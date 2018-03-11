@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <stdio.h>
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
@@ -57,3 +57,4 @@ protected:
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 };
 
+*/

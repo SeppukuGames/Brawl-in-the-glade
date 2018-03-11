@@ -1,3 +1,4 @@
+/*
 #include "ProyectoBasico.h"
 
 
@@ -178,7 +179,7 @@ bool Game::go(){
 		if (!root->renderOneFrame())return false;
 	}
 
-}*/
+	}*//*
 
 //---------------------------OIS - EVENTOS DE TECLADO Y RATÓN---------------------
 //Ajusta el área de clipping del ratón
@@ -255,3 +256,4 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 	delete game;
 	return 0;
 }
+*/

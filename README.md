@@ -4,6 +4,7 @@
 * Bajarse de Drive: Ogre.zip
 * Crear carpeta Proyecto3: Dependencies
 * Extraer Ogre.zip en Dependencies
+* Ya puedes trabajar
 
 
 ### PASOS PARA MONTAR EL BUILD EN EL PROYECTO
