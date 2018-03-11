@@ -1,0 +1,15 @@
+
+# Exes
+*.exe
+*.pdb
+*.ilk
+
+Inter/
+Build/
+Dependencies/Ogre/
+
+# Otros archivos que he visto que hay que ignorar
+*.sdf
+*.log
+*.suo
+
