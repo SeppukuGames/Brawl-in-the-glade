@@ -72,6 +72,7 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
+
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
 
