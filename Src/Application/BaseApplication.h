@@ -23,6 +23,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreRoot.h>
 #include <OgreViewport.h>
 #include <OgreSceneManager.h>
+#include <OgreMeshManager.h>
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
 #include <OgreFrameListener.h>
