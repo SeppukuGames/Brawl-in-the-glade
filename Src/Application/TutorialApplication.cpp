@@ -47,26 +47,28 @@ void TutorialApplication::createLights(void)
 	//Para darle un efecto de PURE BLUE
 	spotlight->setDiffuseColour(0, 0, 1.0);
 	spotlight->setSpecularColour(0, 0, 1.0);
-
+	
 	spotlight->setType(Light::LT_SPOTLIGHT); //Tipo de luz para el foco (spotlight)
-
+	
 	spotlight->setDirection(Vector3::NEGATIVE_UNIT_Z);		//Dirección de la luz
-	spotlight->setSpotlightRange(Degree(35), Degree(50));   //Rango de la luz
-
+	
 	SceneNode* spotLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	spotLightNode->attachObject(spotlight);
 	spotLightNode->setDirection(-1, -1, 0);
 	spotLightNode->setPosition(Vector3(200, 200, 0)); //Posicion de la luz
+	
+	spotlight->setSpotlightRange(Degree(35), Degree(50));   //Rango de la luz
 
 	//CON TODO ESTO DE ARRIBA, SALE EL NINJA CON LUZ AZUL
 
 	Light* directionalLight = mSceneMgr->createLight("DirectionalLight");
 
+	directionalLight->setType(Light::LT_DIRECTIONAL); //Tipo de luz para la luz direccional
+
 	//IMPORTANTE: La clase Light define un método de SetAttenuagtion que te permite controlar cómo se disipa la luz según se aleja del emisor
 	directionalLight->setDiffuseColour(ColourValue(0.4, 0, 0));
 	directionalLight->setSpecularColour(ColourValue(0.4, 0, 0));
-
-	spotlight->setType(Light::LT_DIRECTIONAL); //Tipo de luz para la luz direccional
+	
 
 	directionalLight->setDirection(Vector3::NEGATIVE_UNIT_Z);
 	SceneNode* directionalLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -76,10 +78,10 @@ void TutorialApplication::createLights(void)
 
 	Light* pointLight = mSceneMgr->createLight("PointLight");
 	pointLight->setType(Light::LT_POINT);
-
+	
 	pointLight->setDiffuseColour(0.3, 0.3, 0.3);
 	pointLight->setSpecularColour(0.3, 0.3, 0.3);
-
+	
 	SceneNode* pointLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pointLightNode->attachObject(pointLight);
 	pointLightNode->setPosition(Vector3(0, 150, 250));
