@@ -1,209 +1,237 @@
-/*
------------------------------------------------------------------------------
-Filename:    TutorialApplication.cpp
------------------------------------------------------------------------------
-
-This source file is part of the
-___                 __    __ _ _    _
-/___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-//  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-/ \_// (_| | | |  __/  \  /\  /| |   <| |
-\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-|___/
-Tutorial Framework
-http://www.ogre3d.org/tikiwiki/
------------------------------------------------------------------------------
-*/
 
 #include "TutorialApplication.h"
-#include <OgreSceneNode.h>
-#include <iostream>
 
-using namespace Ogre;
-
-//-------------------------------------------------------------------------------------
-TutorialApplication::TutorialApplication(void)
-{
-}
-//-------------------------------------------------------------------------------------
-TutorialApplication::~TutorialApplication(void)
+TutorialApplication::TutorialApplication()
+: mTerrainGroup(0),
+mTerrainGlobals(0)
 {
 }
 
-//-------------------------------------------------------------------------------------
-
-void TutorialApplication::createLights(void)
+TutorialApplication::~TutorialApplication()
 {
-	//Creamos luz ambiental
-	//mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
-
-	//tutorial 2:
-	mSceneMgr->setAmbientLight(ColourValue(0, 0, 0));
-	mSceneMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE); //Ahora el scenemanager usa sombras modulares modulables™
-
-	//Luz para el tutorial 2:
-
-	Light* spotlight = mSceneMgr->createLight("SpotLight");
-	//Para darle un efecto de PURE BLUE
-	spotlight->setDiffuseColour(0, 0, 1.0);
-	spotlight->setSpecularColour(0, 0, 1.0);
-	
-	spotlight->setType(Light::LT_SPOTLIGHT); //Tipo de luz para el foco (spotlight)
-	
-	spotlight->setDirection(Vector3::NEGATIVE_UNIT_Z);		//Dirección de la luz
-	
-	SceneNode* spotLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	spotLightNode->attachObject(spotlight);
-	spotLightNode->setDirection(-1, -1, 0);
-	spotLightNode->setPosition(Vector3(200, 200, 0)); //Posicion de la luz
-	
-	spotlight->setSpotlightRange(Degree(35), Degree(50));   //Rango de la luz
-
-	//CON TODO ESTO DE ARRIBA, SALE EL NINJA CON LUZ AZUL
-
-	Light* directionalLight = mSceneMgr->createLight("DirectionalLight");
-
-	directionalLight->setType(Light::LT_DIRECTIONAL); //Tipo de luz para la luz direccional
-
-	//IMPORTANTE: La clase Light define un método de SetAttenuagtion que te permite controlar cómo se disipa la luz según se aleja del emisor
-	directionalLight->setDiffuseColour(ColourValue(0.4, 0, 0));
-	directionalLight->setSpecularColour(ColourValue(0.4, 0, 0));
-	
-
-	directionalLight->setDirection(Vector3::NEGATIVE_UNIT_Z);
-	SceneNode* directionalLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	directionalLightNode->attachObject(directionalLight);
-	directionalLightNode->setDirection(Vector3(0, -1, 1)); //La direccion del nodo
-		
-
-	Light* pointLight = mSceneMgr->createLight("PointLight");
-	pointLight->setType(Light::LT_POINT);
-	
-	pointLight->setDiffuseColour(0.3, 0.3, 0.3);
-	pointLight->setSpecularColour(0.3, 0.3, 0.3);
-	
-	SceneNode* pointLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	pointLightNode->attachObject(pointLight);
-	pointLightNode->setPosition(Vector3(0, 150, 250));
-
-	//¿¿¿¿Y LA LUZ ROJA DONDE ESTA????
-
-	//Creamos una luz
-	//Ogre tiene tres luces: Point, spotlight, y direccional
-	//Light* light = mSceneMgr->createLight("MainLight");
-	//SceneNode* lightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//lightNode->attachObject(light);
-	//
-	////Damos posición al nodo de la luz
-	//lightNode->setPosition(20, 80, 50);
 }
 
-//-------------------------------------------------------------------------------------
-
-void TutorialApplication::createCameras(void)
+void TutorialApplication::createScene()
 {
-	//Creamos camara
-	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	camNode->lookAt(Vector3(0, 0, 0), Node::TransformSpace::TS_WORLD); //Ejemplo luces y sombras: Mira a un punto concreto
-	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 47, 222);
+	mCamera->setPosition(Ogre::Vector3(1683, 50, 2116));
+	mCamera->lookAt(Ogre::Vector3(1963, 50, 1660));
+	mCamera->setNearClipDistance(.1);
 
-	/*
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	// create the camera
-	Camera* cam = mSceneMgr->createCamera("myCam");
-	cam->setNearClipDistance(5); // specific to this sample
-	cam->setAutoAspectRatio(true);
-	camNode->attachObject(cam);
-	camNode->setPosition(0, 0, 140);
-	// and tell it to render into the main window
-	getRenderWindow()->addViewport(cam);
-	*/
-}
+	bool infiniteClip =
+		mRoot->getRenderSystem()->getCapabilities()->hasCapability(
+		Ogre::RSC_INFINITE_FAR_PLANE);
 
-//-------------------------------------------------------------------------------------
+	if (infiniteClip)
+		mCamera->setFarClipDistance(0);
+	else
+		mCamera->setFarClipDistance(50000);
 
-void TutorialApplication::createEntities(void)
-{
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
 
-	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-	//Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
-	//
-	//SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//ogreNode->attachObject(ogreEntity);
-	//
-	//Entity* ogreEntity2 = mSceneMgr->createEntity("ogrehead.mesh");
-	//SceneNode* ogreNode2 = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(84, 48, 0));
-	//ogreNode2->attachObject(ogreEntity2);
-	//
-	////Ogro escalado
-	//Entity* ogreEntity3 = mSceneMgr->createEntity("ogrehead.mesh");
-	//SceneNode* ogreNode3 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//ogreNode3->setPosition(0, 104, 0);
-	//ogreNode3->setScale(2, 1.2, 1);
-	//ogreNode3->attachObject(ogreEntity3);
-	//
-	////Ogro rotado
-	//Entity* ogreEntity4 = mSceneMgr->createEntity("ogrehead.mesh");
-	//SceneNode* ogreNode4 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//ogreNode4->setPosition(-84, 48, 0);
-	//ogreNode4->roll(Degree(-90));//Puede hacerse en radianes
-	//ogreNode4->attachObject(ogreEntity4);
+	Ogre::Vector3 lightDir(.55, -.3, .75);
+	lightDir.normalise();
 
-	//TUTORIAL 2: Luces y sombras
-	Plane plane(Vector3::UNIT_Y, 0); //CREA UN PLANO EN EL EJE Y
-	std::cout << "-------------------------------------------------\nPlano creado.\n";
-	// IMPORTANTE: Para la siguiente instrucción, hemos añadido la librería #include <OgreMeshManager.h> en BaseApplication :IMPORTANTE //
-	MeshManager::getSingleton().createPlane(
-		"ground",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		plane,
-		1500, 1500, 20, 20,
-		true,
-		1, 5, 5,
-		Vector3::UNIT_Z);
-	//
-	Entity* entidadSuelo = mSceneMgr->createEntity("ground");
-	SceneNode * suelo = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	entidadSuelo->setCastShadows(false);		//No queremos que el suelo genere sombras
-	entidadSuelo->setMaterialName("Examples/Rockwall");  //Esto instancia una textura en el suelo.
-	suelo->attachObject(entidadSuelo);
+	Ogre::Light* light = mSceneMgr->createLight("TestLight");
+	light->setType(Ogre::Light::LT_DIRECTIONAL);
+	light->setDirection(lightDir);
+	light->setDiffuseColour(Ogre::ColourValue::White);
+	light->setSpecularColour(Ogre::ColourValue(.4, .4, .4));
 
+	// Fog
+	Ogre::ColourValue fadeColour(.9, .9, .9);
+	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
 
-	Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
-	SceneNode * MariconSaltarin = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	MariconSaltarin ->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
-	MariconSaltarin->setScale(0.5, 0.5, 0.5);
-	ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
+	mSceneMgr->setFog(Ogre::FOG_EXP2, fadeColour, 0.002);
 
-	//Metodos utiles de la escena:
-}
+	// Terrain
+	mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
+	mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(
+		mSceneMgr,
+		Ogre::Terrain::ALIGN_X_Z,
+		513, 12000.0);
+	mTerrainGroup->setFilenameConvention(Ogre::String("terrain"), Ogre::String("dat"));
+	mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
 
-//-------------------------------------------------------------------------------------
-void TutorialApplication::createScene(void)
-{
-	// create your scene here :)
+	configureTerrainDefaults(light);
 
-	createLights();
+	for (long x = 0; x <= 0; ++x)
+		for (long y = 0; y <= 0; ++y)
+			defineTerrain(x, y);
 
-	createCameras();
+	mTerrainGroup->loadAllTerrains(true);
 
-	createEntities();
+	if (mTerrainsImported)
+	{
+		Ogre::TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
+
+		while (ti.hasMoreElements())
+		{
+			Ogre::Terrain* t = ti.getNext()->instance;
+			initBlendMaps(t);
+		}
+	}
+
+	mTerrainGroup->freeTemporaryResources();
+
+	// Sky Techniques
+	// mSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox", 300, false);
+	mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
+	// Ogre::Plane plane;
+	// plane.d = 1000;
+	// plane.normal = Ogre::Vector3::NEGATIVE_UNIT_Y;
+
+	// mSceneMgr->setSkyPlane(
+	//   true, plane, "Examples/SpaceSkyPlane", 1500, 40, true, 1.5, 150, 150);
+
 }
 
 
+void TutorialApplication::destroyScene()
+{
+	OGRE_DELETE mTerrainGroup;
+	OGRE_DELETE mTerrainGlobals;
+}
 
-#ifdef _DEBUG || !_WIN32
-int main(){
-	printf("Hola, Mundo!\n");
-#else
-#include <Windows.h>
-int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
 
+void getTerrainImage(bool flipX, bool flipY, Ogre::Image& img)
+{
+	img.load("terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	if (flipX)
+		img.flipAroundY();
+	if (flipY)
+		img.flipAroundX();
+
+}
+
+void TutorialApplication::defineTerrain(long x, long y)
+{
+	Ogre::String filename = mTerrainGroup->generateFilename(x, y);
+
+	bool exists =
+		Ogre::ResourceGroupManager::getSingleton().resourceExists(
+		mTerrainGroup->getResourceGroup(),
+		filename);
+
+	if (exists)
+		mTerrainGroup->defineTerrain(x, y);
+	else
+	{
+		Ogre::Image img;
+		getTerrainImage(x % 2 != 0, y % 2 != 0, img);
+		mTerrainGroup->defineTerrain(x, y, &img);
+
+		mTerrainsImported = true;
+	}
+}
+
+void TutorialApplication::initBlendMaps(Ogre::Terrain* terrain)
+{
+	Ogre::Real minHeight0 = 70;
+	Ogre::Real fadeDist0 = 40;
+	Ogre::Real minHeight1 = 70;
+	Ogre::Real fadeDist1 = 15;
+
+	Ogre::TerrainLayerBlendMap* blendMap0 = terrain->getLayerBlendMap(1);
+	Ogre::TerrainLayerBlendMap* blendMap1 = terrain->getLayerBlendMap(2);
+
+	float* pBlend0 = blendMap0->getBlendPointer();
+	float* pBlend1 = blendMap1->getBlendPointer();
+
+	for (Ogre::uint16 y = 0; y < terrain->getLayerBlendMapSize(); ++y)
+	{
+		for (Ogre::uint16 x = 0; x < terrain->getLayerBlendMapSize(); ++x)
+		{
+			Ogre::Real tx, ty;
+
+			blendMap0->convertImageToTerrainSpace(x, y, &tx, &ty);
+			Ogre::Real height = terrain->getHeightAtTerrainPosition(tx, ty);
+			Ogre::Real val = (height - minHeight0) / fadeDist0;
+			val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+			*pBlend0++ = val;
+
+			val = (height - minHeight1) / fadeDist1;
+			val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+			*pBlend1++ = val;
+		}
+	}
+
+	blendMap0->dirty();
+	blendMap1->dirty();
+	blendMap0->update();
+	blendMap1->update();
+
+}
+
+void TutorialApplication::configureTerrainDefaults(Ogre::Light* light)
+{
+	mTerrainGlobals->setMaxPixelError(8);
+	mTerrainGlobals->setCompositeMapDistance(3000);
+
+	mTerrainGlobals->setLightMapDirection(light->getDerivedDirection());
+	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
+	mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
+
+	Ogre::Terrain::ImportData& importData = mTerrainGroup->getDefaultImportSettings();
+	importData.terrainSize = 513;
+	importData.worldSize = 12000.0;
+	importData.inputScale = 600;
+	importData.minBatchSize = 33;
+	importData.maxBatchSize = 65;
+
+	importData.layerList.resize(3);
+	importData.layerList[0].worldSize = 100;
+	importData.layerList[0].textureNames.push_back(
+		"dirt_grayrocky_diffusespecular.dds");
+	importData.layerList[0].textureNames.push_back(
+		"dirt_grayrocky_normalheight.dds");
+	importData.layerList[1].worldSize = 30;
+	importData.layerList[1].textureNames.push_back(
+		"grass_green-01_diffusespecular.dds");
+	importData.layerList[1].textureNames.push_back(
+		"grass_green-01_normalheight.dds");
+	importData.layerList[2].worldSize = 200;
+	importData.layerList[2].textureNames.push_back(
+		"growth_weirdfungus-03_diffusespecular.dds");
+	importData.layerList[2].textureNames.push_back(
+		"growth_weirdfungus-03_normalheight.dds");
+
+}
+
+
+#if Ogre_PLATFORM == OGRE_PLATFORM_WIN32
+#define WIN32_LEAN_AND_MEAN
+#include "windows.h"
 #endif
 
-	TutorialApplication app;
-	app.go();
-	return 0;
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)
+#else
+	int main(int argc, char *argv[])
+#endif
+	{
+		// Create application object
+		TutorialApplication app;
+
+		try {
+			app.go();
+		}
+		catch (Ogre::Exception& e) {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+			//MessageBox(NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
+#else
+			std::cerr << "An exception has occured: " <<
+				e.getFullDescription().c_str() << std::endl;
+#endif
+		}
+
+		return 0;
+	}
+
+#ifdef __cplusplus
 }
+#endif

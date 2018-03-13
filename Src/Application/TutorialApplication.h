@@ -1,37 +1,27 @@
-/*
------------------------------------------------------------------------------
-Filename:    TutorialApplication.h
------------------------------------------------------------------------------
-
-This source file is part of the
-___                 __    __ _ _    _
-/___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-//  // _` | '__/ _ \ \ \/  \/ / | |/ / |
-/ \_// (_| | | |  __/  \  /\  /| |   <| |
-\___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-|___/
-Tutorial Framework
-http://www.ogre3d.org/tikiwiki/
------------------------------------------------------------------------------
-*/
-#ifndef __TutorialApplication_h_
-#define __TutorialApplication_h_
+#include <../Components/Terrain/include/OgreTerrain.h>
+#include <../Components/Terrain/include/OgreTerrainGroup.h>
 
 #include "BaseApplication.h"
 
 class TutorialApplication : public BaseApplication
 {
 public:
-	TutorialApplication(void);
-	virtual ~TutorialApplication(void);
+	TutorialApplication();
+	virtual ~TutorialApplication();
 
 protected:
-	virtual void createScene(void);
+	virtual void createScene();
+	virtual void destroyScene();
 
-	virtual void createLights(void);
-	virtual void createCameras(void);
-	virtual void createEntities(void);
+private:
+	void defineTerrain(long x, long y);
+	void initBlendMaps(Ogre::Terrain* terrain);
+	void configureTerrainDefaults(Ogre::Light* light);
+
+	bool mTerrainsImported;
+	Ogre::TerrainGroup* mTerrainGroup;
+	Ogre::TerrainGlobalOptions* mTerrainGlobals;
+
+	
 
 };
-
-#endif // #ifndef __TutorialApplication_h_
