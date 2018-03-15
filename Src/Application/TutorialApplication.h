@@ -27,11 +27,20 @@ public:
 
 protected:
 	virtual void createScene(void);
+	virtual bool frameRenderingQueued(const Ogre::FrameEvent& fe);
+	
+	//Para el tuto 5 skrr
+	Ogre::Real mRotate;
+	Ogre::Real mMove;
+	Ogre::SceneNode* mCamNode;
+	Ogre::Vector3 mDirection;
 
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
 
+private:
+	bool processUnbufferedInput(const Ogre::FrameEvent& fe);
 };
 
 #endif // #ifndef __TutorialApplication_h_

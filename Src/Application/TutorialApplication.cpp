@@ -37,7 +37,10 @@ void TutorialApplication::createLights(void)
 	//Creamos luz ambiental
 	//mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
-	//tutorial 2:
+	////////////////////////////////////////////////
+	//		TUTORIAL 2: Luces y sombras			///
+	///////////////////////////////////////////////
+	/*
 	mSceneMgr->setAmbientLight(ColourValue(0, 0, 0));
 	mSceneMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE); //Ahora el scenemanager usa sombras modulares modulables™
 
@@ -85,8 +88,20 @@ void TutorialApplication::createLights(void)
 	SceneNode* pointLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pointLightNode->attachObject(pointLight);
 	pointLightNode->setPosition(Vector3(0, 150, 250));
+	*/
 
-	//¿¿¿¿Y LA LUZ ROJA DONDE ESTA????
+	//////////////////////////////////////////////
+	//         TUTORIAL 4: Unbuffered input    ///
+	//////////////////////////////////////////////
+
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(.25, .25, .25));
+
+	Ogre::Light* pointLight = mSceneMgr->createLight("PointLight");
+	pointLight->setType(Ogre::Light::LT_POINT);
+	pointLight->setPosition(250, 150, 250);
+	pointLight->setDiffuseColour(Ogre::ColourValue::White);
+	pointLight->setSpecularColour(Ogre::ColourValue::White);
+
 
 	//Creamos una luz
 	//Ogre tiene tres luces: Point, spotlight, y direccional
@@ -126,7 +141,7 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
-
+	///CABEZAS DE OGROS///
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	//Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
 	//
@@ -151,30 +166,33 @@ void TutorialApplication::createEntities(void)
 	//ogreNode4->roll(Degree(-90));//Puede hacerse en radianes
 	//ogreNode4->attachObject(ogreEntity4);
 
-	//TUTORIAL 2: Luces y sombras
-	Plane plane(Vector3::UNIT_Y, 0); //CREA UN PLANO EN EL EJE Y
-	std::cout << "-------------------------------------------------\nPlano creado.\n";
-	// IMPORTANTE: Para la siguiente instrucción, hemos añadido la librería #include <OgreMeshManager.h> en BaseApplication :IMPORTANTE //
-	MeshManager::getSingleton().createPlane(
-		"ground",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		plane,
-		1500, 1500, 20, 20,
-		true,
-		1, 5, 5,
-		Vector3::UNIT_Z);
-	//
-	Entity* entidadSuelo = mSceneMgr->createEntity("ground");
-	SceneNode * suelo = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	entidadSuelo->setCastShadows(false);		//No queremos que el suelo genere sombras
-	entidadSuelo->setMaterialName("Examples/Rockwall");  //Esto instancia una textura en el suelo.
-	suelo->attachObject(entidadSuelo);
+	////////////////////////////////////////////////
+	//		TUTORIAL 2: Luces y sombras			///
+	///////////////////////////////////////////////
 
+	//Plane plane(Vector3::UNIT_Y, 0); //CREA UN PLANO EN EL EJE Y
+	//std::cout << "-------------------------------------------------\nPlano creado.\n";
+	//// IMPORTANTE: Para la siguiente instrucción, hemos añadido la librería #include <OgreMeshManager.h> en BaseApplication :IMPORTANTE //
+	//MeshManager::getSingleton().createPlane(
+	//	"ground",
+	//	ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+	//	plane,
+	//	1500, 1500, 20, 20,
+	//	true,
+	//	1, 5, 5,
+	//	Vector3::UNIT_Z);
+	////
+	//Entity* entidadSuelo = mSceneMgr->createEntity("ground");
+	//SceneNode * suelo = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//entidadSuelo->setCastShadows(false);		//No queremos que el suelo genere sombras
+	//entidadSuelo->setMaterialName("Examples/Rockwall");  //Esto instancia una textura en el suelo.
+	//suelo->attachObject(entidadSuelo);
 
+	//NINJA MARICON//
 	Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
-	SceneNode * MariconSaltarin = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	MariconSaltarin ->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
-	MariconSaltarin->setScale(0.5, 0.5, 0.5);
+	SceneNode * ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ninjaNode");
+	ninjaNode->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
+	ninjaNode->setScale(0.5, 0.5, 0.5);
 	ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
 
 	//Metodos utiles de la escena:
@@ -192,7 +210,73 @@ void TutorialApplication::createScene(void)
 	createEntities();
 }
 
+//A saber qué cojones es esto pavo
+bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
+{
+	//Esto nos garantia que solo cobtinbuamos si el iput está procesado bien
+	if (!processUnbufferedInput(fe))
+		return false;
 
+	bool ret = BaseApplication::frameRenderingQueued(fe);
+	
+	return ret;
+}
+
+
+bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe)
+{
+	//Variables necesarias para el processUnbufferedInput
+	static bool mouseDownLastFrame = false; //Static para que se mantenga el valor entre llamadas
+	Ogre::Vector3 dirVec = Ogre::Vector3::ZERO; //Vector para mantener la direccion del ninja
+	static Ogre::Real toggleTimer = 0.0;
+	static Ogre::Real rotate = .13;
+	static Ogre::Real move = 250;
+
+	bool leftMouseDown = mMouse->getMouseState().buttonDown(OIS::MB_Left);
+
+	if (leftMouseDown && !mouseDownLastFrame)
+	{
+		Ogre::Light* light = mSceneMgr->getLight("PointLight");
+		light->setVisible(!light->isVisible());
+	}
+	//TECLAS DE MOVIMIENTO DEL NINJA//
+	if (mKeyboard->isKeyDown(OIS::KC_W)) //Alante
+		dirVec.z -= move;
+
+	if (mKeyboard->isKeyDown(OIS::KC_S)) //Atras
+		dirVec.z += move;
+
+	if (mKeyboard->isKeyDown(OIS::KC_Q)) //Arriba (eje y)
+		dirVec.y += move;
+
+	if (mKeyboard->isKeyDown(OIS::KC_E)) //Abajo (eje y)
+		dirVec.y -= move;
+
+	if (mKeyboard->isKeyDown(OIS::KC_A)) //Izq
+	{
+		if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			mSceneMgr->getSceneNode("ninjaNode")->yaw(Ogre::Degree(5 * rotate));
+		else
+			dirVec.x -= move;
+	}
+
+	if (mKeyboard->isKeyDown(OIS::KC_D)) //Der
+	{
+		if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			mSceneMgr->getSceneNode("ninjaNode")->yaw(Ogre::Degree(-5 * rotate));
+		else
+			dirVec.x += move;
+	}
+
+
+	mSceneMgr->getSceneNode("ninjaNode")->translate(
+		dirVec * fe.timeSinceLastFrame,
+		Ogre::Node::TS_LOCAL);
+
+
+	mouseDownLastFrame = leftMouseDown; //Lo asgnamos para asegurarnos que tiene el valor correcto el siguiente frame.
+	return true;
+}
 
 #ifdef _DEBUG || !_WIN32
 int main(){

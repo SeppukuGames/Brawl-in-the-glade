@@ -36,6 +36,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+//																									-Listeners de OIS-
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
 {
 public:
