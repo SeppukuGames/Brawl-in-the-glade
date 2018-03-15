@@ -199,6 +199,22 @@ void TutorialApplication::configureTerrainDefaults(Ogre::Light* light)
 }
 
 
+#ifdef _DEBUG || !_WIN32
+int main(){
+	printf("Hola, Mundo!\n");
+#else
+#include <Windows.h>
+int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
+
+#endif
+
+	TutorialApplication app;
+	app.go();
+	return 0;
+}
+
+/*
+
 #if Ogre_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
@@ -235,3 +251,4 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+*/

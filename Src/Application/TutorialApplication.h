@@ -1,5 +1,9 @@
+
 #include <../Components/Terrain/include/OgreTerrain.h>
 #include <../Components/Terrain/include/OgreTerrainGroup.h>
+
+#ifndef __TutorialApplication_h_
+#define __TutorialApplication_h_
 
 #include "BaseApplication.h"
 
@@ -25,3 +29,5 @@ private:
 	
 
 };
+
+#endif
