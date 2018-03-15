@@ -17,15 +17,16 @@ http://www.ogre3d.org/tikiwiki/
 #ifndef __BaseApplication_h_
 #define __BaseApplication_h_
 
+#include <OgreRoot.h>
+#include <OgreConfigFile.h> //Para parsear los .cfg
+
 #include <OgreCamera.h>
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
-#include <OgreRoot.h>
 #include <OgreViewport.h>
 #include <OgreSceneManager.h>
 #include <OgreMeshManager.h>
 #include <OgreRenderWindow.h>
-#include <OgreConfigFile.h>
 #include <OgreFrameListener.h>
 #include <OgreWindowEventUtilities.h>
 #include <OgreOverlaySystem.h>
@@ -40,6 +41,19 @@ http://www.ogre3d.org/tikiwiki/
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
 {
 public:
+	/*
+	Ciclo básico de Ogre:
+
+	Create the Ogre::Root object
+	Define the resources that Ogre will use
+	Choose and set up the RenderSystem (DirectX, OpenGL, etc)
+	Create the RenderWindow
+	Set up any third party libraries and plugins.
+	Initialise resources
+	Register listener classes
+	Build a scene
+	Start the render loop
+	*/
 	BaseApplication(void);
 	virtual ~BaseApplication(void);
 
@@ -70,12 +84,18 @@ protected:
 	//Unattach OIS before window shutdown (very important under Linux)
 	virtual void windowClosed(Ogre::RenderWindow* rw);
 
+	//Permite inicializar el core de Ogre facilmente
 	Ogre::Root *mRoot;
-	Ogre::Camera* mCamera;
-	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
-	Ogre::RenderWindow* mWindow;
+
+	//Strings que utilizaremos durante el setup
 	Ogre::String mResourcesCfg;
 	Ogre::String mPluginsCfg;
+
+	//RenderSystem
+	Ogre::RenderWindow* mWindow;
+
+	Ogre::Camera* mCamera;
+	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
 
 	Ogre::OverlaySystem *mOverlaySystem;
 

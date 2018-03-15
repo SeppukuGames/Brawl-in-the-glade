@@ -15,22 +15,24 @@ http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
 #include "BaseApplication.h"
-
+#include <OgreException.h>
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
-: mRoot(0),
-mCamera(0),
-mSceneMgr(0),
-mWindow(0),
-mResourcesCfg(Ogre::StringUtil::BLANK),
-mPluginsCfg(Ogre::StringUtil::BLANK),
-mCursorWasVisible(false),
-mShutDown(false),
-mInputManager(0),
-mMouse(0),
-mKeyboard(0),
-mOverlaySystem(0)
+:	mRoot(0),
+	mResourcesCfg(Ogre::StringUtil::BLANK),
+	mPluginsCfg(Ogre::StringUtil::BLANK),
+
+	mCamera(0),
+	mSceneMgr(0),
+	mWindow(0),
+
+	mCursorWasVisible(false),
+	mShutDown(false),
+	mInputManager(0),
+	mMouse(0),
+	mKeyboard(0),
+	mOverlaySystem(0)
 {
 }
 
@@ -46,8 +48,68 @@ BaseApplication::~BaseApplication(void)
 }
 
 //-------------------------------------------------------------------------------------
+
+void BaseApplication::go(void)
+{
+	//Strings que identifican los archivos de recursos y de plugins
+#ifdef _DEBUG
+	mResourcesCfg = "resources_d.cfg";
+	mPluginsCfg = "plugins_d.cfg";
+#else
+	mResourcesCfg = "Ogre/resources.cfg";
+	mPluginsCfg = "Ogre/plugins.cfg";
+#endif
+
+	if (!setup())
+		return;
+
+	mRoot->startRendering();
+
+	// clean up
+	destroyScene();
+}
+
+//-------------------------------------------------------------------------------------
+
+bool BaseApplication::setup(void)
+{
+	//Creamos la instancia del root object
+	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
+	mRoot = new Ogre::Root(mPluginsCfg);
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
+
+	//Configuramos el renderSystem
+	bool carryOn = configure();
+	if (!carryOn) return false;
+
+	chooseSceneManager();
+	createCamera();
+	createViewports();
+
+	// Set default mipmap level (NB some APIs ignore this)
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	// Create any resource listeners (for loading screens)
+	createResourceListener();
+	// Load resources
+	loadResources();
+
+	// Create the scene
+	createScene();
+
+	createFrameListener();
+
+	return true;
+};
+
+//-------------------------------------------------------------------------------------
 bool BaseApplication::configure(void)
 {
+	//Todo este código muestra una ventana que te permite establecer el rendersystem que quieres utilizar
+
 	// Show the configuration dialog and initialise the system
 	// You can skip this and use root.restoreConfig() to load configuration
 	// settings if you were sure there are valid ones saved in ogre.cfg
@@ -63,7 +125,60 @@ bool BaseApplication::configure(void)
 	{
 		return false;
 	}
+
+	//Esto es lo que hay por dentro del ConfigDialog
+	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
+	/*
+	//Creamos una instancia de RenderWindow
+		
+	//Podemos hacer que el configDialog solo salgo si no hay un ogre.cfg
+	if(!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
+		return false;
+
+	//Ejemplo para crear los ajustes de Direct3D9
+
+	/ Do not add this to your project
+	RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
+
+	mRoot->setRenderSystem(rs);
+	rs->setConfigOption("Full Screen", "No");
+	rs->setConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
+	
+	 Root::getAvailableRenderers permite saber qué renderers están disponibles en nuestro sistema
+
+	 RenderSystem::getConfigOptions permite ver las opciones que ofrece
+	
+	Además de que Ogre cree el RenderWindow, podemos crear una ventana usando el API de win32, wxWidgets u otro sistema de ventana.
+
+	Ejemplo:
+
+	// Do not add this to your project
+	mRoot->initialise(false);
+
+	HWND hWnd = 0;
+
+	// Retrieve the HWND for the window we want to render in.
+	// This step depends entirely on the windowing system you are using.
+
+	NameValuePairList misc;
+	misc["externalWindowHandle"] = StringConverter::toString((int)hWnd);
+
+	//Aplicamos a mroot los cambios que hemos hecho
+	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
+	
+	
+	
+	*/
 }
+//-------------------------------------------------------------------------------------
+
+void BaseApplication::loadResources(void)
+{
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
 //-------------------------------------------------------------------------------------
 void BaseApplication::chooseSceneManager(void)
 {
@@ -132,25 +247,39 @@ void BaseApplication::createViewports(void)
 //-------------------------------------------------------------------------------------
 void BaseApplication::setupResources(void)
 {
-	// Load resource paths from config file
+	//Carga las rutas de los recursos del archivo de configuración
 	Ogre::ConfigFile cf;
 	cf.load(mResourcesCfg);
 
-	// Go through all sections & settings in the file
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+	//Tenemos que recorrer todas las secciones del archivo [Essential] y añadir las localizaciones al ResourceGroupManager
+	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
-	Ogre::String secName, typeName, archName;
-	while (seci.hasMoreElements())
+	//String auxiliares para guardar información del archivo de configuracion parseado
+
+	Ogre::String pathName;//Ruta de los recursos
+	Ogre::String formatName;//Formato del archivo (Zip, Filesystem)
+
+	Ogre::String secName;
+
+	//Iteramos a través de todos los elementos
+	while (secIt.hasMoreElements())
 	{
-		secName = seci.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = settings->begin(); i != settings->end(); ++i)
+		secName = secIt.peekNextKey();
+
+		//Preguntamos por un iterador que nos permitirá iterar a traves de los elementos de cada sección
+		Ogre::ConfigFile::SettingsMultiMap *settings = secIt.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator it;
+
+		//Iteramos escaneando cada elemento
+		for (it = settings->begin(); it != settings->end(); ++it)
 		{
-			typeName = i->first;
-			archName = i->second;
+			//Desempaquetamos cada par
+			formatName = it->first;
+			pathName = it->second;
+
+			//Añadimos la localización al ResourceGroupManager
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-				archName, typeName, secName);
+				pathName, formatName, secName);
 		}
 	}
 }
@@ -159,60 +288,9 @@ void BaseApplication::createResourceListener(void)
 {
 
 }
-//-------------------------------------------------------------------------------------
-void BaseApplication::loadResources(void)
-{
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::go(void)
-{
-#ifdef _DEBUG
-	mResourcesCfg = "resources_d.cfg";
-	mPluginsCfg = "plugins_d.cfg";
-#else
-	mResourcesCfg = "Ogre/resources.cfg";
-	mPluginsCfg = "Ogre/plugins.cfg";
-#endif
 
-	if (!setup())
-		return;
 
-	mRoot->startRendering();
 
-	// clean up
-	destroyScene();
-}
-//-------------------------------------------------------------------------------------
-bool BaseApplication::setup(void)
-{
-	mRoot = new Ogre::Root(mPluginsCfg);
-
-	setupResources();
-
-	bool carryOn = configure();
-	if (!carryOn) return false;
-
-	chooseSceneManager();
-	createCamera();
-	createViewports();
-
-	// Set default mipmap level (NB some APIs ignore this)
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	// Create any resource listeners (for loading screens)
-	createResourceListener();
-	// Load resources
-	loadResources();
-
-	// Create the scene
-	createScene();
-
-	createFrameListener();
-
-	return true;
-};
-//-------------------------------------------------------------------------------------
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	if (mWindow->isClosed())
