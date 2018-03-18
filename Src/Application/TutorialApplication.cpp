@@ -17,6 +17,8 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialApplication.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
+#include "GameComponent.h"
+#include "OgritoRotaComponent.h"
 using namespace Ogre;
 
 //-------------------------------------------------------------------------------------
@@ -73,9 +75,15 @@ void TutorialApplication::createEntities(void)
 {
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
-
 	SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ogreNode->attachObject(ogreEntity);
+
+	GameComponent * OgritoQueRota = new GameComponent(ogreNode);
+	OgritoQueRota->addComponent(new OgritoRotaComponent());
+	actors_.push_back(OgritoQueRota);
+
+
+
 
 	Entity* ogreEntity2 = mSceneMgr->createEntity("ogrehead.mesh");
 	SceneNode* ogreNode2 = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(84, 48, 0));
@@ -112,16 +120,3 @@ void TutorialApplication::createScene(void)
 
 
 
-#ifdef _DEBUG || !_WIN32
-int main(){
-	printf("Hola, Mundo!\n");
-#else
-#include <Windows.h>
-int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
-
-#endif
-
-	TutorialApplication app;
-	app.go();
-	return 0;
-}

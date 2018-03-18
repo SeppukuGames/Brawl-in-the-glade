@@ -65,7 +65,7 @@ void BaseApplication::go(void)
 	if (!setup())
 		return;
 
-	while (renderLoop());
+	while (gameLoop());
 	//Le cedemos el control a Ogre
 	//mRoot->startRendering();
 
@@ -75,7 +75,7 @@ void BaseApplication::go(void)
 //-------------------------------------------------------------------------------------
 
 //Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
-bool BaseApplication::renderLoop()
+bool BaseApplication::gameLoop()
 {
 	//Actualiza el RenderWindow
 	Ogre::WindowEventUtilities::messagePump();
@@ -85,8 +85,10 @@ bool BaseApplication::renderLoop()
 	if (!handleInput())
 		return false;
 
-	//Se profundiza en el TUTORIAL4
-	if (!mRoot->renderOneFrame()) return false;
+	update();
+
+	if (!render())
+		return false;
 }
 
 //Detecta input
@@ -99,9 +101,28 @@ bool BaseApplication::handleInput(void){
 	if (mKeyboard->isKeyDown(OIS::KC_ESCAPE))
 		return false;
 
+	return true;
+}
+
+//Detecta input
+bool BaseApplication::update(void)
+{
+	//Actualiza todos los objetos
+	for (int i = 0; i < actors_.size(); i++)
+		actors_[i]->tick();
 
 	return true;
 }
+
+//Detecta input
+bool BaseApplication::render(void){
+
+	//Se profundiza en el TUTORIAL4
+	if (!mRoot->renderOneFrame()) return false;
+
+	return true;
+}
+
 
 //-------------------------------------------------------------------------------------
 

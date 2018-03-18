@@ -37,7 +37,7 @@ http://www.ogre3d.org/tikiwiki/
 //#include <OgreOverlaySystem.h>
 #include <OgreTextureManager.h>
 
-
+#include "GameObject.h"
 
 //																									-Listeners de OIS-
 class BaseApplication :
@@ -66,8 +66,11 @@ public:
 	virtual void go(void);
 
 protected:
-	virtual bool renderLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	
 	virtual bool handleInput(void);//Detecta input
+	virtual bool update(void);
+	virtual bool render(void);
 
 	virtual bool setup();
 	virtual void setupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
@@ -133,6 +136,10 @@ protected:
 	bool mShutDown;
 	*/
 	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+
+
+	//Todos los objetos de las escena
+	std::vector<GameObject*> actors_;
 
 
 };
