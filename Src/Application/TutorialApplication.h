@@ -18,6 +18,7 @@ http://www.ogre3d.org/tikiwiki/
 #define __TutorialApplication_h_
 
 #include "BaseApplication.h"
+#include <OgreEntity.h>
 
 class TutorialApplication : public BaseApplication
 {

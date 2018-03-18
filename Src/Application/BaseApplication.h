@@ -19,23 +19,25 @@ http://www.ogre3d.org/tikiwiki/
 
 #include <OgreRoot.h>
 #include <OgreConfigFile.h> //Para parsear los .cfg
-
-#include <OgreCamera.h>
-#include <OgreEntity.h>
-#include <OgreLogManager.h>
-#include <OgreViewport.h>
-#include <OgreSceneManager.h>
-#include <OgreMeshManager.h>
 #include <OgreRenderWindow.h>
-#include <OgreFrameListener.h>
+#include <OgreSceneManager.h>
+#include <OgreCamera.h>
+#include <OgreViewport.h>
 #include <OgreWindowEventUtilities.h>
-#include <OgreOverlaySystem.h>
-#include <OgreTextureManager.h>
 
+//OIS
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
+
+#include <OgreLogManager.h>
+#include <OgreMeshManager.h>
+#include <OgreFrameListener.h>
+#include <OgreOverlaySystem.h>
+#include <OgreTextureManager.h>
+
+
 
 //																									-Listeners de OIS-
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
@@ -69,7 +71,9 @@ protected:
 	virtual void destroyScene(void);
 	virtual void createViewports(void);
 	virtual void setupResources(void);
-	virtual void createResourceListener(void);
+	virtual bool renderLoop(void);
+	virtual void initOIS(void);
+	//virtual void createResourceListener(void);
 	virtual void loadResources(void);
 	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
@@ -84,6 +88,9 @@ protected:
 	//Unattach OIS before window shutdown (very important under Linux)
 	virtual void windowClosed(Ogre::RenderWindow* rw);
 
+
+	//ATRIBUTOS
+
 	//Permite inicializar el core de Ogre facilmente
 	Ogre::Root *mRoot;
 
@@ -94,18 +101,19 @@ protected:
 	//RenderSystem
 	Ogre::RenderWindow* mWindow;
 
-	Ogre::Camera* mCamera;
 	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
-
-	Ogre::OverlaySystem *mOverlaySystem;
-
-	bool mCursorWasVisible;						// was cursor visible before dialog appeared
-	bool mShutDown;
+	Ogre::Camera* mCamera;
 
 	//OIS Input devices
 	OIS::InputManager* mInputManager;
 	OIS::Mouse*    mMouse;
 	OIS::Keyboard* mKeyboard;
+
+	bool mCursorWasVisible;						// was cursor visible before dialog appeared
+	bool mShutDown;
+
+	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+
 
 };
 
