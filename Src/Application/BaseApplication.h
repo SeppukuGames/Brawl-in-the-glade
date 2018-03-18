@@ -33,14 +33,18 @@ http://www.ogre3d.org/tikiwiki/
 
 #include <OgreLogManager.h>
 #include <OgreMeshManager.h>
-#include <OgreFrameListener.h>
-#include <OgreOverlaySystem.h>
+//#include <OgreFrameListener.h>
+//#include <OgreOverlaySystem.h>
 #include <OgreTextureManager.h>
 
 
 
 //																									-Listeners de OIS-
-class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener
+class BaseApplication :
+	public Ogre::WindowEventListener //Para OIS, queremos sobreescribir windowResized() y windowClosed()
+	//public Ogre::FrameListener, //Para poder llamar cada frame al input (buffered o no)
+	//public OIS::KeyListener,
+	//public OIS::MouseListener
 {
 public:
 	/*
@@ -62,31 +66,46 @@ public:
 	virtual void go(void);
 
 protected:
+	virtual bool renderLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	virtual bool handleInput(void);//Detecta input
+
 	virtual bool setup();
-	virtual bool configure(void);
+	virtual void setupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
+	virtual bool configure(void);//Configura el RenderSystem y crea la ventana
+	virtual void loadResources(void);//Carga todos los recursos
+
 	virtual void chooseSceneManager(void);
 	virtual void createCamera(void);
-	virtual void createFrameListener(void);
+	virtual void createViewports(void);
+
+	virtual void initOIS(void);
+
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
-	virtual void createViewports(void);
-	virtual void setupResources(void);
-	virtual bool renderLoop(void);
-	virtual void initOIS(void);
-	//virtual void createResourceListener(void);
-	virtual void loadResources(void);
-	virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
+	//virtual void createFrameListener(void);
+	//virtual void createResourceListener(void);
+
+	//----------------Window Event Listener---------------
+	//Actualiza el estado del ratón a la nueva ventana
+	virtual void windowResized(Ogre::RenderWindow* rw);//Se le llama cada vez que se escala la ventana
+	//Destruye OIS antes de que se cierre la ventana
+	virtual void windowClosed(Ogre::RenderWindow* rw);
+	//----------------Window Event Listener---------------
+
+	//-----------Frame Listener----------
+	//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	//-----------Frame Listener----------
+
+	//------------OIS----------------------------
+	/*
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);
 	virtual bool mouseMoved(const OIS::MouseEvent &arg);
 	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-
-	//Adjust mouse clipping area
-	virtual void windowResized(Ogre::RenderWindow* rw);
-	//Unattach OIS before window shutdown (very important under Linux)
-	virtual void windowClosed(Ogre::RenderWindow* rw);
+	*/
+	//------------OIS-----------------------------
 
 
 	//ATRIBUTOS
@@ -109,9 +128,10 @@ protected:
 	OIS::Mouse*    mMouse;
 	OIS::Keyboard* mKeyboard;
 
+	/*
 	bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	bool mShutDown;
-
+	*/
 	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
 
 

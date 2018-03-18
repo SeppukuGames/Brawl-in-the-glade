@@ -23,15 +23,17 @@ BaseApplication::BaseApplication(void)
 	mResourcesCfg(Ogre::StringUtil::BLANK),
 	mPluginsCfg(Ogre::StringUtil::BLANK),
 
-	mCamera(0),
-	mSceneMgr(0),
 	mWindow(0),
 
-	mCursorWasVisible(false),
-	mShutDown(false),
+	mSceneMgr(0),
+	mCamera(0),
+
 	mInputManager(0),
 	mMouse(0),
 	mKeyboard(0)
+
+	//mCursorWasVisible(false),
+	//mShutDown(false),
 	//mOverlaySystem(0)
 {
 }
@@ -80,8 +82,25 @@ bool BaseApplication::renderLoop()
 
 	if (mWindow->isClosed()) return false;
 
+	if (!handleInput())
+		return false;
+
 	//Se profundiza en el TUTORIAL4
 	if (!mRoot->renderOneFrame()) return false;
+}
+
+//Detecta input
+bool BaseApplication::handleInput(void){
+
+	//Need to capture/update each device
+	mKeyboard->capture();
+	mMouse->capture();
+
+	if (mKeyboard->isKeyDown(OIS::KC_ESCAPE))
+		return false;
+
+
+	return true;
 }
 
 //-------------------------------------------------------------------------------------
@@ -113,7 +132,7 @@ bool BaseApplication::setup(void)
 	createScene();
 
 	initOIS();
-	createFrameListener();
+	//createFrameListener();
 
 	return true;
 };
@@ -286,35 +305,51 @@ void BaseApplication::initOIS(void)
 
 	//Necesitamos coger input de los dispositivos:
 	//Pasamos true para decir que son buffered (Recibimos eventos de mouseMoved,mousePressed,keyReleased...)
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
-}
-
-void BaseApplication::createFrameListener(void)
-{
-
-
-	mMouse->setEventCallback(this);
-	mKeyboard->setEventCallback(this);
+	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, false));
+	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, false));
 
 	//Set initial mouse clipping size
 	windowResized(mWindow);
 
 	//Register as a Window listener
 	Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
-
-	mRoot->addFrameListener(this);
 }
-//-------------------------------------------------------------------------------------
-void BaseApplication::destroyScene(void)
+
+
+//----------------Window Event Listener---------------
+
+//Actualiza el estado del ratón a la nueva ventana
+void BaseApplication::windowResized(Ogre::RenderWindow* rw)
 {
+	unsigned int width, height, depth;
+	int left, top;
+	rw->getMetrics(width, height, depth, left, top);
+
+	const OIS::MouseState &ms = mMouse->getMouseState();
+	ms.width = width;
+	ms.height = height;
 }
-//-------------------------------------------------------------------------------------
+
+//Destruye OIS antes de que se cierre la ventana
+void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
+{
+	//Only close for window that created OIS (the main window in these demos)
+	if (rw == mWindow)
+	{
+		if (mInputManager)
+		{
+			mInputManager->destroyInputObject(mMouse);
+			mInputManager->destroyInputObject(mKeyboard);
+
+			OIS::InputManager::destroyInputSystem(mInputManager);
+			mInputManager = 0;
+		}
+	}
+}
 
 
-//-------------------------------------------------------------------------------------
-
-
+//----------------Frame Listener---------------
+/*
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	if (mWindow->isClosed())
@@ -329,7 +364,30 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 	return true;
 }
+
+void BaseApplication::createFrameListener(void)
+{
+	//mMouse->setEventCallback(this);
+	//mKeyboard->setEventCallback(this);
+
+
+
+	mRoot->addFrameListener(this);
+}
+*/
 //-------------------------------------------------------------------------------------
+void BaseApplication::destroyScene(void)
+{
+}
+//-------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------------------------
+
+
+
+//--------------------OIS-------------------------------
+/*
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
@@ -396,32 +454,4 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 {
 	return true;
 }
-
-//Adjust mouse clipping area
-void BaseApplication::windowResized(Ogre::RenderWindow* rw)
-{
-	unsigned int width, height, depth;
-	int left, top;
-	rw->getMetrics(width, height, depth, left, top);
-
-	const OIS::MouseState &ms = mMouse->getMouseState();
-	ms.width = width;
-	ms.height = height;
-}
-
-//Unattach OIS before window shutdown (very important under Linux)
-void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
-{
-	//Only close for window that created OIS (the main window in these demos)
-	if (rw == mWindow)
-	{
-		if (mInputManager)
-		{
-			mInputManager->destroyInputObject(mMouse);
-			mInputManager->destroyInputObject(mKeyboard);
-
-			OIS::InputManager::destroyInputSystem(mInputManager);
-			mInputManager = 0;
-		}
-	}
-}
+*/
