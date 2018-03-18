@@ -31,6 +31,9 @@ http://www.ogre3d.org/tikiwiki/
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+//CEGUI
+//#include <CEGUI/CEGUI.h>
+
 #include <OgreLogManager.h>
 #include <OgreMeshManager.h>
 //#include <OgreFrameListener.h>

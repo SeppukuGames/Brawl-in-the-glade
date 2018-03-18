@@ -78,6 +78,7 @@ void TutorialApplication::createEntities(void)
 	SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	ogreNode->attachObject(ogreEntity);
 
+	//OGRITO
 	GameComponent * OgritoQueRota = new GameComponent(ogreNode);
 	OgritoQueRota->addComponent(new OgritoRotaComponent());
 	actors_.push_back(OgritoQueRota);

@@ -1,0 +1,123 @@
+------------------------ CEGUI --------------------------------
+
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Yo probaré con la versión 0.8.7 (que es la última)
+
+Primero necesito descargar las dependencias y la propia versión de CEGUI 
+
+http://cegui.org.uk/download
+
+Hacer un build de las dependencias para crear la carpeta dependencies, que luego se pegará en el build del CEGUI
+
+Guía que estoy siguiendo: 
+
+http://static.cegui.org.uk/docs/0.8.7/building_deps.html  -----> GUÍA PARA METER LAS DEPENDENCIAS EN LA CARPETA DEPENDENCIES
+
+http://cegui.org.uk/wiki/Building_CEGUI_for_Ogre_/_OgreRenderer  -----> GUÍA PARA METER CEGUI (CON LAS DEPENDENCIAS YA METIDAS)
+
+Voy a describir qué hace cada cosa de las dependencias, para ver si nos interesa o no:
+
+-----------------LIBRERÍAS PARA CARGAR IMÁGENES -------------------
+
+CEGUI_BUILD_CORONA: es una librería de entrada/salida que puede leer, escribir y manipular fichero de imagen en unas pocas líneas de código. Puede escribir en fichero PNG y TGA y leer PNG, JPGE, PCX, ... etc Básicamente sirve para añadir carga de imágenes.
+
+			http://corona.sourceforge.net/
+
+
+CEGUI_BUILD_DEVIL: es una librería para desarrollar aplicaciones con mucho poder en la carga de imágenes. Igual que corona, carga, guarda, convierte, manipula, filtra y monitoriza distintos formatos. Soporta OpenGL, SDL, DirectX
+
+			http://openil.sourceforge.net/
+
+
+CEGUI_BUILD_FREEIMAGE: es una librería para soportar distintos formatos (Igual que corona y devil)
+
+			http://freeimage.sourceforge.net/
+
+CEGUI_BUILD_SILLY: es una librería que proporciona la carga de imágenes en el contexto de CEGUI. La idea es que reemplace DevIl con menos formatos de imagen pero centrado sobre todo en la carga de imágenes. (?)
+
+			http://cegui.org.uk/wiki/SILLY
+
+
+/-----------------LIBRERÍAS PARA CARGAR IMÁGENES -------------------/
+
+
+
+----------- LIBRERÍAS PARA PARSEAR XML --------------------------
+
+CEGUI_BUILD_EXPAT: es una librería para parsear XML 
+
+			https://libexpat.github.io/
+
+CEGUI_BUILD_TINYXML: es una librería para parsear XML y crear objetos que reprensentan el XML.
+
+			https://sourceforge.net/projects/tinyxml/
+
+CEGUI_BUILD_XERCES : otro parseador más
+
+			http://xerces.apache.org/xerces-c/
+
+/----------- LIBRERÍAS PARA PARSEAR XML --------------------------/
+
+
+
+------------- LIBRERÍAS DE FUNCIONAMIENTO DE "NÚCLEO" -----------
+
+CEGUI_BUILD_FREETYPE2: es una librería para renderizar fuentes
+
+			https://www.freetype.org/
+
+CEGUI_BUILD_MINIZIP: es una librería de compresión de archivos. Se trata de zlib, pero eso ya lo tenemos(?).
+
+			http://zlib.net/
+
+CEGUI_BUILD_ZLIB:
+
+CEGUI_BUILD_PCRE: es una librería que contiene un set de funciones que implementan un patrón de de expresión regular de matching(????what)
+usando las mismas semánticas que Perl 5. Npi.
+
+			http://www.pcre.org/
+
+/------------- LIBRERÍAS DE FUNCIONAMIENTO DE "NÚCLEO" -----------/
+
+
+
+
+--------------- LIBRERÍAS DE SAMPLES(?) (OPENGL) ------------------
+
+CEGUI_BUILD_GLEW: es una librería (extensión) que proporciona mecanismos de ejecución eficientes para determinar qué versiones de OpenGL son soportadas en la plataforma objetivo.
+
+			http://glew.sourceforge.net/
+
+CEGUI_BUILD_GLFW: es una librería para el desarrollo en OpenGL. Proporciona una API para crear ventanas, contextos y superficies, recibiendo input y eventos.
+
+			http://www.glfw.org/
+
+/--------------- LIBRERÍAS DE SAMPLES(?) (OPENGL) ------------------/
+
+
+
+
+---------------- LIBRERÍAS DE RENDERIZADO --------------------------
+
+CEGUI_BUILD-GLM: es una librería de matemáticas para gráficos basados en especificaciones GLSL. Proporcioa clases y funciones diseñadas e implementadas con la misma nomenclatura y funcionalidad que GLSL, así que si se sabe de GLSL se puede usar GLM en C++. Proporciona además: transformaciones de matrices, quaterniones, empaquetado de dados, números random, ruido, etc. También viene bien para raytracing y rasterización, procesado de imágenes, física.......WOW
+
+			https://glm.g-truc.net/0.9.8/index.html
+
+/---------------- LIBRERÍAS DE RENDERIZADO -----------------------/
+
+
+
+----------------- LIBRERÍAS DE SCRIPTING ---------------------------
+
+CEGUI_BUILD_LUA: es una librería de lenguaje de script 
+
+			http://www.lua.org/about.html
+
+CEGUI_BUILD_TOLUAPP: extensión de lua que incorpora: soporte para std::string como un tipo básico y soporte para templates
+
+			http://www.codenix.com/~tolua/
+
+/----------------- LIBRERÍAS DE SCRIPTING ---------------------------/
+
