@@ -468,7 +468,7 @@ bool TutorialApplication::mouseReleased(
 	return true;
 }
 
-#ifdef _DEBUG || !_WIN32
+/*#ifdef _DEBUG || !_WIN32
 int main(){
 	printf("Hola, Mundo!\n");
 #else
@@ -480,4 +480,4 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 	TutorialApplication app;
 	app.go();
 	return 0;
-}
+}*/
