@@ -24,6 +24,13 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
+	//DECLARACIONES TUTORIAL 5
+	mRotate = .13;
+	mMove = 250;
+	mCamNode = 0;
+	mDirection = Ogre::Vector3::ZERO;
+	//-----------------------//
+
 }
 //-------------------------------------------------------------------------------------
 TutorialApplication::~TutorialApplication(void)
@@ -31,6 +38,24 @@ TutorialApplication::~TutorialApplication(void)
 }
 
 //-------------------------------------------------------------------------------------
+
+void TutorialApplication::tutorial5(){
+	//Tutorial 5
+	Entity* tudorEntity = mSceneMgr->createEntity("tudorhouse.mesh"); //La casita :3
+	SceneNode * nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodoCASA"); //en el tutorial se llama "node"
+	nodoCasa->attachObject(tudorEntity);
+
+
+	nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("CamNode1", Ogre::Vector3(1200, -370, 0));
+	nodoCasa->yaw(Ogre::Degree(90));
+	
+	mCamNode = nodoCasa;
+	nodoCasa->attachObject(mCamera);
+
+	nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("CamNode2", Ogre::Vector3(-500, -370, 1000));
+	nodoCasa->yaw(Ogre::Degree(-30));
+
+}
 
 void TutorialApplication::createLights(void)
 {
@@ -94,13 +119,26 @@ void TutorialApplication::createLights(void)
 	//         TUTORIAL 4: Unbuffered input    ///
 	//////////////////////////////////////////////
 
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(.25, .25, .25));
+	/*mSceneMgr->setAmbientLight(Ogre::ColourValue(.25, .25, .25));
 
 	Ogre::Light* pointLight = mSceneMgr->createLight("PointLight");
 	pointLight->setType(Ogre::Light::LT_POINT);
 	pointLight->setPosition(250, 150, 250);
 	pointLight->setDiffuseColour(Ogre::ColourValue::White);
 	pointLight->setSpecularColour(Ogre::ColourValue::White);
+	*/
+
+
+	////////////////////////////////////////////////
+	//		TUTORIAL 5: Buffered input          ///
+	///////////////////////////////////////////////
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
+
+	Ogre::Light* light = mSceneMgr->createLight("Light1");
+	light->setType(Ogre::Light::LT_POINT);
+	light->setPosition(Ogre::Vector3(250, 150, 250));
+	light->setDiffuseColour(Ogre::ColourValue::White);
+	light->setSpecularColour(Ogre::ColourValue::White);
 
 
 	//Creamos una luz
@@ -122,7 +160,10 @@ void TutorialApplication::createCameras(void)
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	camNode->lookAt(Vector3(0, 0, 0), Node::TransformSpace::TS_WORLD); //Ejemplo luces y sombras: Mira a un punto concreto
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 47, 222);
+	//camNode->setPosition(0, 47, 222);
+
+	
+	
 
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -188,14 +229,24 @@ void TutorialApplication::createEntities(void)
 	//entidadSuelo->setMaterialName("Examples/Rockwall");  //Esto instancia una textura en el suelo.
 	//suelo->attachObject(entidadSuelo);
 
-	//NINJA MARICON//
-	Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
-	SceneNode * ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ninjaNode");
-	ninjaNode->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
-	ninjaNode->setScale(0.5, 0.5, 0.5);
-	ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
+	////NINJA MARICON//
+	//Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
+	//SceneNode * ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ninjaNode");
+	//ninjaNode->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
+	//ninjaNode->setScale(0.5, 0.5, 0.5);
+	//ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
 
-	//Metodos utiles de la escena:
+	////////////////////////////////////////////////
+	//		TUTORIAL 5: Buffered input          ///
+	///////////////////////////////////////////////
+
+	Entity* tudorEntity = mSceneMgr->createEntity("tudorhouse.mesh"); //La casita :3
+	SceneNode * nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("nodoCasa"); //en el tutorial se llama "node"
+	nodoCasa->attachObject(tudorEntity);
+
+
+
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -205,9 +256,13 @@ void TutorialApplication::createScene(void)
 
 	createLights();
 
-	createCameras();
 
-	createEntities();
+	tutorial5();
+	//createCameras();
+
+	//createEntities();
+
+	
 }
 
 //A saber qué cojones es esto pavo
@@ -216,6 +271,8 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 	//Esto nos garantia que solo cobtinbuamos si el iput está procesado bien
 	if (!processUnbufferedInput(fe))
 		return false;
+
+	mCamNode->translate(mDirection * fe.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 
 	bool ret = BaseApplication::frameRenderingQueued(fe);
 	
@@ -232,11 +289,12 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe)
 	static Ogre::Real rotate = .13;
 	static Ogre::Real move = 250;
 
+	/*
 	bool leftMouseDown = mMouse->getMouseState().buttonDown(OIS::MB_Left);
 
 	if (leftMouseDown && !mouseDownLastFrame)
 	{
-		Ogre::Light* light = mSceneMgr->getLight("PointLight");
+		Ogre::Light* light = mSceneMgr->getLight("Light1");
 		light->setVisible(!light->isVisible());
 	}
 	//TECLAS DE MOVIMIENTO DEL NINJA//
@@ -269,12 +327,144 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent& fe)
 	}
 
 
-	mSceneMgr->getSceneNode("ninjaNode")->translate(
-		dirVec * fe.timeSinceLastFrame,
-		Ogre::Node::TS_LOCAL);
+	//mSceneMgr->getSceneNode("ninjaNode")->translate(
+	//	dirVec * fe.timeSinceLastFrame,
+	//	Ogre::Node::TS_LOCAL);
 
 
 	mouseDownLastFrame = leftMouseDown; //Lo asgnamos para asegurarnos que tiene el valor correcto el siguiente frame.
+	return true;
+	*/
+	return true;
+}
+
+//Tutorial 5: TECLADO
+bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
+{
+	switch (ke.key)
+	{
+	case OIS::KC_ESCAPE:
+		mShutDown = true;
+		break;
+
+	case OIS::KC_1:
+		mCamera->getParentSceneNode()->detachObject(mCamera);
+		mCamNode = mSceneMgr->getSceneNode("CamNode1");
+		mCamNode->attachObject(mCamera);
+		break;
+
+	case OIS::KC_2:
+		mCamera->getParentSceneNode()->detachObject(mCamera);
+		mCamNode = mSceneMgr->getSceneNode("CamNode2");
+		mCamNode->attachObject(mCamera);
+		break;
+
+	case OIS::KC_UP:
+	case OIS::KC_W:
+		mDirection.z = -mMove;
+		break;
+
+	case OIS::KC_DOWN:
+	case OIS::KC_S:
+		mDirection.z = mMove;
+		break;
+
+	case OIS::KC_LEFT:
+	case OIS::KC_A:
+		mDirection.x = -mMove;
+		break;
+
+	case OIS::KC_RIGHT:
+	case OIS::KC_D:
+		mDirection.x = mMove;
+		break;
+
+	case OIS::KC_PGDOWN:
+	case OIS::KC_E:
+		mDirection.y = -mMove;
+		break;
+
+	case OIS::KC_PGUP:
+	case OIS::KC_Q:
+		mDirection.y = mMove;
+		break;
+
+	default:
+		break;
+	}
+
+	return true;
+}
+
+bool TutorialApplication::keyReleased(const OIS::KeyEvent& ke) 
+{ 
+	switch (ke.key)
+	{
+	case OIS::KC_UP:
+	case OIS::KC_W:
+		mDirection.z = 0;
+		break;
+
+	case OIS::KC_DOWN:
+	case OIS::KC_S:
+		mDirection.z = 0;
+		break;
+
+	case OIS::KC_LEFT:
+	case OIS::KC_A:
+		mDirection.x = 0;
+		break;
+
+	case OIS::KC_RIGHT:
+	case OIS::KC_D:
+		mDirection.x = 0;
+		break;
+
+	case OIS::KC_PGDOWN:
+	case OIS::KC_E:
+		mDirection.y = 0;
+		break;
+
+	case OIS::KC_PGUP:
+	case OIS::KC_Q:
+		mDirection.y = 0;
+		break;
+
+	default:
+		break;
+	}
+	return true;
+	return true; 
+}
+
+//Tutorial 5: RATÓN
+bool TutorialApplication::mouseMoved(const OIS::MouseEvent& me)
+{
+	if (me.state.buttonDown(OIS::MB_Right))
+	{
+		mCamNode->yaw(Ogre::Degree(-mRotate * me.state.X.rel), Ogre::Node::TS_WORLD);
+		mCamNode->pitch(Ogre::Degree(-mRotate * me.state.Y.rel), Ogre::Node::TS_LOCAL);
+	}
+
+	return true;
+}
+
+bool TutorialApplication::mousePressed(
+	const OIS::MouseEvent& me, OIS::MouseButtonID id) 
+{ 
+	switch (id)
+	{
+	case OIS::MB_Left:
+		Ogre::Light* light = mSceneMgr->getLight("Light1");
+		light->setVisible(!light->isVisible());
+		break;
+	}
+	return true;
+}
+
+bool TutorialApplication::mouseReleased(
+	const OIS::MouseEvent& me, OIS::MouseButtonID id)
+{
 	return true;
 }
 

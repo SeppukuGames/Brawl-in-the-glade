@@ -39,6 +39,18 @@ protected:
 	virtual void createCameras(void);
 	virtual void createEntities(void);
 
+	void tutorial5();
+
+	//Tutorial 5:
+	//Keyboard Listener
+	virtual bool keyPressed(const OIS::KeyEvent& ke);
+	virtual bool keyReleased(const OIS::KeyEvent& ke);
+	//Mouse Listener
+	virtual bool mouseMoved(const OIS::MouseEvent& me);
+	virtual bool mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID id);
+	virtual bool mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID id);
+
+
 private:
 	bool processUnbufferedInput(const Ogre::FrameEvent& fe);
 };
