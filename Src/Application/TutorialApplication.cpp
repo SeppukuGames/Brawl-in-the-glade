@@ -18,8 +18,10 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameComponent.h"
-#include "OgritoRotaComponent.h"
+#include "componenteEscalado.h"
+#include "Transform.h"
 #include "RenderComponent.h"
+#include <time.h>
 using namespace Ogre;
 
 //-------------------------------------------------------------------------------------
@@ -75,33 +77,34 @@ void TutorialApplication::createCameras(void)
 void TutorialApplication::createEntities(void)
 {
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-
+	/*
 	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
 
 	//Componentes que se añaden al Game Component
-	OgritoQueRota->addComponent(new OgritoRotaComponent());
-	OgritoQueRota->addComponent(new RenderComponent("ogrehead.mesh"));
+	OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5,5,5)));
+	OgritoQueRota->addComponent(new Transform(Ogre::Vector3(1, 0, 0)));
+	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
 	actors_.push_back(OgritoQueRota);
+	*/
 
-
-	Entity* ogreEntity2 = mSceneMgr->createEntity("ogrehead.mesh");
-	SceneNode* ogreNode2 = mSceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(84, 48, 0));
-	ogreNode2->attachObject(ogreEntity2);
-
-	//Ogro escalado
-	Entity* ogreEntity3 = mSceneMgr->createEntity("ogrehead.mesh");
-	SceneNode* ogreNode3 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ogreNode3->setPosition(0, 104, 0);
-	ogreNode3->setScale(2, 1.2, 1);
-	ogreNode3->attachObject(ogreEntity3);
-
-	//Ogro rotado
-	Entity* ogreEntity4 = mSceneMgr->createEntity("ogrehead.mesh");
-	SceneNode* ogreNode4 = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ogreNode4->setPosition(-84, 48, 0);
-	ogreNode4->roll(Degree(-90));//Puede hacerse en radianes
-	ogreNode4->attachObject(ogreEntity4);
-
+	
+	srand(time(NULL));
+	int random = 0;
+	std::vector<Entity*> entidades_;
+	for (int i = 0; i < 10; i++){
+		for (int j = 0; j < 10; j++){
+			random = rand() % 101;
+			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+			OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5, 5, 5)));
+			OgritoQueRota->addComponent(new Transform(Ogre::Vector3((i*50)-300, -20, (j*50)-300)));
+			if (random % 7 == 0)
+				OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
+			else
+				OgritoQueRota->addComponent(new RenderComponent("suelo.mesh"));			
+			actors_.push_back(OgritoQueRota);
+		}
+	}
+		
 	//Metodos utiles de la escena:
 }
 

@@ -20,10 +20,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
+    <ClInclude Include="..\..\Src\Application\componenteEscalado.h" />
     <ClInclude Include="..\..\Src\Application\GameComponent.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\OgritoRotaComponent.h" />
     <ClInclude Include="..\..\Src\Application\RenderComponent.h" />
+    <ClInclude Include="..\..\Src\Application\Transform.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
