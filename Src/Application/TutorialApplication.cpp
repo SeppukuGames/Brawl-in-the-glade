@@ -39,7 +39,7 @@ TutorialApplication::~TutorialApplication(void)
 
 //-------------------------------------------------------------------------------------
 
-void TutorialApplication::tutorial5(){
+/*void TutorialApplication::tutorial5(){
 	//Tutorial 5
 	Entity* tudorEntity = mSceneMgr->createEntity("tudorhouse.mesh"); //La casita :3
 	SceneNode * nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("NodoCASA"); //en el tutorial se llama "node"
@@ -55,7 +55,7 @@ void TutorialApplication::tutorial5(){
 	nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("CamNode2", Ogre::Vector3(-500, -370, 1000));
 	nodoCasa->yaw(Ogre::Degree(-30));
 
-}
+}*/
 
 void TutorialApplication::createLights(void)
 {
@@ -132,7 +132,7 @@ void TutorialApplication::createLights(void)
 	////////////////////////////////////////////////
 	//		TUTORIAL 5: Buffered input          ///
 	///////////////////////////////////////////////
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(.25, .25, .25));
 
 	Ogre::Light* light = mSceneMgr->createLight("Light1");
 	light->setType(Ogre::Light::LT_POINT);
@@ -157,12 +157,12 @@ void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
 	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("CamNode1", Ogre::Vector3(1200, -370, 0));
 	camNode->lookAt(Vector3(0, 0, 0), Node::TransformSpace::TS_WORLD); //Ejemplo luces y sombras: Mira a un punto concreto
 	camNode->attachObject(mCamera);
-	//camNode->setPosition(0, 47, 222);
-
-	
+	camNode->setPosition(0, 47, 222);
+	mCamera->setPosition(1200, 370, 0);
+	// Ogre::Vector3(1200, -370, 0)
 	
 
 	/*
@@ -229,19 +229,25 @@ void TutorialApplication::createEntities(void)
 	//entidadSuelo->setMaterialName("Examples/Rockwall");  //Esto instancia una textura en el suelo.
 	//suelo->attachObject(entidadSuelo);
 
-	////NINJA MARICON//
-	//Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
-	//SceneNode * ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ninjaNode");
-	//ninjaNode->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
-	//ninjaNode->setScale(0.5, 0.5, 0.5);
-	//ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
+	////NINJA//
+	Entity * ninja = mSceneMgr->createEntity("ninja.mesh");
+	SceneNode * ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("ninjaNode");
+	ninjaNode->attachObject(ninja); //Esto vincula el mesh al nodo de la escena
+	
+	ninjaNode->setScale(0.5, 0.5, 0.5);
+	ninja->setCastShadows(true); //Gracias a esta linea el mesh emite sombras cuando le afecta una luz
 
+	ninjaNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("CamNode1", Ogre::Vector3(0, 60, 50));
+	//ninjaNode->yaw(Ogre::Degree(90));
+	mCamNode = ninjaNode;
+	ninjaNode->attachObject(mCamera); //Para que la cámara se mueva con el ninja???
 	////////////////////////////////////////////////
 	//		TUTORIAL 5: Buffered input          ///
 	///////////////////////////////////////////////
 
 	Entity* tudorEntity = mSceneMgr->createEntity("tudorhouse.mesh"); //La casita :3
 	SceneNode * nodoCasa = mSceneMgr->getRootSceneNode()->createChildSceneNode("nodoCasa"); //en el tutorial se llama "node"
+	nodoCasa->setScale(0.5, 0.5, 0.5);
 	nodoCasa->attachObject(tudorEntity);
 
 
@@ -256,16 +262,14 @@ void TutorialApplication::createScene(void)
 
 	createLights();
 
-
-	tutorial5();
+	//tutorial5();
 	//createCameras();
 
-	//createEntities();
+	createEntities();
 
 	
 }
 
-//A saber qué cojones es esto pavo
 bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 {
 	//Esto nos garantia que solo cobtinbuamos si el iput está procesado bien
@@ -273,6 +277,7 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 		return false;
 
 	mCamNode->translate(mDirection * fe.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+	mSceneMgr->getSceneNode("ninjaNode")->translate(mDirection * fe.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 
 	bool ret = BaseApplication::frameRenderingQueued(fe);
 	
@@ -393,6 +398,7 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent& ke)
 		break;
 	}
 
+	
 	return true;
 }
 
