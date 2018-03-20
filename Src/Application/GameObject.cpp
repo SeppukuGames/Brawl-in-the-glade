@@ -2,8 +2,9 @@
 
 #include <OgreMovableObject.h>
 
-GameObject::GameObject(Ogre::SceneNode* scnNode) : node(scnNode) {
+GameObject::GameObject(Ogre::SceneManager * mSceneMgr) {
 	control = new UserControl(this);
+	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
 }
 
 

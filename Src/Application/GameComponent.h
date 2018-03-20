@@ -10,7 +10,7 @@ class GameComponent : public GameObject {
 	std::vector<Component*> components;
 
 public:
-	GameComponent(Ogre::SceneNode* scnNode) ;
+	GameComponent(Ogre::SceneManager * mSceneMgr);
 	virtual ~GameComponent();
 
 	virtual void addComponent(Component* comp);

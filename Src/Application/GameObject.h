@@ -2,6 +2,8 @@
 #define __GameObject_H__
 
 #include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
+
 
 class GameObject; // declaración adelantada
 
@@ -34,10 +36,11 @@ public:
 	inline Ogre::SceneNode* getNode(){ return node; };
 
 protected:
-	GameObject(Ogre::SceneNode* scnNode);
+	GameObject(Ogre::SceneManager * mSceneMgr);
 
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
+
 
 
 	//UN PUNTERO AL GAME/ GAMEMANAGER?

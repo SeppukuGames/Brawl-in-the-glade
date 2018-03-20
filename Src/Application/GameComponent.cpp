@@ -1,6 +1,6 @@
 #include "GameComponent.h"
 
-GameComponent::GameComponent(Ogre::SceneNode* scnNode) : GameObject(scnNode),
+GameComponent::GameComponent(Ogre::SceneManager * mSceneMgr) : GameObject(mSceneMgr),
 components(0){}
 
 GameComponent::~GameComponent() {

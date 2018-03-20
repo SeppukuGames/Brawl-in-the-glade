@@ -59,5 +59,8 @@
     <ClInclude Include="..\..\Src\Application\OgritoRotaComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\RenderComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreEntity.h>
 #include "GameComponent.h"
 #include "OgritoRotaComponent.h"
+#include "RenderComponent.h"
 using namespace Ogre;
 
 //-------------------------------------------------------------------------------------
@@ -74,15 +75,13 @@ void TutorialApplication::createCameras(void)
 void TutorialApplication::createEntities(void)
 {
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-	Entity* ogreEntity = mSceneMgr->createEntity("ogrehead.mesh");
-	SceneNode* ogreNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	ogreNode->attachObject(ogreEntity);
 
-	GameComponent * OgritoQueRota = new GameComponent(ogreNode);
+	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+
+	//Componentes que se añaden al Game Component
 	OgritoQueRota->addComponent(new OgritoRotaComponent());
+	OgritoQueRota->addComponent(new RenderComponent("ogrehead.mesh"));
 	actors_.push_back(OgritoQueRota);
-
-
 
 
 	Entity* ogreEntity2 = mSceneMgr->createEntity("ogrehead.mesh");
