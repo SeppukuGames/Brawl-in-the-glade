@@ -41,10 +41,10 @@ http://www.ogre3d.org/tikiwiki/
 
 //																									-Listeners de OIS-
 class BaseApplication :
-	public Ogre::WindowEventListener //Para OIS, queremos sobreescribir windowResized() y windowClosed()
+	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
 	//public Ogre::FrameListener, //Para poder llamar cada frame al input (buffered o no)
-	//public OIS::KeyListener,
-	//public OIS::MouseListener
+	public OIS::KeyListener,
+	public OIS::MouseListener
 {
 public:
 	/*
@@ -67,7 +67,7 @@ public:
 
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
-	
+
 	virtual bool handleInput(void);//Detecta input
 	virtual bool update(void);
 	virtual bool render(void);
@@ -86,9 +86,6 @@ protected:
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
 
-	//virtual void createFrameListener(void);
-	//virtual void createResourceListener(void);
-
 	//----------------Window Event Listener---------------
 	//Actualiza el estado del ratón a la nueva ventana
 	virtual void windowResized(Ogre::RenderWindow* rw);//Se le llama cada vez que se escala la ventana
@@ -96,19 +93,15 @@ protected:
 	virtual void windowClosed(Ogre::RenderWindow* rw);
 	//----------------Window Event Listener---------------
 
-	//-----------Frame Listener----------
-	//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-	//-----------Frame Listener----------
+	//------------Input Listener----------------------------
 
-	//------------OIS----------------------------
-	/*
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);
 	virtual bool mouseMoved(const OIS::MouseEvent &arg);
 	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	*/
-	//------------OIS-----------------------------
+
+	//------------Input Listener----------------------------
 
 
 	//ATRIBUTOS
@@ -131,10 +124,9 @@ protected:
 	OIS::Mouse*    mMouse;
 	OIS::Keyboard* mKeyboard;
 
-	/*
-	bool mCursorWasVisible;						// was cursor visible before dialog appeared
+
+	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	bool mShutDown;
-	*/
 	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
 
 

@@ -19,7 +19,7 @@ http://www.ogre3d.org/tikiwiki/
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
-:	mRoot(0),
+	: mRoot(0),
 	mResourcesCfg(Ogre::StringUtil::BLANK),
 	mPluginsCfg(Ogre::StringUtil::BLANK),
 
@@ -30,10 +30,10 @@ BaseApplication::BaseApplication(void)
 
 	mInputManager(0),
 	mMouse(0),
-	mKeyboard(0)
+	mKeyboard(0),
 
 	//mCursorWasVisible(false),
-	//mShutDown(false),
+	mShutDown(false)
 	//mOverlaySystem(0)
 {
 }
@@ -58,8 +58,8 @@ void BaseApplication::go(void)
 	mResourcesCfg = "resources_d.cfg";
 	mPluginsCfg = "plugins_d.cfg";
 #else
-	mResourcesCfg = "Ogre/resources.cfg";
-	mPluginsCfg = "Ogre/plugins.cfg";
+	mResourcesCfg = "resources.cfg";
+	mPluginsCfg = "plugins.cfg";
 #endif
 
 	if (!setup())
@@ -98,7 +98,7 @@ bool BaseApplication::handleInput(void){
 	mKeyboard->capture();
 	mMouse->capture();
 
-	if (mKeyboard->isKeyDown(OIS::KC_ESCAPE))
+	if (mShutDown)
 		return false;
 
 	return true;
@@ -206,10 +206,10 @@ bool BaseApplication::configure(void)
 	//El config Dialog permite hacer ajustes e inicializa el sistema
 	//Podemos hacer que el configDialog solo salga si no hay un ogre.cfg
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
-	if(!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
+	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 		return false;
-		/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
-		, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
+	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
+	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
 
 	//Se pueden ajustar los valores manualmente
 	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
@@ -253,7 +253,7 @@ bool BaseApplication::configure(void)
 void BaseApplication::loadResources(void)
 {
 	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
-	
+
 	//Establecemos el número por defecto de mipmaps que se usarán.
 	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
 	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
@@ -270,7 +270,7 @@ void BaseApplication::chooseSceneManager(void)
 	//Creamos el SceneManager
 	mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
-	/*No lo utilizamos?? 
+	/*No lo utilizamos??
 	// Inicializa el OverlaySystem
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
@@ -326,8 +326,11 @@ void BaseApplication::initOIS(void)
 
 	//Necesitamos coger input de los dispositivos:
 	//Pasamos true para decir que son buffered (Recibimos eventos de mouseMoved,mousePressed,keyReleased...)
-	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, false));
-	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, false));
+	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
+	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
+
+	mMouse->setEventCallback(this);
+	mKeyboard->setEventCallback(this);
 
 	//Set initial mouse clipping size
 	windowResized(mWindow);
@@ -368,34 +371,6 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 	}
 }
 
-
-//----------------Frame Listener---------------
-/*
-bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
-{
-	if (mWindow->isClosed())
-		return false;
-
-	if (mShutDown)
-		return false;
-
-	//Need to capture/update each device
-	mKeyboard->capture();
-	mMouse->capture();
-
-	return true;
-}
-
-void BaseApplication::createFrameListener(void)
-{
-	//mMouse->setEventCallback(this);
-	//mKeyboard->setEventCallback(this);
-
-
-
-	mRoot->addFrameListener(this);
-}
-*/
 //-------------------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)
 {
@@ -408,51 +383,17 @@ void BaseApplication::destroyScene(void)
 
 
 //--------------------OIS-------------------------------
-/*
+
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
-	if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
-	{
-	}
-	else if (arg.key == OIS::KC_G)   // toggle visibility of even rarer debugging details
-	{
-		
-	}
-	else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
-	{
-		
-	}
-	else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
-	{
-		Ogre::PolygonMode pm;
-
-		switch (mCamera->getPolygonMode())
-		{
-		case Ogre::PM_SOLID:
-			pm = Ogre::PM_WIREFRAME;
-			break;
-		case Ogre::PM_WIREFRAME:
-			pm = Ogre::PM_POINTS;
-			break;
-		default:
-			pm = Ogre::PM_SOLID;
-		}
-
-		mCamera->setPolygonMode(pm);
-	}
-	else if (arg.key == OIS::KC_F5)   // refresh all textures
-	{
-		Ogre::TextureManager::getSingleton().reloadAll();
-	}
-	else if (arg.key == OIS::KC_SYSRQ)   // take a screenshot
-	{
-		mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
-	}
-	else if (arg.key == OIS::KC_ESCAPE)
+	if (arg.key == OIS::KC_ESCAPE)
 	{
 		mShutDown = true;
 	}
-
+	else if (arg.key == OIS::KC_A)
+	{
+		int a = 0;
+	}
 	return true;
 }
 
@@ -475,4 +416,4 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 {
 	return true;
 }
-*/
+
