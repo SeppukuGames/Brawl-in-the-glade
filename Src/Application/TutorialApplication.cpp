@@ -24,6 +24,10 @@ http://www.ogre3d.org/tikiwiki/
 #include <time.h>
 using namespace Ogre;
 
+
+
+
+
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
@@ -47,6 +51,11 @@ void TutorialApplication::createLights(void)
 
 	//Damos posición al nodo de la luz
 	lightNode->setPosition(20, 80, 50);
+
+	/*
+		
+	
+	*/
 }
 
 //-------------------------------------------------------------------------------------
@@ -86,8 +95,6 @@ void TutorialApplication::createEntities(void)
 	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
 	actors_.push_back(OgritoQueRota);
 	*/
-
-	
 	srand(time(NULL));
 	int random = 0;
 	std::vector<Entity*> entidades_;
@@ -113,11 +120,14 @@ void TutorialApplication::createScene(void)
 {
 	// create your scene here :)
 
+	/*
 	createLights();
 
 	createCameras();
 
 	createEntities();
+
+	*/
 }
 
 
