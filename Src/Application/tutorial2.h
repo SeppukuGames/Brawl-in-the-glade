@@ -1,6 +1,6 @@
 /*
 -----------------------------------------------------------------------------
-Filename:    TutorialApplication.h
+Filename:    tutorial2.h
 -----------------------------------------------------------------------------
 This source file is part of the
 ___                 __    __ _ _    _
@@ -13,16 +13,16 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#ifndef __TutorialApplication_h_
-#define __TutorialApplication_h_
+#ifndef __tutorial2_h_
+#define __tutorial2_h_
 
 #include "BaseApplication.h"
 
-class TutorialApplication : public BaseApplication
+class tutorial2 : public BaseApplication
 {
 public:
-	TutorialApplication(void);
-	virtual ~TutorialApplication(void);
+	tutorial2(void);
+	virtual ~tutorial2(void);
 
 protected:
 	virtual void createScene(void);
@@ -33,4 +33,4 @@ protected:
 
 };
 
-#endif // #ifndef __TutorialApplication_h_
+#endif // #ifndef __tutorial2_h_

@@ -15,29 +15,33 @@ http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
 #include "BaseApplication.h"
-
+#include <OgreException.h>
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
-: mRoot(0),
-mCamera(0),
-mSceneMgr(0),
-mWindow(0),
-mResourcesCfg(Ogre::StringUtil::BLANK),
-mPluginsCfg(Ogre::StringUtil::BLANK),
-mCursorWasVisible(false),
-mShutDown(false),
-mInputManager(0),
-mMouse(0),
-mKeyboard(0),
-mOverlaySystem(0)
+	: mRoot(0),
+	mResourcesCfg(Ogre::StringUtil::BLANK),
+	mPluginsCfg(Ogre::StringUtil::BLANK),
+
+	mWindow(0),
+
+	mSceneMgr(0),
+	mCamera(0),
+
+	mInputManager(0),
+	mMouse(0),
+	mKeyboard(0),
+
+	//mCursorWasVisible(false),
+	mShutDown(false)
+	//mOverlaySystem(0)
 {
 }
 
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-	if (mOverlaySystem) delete mOverlaySystem;
+	//if (mOverlaySystem) delete mOverlaySystem;
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -46,48 +50,263 @@ BaseApplication::~BaseApplication(void)
 }
 
 //-------------------------------------------------------------------------------------
+
+void BaseApplication::go(void)
+{
+	//Strings que identifican los archivos de recursos y de plugins
+#ifdef _DEBUG
+	mResourcesCfg = "resources_d.cfg";
+	mPluginsCfg = "plugins_d.cfg";
+#else
+	mResourcesCfg = "resources.cfg";
+	mPluginsCfg = "plugins.cfg";
+#endif
+
+	if (!setup())
+		return;
+
+	while (gameLoop());
+	//Le cedemos el control a Ogre
+	//mRoot->startRendering();
+
+	// clean up
+	destroyScene();
+}
+//-------------------------------------------------------------------------------------
+
+//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+bool BaseApplication::gameLoop()
+{
+	//Actualiza el RenderWindow
+	Ogre::WindowEventUtilities::messagePump();
+
+	if (mWindow->isClosed()) return false;
+
+	if (!handleInput())
+		return false;
+
+	update();
+
+	if (!render())
+		return false;
+}
+
+//Detecta input
+bool BaseApplication::handleInput(void){
+
+	//Need to capture/update each device
+	mKeyboard->capture();
+	mMouse->capture();
+
+	if (mShutDown)
+		return false;
+
+	return true;
+}
+
+//Detecta input
+bool BaseApplication::update(void)
+{
+	//Actualiza todos los objetos
+	for (int i = 0; i < actors_.size(); i++)
+		actors_[i]->tick();
+
+	return true;
+}
+
+//Detecta input
+bool BaseApplication::render(void){
+
+	//Se profundiza en el TUTORIAL4
+	if (!mRoot->renderOneFrame()) return false;
+
+	return true;
+}
+
+
+//-------------------------------------------------------------------------------------
+
+bool BaseApplication::setup(void)
+{
+	//Creamos la instancia del root object
+	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
+	mRoot = new Ogre::Root(mPluginsCfg);
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
+
+	//Configuramos el renderSystem y creamos la ventana
+	bool carryOn = configure();
+	if (!carryOn) return false;
+
+	//Carga todos los recursos
+	loadResources();
+	// Create any resource listeners (for loading screens)
+	//createResourceListener();
+
+	chooseSceneManager();
+	createCamera();
+	createViewports();
+
+	//Creamos la Escena del método hijo
+	createScene();
+
+	initOIS();
+	//createFrameListener();
+
+	return true;
+};
+
+//-------------------------------------------------------------------------------------
+//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
+void BaseApplication::setupResources(void)
+{
+	//Carga las rutas de los recursos del archivo de configuración
+	Ogre::ConfigFile cf;
+	cf.load(mResourcesCfg);
+
+	//Tenemos que recorrer todas las secciones del archivo [Essential] y añadir las localizaciones al ResourceGroupManager
+	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
+
+	//String auxiliares para guardar información del archivo de configuracion parseado
+
+	Ogre::String pathName;//Ruta de los recursos
+	Ogre::String formatName;//Formato del archivo (Zip, Filesystem)
+
+	Ogre::String secName;
+
+	//Iteramos a través de todos los elementos
+	while (secIt.hasMoreElements())
+	{
+		secName = secIt.peekNextKey();
+
+		//Preguntamos por un iterador que nos permitirá iterar a traves de los elementos de cada sección
+		Ogre::ConfigFile::SettingsMultiMap *settings = secIt.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator it;
+
+		//Iteramos escaneando cada elemento
+		for (it = settings->begin(); it != settings->end(); ++it)
+		{
+			//Desempaquetamos cada par
+			formatName = it->first;
+			pathName = it->second;
+
+			//Añadimos la localización al ResourceGroupManager
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+				pathName, formatName, secName);
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------
+//Configura el RenderSystem y crea la ventana
 bool BaseApplication::configure(void)
 {
-	// Show the configuration dialog and initialise the system
-	// You can skip this and use root.restoreConfig() to load configuration
-	// settings if you were sure there are valid ones saved in ogre.cfg
-	if (mRoot->showConfigDialog())
-	{
-		// If returned true, user clicked OK so initialise
-		// Here we choose to let the system create a default rendering window by passing 'true'
-		mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
-
-		return true;
-	}
-	else
-	{
+	//El config Dialog permite hacer ajustes e inicializa el sistema
+	//Podemos hacer que el configDialog solo salga si no hay un ogre.cfg
+	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
+	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 		return false;
-	}
+	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
+	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
+
+	//Se pueden ajustar los valores manualmente
+	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
+	//Ejemplo de inicializar Direct3D9 Render System
+	/*
+	//Do not add this to your project
+	RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
+
+	mRoot->setRenderSystem(rs);
+	rs->setConfigOption("Full Screen", "No");
+	rs->setConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
+
+	//Root::getAvailableRenderers permite saber qué renderers están disponibles en nuestro sistema
+
+	//RenderSystem::getConfigOptions permite ver las opciones que ofrece un RenderSystem
+	*/
+
+	//Creamos la RenderWindow por defecto
+	mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
+
+	//Podemos crear la ventana con win32 API, Ejemplo:
+	/*
+	// Do not add this to your project
+	mRoot->initialise(false);
+
+	HWND hWnd = 0;
+
+	// Retrieve the HWND for the window we want to render in.
+	// This step depends entirely on the windowing system you are using.
+
+	NameValuePairList misc;
+	misc["externalWindowHandle"] = StringConverter::toString((int)hWnd);
+
+	//Aplicamos a mroot los cambios que hemos hecho
+	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
+	*/
 }
 //-------------------------------------------------------------------------------------
+
+//Carga todos los recursos
+void BaseApplication::loadResources(void)
+{
+	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
+
+	//Establecemos el número por defecto de mipmaps que se usarán.
+	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
+//-------------------------------------------------------------------------------------
+
 void BaseApplication::chooseSceneManager(void)
 {
-	// Get the SceneManager, in this case a generic one
+	//Creamos el SceneManager
 	mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
-	// initialize the OverlaySystem (changed for 1.9)
+	/*No lo utilizamos??
+	// Inicializa el OverlaySystem
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	*/
 }
+
 //-------------------------------------------------------------------------------------
+
 void BaseApplication::createCamera(void)
 {
-	// Create the camera
-	mCamera = mSceneMgr->createCamera("PlayerCam");
+	//Creamos la cámara
+	mCamera = mSceneMgr->createCamera("MainCam");
 
-	// Position it at 500 in Z direction
+	//La inicializamos
 	mCamera->setPosition(Ogre::Vector3(0, 0, 80));
-	// Look back along -Z
 	mCamera->lookAt(Ogre::Vector3(0, 0, -300));
 	mCamera->setNearClipDistance(5);
 }
+
 //-------------------------------------------------------------------------------------
-void BaseApplication::createFrameListener(void)
+
+void BaseApplication::createViewports(void)
+{
+	//Creamos un viewport, toda la ventana
+	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+
+	// Alter the camera aspect ratio to match the viewport
+	mCamera->setAspectRatio(
+		Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+}
+
+//-------------------------------------------------------------------------------------
+
+//Inicializa el input
+void BaseApplication::initOIS(void)
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 	OIS::ParamList pl;
@@ -98,8 +317,15 @@ void BaseApplication::createFrameListener(void)
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
+	//Permite ver el cursor
+	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
+	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+
+	//Inicializa en input para ser usado
 	mInputManager = OIS::InputManager::createInputSystem(pl);
 
+	//Necesitamos coger input de los dispositivos:
+	//Pasamos true para decir que son buffered (Recibimos eventos de mouseMoved,mousePressed,keyReleased...)
 	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
 	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
 
@@ -111,167 +337,63 @@ void BaseApplication::createFrameListener(void)
 
 	//Register as a Window listener
 	Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
-
-	mRoot->addFrameListener(this);
 }
+
+
+//----------------Window Event Listener---------------
+
+//Actualiza el estado del ratón a la nueva ventana
+void BaseApplication::windowResized(Ogre::RenderWindow* rw)
+{
+	unsigned int width, height, depth;
+	int left, top;
+	rw->getMetrics(width, height, depth, left, top);
+
+	const OIS::MouseState &ms = mMouse->getMouseState();
+	ms.width = width;
+	ms.height = height;
+}
+
+//Destruye OIS antes de que se cierre la ventana
+void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
+{
+	//Only close for window that created OIS (the main window in these demos)
+	if (rw == mWindow)
+	{
+		if (mInputManager)
+		{
+			mInputManager->destroyInputObject(mMouse);
+			mInputManager->destroyInputObject(mKeyboard);
+
+			OIS::InputManager::destroyInputSystem(mInputManager);
+			mInputManager = 0;
+		}
+	}
+}
+
 //-------------------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)
 {
 }
 //-------------------------------------------------------------------------------------
-void BaseApplication::createViewports(void)
-{
-	// Create one viewport, entire window
-	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
 
-	// Alter the camera aspect ratio to match the viewport
-	mCamera->setAspectRatio(
-		Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-}
+
 //-------------------------------------------------------------------------------------
-void BaseApplication::setupResources(void)
-{
-	// Load resource paths from config file
-	Ogre::ConfigFile cf;
-	cf.load(mResourcesCfg);
 
-	// Go through all sections & settings in the file
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
-	Ogre::String secName, typeName, archName;
-	while (seci.hasMoreElements())
-	{
-		secName = seci.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = settings->begin(); i != settings->end(); ++i)
-		{
-			typeName = i->first;
-			archName = i->second;
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-				archName, typeName, secName);
-		}
-	}
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::createResourceListener(void)
-{
 
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::loadResources(void)
-{
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-//-------------------------------------------------------------------------------------
-void BaseApplication::go(void)
-{
-#ifdef _DEBUG
-	mResourcesCfg = "resources_d.cfg";
-	mPluginsCfg = "plugins_d.cfg";
-#else
-	mResourcesCfg = "Ogre/resources.cfg";
-	mPluginsCfg = "Ogre/plugins.cfg";
-#endif
+//--------------------OIS-------------------------------
 
-	if (!setup())
-		return;
-
-	mRoot->startRendering();
-
-	// clean up
-	destroyScene();
-}
-//-------------------------------------------------------------------------------------
-bool BaseApplication::setup(void)
-{
-	mRoot = new Ogre::Root(mPluginsCfg);
-
-	setupResources();
-
-	bool carryOn = configure();
-	if (!carryOn) return false;
-
-	chooseSceneManager();
-	createCamera();
-	createViewports();
-
-	// Set default mipmap level (NB some APIs ignore this)
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	// Create any resource listeners (for loading screens)
-	createResourceListener();
-	// Load resources
-	loadResources();
-
-	// Create the scene
-	createScene();
-
-	createFrameListener();
-
-	return true;
-};
-//-------------------------------------------------------------------------------------
-bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
-{
-	if (mWindow->isClosed())
-		return false;
-
-	if (mShutDown)
-		return false;
-
-	//Need to capture/update each device
-	mKeyboard->capture();
-	mMouse->capture();
-
-	return true;
-}
-//-------------------------------------------------------------------------------------
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
-	if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
-	{
-	}
-	else if (arg.key == OIS::KC_G)   // toggle visibility of even rarer debugging details
-	{
-		
-	}
-	else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
-	{
-		
-	}
-	else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
-	{
-		Ogre::PolygonMode pm;
-
-		switch (mCamera->getPolygonMode())
-		{
-		case Ogre::PM_SOLID:
-			pm = Ogre::PM_WIREFRAME;
-			break;
-		case Ogre::PM_WIREFRAME:
-			pm = Ogre::PM_POINTS;
-			break;
-		default:
-			pm = Ogre::PM_SOLID;
-		}
-
-		mCamera->setPolygonMode(pm);
-	}
-	else if (arg.key == OIS::KC_F5)   // refresh all textures
-	{
-		Ogre::TextureManager::getSingleton().reloadAll();
-	}
-	else if (arg.key == OIS::KC_SYSRQ)   // take a screenshot
-	{
-		mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
-	}
-	else if (arg.key == OIS::KC_ESCAPE)
+	if (arg.key == OIS::KC_ESCAPE)
 	{
 		mShutDown = true;
 	}
-
+	else if (arg.key == OIS::KC_A)
+	{
+		int a = 0;
+	}
 	return true;
 }
 
@@ -295,31 +417,3 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 	return true;
 }
 
-//Adjust mouse clipping area
-void BaseApplication::windowResized(Ogre::RenderWindow* rw)
-{
-	unsigned int width, height, depth;
-	int left, top;
-	rw->getMetrics(width, height, depth, left, top);
-
-	const OIS::MouseState &ms = mMouse->getMouseState();
-	ms.width = width;
-	ms.height = height;
-}
-
-//Unattach OIS before window shutdown (very important under Linux)
-void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
-{
-	//Only close for window that created OIS (the main window in these demos)
-	if (rw == mWindow)
-	{
-		if (mInputManager)
-		{
-			mInputManager->destroyInputObject(mMouse);
-			mInputManager->destroyInputObject(mKeyboard);
-
-			OIS::InputManager::destroyInputSystem(mInputManager);
-			mInputManager = 0;
-		}
-	}
-}
