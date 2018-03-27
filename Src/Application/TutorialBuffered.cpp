@@ -17,11 +17,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialBuffered.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-#include "GameComponent.h"
-#include "componenteEscalado.h"
-#include "Transform.h"
-#include "RenderComponent.h"
-#include <time.h>
 using namespace Ogre;
 
 //-------------------------------------------------------------------------------------

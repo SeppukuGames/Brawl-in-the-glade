@@ -18,8 +18,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameComponent.h"
-#include "componenteEscalado.h"
-#include "Transform.h"
+#include "TransformComponent.h"
 #include "RenderComponent.h"
 #include <time.h>
 using namespace Ogre;
@@ -95,8 +94,11 @@ void TutorialApplication::createEntities(void)
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
 			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
-			OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5, 5, 5)));
-			OgritoQueRota->addComponent(new Transform(Ogre::Vector3((i*50)-300, -20, (j*50)-300)));
+			TransformComponent * transformSuelo = new TransformComponent();
+			OgritoQueRota->addComponent(transformSuelo);
+			transformSuelo->SetPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			transformSuelo->SetScale(Ogre::Vector3(5,5,5));
+
 			if (random % 7 == 0)
 				OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
 			else
