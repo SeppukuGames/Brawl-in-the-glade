@@ -1,6 +1,7 @@
 #include "TutorialApplication.h"
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
+#include "TutorialInt1.h"
 
 
 #ifdef _DEBUG || !_WIN32
@@ -12,7 +13,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 
 #endif
 
-	TutorialApplication app;
+	TutorialInt1 app;
 	app.go();
 	return 0;
 }

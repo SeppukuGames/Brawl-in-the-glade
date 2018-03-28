@@ -57,6 +57,9 @@
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
       <Filter>Source Files\Escenas\Tutoriales</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TutorialInt1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameObject.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\tutorial2.h">
       <Filter>Header Files\Escenas\Tutoriales</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\TutorialInt1.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

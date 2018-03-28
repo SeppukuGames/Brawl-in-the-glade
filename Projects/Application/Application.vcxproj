@@ -18,6 +18,7 @@
     <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
+    <ClCompile Include="..\..\Src\Application\TutorialInt1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />
+    <ClInclude Include="..\..\Src\Application\TutorialInt1.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C077A3AD-5242-468F-AD96-581CEBFA7C1C}</ProjectGuid>
