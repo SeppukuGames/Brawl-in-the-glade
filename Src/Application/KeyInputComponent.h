@@ -2,16 +2,15 @@
 #define KEYINPUTCOMPONENT_H_
 
 #include "Component.h"
-#include "KeyInputObserver.h"
-#include "BaseApplication.h"
+#include <OIS.h>
 
 class KeyInputComponent : public Component, public OIS::KeyListener{
 public:
 
 	//Seguramente haya que pasarle un puntero al GameManager
-	KeyInputComponent(BaseApplication *app) : Component()
+	KeyInputComponent() : Component()
 	{
-		app->registerKeyInputObserver(this);
+		TutorialApplication::getInstance()->registerKeyInputObserver(this);
 	};
 	virtual ~KeyInputComponent(){};
 

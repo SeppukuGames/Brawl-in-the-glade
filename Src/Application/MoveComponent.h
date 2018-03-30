@@ -8,8 +8,7 @@
 class MoveComponent : public KeyInputComponent {
 public:
 
-	//CUANDO HAYA UN SINGLETON DEL GAMEMANAGER, NO HARÁ FALTA PASAR ESTE PARÁMETRO
-	MoveComponent(BaseApplication * base) : KeyInputComponent(base)
+	MoveComponent() : KeyInputComponent()
 	{
 
 	};

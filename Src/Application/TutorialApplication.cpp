@@ -114,7 +114,7 @@ void TutorialApplication::createEntities(void)
 	transform->SetScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
 	ogro->addComponent(new RenderComponent("ogrehead.mesh"));
-	ogro->addComponent(new MoveComponent(this));
+	ogro->addComponent(new MoveComponent());
 	actors_.push_back(ogro);
 
 	//Metodos utiles de la escena:
