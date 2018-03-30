@@ -38,7 +38,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 #include "GameObject.h"
-
+#include "KeyInputObserver.h"
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -64,6 +64,8 @@ public:
 	virtual ~BaseApplication(void);
 
 	virtual void go(void);
+
+	virtual void registerKeyInputObserver(OIS::KeyListener *observer);
 
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
@@ -132,6 +134,8 @@ protected:
 
 	//Todos los objetos de las escena
 	std::vector<GameObject*> actors_;
+
+	std::vector<OIS::KeyListener*> keyInputObservers;
 
 
 };

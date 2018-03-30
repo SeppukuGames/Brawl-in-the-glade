@@ -18,11 +18,21 @@ http://www.ogre3d.org/tikiwiki/
 
 #include "BaseApplication.h"
 
+
 class TutorialApplication : public BaseApplication
 {
-public:
+	static TutorialApplication * instance;
 	TutorialApplication(void);
-	virtual ~TutorialApplication(void);
+	//virtual ~TutorialApplication(void);
+
+public:
+
+	static TutorialApplication *getInstance()
+	{
+		if (!instance)
+			instance = new TutorialApplication;
+		return instance;
+	}
 
 protected:
 	virtual void createScene(void);
@@ -32,5 +42,6 @@ protected:
 	virtual void createEntities(void);
 
 };
+
 
 #endif // #ifndef __TutorialApplication_h_

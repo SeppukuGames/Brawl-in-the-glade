@@ -98,6 +98,7 @@ bool BaseApplication::handleInput(void){
 	mKeyboard->capture();
 	mMouse->capture();
 
+
 	if (mShutDown)
 		return false;
 
@@ -394,11 +395,18 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 	{
 		int a = 0;
 	}
+	
+	for (int i = 0; i < keyInputObservers.size(); i++)
+		keyInputObservers[i]->keyPressed(arg);
+
 	return true;
 }
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
+	for (int i = 0; i < keyInputObservers.size(); i++)
+		keyInputObservers[i]->keyReleased(arg);
+
 	return true;
 }
 
@@ -417,3 +425,7 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 	return true;
 }
 
+void BaseApplication::registerKeyInputObserver(OIS::KeyListener *observer)
+{
+	keyInputObservers.push_back(observer);
+}

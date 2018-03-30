@@ -34,6 +34,9 @@
     <Filter Include="Header Files\Escenas\Tutoriales">
       <UniqueIdentifier>{bdbb6c2f-7ddc-4824-b6db-1fe439235395}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Observers">
+      <UniqueIdentifier>{b18086d6-694e-4147-b267-539dca6a7f4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -85,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\tutorial2.h">
       <Filter>Header Files\Escenas\Tutoriales</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MoveComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "GameComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "MoveComponent.h"
 #include <time.h>
 using namespace Ogre;
 
@@ -28,10 +29,11 @@ TutorialApplication::TutorialApplication(void)
 {
 }
 //-------------------------------------------------------------------------------------
-TutorialApplication::~TutorialApplication(void)
+
+/*TutorialApplication::~TutorialApplication(void)
 {
 }
-
+*/
 //-------------------------------------------------------------------------------------
 
 void TutorialApplication::createLights(void)
@@ -89,7 +91,6 @@ void TutorialApplication::createEntities(void)
 	
 	srand(time(NULL));
 	int random = 0;
-	std::vector<Entity*> entidades_;
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
@@ -106,7 +107,16 @@ void TutorialApplication::createEntities(void)
 			actors_.push_back(OgritoQueRota);
 		}
 	}
-		
+
+	GameComponent * ogro= new GameComponent(mSceneMgr);
+	TransformComponent * transform = new TransformComponent();
+	ogro->addComponent(transform);
+	transform->SetScale(Ogre::Vector3(0.5, 0.5, 0.55));
+
+	ogro->addComponent(new RenderComponent("ogrehead.mesh"));
+	ogro->addComponent(new MoveComponent(this));
+	actors_.push_back(ogro);
+
 	//Metodos utiles de la escena:
 }
 
