@@ -21,8 +21,13 @@ public:
 
 	};
 
+	Ogre::Entity *GetEntity()
+	{
+		return _entity;
+	}
+
 private:
-	Ogre::Entity * _entity;//Para el renderizado
+	Ogre::Entity * _entity;
 	std::string _meshString;
 };
 

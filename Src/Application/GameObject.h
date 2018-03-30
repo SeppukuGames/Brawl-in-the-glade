@@ -39,6 +39,7 @@ protected:
 	GameObject(Ogre::SceneManager * mSceneMgr);
 
 	Ogre::SceneNode* node = nullptr;
+
 	UserControl* control = nullptr;
 
 

@@ -26,6 +26,8 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
+	collision = new Collision::CollisionTools();
+
 }
 //-------------------------------------------------------------------------------------
 TutorialApplication::~TutorialApplication(void)
@@ -56,8 +58,8 @@ void TutorialApplication::createCameras(void)
 	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 47, 222);
-
+	camNode->setPosition(0, 300, 100);
+	camNode->pitch(Ogre::Degree(-90));
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	// create the camera
@@ -89,23 +91,43 @@ void TutorialApplication::createEntities(void)
 	
 	srand(time(NULL));
 	int random = 0;
-	std::vector<Entity*> entidades_;
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
-			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+			GameComponent * tile = new GameComponent(mSceneMgr);
+			tile->getNode()->showBoundingBox(true);
 			TransformComponent * transformSuelo = new TransformComponent();
-			OgritoQueRota->addComponent(transformSuelo);
+			tile->addComponent(transformSuelo);
 			transformSuelo->SetPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
 			transformSuelo->SetScale(Ogre::Vector3(5,5,5));
 
+			RenderComponent *render;
+
 			if (random % 7 == 0)
-				OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
+				render = new RenderComponent("arbol.mesh");
 			else
-				OgritoQueRota->addComponent(new RenderComponent("suelo.mesh"));			
-			actors_.push_back(OgritoQueRota);
+				render = new RenderComponent("suelo.mesh");
+
+			tile->addComponent(render);
+
+			collision->register_entity(render->GetEntity(), Collision::COLLISION_BOX);
+
+			actors_.push_back(tile);
 		}
 	}
+
+	GameComponent * ogro = new GameComponent(mSceneMgr);
+	TransformComponent * transform = new TransformComponent();
+	ogro->addComponent(transform);
+	transform->SetPosition(0,20, 0);
+	transform->SetScale(Ogre::Vector3(0.5, 0.5, 0.5));
+
+	move = new MoveComponent(collision);
+	ogro->addComponent(move);
+
+	actors_.push_back(ogro);
+
+
 		
 	//Metodos utiles de la escena:
 }
@@ -122,5 +144,9 @@ void TutorialApplication::createScene(void)
 	createEntities();
 }
 
-
+bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
+{
+	move->keyPressed(arg);
+	return true;
+}
 
