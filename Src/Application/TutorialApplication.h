@@ -17,14 +17,22 @@ http://www.ogre3d.org/tikiwiki/
 #define __TutorialApplication_h_
 
 #include "BaseApplication.h"
-#include "MoveComponent.h" //QUITAR ESTA BASURA DE AQUI
-#include "NewMOC.h"
+
 
 class TutorialApplication : public BaseApplication
 {
-public:
+	static TutorialApplication * instance;
 	TutorialApplication(void);
-	virtual ~TutorialApplication(void);
+	//virtual ~TutorialApplication(void);
+
+public:
+
+	static TutorialApplication *getInstance()
+	{
+		if (!instance)
+			instance = new TutorialApplication;
+		return instance;
+	}
 
 protected:
 	virtual void createScene(void);
@@ -33,18 +41,7 @@ protected:
 	virtual void createCameras(void);
 	virtual void createEntities(void);
 
-	//------------OIS---------
-	virtual bool keyPressed(const OIS::KeyEvent &arg);
-
-
-
-private:
-	//Collision manager
-	Collision::CollisionTools* collision;
-
-	//QUITAR ESTA BASURA DE AQUI
-	MoveComponent * move;
-
 };
+
 
 #endif // #ifndef __TutorialApplication_h_

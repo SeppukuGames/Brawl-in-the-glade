@@ -1,30 +1,25 @@
-#ifndef RENDERCOMPONENT_H_
-#define RENDERCOMPONENT_H_
+#ifndef ENTITYCOMPONENT_H_
+#define ENTITYCOMPONENT_H_
 
 #include "Component.h"
 #include <OgreEntity.h>
 
-class RenderComponent : public Component{
+class EntityComponent : public Component{
 public:
-	RenderComponent(std::string meshString) : Component()
+	EntityComponent(std::string meshString) : Component()
 	{
 		_meshString = meshString;
 		
 	};
-	virtual ~RenderComponent(){};
+	virtual ~EntityComponent(){};
 
 	virtual void start(){
 		_entity = _gameObject->getNode()->getCreator()->createEntity(_meshString);
 		_gameObject->getNode()->attachObject(_entity);
 	};
-	virtual void tick(){
+	virtual void tick(double elapsed){
 
 	};
-
-	Ogre::Entity *GetEntity()
-	{
-		return _entity;
-	}
 
 private:
 	Ogre::Entity * _entity;

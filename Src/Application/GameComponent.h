@@ -16,7 +16,7 @@ public:
 	virtual void addComponent(Component* comp);
 
 	// from GameObject
-	virtual void tick();
+	virtual void tick(double elapsed);
 };
 
 #endif /* GAMECOMPONENT_H_ */

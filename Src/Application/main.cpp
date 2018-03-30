@@ -2,6 +2,7 @@
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
 
+TutorialApplication *TutorialApplication::instance = 0;
 
 #ifdef _DEBUG || !_WIN32
 int main(){
@@ -12,8 +13,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 
 #endif
 
-	TutorialApplication app;
-	app.go();
+	TutorialApplication::getInstance()->go();
 	return 0;
 }
 /*

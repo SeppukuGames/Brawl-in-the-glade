@@ -2,82 +2,110 @@
 #define MOVECOMPONENT_H_
 
 #include "Component.h"
-#include <OIS.h>
-#include "NewMOC.h"
-#include <OgreEntity.h>
+#include "KeyInputComponent.h"
 
-/*ESTA CLASE DEBERIA FUNCIONAR POR MENSAJES, DEBERIA LLAMAR AL TRANSFORM COMPONENT*/
-class MoveComponent : public Component, public OIS::KeyListener
-{
+
+class MoveComponent : public KeyInputComponent {
 public:
-	MoveComponent(Collision::CollisionTools* col) : Component()
+
+	MoveComponent() : KeyInputComponent()
 	{
-		collision = col;
-	};
-	virtual ~MoveComponent(){
-		collision->remove_entity(_entity);
 
 	};
+	virtual ~MoveComponent(){};
 
 	virtual void start(){
-		_nodo = _gameObject->getNode();
-		_entity = _gameObject->getNode()->getCreator()->createEntity("ogrehead.mesh");
-		_nodo->showBoundingBox(true);
-		_gameObject->getNode()->attachObject(_entity);
-
-		ray = new Ogre::Ray(_nodo->getPosition(), Ogre::Vector3(1,0,0));
-
-		collision->register_entity(_entity, Collision::COLLISION_BOX);
+		velocity = 50;
+		direction = Ogre::Vector3::ZERO;
 	};
-	virtual void tick(){
+	virtual void tick(double elapsed){
+		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
 
 	};
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
-
-		if (arg.key == OIS::KC_W)
+		switch (arg.key)
 		{
-			_nodo->setPosition(Ogre::Vector3(_nodo->getPosition().x + 5, _nodo->getPosition().y, _nodo->getPosition().z));
-		}
+		case OIS::KC_UP:
+		case OIS::KC_W:
+			direction.z = -velocity;
+			break;
 
-		if (arg.key == OIS::KC_A)
-		{
-			_nodo->setPosition(Ogre::Vector3(_nodo->getPosition().x - 5, _nodo->getPosition().y, _nodo->getPosition().z));
-		}
+		case OIS::KC_DOWN:
+		case OIS::KC_S:
+			direction.z = velocity;
+			break;
 
-		if (arg.key == OIS::KC_S)
-		{
-			_nodo->setPosition(Ogre::Vector3(_nodo->getPosition().x, _nodo->getPosition().y + 5, _nodo->getPosition().z));
-		}
+		case OIS::KC_LEFT:
+		case OIS::KC_A:
+			direction.x = -velocity;
+			break;
 
-		if (arg.key == OIS::KC_D)
-		{
-			_nodo->setPosition(Ogre::Vector3(_nodo->getPosition().x, _nodo->getPosition().y - 5, _nodo->getPosition().z));
-		}
-		Collision::SCheckCollisionAnswer ret = collision->check_ray_collision(*ray);
+		case OIS::KC_RIGHT:
+		case OIS::KC_D:
+			direction.x = velocity;
+			break;
 
-		// check if we found collision:
-		if (ret.collided)
-		{
-			int a = 0;
-			// handle collision here..
-		}
+		case OIS::KC_PGDOWN:
+		case OIS::KC_E:
+			direction.y = -velocity;
+			break;
 
+		case OIS::KC_PGUP:
+		case OIS::KC_Q:
+			direction.y = velocity;
+			break;
+
+		default:
+			break;
+		}
 		return true;
-	}
+	};
+
 	virtual bool keyReleased(const OIS::KeyEvent &arg){
 
-		return true;
+		switch (arg.key)
+		{
+		case OIS::KC_UP:
+		case OIS::KC_W:
+			direction.z = 0;
+			break;
 
-	}
+		case OIS::KC_DOWN:
+		case OIS::KC_S:
+			direction.z = 0;
+			break;
+
+		case OIS::KC_LEFT:
+		case OIS::KC_A:
+			direction.x = 0;
+			break;
+
+		case OIS::KC_RIGHT:
+		case OIS::KC_D:
+			direction.x = 0;
+			break;
+
+		case OIS::KC_PGDOWN:
+		case OIS::KC_E:
+			direction.y = 0;
+			break;
+
+		case OIS::KC_PGUP:
+		case OIS::KC_Q:
+			direction.y = 0;
+			break;
+
+		default:
+			break;
+		}
+		return true;
+	};
 
 private:
-	Ogre::SceneNode* _nodo;
-	Ogre::Entity * _entity;
+	Ogre::Vector3 direction; 
+	float velocity;
 
-	Ogre::Ray* ray;
-
-	Collision::CollisionTools* collision;//Puntero al manager
 };
 
-#endif /* MoveComponentCOMPONENT_H_ */
+#endif /* MOVECOMPONENT_H_ */

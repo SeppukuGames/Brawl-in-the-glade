@@ -16,6 +16,7 @@ http://www.ogre3d.org/tikiwiki/
 */
 #include "BaseApplication.h"
 #include <OgreException.h>
+#include <OgreTimer.h>
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
@@ -65,6 +66,8 @@ void BaseApplication::go(void)
 	if (!setup())
 		return;
 
+	timer = new Ogre::Timer();
+	lastTime = timer->getMilliseconds();
 	while (gameLoop());
 	//Le cedemos el control a Ogre
 	//mRoot->startRendering();
@@ -82,13 +85,18 @@ bool BaseApplication::gameLoop()
 
 	if (mWindow->isClosed()) return false;
 
+	double current = timer->getMilliseconds();
+	double elapsed = (current - lastTime) /1000 ;
+
 	if (!handleInput())
 		return false;
 
-	update();
+	update(elapsed);
 
 	if (!render())
 		return false;
+
+	lastTime = current;
 }
 
 //Detecta input
@@ -98,6 +106,7 @@ bool BaseApplication::handleInput(void){
 	mKeyboard->capture();
 	mMouse->capture();
 
+
 	if (mShutDown)
 		return false;
 
@@ -105,11 +114,11 @@ bool BaseApplication::handleInput(void){
 }
 
 //Detecta input
-bool BaseApplication::update(void)
+bool BaseApplication::update(double elapsed)
 {
 	//Actualiza todos los objetos
 	for (int i = 0; i < actors_.size(); i++)
-		actors_[i]->tick();
+		actors_[i]->tick(elapsed);
 
 	return true;
 }
@@ -394,11 +403,18 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 	{
 		int a = 0;
 	}
+	
+	for (int i = 0; i < keyInputObservers.size(); i++)
+		keyInputObservers[i]->keyPressed(arg);
+
 	return true;
 }
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
+	for (int i = 0; i < keyInputObservers.size(); i++)
+		keyInputObservers[i]->keyReleased(arg);
+
 	return true;
 }
 
@@ -417,3 +433,7 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 	return true;
 }
 
+void BaseApplication::registerKeyInputObserver(OIS::KeyListener *observer)
+{
+	keyInputObservers.push_back(observer);
+}

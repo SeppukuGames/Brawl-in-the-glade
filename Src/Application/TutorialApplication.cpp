@@ -18,22 +18,21 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameComponent.h"
-#include "TransformComponent.h"
-#include "RenderComponent.h"
+#include "EntityComponent.h"
+#include "MoveComponent.h"
 #include <time.h>
 using namespace Ogre;
 
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
-	collision = new Collision::CollisionTools();
-
 }
 //-------------------------------------------------------------------------------------
-TutorialApplication::~TutorialApplication(void)
+
+/*TutorialApplication::~TutorialApplication(void)
 {
 }
-
+*/
 //-------------------------------------------------------------------------------------
 
 void TutorialApplication::createLights(void)
@@ -58,8 +57,8 @@ void TutorialApplication::createCameras(void)
 	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 300, 100);
-	camNode->pitch(Ogre::Degree(-90));
+	camNode->setPosition(0, 47, 222);
+
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	// create the camera
@@ -94,41 +93,25 @@ void TutorialApplication::createEntities(void)
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
-			GameComponent * tile = new GameComponent(mSceneMgr);
-			tile->getNode()->showBoundingBox(true);
-			TransformComponent * transformSuelo = new TransformComponent();
-			tile->addComponent(transformSuelo);
-			transformSuelo->SetPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			transformSuelo->SetScale(Ogre::Vector3(5,5,5));
-
-			RenderComponent *render;
+			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
 			if (random % 7 == 0)
-				render = new RenderComponent("arbol.mesh");
+				OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
 			else
-				render = new RenderComponent("suelo.mesh");
-
-			tile->addComponent(render);
-
-			collision->register_entity(render->GetEntity(), Collision::COLLISION_BOX);
-
-			actors_.push_back(tile);
+				OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
+			actors_.push_back(OgritoQueRota);
 		}
 	}
 
-	GameComponent * ogro = new GameComponent(mSceneMgr);
-	TransformComponent * transform = new TransformComponent();
-	ogro->addComponent(transform);
-	transform->SetPosition(0,20, 0);
-	transform->SetScale(Ogre::Vector3(0.5, 0.5, 0.5));
+	GameComponent * ogro= new GameComponent(mSceneMgr);
+	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
-	move = new MoveComponent(collision);
-	ogro->addComponent(move);
-
+	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
+	ogro->addComponent(new MoveComponent());
 	actors_.push_back(ogro);
 
-
-		
 	//Metodos utiles de la escena:
 }
 
@@ -144,9 +127,5 @@ void TutorialApplication::createScene(void)
 	createEntities();
 }
 
-bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
-{
-	move->keyPressed(arg);
-	return true;
-}
+
 
