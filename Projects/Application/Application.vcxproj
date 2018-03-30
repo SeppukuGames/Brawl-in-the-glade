@@ -26,8 +26,7 @@
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
-    <ClInclude Include="..\..\Src\Application\RenderComponent.h" />
-    <ClInclude Include="..\..\Src\Application\TransformComponent.h" />
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />

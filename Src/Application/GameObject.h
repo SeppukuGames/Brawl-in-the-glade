@@ -27,7 +27,7 @@ public:
 	static const Ogre::uint32 O_QUERY_MASK = 0;
 	*/
 
-	virtual void tick() = 0;
+	virtual void tick(double elapsed) = 0;
 
 	virtual void setObjMan(Ogre::MovableObject* mObj);
 
@@ -40,7 +40,6 @@ protected:
 
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
-
 
 
 	//UN PUNTERO AL GAME/ GAMEMANAGER?

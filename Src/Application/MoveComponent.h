@@ -15,11 +15,11 @@ public:
 	virtual ~MoveComponent(){};
 
 	virtual void start(){
-		velocity = 10;
+		velocity = 50;
 		direction = Ogre::Vector3::ZERO;
 	};
-	virtual void tick(){
-		_gameObject->getNode()->translate(direction * 1, Ogre::Node::TS_LOCAL);
+	virtual void tick(double elapsed){
+		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
 
 	};
 

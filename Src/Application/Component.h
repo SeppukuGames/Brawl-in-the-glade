@@ -10,7 +10,7 @@ public:
 	virtual ~Component(){};
 
 	virtual void start() = 0;
-	virtual void tick() = 0;
+	virtual void tick(double elapsed) = 0;
 
 	inline void setGameObject(GameObject * gameObject){ _gameObject = gameObject; };
 

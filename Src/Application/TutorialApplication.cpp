@@ -18,8 +18,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameComponent.h"
-#include "TransformComponent.h"
-#include "RenderComponent.h"
+#include "EntityComponent.h"
 #include "MoveComponent.h"
 #include <time.h>
 using namespace Ogre;
@@ -95,25 +94,21 @@ void TutorialApplication::createEntities(void)
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
 			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
-			TransformComponent * transformSuelo = new TransformComponent();
-			OgritoQueRota->addComponent(transformSuelo);
-			transformSuelo->SetPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			transformSuelo->SetScale(Ogre::Vector3(5,5,5));
+			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
 			if (random % 7 == 0)
-				OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
+				OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
 			else
-				OgritoQueRota->addComponent(new RenderComponent("suelo.mesh"));			
+				OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
 			actors_.push_back(OgritoQueRota);
 		}
 	}
 
 	GameComponent * ogro= new GameComponent(mSceneMgr);
-	TransformComponent * transform = new TransformComponent();
-	ogro->addComponent(transform);
-	transform->SetScale(Ogre::Vector3(0.5, 0.5, 0.55));
+	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
-	ogro->addComponent(new RenderComponent("ogrehead.mesh"));
+	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
 	ogro->addComponent(new MoveComponent());
 	actors_.push_back(ogro);
 
