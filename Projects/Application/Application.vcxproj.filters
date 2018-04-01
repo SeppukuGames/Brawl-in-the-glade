@@ -37,6 +37,21 @@
     <Filter Include="Header Files\Observers">
       <UniqueIdentifier>{b18086d6-694e-4147-b267-539dca6a7f4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Prototype">
+      <UniqueIdentifier>{9a25af89-493c-474a-8ef1-c96b0e2b22d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Factory">
+      <UniqueIdentifier>{e082ea63-3eea-4592-b321-a1cf454f77f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enemy">
+      <UniqueIdentifier>{1e898b86-9774-4aeb-a10f-3cde7549dc39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{cdc8a4c0-910e-482d-a214-e559ae92b832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factory">
+      <UniqueIdentifier>{a8e1e3c3-9670-486a-83d3-f797abb4284c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -59,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
       <Filter>Source Files\Escenas\Tutoriales</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EnemyPrototype.h">
+      <Filter>Header Files\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Factory.h">
+      <Filter>Header Files\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EnemyType1.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

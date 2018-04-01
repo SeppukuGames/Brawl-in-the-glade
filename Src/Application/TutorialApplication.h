@@ -17,10 +17,13 @@ http://www.ogre3d.org/tikiwiki/
 #define __TutorialApplication_h_
 
 #include "BaseApplication.h"
+#include "EnemyPrototype.h"
+#include "Factory.h"
 
 
 class TutorialApplication : public BaseApplication
 {
+	
 	static TutorialApplication * instance;
 	TutorialApplication(void);
 	//virtual ~TutorialApplication(void);

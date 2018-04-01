@@ -1,7 +1,6 @@
 #ifndef MOVECOMPONENT_H_
 #define MOVECOMPONENT_H_
 
-#include "Component.h"
 #include "KeyInputComponent.h"
 
 

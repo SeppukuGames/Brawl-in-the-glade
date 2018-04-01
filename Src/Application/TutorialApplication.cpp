@@ -105,12 +105,22 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 
+	ObjFactory::initialize(mSceneMgr);
+
+	EnemyPrototype * ogro;//Prototipo del enemigo
+
+	for (int i = 0; i < 3; i++){
+		ogro = ObjFactory::getTypeEnemy();
+		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
+	}
+
+	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
 	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
 	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
 	ogro->addComponent(new MoveComponent());
-	actors_.push_back(ogro);
+	actors_.push_back(ogro);*/
 
 	//Metodos utiles de la escena:
 }

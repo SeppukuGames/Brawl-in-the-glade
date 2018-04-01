@@ -3,6 +3,8 @@
 #include "tutorial2.h"
 
 TutorialApplication *TutorialApplication::instance = 0;
+EnemyPrototype* ObjFactory::typeEnemy = 0;
+
 
 #ifdef _DEBUG || !_WIN32
 int main(){

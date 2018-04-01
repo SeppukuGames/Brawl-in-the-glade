@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
+    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
     <ClCompile Include="..\..\Src\Application\GameComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
@@ -22,6 +23,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
+    <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
+    <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
+    <ClInclude Include="..\..\Src\Application\Factory.h" />
     <ClInclude Include="..\..\Src\Application\GameComponent.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
