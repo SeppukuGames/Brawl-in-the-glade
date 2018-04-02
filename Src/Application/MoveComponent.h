@@ -20,7 +20,6 @@ public:
 	};
 	virtual void tick(double elapsed){
 		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
-
 	};
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){

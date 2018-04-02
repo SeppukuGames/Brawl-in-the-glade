@@ -55,10 +55,17 @@ void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
 	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//camNode->attachObject(mCamera);
+	//camNode->setPosition(0, 47, 222);
+
+	GameComponent * cam = new GameComponent(mSceneMgr);
+	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
-
+	cam->addComponent(new MoveComponent());
+	actors_.push_back(cam);
+	
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	// create the camera
@@ -105,12 +112,15 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 
-	GameComponent * ogro= new GameComponent(mSceneMgr);
+	GameComponent * ogro = new GameComponent(mSceneMgr);
 	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
+	//ogro->getNode()->addChild(camNode);	//Esto es para asociar la cámara a sinbad (no hace falta ahora)
+	
 	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
 	ogro->addComponent(new MoveComponent());
 	actors_.push_back(ogro);
+	
 
 	//Metodos utiles de la escena:
 }

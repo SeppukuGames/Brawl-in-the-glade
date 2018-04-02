@@ -294,8 +294,8 @@ void BaseApplication::createCamera(void)
 	mCamera = mSceneMgr->createCamera("MainCam");
 
 	//La inicializamos
-	mCamera->setPosition(Ogre::Vector3(0, 0, 80));
-	mCamera->lookAt(Ogre::Vector3(0, 0, -300));
+	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
+	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
 	mCamera->setNearClipDistance(5);
 }
 
