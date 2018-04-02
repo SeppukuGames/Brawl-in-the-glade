@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
       <Filter>Source Files\Escenas\Tutoriales</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Messaging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameObject.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Messaging.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
