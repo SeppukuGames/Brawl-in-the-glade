@@ -63,7 +63,7 @@ void TutorialApplication::createCameras(void)
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
-	cam->addComponent(new MoveComponent());
+	cam->addComponent(new MoveComponent(BaseApplication::mWindow, mSceneMgr));
 	actors_.push_back(cam);
 	
 	/*
@@ -118,7 +118,7 @@ void TutorialApplication::createEntities(void)
 	//ogro->getNode()->addChild(camNode);	//Esto es para asociar la cámara a sinbad (no hace falta ahora)
 	
 	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
-	ogro->addComponent(new MoveComponent());
+	ogro->addComponent(new MoveComponent(BaseApplication::mWindow, mSceneMgr));
 	actors_.push_back(ogro);
 	
 

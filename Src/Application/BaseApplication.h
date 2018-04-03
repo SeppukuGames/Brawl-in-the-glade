@@ -65,6 +65,7 @@ public:
 	virtual void go(void);
 
 	virtual void registerKeyInputObserver(OIS::KeyListener *observer);
+	virtual void registerMouseInputObserver(OIS::MouseListener *observer);
 
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
@@ -135,6 +136,7 @@ protected:
 	std::vector<GameObject*> actors_;
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
+	std::vector<OIS::MouseListener*> mouseInputObservers;
 
 
 	//Para el bucle principal
