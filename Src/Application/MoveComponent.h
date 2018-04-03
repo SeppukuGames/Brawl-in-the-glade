@@ -166,11 +166,27 @@ public:
 		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 		*/
 		int mMoveScale = 25;
+		
+		//X AXIS
 		if (arg.state.X.abs > (_mWindow->getWidth() - 20))
 		{
 			transVector.x += mMoveScale;
 		}
-		else transVector.x = 0;
+		else if (arg.state.X.abs < (20))
+			transVector.x -= mMoveScale;
+		else
+			transVector.x = 0;
+
+		//Y AXIS
+		if (arg.state.Y.abs >(_mWindow->getHeight() - 20))
+		{
+			transVector.z += mMoveScale;
+		}
+		else if (arg.state.Y.abs < (20))
+			transVector.z -= mMoveScale;
+		else
+			transVector.z = 0;
+
 		//_mSceneMgr->getSceneNode("camNode")->translate(transVector, Ogre::Node::TS_LOCAL);
 		return true;
 	}
