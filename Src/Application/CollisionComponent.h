@@ -3,17 +3,22 @@
 
 #include "Component.h"
 #include <OgreEntity.h>
+#include "EntityComponent.h"
+#include "NewMOC.h"
+#include "TutorialApplication.h"
 
 class CollisionComponent : public Component{
 public:
-	CollisionComponent() : Component()
+	CollisionComponent(EntityComponent* entComponent) : Component()
 	{
-
+		entityComponent = entComponent;
 
 	};
 	virtual ~CollisionComponent(){};
 
 	virtual void start(){
+		collisionManager = TutorialApplication::getInstance()->getCollisionManager();
+		collisionManager->register_entity(entityComponent->getEntity(), Collision::COLLISION_BOX);
 
 
 	};
@@ -22,7 +27,8 @@ public:
 	};
 
 private:
-	
+	EntityComponent* entityComponent;
+	Collision::CollisionTools* collisionManager;
 };
 
 #endif /* RENDERCOMPONENT_H_ */

@@ -27,12 +27,9 @@ class TutorialApplication : public BaseApplication
 
 public:
 
-	static TutorialApplication *getInstance()
-	{
-		if (!instance)
-			instance = new TutorialApplication;
-		return instance;
-	}
+	static TutorialApplication *getInstance();
+
+
 
 protected:
 	virtual void createScene(void);

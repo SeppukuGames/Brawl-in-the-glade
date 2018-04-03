@@ -68,6 +68,8 @@ public:
 
 	virtual void registerKeyInputObserver(OIS::KeyListener *observer);
 
+	Collision::CollisionTools * getCollisionManager(){ return collision; };
+
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 

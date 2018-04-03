@@ -128,4 +128,11 @@ void TutorialApplication::createScene(void)
 }
 
 
+TutorialApplication *TutorialApplication::instance = 0;
 
+ TutorialApplication *TutorialApplication::getInstance()
+{
+	if (!instance)
+		instance = new TutorialApplication;
+	return instance;
+}

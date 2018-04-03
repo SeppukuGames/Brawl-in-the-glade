@@ -2,7 +2,6 @@
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
 
-TutorialApplication *TutorialApplication::instance = 0;
 
 #ifdef _DEBUG || !_WIN32
 int main(){
