@@ -109,9 +109,10 @@ void TutorialApplication::createEntities(void)
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
 
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 50; i++){
 		ogro = ObjFactory::getTypeEnemy();
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
+		actors_.push_back(ogro); 
 	}
 
 	/*
@@ -137,5 +138,11 @@ void TutorialApplication::createScene(void)
 	createEntities();
 }
 
+TutorialApplication *TutorialApplication::instance = 0;
 
-
+TutorialApplication *TutorialApplication::getInstance()
+{
+	if (!instance)
+		instance = new TutorialApplication;
+	return instance;
+}

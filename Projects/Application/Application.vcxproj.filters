@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Factory">
       <UniqueIdentifier>{a8e1e3c3-9670-486a-83d3-f797abb4284c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{edc51344-fa33-4763-a25d-13185c562095}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\KeyInputComponent.cpp">
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

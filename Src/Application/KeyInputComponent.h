@@ -8,10 +8,8 @@ class KeyInputComponent : public Component, public OIS::KeyListener{
 public:
 
 	//Seguramente haya que pasarle un puntero al GameManager
-	KeyInputComponent() : Component()
-	{
-		TutorialApplication::getInstance()->registerKeyInputObserver(this);
-	};
+	KeyInputComponent();
+	
 	virtual ~KeyInputComponent(){};
 
 private:

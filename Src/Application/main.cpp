@@ -2,7 +2,6 @@
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
 
-TutorialApplication *TutorialApplication::instance = 0;
 EnemyPrototype* ObjFactory::typeEnemy = 0;
 
 

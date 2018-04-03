@@ -1,6 +1,6 @@
 #include "EnemyType1.h"
 #include "EntityComponent.h"
-//#include "MoveComponent.h" //Queda arreglar el MoveComponent
+#include "MoveComponent.h" //Queda arreglar el MoveComponent
 
 EnemyType1::EnemyType1(Ogre::SceneManager * mSceneMgr) : EnemyPrototype(mSceneMgr)
 {
@@ -13,7 +13,7 @@ EnemyPrototype * EnemyType1::clone(){
 
 	//Se añaden los componentes
 	enemy->addComponent(new EntityComponent("ogrehead.mesh")); //Se añade la entidad
-	//enemy->addComponent(new MoveComponent());//Se añade un componente
+	enemy->addComponent(new MoveComponent());//Se añade un componente
 
 	return enemy;
 }
