@@ -92,5 +92,11 @@
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

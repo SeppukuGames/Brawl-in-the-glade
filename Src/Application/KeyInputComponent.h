@@ -4,14 +4,13 @@
 #include "Component.h"
 #include <OIS.h>
 
-class KeyInputComponent : public Component, public OIS::KeyListener, public OIS::MouseListener{
+class KeyInputComponent : public Component, public OIS::KeyListener {
 public:
 
 	//Seguramente haya que pasarle un puntero al GameManager
 	KeyInputComponent() : Component()
 	{
 		TutorialApplication::getInstance()->registerKeyInputObserver(this);
-		TutorialApplication::getInstance()->registerMouseInputObserver(this);
 	};
 	virtual ~KeyInputComponent(){};
 

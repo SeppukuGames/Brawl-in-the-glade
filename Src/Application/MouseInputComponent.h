@@ -13,39 +13,6 @@ public:
 	};
 	virtual ~MouseInputComponent(){};
 
-	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
-
-		int i = 0;
-
-		switch (id)
-		{
-		case OIS::MB_Left:
-			i++;
-			break;
-
-		default:
-			break;
-		}
-		return true;
-	};
-
-
-	virtual bool mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID id)
-	{
-
-		return true;
-	};
-
-	virtual bool mouseMoved(const OIS::MouseEvent &arg)
-	{
-		/*if (arg.state.buttonDown(OIS::MB_Right))
-		{
-		_gameObject->getNode()->yaw(Ogre::Degree(-rotation * arg.state.X.rel), Ogre::Node::TS_WORLD);
-		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
-		}*/
-		return true;
-	}
-
 private:
 };
 
