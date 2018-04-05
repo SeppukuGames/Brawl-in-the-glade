@@ -36,6 +36,8 @@ http://www.ogre3d.org/tikiwiki/
 //#include <OgreFrameListener.h>
 //#include <OgreOverlaySystem.h>
 #include <OgreTextureManager.h>
+#include <OgreOverlay.h>
+#include <OgreOverlaySystem.h>
 
 #include "GameObject.h"
 //																									-Listeners de OIS-
@@ -79,6 +81,7 @@ protected:
 	virtual void loadResources(void);//Carga todos los recursos
 
 	virtual void chooseSceneManager(void);
+	virtual void initOverlay(void);
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 
@@ -128,7 +131,7 @@ protected:
 
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	bool mShutDown;
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+	Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
 
 
 	//Todos los objetos de las escena

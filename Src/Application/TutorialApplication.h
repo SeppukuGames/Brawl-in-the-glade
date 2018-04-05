@@ -19,6 +19,11 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include "EnemyPrototype.h"
 #include "Factory.h"
+#include "OgreTextAreaOverlayElement.h"
+#include "OgreFontManager.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
+
 
 
 class TutorialApplication : public BaseApplication

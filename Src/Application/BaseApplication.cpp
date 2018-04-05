@@ -17,6 +17,8 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
+#include <OgreOverlayManager.h>
+
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
@@ -34,8 +36,8 @@ BaseApplication::BaseApplication(void)
 	mKeyboard(0),
 
 	//mCursorWasVisible(false),
-	mShutDown(false)
-	//mOverlaySystem(0)
+	mShutDown(false),
+	mOverlaySystem(0)
 {
 }
 
@@ -143,23 +145,28 @@ bool BaseApplication::setup(void)
 
 	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
 	//No los inicializa, solo establece donde buscar los potenciales recursos
-	setupResources();
+
 
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
 
-	//Carga todos los recursos
-	loadResources();
+	
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
 	chooseSceneManager();
+	initOverlay();
+
+	//Carga todos los recursos -- Crear los recursos después de inicializar Overlay https://forums.ogre3d.org/viewtopic.php?t=80240
+	setupResources();
+	loadResources();
 	createCamera();
 	createViewports();
 
 	//Creamos la Escena del método hijo
 	createScene();
+
 
 	initOIS();
 	//createFrameListener();
@@ -208,6 +215,22 @@ void BaseApplication::setupResources(void)
 	}
 }
 
+
+//-------------------------------------------------------------------------------------
+//Carga todos los recursos
+void BaseApplication::loadResources(void)
+{
+	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
+
+	//Establecemos el número por defecto de mipmaps que se usarán.
+	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
 //-------------------------------------------------------------------------------------
 //Configura el RenderSystem y crea la ventana
 bool BaseApplication::configure(void)
@@ -217,6 +240,7 @@ bool BaseApplication::configure(void)
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
 	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 		return false;
+	
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
 	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
 
@@ -258,19 +282,7 @@ bool BaseApplication::configure(void)
 }
 //-------------------------------------------------------------------------------------
 
-//Carga todos los recursos
-void BaseApplication::loadResources(void)
-{
-	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
 
-	//Establecemos el número por defecto de mipmaps que se usarán.
-	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	//Inicializa todos los recursos encontrados por Ogre
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-}
 
 //-------------------------------------------------------------------------------------
 
@@ -286,6 +298,14 @@ void BaseApplication::chooseSceneManager(void)
 	*/
 }
 
+void BaseApplication::initOverlay(void)
+{
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
+	
+}
 //-------------------------------------------------------------------------------------
 
 void BaseApplication::createCamera(void)

@@ -20,6 +20,9 @@ http://www.ogre3d.org/tikiwiki/
 #include "GameComponent.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
+#include <OgreException.h>
+
+
 #include <time.h>
 using namespace Ogre;
 
@@ -44,7 +47,7 @@ void TutorialApplication::createLights(void)
 	Light* light = mSceneMgr->createLight("MainLight");
 	SceneNode* lightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	lightNode->attachObject(light);
-
+	
 	//Damos posición al nodo de la luz
 	lightNode->setPosition(20, 80, 50);
 }
@@ -114,6 +117,59 @@ void TutorialApplication::createEntities(void)
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
 		actors_.push_back(ogro); 
 	}
+	 //------------------------- OVERLAY ---------------------------------------
+	
+
+
+	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	FontManager& fM = FontManager::getSingleton();
+
+	
+	// Create a panel
+	OverlayContainer* panel = static_cast<OverlayContainer*>(
+	overlayManager.createOverlayElement("Panel", "PanelName"));
+	panel->setMetricsMode(Ogre::GMM_PIXELS);
+	panel->setPosition(100, 100);
+	panel->setDimensions(100, 100);
+	panel->setMaterialName("BaseWhite"); // Optional background material
+
+	/*
+	// Create a text area
+	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
+	overlayManager.createOverlayElement("TextArea", "TextAreaName"));
+	textArea->setMetricsMode(Ogre::GMM_PIXELS);
+	textArea->setPosition(0, 0);
+	textArea->setDimensions(100, 100);
+	textArea->setCaption("Hello, World!");
+	textArea->setCharHeight(16);
+	textArea->setFontName("Trebuchet MS");
+	textArea->setColourBottom(ColourValue(0.3, 0.5, 0.3));
+	textArea->setColourTop(ColourValue(0.5, 0.7, 0.5));
+	*/
+	// Create an overlay, and add the panel
+	Overlay* overlay = overlayManager.create("OverlayName");
+	overlay->add2D(panel);
+
+	// Add the text area to the panel
+	// panel->addChild(textArea);
+	
+
+	// Show the overlay
+	overlay->show();
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	//panel->setMaterialName("MaterialName"); // Optional background material
 
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
@@ -139,6 +195,7 @@ void TutorialApplication::createScene(void)
 }
 
 TutorialApplication *TutorialApplication::instance = 0;
+
 
 TutorialApplication *TutorialApplication::getInstance()
 {
