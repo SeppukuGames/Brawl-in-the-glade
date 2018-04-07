@@ -20,6 +20,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "GameComponent.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
+#include "CollisionComponent.h"
 #include <time.h>
 using namespace Ogre;
 
@@ -89,29 +90,56 @@ void TutorialApplication::createEntities(void)
 
 	
 	srand(time(NULL));
+
+	/*
 	int random = 0;
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
 			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+
 			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+
 			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+			EntityComponent *entComp;
 
 			if (random % 7 == 0)
-				OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
+				entComp = new EntityComponent("arbol.mesh");
 			else
-				OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
+				entComp = new EntityComponent("suelo.mesh");
+
+			OgritoQueRota->addComponent(entComp);
+
+			collision->register_static_entity(entComp->getEntity(), OgritoQueRota->getNode()->getPosition(), OgritoQueRota->getNode()->getOrientation(), OgritoQueRota->getNode()->getScale(), Collision::COLLISION_BOX);
 			actors_.push_back(OgritoQueRota);
 		}
 	}
+	*/
+	/*
+	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
+	node->attachObject(entity);
 
+	collision->register_entity(entity, Collision::COLLISION_BOX);
+	*/
 	GameComponent * ogro= new GameComponent(mSceneMgr);
 	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
-	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
+	EntityComponent *entComp = new EntityComponent("ogrehead.mesh");
+	ogro->addComponent(entComp);
 	ogro->addComponent(new MoveComponent());
+	ogro->addComponent(new CollisionComponent(entComp));
+
 	actors_.push_back(ogro);
 
+	GameComponent * ogro2 = new GameComponent(mSceneMgr);
+	ogro2->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
+
+	EntityComponent *entComp2 = new EntityComponent("ogrehead.mesh");
+	ogro2->addComponent(entComp2);
+	ogro2->addComponent(new CollisionComponent(entComp2));
+
+	actors_.push_back(ogro2);
 	//Metodos utiles de la escena:
 }
 

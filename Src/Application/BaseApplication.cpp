@@ -66,7 +66,6 @@ void BaseApplication::go(void)
 	if (!setup())
 		return;
 
-	collision = new Collision::CollisionTools();
 
 	timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
@@ -159,6 +158,8 @@ bool BaseApplication::setup(void)
 	chooseSceneManager();
 	createCamera();
 	createViewports();
+
+	collision = new Collision::CollisionTools();
 
 	//Creamos la Escena del método hijo
 	createScene();
