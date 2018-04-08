@@ -21,6 +21,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "CollisionComponent.h"
+#include "AnimationComponent.h"
 #include <time.h>
 using namespace Ogre;
 
@@ -110,6 +111,7 @@ void TutorialApplication::createEntities(void)
 
 			OgritoQueRota->addComponent(entComp);
 			OgritoQueRota->addComponent(new StaticCollisionComponent());
+			
 
 			actors_.push_back(OgritoQueRota);
 		}
@@ -119,10 +121,11 @@ void TutorialApplication::createEntities(void)
 	ogro->getNode()->setScale(Ogre::Vector3(Ogre::Real(0.5), Ogre::Real(0.5), Ogre::Real(0.55)));
 	ogro->getNode()->setPosition(50, 20, 0);
 
-	EntityComponent *entComp = new EntityComponent("ogrehead.mesh");
+	EntityComponent *entComp = new EntityComponent("Ninja.mesh");
 	ogro->addComponent(entComp);
 	ogro->addComponent(new MoveComponent());
 	ogro->addComponent(new CollisionComponent());
+	ogro->addComponent(new AnimationComponent("Walk")); //Le pasas una inicial, luego la cambias desde el input.
 
 	actors_.push_back(ogro);
 	

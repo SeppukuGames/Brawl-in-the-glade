@@ -21,6 +21,7 @@
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\CollisionComponent.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
