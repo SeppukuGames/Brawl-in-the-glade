@@ -23,6 +23,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "OgreFontManager.h"
 #include "OgreOverlayManager.h"
 #include "OgreOverlayContainer.h"
+#include "OgreBorderPanelOverlayElement.h"
 
 
 

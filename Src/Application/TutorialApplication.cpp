@@ -128,48 +128,41 @@ void TutorialApplication::createEntities(void)
 	// Create a panel
 	OverlayContainer* panel = static_cast<OverlayContainer*>(
 	overlayManager.createOverlayElement("Panel", "PanelName"));
+
 	panel->setMetricsMode(Ogre::GMM_PIXELS);
 	panel->setPosition(100, 100);
-	panel->setDimensions(100, 100);
-	panel->setMaterialName("BaseWhite"); // Optional background material
+	panel->setDimensions(300, 200);
+	panel->setMaterialName("panel"); // Optional background material
+	
+	Ogre::BorderPanelOverlayElement* bpanel = static_cast<BorderPanelOverlayElement*>(
+		overlayManager.createOverlayElement("BorderPanel", "BorderPanelName"));
 
-	/*
+	bpanel->setBorderSize(0.2, 0.2);
+
+	
 	// Create a text area
 	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
 	overlayManager.createOverlayElement("TextArea", "TextAreaName"));
 	textArea->setMetricsMode(Ogre::GMM_PIXELS);
-	textArea->setPosition(0, 0);
+	textArea->setPosition(50, 100);
 	textArea->setDimensions(100, 100);
-	textArea->setCaption("Hello, World!");
+	textArea->setCaption("Hola, soy un panel de prueba!");
 	textArea->setCharHeight(16);
-	textArea->setFontName("Trebuchet MS");
-	textArea->setColourBottom(ColourValue(0.3, 0.5, 0.3));
+	textArea->setFontName("Trebuchet");
+	textArea->setColourBottom(ColourValue(0.8, 0.5, 0.3));
 	textArea->setColourTop(ColourValue(0.5, 0.7, 0.5));
-	*/
+	
 	// Create an overlay, and add the panel
 	Overlay* overlay = overlayManager.create("OverlayName");
 	overlay->add2D(panel);
 
 	// Add the text area to the panel
-	// panel->addChild(textArea);
+	 panel->addChild(textArea);
 	
 
 	// Show the overlay
 	overlay->show();
-	
-	
 
-
-
-
-
-
-
-
-
-
-
-	//panel->setMaterialName("MaterialName"); // Optional background material
 
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
@@ -177,7 +170,8 @@ void TutorialApplication::createEntities(void)
 
 	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
 	ogro->addComponent(new MoveComponent());
-	actors_.push_back(ogro);*/
+	actors_.push_back(ogro);
+	*/
 
 	//Metodos utiles de la escena:
 }
