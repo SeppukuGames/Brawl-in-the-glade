@@ -3,7 +3,7 @@
 
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
-
+#include "Component.h"
 
 class GameObject; // declaración adelantada
 
@@ -26,8 +26,13 @@ public:
 	static const Ogre::uint32 MY_QUERY_MASK = 1; // << 0; //Lo tienen todos los objetos que quiero procesar
 	static const Ogre::uint32 O_QUERY_MASK = 0;
 	*/
+	GameObject(Ogre::SceneManager * mSceneMgr);
 
-	virtual void tick(double elapsed) = 0;
+	virtual void addComponent(Component* comp);
+	virtual Component* getComponent(ComponentName component);
+
+	// from GameObject
+	virtual void tick(double elapsed);
 
 	virtual void setObjMan(Ogre::MovableObject* mObj);
 
@@ -36,11 +41,11 @@ public:
 	inline Ogre::SceneNode* getNode(){ return node; };
 
 protected:
-	GameObject(Ogre::SceneManager * mSceneMgr);
 
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
 
+	std::vector<Component*> components;
 
 	//UN PUNTERO AL GAME/ GAMEMANAGER?
 };

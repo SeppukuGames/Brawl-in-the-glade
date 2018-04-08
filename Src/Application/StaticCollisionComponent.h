@@ -9,10 +9,9 @@
 
 class StaticCollisionComponent : public Component{
 public:
-	StaticCollisionComponent(EntityComponent* entComponent) : Component()
+	StaticCollisionComponent() : Component()
 	{
-		entityComponent = entComponent;
-
+		
 	};
 	virtual ~StaticCollisionComponent(){};
 

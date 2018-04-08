@@ -22,8 +22,8 @@ http://www.ogre3d.org/tikiwiki/
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
-	mResourcesCfg(Ogre::StringUtil::BLANK),
-	mPluginsCfg(Ogre::StringUtil::BLANK),
+	mResourcesCfg(Ogre::BLANKSTRING),
+	mPluginsCfg(Ogre::BLANKSTRING),
 
 	mWindow(0),
 
@@ -99,6 +99,8 @@ bool BaseApplication::gameLoop()
 		return false;
 
 	lastTime = current;
+
+	return true;
 }
 
 //Detecta input
@@ -119,7 +121,7 @@ bool BaseApplication::handleInput(void){
 bool BaseApplication::update(double elapsed)
 {
 	//Actualiza todos los objetos
-	for (int i = 0; i < actors_.size(); i++)
+	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
 	return true;
@@ -172,6 +174,7 @@ bool BaseApplication::setup(void)
 };
 
 //-------------------------------------------------------------------------------------
+//HAY QUE ELIMINAR LOS WARNINGS DE AQUI
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void BaseApplication::setupResources(void)
 {
@@ -219,7 +222,7 @@ bool BaseApplication::configure(void)
 	//El config Dialog permite hacer ajustes e inicializa el sistema
 	//Podemos hacer que el configDialog solo salga si no hay un ogre.cfg
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
-	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
+	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog(NULL)))
 		return false;
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
 	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
@@ -259,6 +262,8 @@ bool BaseApplication::configure(void)
 	//Aplicamos a mroot los cambios que hemos hecho
 	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
 	*/
+
+	return true;
 }
 //-------------------------------------------------------------------------------------
 
@@ -281,7 +286,7 @@ void BaseApplication::loadResources(void)
 void BaseApplication::chooseSceneManager(void)
 {
 	//Creamos el SceneManager
-	mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
+	mSceneMgr = mRoot->createSceneManager();
 
 	/*No lo utilizamos??
 	// Inicializa el OverlaySystem
@@ -408,7 +413,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 		int a = 0;
 	}
 	
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
 
 	return true;
@@ -416,7 +421,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyReleased(arg);
 
 	return true;

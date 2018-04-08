@@ -6,7 +6,7 @@
 
 class CollisionComponent : public StaticCollisionComponent{
 public:
-	CollisionComponent(EntityComponent* entComponent) : StaticCollisionComponent(entComponent)
+	CollisionComponent() : StaticCollisionComponent()
 	{
 
 	};

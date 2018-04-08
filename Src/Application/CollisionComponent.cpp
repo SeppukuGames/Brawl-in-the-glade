@@ -1,5 +1,5 @@
 #include "CollisionComponent.h"
-#include "Header.h"
+#include "CollisionManager.h"
 #include "TutorialApplication.h"
 
 void CollisionComponent::tick(double elapsed){
@@ -9,7 +9,7 @@ void CollisionComponent::tick(double elapsed){
 	{
 		Ogre::AxisAlignedBox box = getBoundingBox();
 
-		for (int i = 0; i < TutorialApplication::getInstance()->getCollisionManager()->getCollisionGameObjects().size(); i++)
+		for (size_t i = 0; i < TutorialApplication::getInstance()->getCollisionManager()->getCollisionGameObjects().size(); i++)
 		{
 			if (TutorialApplication::getInstance()->getCollisionManager()->getCollisionGameObjects()[i] != this)
 			{

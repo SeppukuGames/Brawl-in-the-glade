@@ -38,7 +38,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 #include "GameObject.h"
-#include "Header.h"
+#include "CollisionManager.h"
 
 //																									-Listeners de OIS-
 class BaseApplication :

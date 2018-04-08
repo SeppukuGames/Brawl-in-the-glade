@@ -1,5 +1,5 @@
-#ifndef A_H_
-#define A_H_
+#ifndef COLLISIONMANAGER_H_
+#define COLLISIONMANAGER_H_
 
 #include <vector>
 #include "StaticCollisionComponent.h"
@@ -21,4 +21,4 @@ private:
 	std::vector <StaticCollisionComponent*> collisionGameObjects;
 
 };
-#endif /* RENDERCOMPONENT_H_ */
+#endif /* COLLISIONMANAGER_H_ */

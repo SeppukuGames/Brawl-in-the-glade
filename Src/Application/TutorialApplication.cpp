@@ -17,7 +17,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialApplication.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-#include "GameComponent.h"
+#include "GameObject.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "CollisionComponent.h"
@@ -89,16 +89,16 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	
 	int random = 0;
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			random = rand() % 101;
-			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+			GameObject * OgritoQueRota = new GameObject(mSceneMgr);
 
-			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			OgritoQueRota->getNode()->setPosition(Ogre::Vector3(Ogre::Real((i * 50) - 300), Ogre::Real(-20), Ogre::Real((j * 50) - 300)));
 
 			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 			EntityComponent *entComp;
@@ -109,21 +109,20 @@ void TutorialApplication::createEntities(void)
 				entComp = new EntityComponent("suelo.mesh");
 
 			OgritoQueRota->addComponent(entComp);
-			OgritoQueRota->addComponent(new StaticCollisionComponent(entComp));
+			OgritoQueRota->addComponent(new StaticCollisionComponent());
 
 			actors_.push_back(OgritoQueRota);
 		}
 	}
-	
 
-	GameComponent * ogro= new GameComponent(mSceneMgr);
-	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
+	GameObject * ogro = new GameObject(mSceneMgr);
+	ogro->getNode()->setScale(Ogre::Vector3(Ogre::Real(0.5), Ogre::Real(0.5), Ogre::Real(0.55)));
 	ogro->getNode()->setPosition(50, 20, 0);
 
 	EntityComponent *entComp = new EntityComponent("ogrehead.mesh");
 	ogro->addComponent(entComp);
 	ogro->addComponent(new MoveComponent());
-	ogro->addComponent(new CollisionComponent(entComp));
+	ogro->addComponent(new CollisionComponent());
 
 	actors_.push_back(ogro);
 	

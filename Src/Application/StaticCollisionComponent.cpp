@@ -1,8 +1,10 @@
 #include "StaticCollisionComponent.h"
-#include "Header.h"
+#include "CollisionManager.h"
 #include "TutorialApplication.h"
+#include "GameObject.h"
 
 void StaticCollisionComponent::start(){
+	entityComponent = dynamic_cast<EntityComponent*> (_gameObject->getComponent(ComponentName::ENTITY));
 
 	//_gameObject->getNode()->showBoundingBox(true);
 	TutorialApplication::getInstance()->getCollisionManager()->registerCollisionComponent(this);

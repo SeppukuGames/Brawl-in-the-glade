@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "KeyInputComponent.h"
+#include "GameObject.h"
 
 
 class MoveComponent : public KeyInputComponent {
@@ -19,7 +20,8 @@ public:
 		direction = Ogre::Vector3::ZERO;
 	};
 	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
+		Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed;
+		_gameObject->getNode()->translate(movement, Ogre::Node::TS_LOCAL);
 
 	};
 
