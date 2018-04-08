@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Component.h"
 
+
 //GameObject compuesto por componentes
 class GameComponent : public GameObject {
 
@@ -14,6 +15,7 @@ public:
 	virtual ~GameComponent();
 
 	virtual void addComponent(Component* comp);
+	virtual Component* getComponent(ComponentName component);
 
 	// from GameObject
 	virtual void tick(double elapsed);

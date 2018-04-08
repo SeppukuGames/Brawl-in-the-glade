@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include <OIS.h>
+#include "TutorialApplication.h"
 
 class KeyInputComponent : public Component, public OIS::KeyListener{
 public:

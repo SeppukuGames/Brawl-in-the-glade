@@ -3,6 +3,8 @@
 
 #include "GameObject.h"
 
+enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION };
+
 class Component {
 public:
 	Component() : _gameObject(nullptr)

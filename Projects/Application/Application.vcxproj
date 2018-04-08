@@ -12,10 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
+    <ClCompile Include="..\..\Src\Application\CollisionComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
-    <ClCompile Include="..\..\Src\Application\NewMOC.cpp" />
+    <ClCompile Include="..\..\Src\Application\StaticCollisionComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
@@ -26,10 +27,11 @@
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\GameComponent.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
+    <ClInclude Include="..\..\Src\Application\Header.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
-    <ClInclude Include="..\..\Src\Application\NewMOC.h" />
+    <ClInclude Include="..\..\Src\Application\StaticCollisionComponent.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />

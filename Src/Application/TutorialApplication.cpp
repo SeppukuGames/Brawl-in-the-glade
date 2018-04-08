@@ -91,7 +91,7 @@ void TutorialApplication::createEntities(void)
 	
 	srand(time(NULL));
 
-	/*
+	
 	int random = 0;
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
@@ -109,21 +109,16 @@ void TutorialApplication::createEntities(void)
 				entComp = new EntityComponent("suelo.mesh");
 
 			OgritoQueRota->addComponent(entComp);
+			OgritoQueRota->addComponent(new StaticCollisionComponent(entComp));
 
-			collision->register_static_entity(entComp->getEntity(), OgritoQueRota->getNode()->getPosition(), OgritoQueRota->getNode()->getOrientation(), OgritoQueRota->getNode()->getScale(), Collision::COLLISION_BOX);
 			actors_.push_back(OgritoQueRota);
 		}
 	}
-	*/
-	/*
-	Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
-	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
-	node->attachObject(entity);
+	
 
-	collision->register_entity(entity, Collision::COLLISION_BOX);
-	*/
 	GameComponent * ogro= new GameComponent(mSceneMgr);
 	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
+	ogro->getNode()->setPosition(50, 20, 0);
 
 	EntityComponent *entComp = new EntityComponent("ogrehead.mesh");
 	ogro->addComponent(entComp);
@@ -131,15 +126,21 @@ void TutorialApplication::createEntities(void)
 	ogro->addComponent(new CollisionComponent(entComp));
 
 	actors_.push_back(ogro);
+	
+	/*
+	for (int i = 0; i <200; i++)
+	{
 
-	GameComponent * ogro2 = new GameComponent(mSceneMgr);
-	ogro2->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
+		GameComponent * ogro2 = new GameComponent(mSceneMgr);
+		ogro2->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
-	EntityComponent *entComp2 = new EntityComponent("ogrehead.mesh");
-	ogro2->addComponent(entComp2);
-	ogro2->addComponent(new CollisionComponent(entComp2));
+		EntityComponent *entComp2 = new EntityComponent("ogrehead.mesh");
+		ogro2->addComponent(entComp2);
+		ogro2->addComponent(new CollisionComponent(entComp2));
 
-	actors_.push_back(ogro2);
+		actors_.push_back(ogro2);
+	}
+	*/
 	//Metodos utiles de la escena:
 }
 

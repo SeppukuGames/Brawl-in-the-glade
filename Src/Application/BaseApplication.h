@@ -38,8 +38,8 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 #include "GameObject.h"
+#include "Header.h"
 
-#include "NewMOC.h"
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -67,8 +67,7 @@ public:
 	virtual void go(void);
 
 	virtual void registerKeyInputObserver(OIS::KeyListener *observer);
-
-	Collision::CollisionTools * getCollisionManager(){ return collision; };
+	virtual CollisionManager* getCollisionManager(){ return collisionManager; };
 
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
@@ -140,14 +139,12 @@ protected:
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
 
-
+	CollisionManager* collisionManager;
+	
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
 
-
-	//Colisiones
-	Collision::CollisionTools * collision; //Manager de colisiones
 };
 
 #endif // #ifndef __BaseApplication_h_

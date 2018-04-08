@@ -18,6 +18,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 
+
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
@@ -159,7 +160,7 @@ bool BaseApplication::setup(void)
 	createCamera();
 	createViewports();
 
-	collision = new Collision::CollisionTools();
+	collisionManager = new CollisionManager();
 
 	//Creamos la Escena del método hijo
 	createScene();
