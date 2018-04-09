@@ -6,6 +6,7 @@
 #include "StaticCollisionComponent.h"
 #include "CollisionComponent.h"
 #include "MoveComponent.h"
+#include "AnimationComponent.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr)  :components(0){
 	control = new UserControl(this);
@@ -114,6 +115,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			MoveComponent* comp = dynamic_cast<MoveComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::ANIMATION:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			AnimationComponent* comp = dynamic_cast<AnimationComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

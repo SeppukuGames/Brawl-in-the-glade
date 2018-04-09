@@ -4,6 +4,7 @@
 #include "Component.h"
 //#include "KeyInputComponent.h"
 #include "EntityComponent.h"	//Hereda de EntityComponent porque normalmente querremos animar meshes
+#include <stack>
 
 class AnimationComponent : public Component {
 public:
@@ -32,32 +33,34 @@ public:
 
 		//El mesh que vamos a animar
 		animEntity = dynamic_cast<EntityComponent*> (_gameObject->getComponent(ComponentName::ENTITY))->getEntity();
-		createAnimation(baseAnim);
+		stackIdle(baseAnim);
 	};
 	virtual void tick(double elapsed) {
 		//aqui va lo de pasar de frame de animación :D
 	
 		mAnimationState->addTime((Ogre::Real)elapsed);
 
-		
-
 	};
 
-	void createAnimation(std::string animName) {
+	void stackIdle(std::string animName) {
 
 		//get animation
-		mAnimationState = animEntity->getAnimationState(animName);
+		mAnimationState = animEntity->getAnimationState("Idle");
 		mAnimationState->setLoop(true);
 		mAnimationState->setEnabled(true);
+
+		animStack.push(mAnimationState);
 	}
 
-	//Añade waypoints a la rutina 
-	void queueAnimationPosition(){
 	
-	}
 
 	//Cambia la animación
-	void changeCurrentAnimation(std::string newAnim) {
+	void stackAnimation(std::string newAnim) {
+		//get animation
+		mAnimationState = animEntity->getAnimationState(newAnim);
+		mAnimationState->setLoop(true);
+		mAnimationState->setEnabled(true);
+
 
 	}
 
@@ -70,6 +73,8 @@ private:
 	Ogre::AnimationState* mAnimationState;		//Estados de la animación
 	Ogre::Entity* animEntity;					//Entidad que almacena la animación
 
+	//Pila de animaciones
+	std::stack <Ogre::AnimationState*> animStack;
 
 	//Elementos del tutorial 
 	Ogre::Real mDistance;

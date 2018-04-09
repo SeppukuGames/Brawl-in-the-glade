@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "KeyInputComponent.h"
+#include "AnimationComponent.h"
 #include "GameObject.h"
 
 
@@ -107,6 +108,12 @@ public:
 private:
 	Ogre::Vector3 direction; 
 	float velocity;
+
+	//Puntero a la animacion
+	AnimationComponent* animComp = dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
+
+	//Animaciones:
+	std::string walk = "Walk";
 
 };
 
