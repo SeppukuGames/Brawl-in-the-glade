@@ -55,6 +55,9 @@
     <Filter Include="Source Files\Component">
       <UniqueIdentifier>{edc51344-fa33-4763-a25d-13185c562095}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SoundEngine">
+      <UniqueIdentifier>{b0daa528-447a-4126-a4cb-b9690f2eec36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -124,6 +127,69 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\EnemyType1.h">
       <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundEngineOptions.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundOutputDrivers.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_EStreamModes.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioRecorder.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStream.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStreamLoader.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileFactory.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileReader.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IRefCounted.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_irrKlangTypes.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISound.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundDeviceList.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEffectControl.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEngine.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundMixedOutputReceiver.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundSource.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundStopEventReceiver.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IVirtualRefCounted.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_SAudioStreamFormat.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_vec3d.h">
+      <Filter>Header Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SoundEngine\irrKlang.h">
+      <Filter>Header Files\SoundEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

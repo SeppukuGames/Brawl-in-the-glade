@@ -32,6 +32,27 @@
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundEngineOptions.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundOutputDrivers.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_EStreamModes.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioRecorder.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStream.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStreamLoader.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileFactory.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileReader.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IRefCounted.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_irrKlangTypes.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISound.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundDeviceList.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEffectControl.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEngine.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundMixedOutputReceiver.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundSource.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundStopEventReceiver.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IVirtualRefCounted.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_SAudioStreamFormat.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_vec3d.h" />
+    <ClInclude Include="..\..\Src\Application\SoundEngine\irrKlang.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />
@@ -91,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreMain_d.lib;OIS.lib;OgreOverlay_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OgreMain_d.lib;OIS.lib;OgreOverlay_d.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\Build\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

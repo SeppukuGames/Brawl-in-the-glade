@@ -38,6 +38,7 @@ protected:
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
+	virtual void createSoundEngine(void);
 
 };
 
