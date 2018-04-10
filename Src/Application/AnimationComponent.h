@@ -4,7 +4,13 @@
 #include "Component.h"
 //#include "KeyInputComponent.h"
 #include "EntityComponent.h"	//Hereda de EntityComponent porque normalmente querremos animar meshes
-#include <stack>
+
+#include <map>
+
+
+enum AnimationID{
+	ANIM_IDLE1, ANIM_ATTACK1, ANIM_BACKFLIP, ANIM_DEATH1, ANIM_SPIN
+};
 
 class AnimationComponent : public Component {
 public:
@@ -26,43 +32,35 @@ public:
 		mDirection = Ogre::Vector3::ZERO;
 		mDestination = Ogre::Vector3::ZERO;
 
-		//TEST//
-		mWalkList.push_back(Ogre::Vector3(550.0, 0, 50.0));
-		mWalkList.push_back(Ogre::Vector3(-100.0, 0, -200.0));
-		mWalkList.push_back(Ogre::Vector3(0, 0, 25.0));
 
 		//El mesh que vamos a animar
 		animEntity = dynamic_cast<EntityComponent*> (_gameObject->getComponent(ComponentName::ENTITY))->getEntity();
-		stackIdle(baseAnim);
+		setAnimation(baseAnim, true);
 	};
 	virtual void tick(double elapsed) {
 		//aqui va lo de pasar de frame de animación :D
 	
-		mAnimationState->addTime((Ogre::Real)elapsed);
+		animacionActual -> addTime((Ogre::Real)elapsed);
+
+		//Si no hay, poner de nuevo la de idle?
 
 	};
-
-	void stackIdle(std::string animName) {
-
-		//get animation
-		mAnimationState = animEntity->getAnimationState("Idle");
-		mAnimationState->setLoop(true);
-		mAnimationState->setEnabled(true);
-
-		animStack.push(mAnimationState);
-	}
-
 	
 
 	//Cambia la animación
-	void stackAnimation(std::string newAnim) {
+	void setAnimation(std::string newAnim, bool looped) {
 		//get animation
-		mAnimationState = animEntity->getAnimationState(newAnim);
-		mAnimationState->setLoop(true);
-		mAnimationState->setEnabled(true);
 
+		animacionActual = animEntity->getAnimationState(newAnim);
+		
+		animacionActual->setLoop(looped);
+		animacionActual->setEnabled(true);
+
+		//animStack.push_back(nuevoAnimState);
 
 	}
+
+	
 
 private:
 	//Comunicación directa con el componente de mesh
@@ -70,11 +68,11 @@ private:
 
 	//Elementos de Animación
 	std::string baseAnim;
-	Ogre::AnimationState* mAnimationState;		//Estados de la animación
+	Ogre::AnimationState* animacionActual;
 	Ogre::Entity* animEntity;					//Entidad que almacena la animación
 
 	//Pila de animaciones
-	std::stack <Ogre::AnimationState*> animStack;
+	std::list <Ogre::AnimationState*> animStack;
 
 	//Elementos del tutorial 
 	Ogre::Real mDistance;
@@ -83,9 +81,6 @@ private:
 	Ogre::Vector3 mDestination;
 	
 	float velocity;
-
-	//Se usa para establecer una cola de waypoints (Seguramente vaya en la IA en verdad)
-	std::deque<Ogre::Vector3> mWalkList;
 };
 
 

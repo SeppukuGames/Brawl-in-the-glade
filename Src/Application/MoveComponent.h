@@ -19,6 +19,7 @@ public:
 	virtual void start(){
 		velocity = 50;
 		direction = Ogre::Vector3::ZERO;
+		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	};
 	virtual void tick(double elapsed){
 		Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed;
@@ -32,11 +33,13 @@ public:
 		case OIS::KC_UP:
 		case OIS::KC_W:
 			direction.z = -velocity;
+			
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:
 			direction.z = velocity;
+			
 			break;
 
 		case OIS::KC_LEFT:
@@ -59,9 +62,15 @@ public:
 			direction.y = velocity;
 			break;
 
+		case OIS::KC_SPACE:
+			animComp->setAnimation("Attack1", true); //Va guay pero hace falta que la haga entera
+			break;
+
 		default:
 			break;
 		}
+		//E ORA DO MOVIMENTO
+		//animComp->setAnimation("Walk");
 		return true;
 	};
 
@@ -99,9 +108,14 @@ public:
 			direction.y = 0;
 			break;
 
+		case OIS::KC_SPACE:
+			animComp->setAnimation("Idle2", true);
+			break;
+
 		default:
 			break;
 		}
+		//animComp->setAnimation("Idle2");
 		return true;
 	};
 
@@ -110,10 +124,7 @@ private:
 	float velocity;
 
 	//Puntero a la animacion
-	AnimationComponent* animComp = dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
-
-	//Animaciones:
-	std::string walk = "Walk";
+	AnimationComponent* animComp;
 
 };
 

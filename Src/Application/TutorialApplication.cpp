@@ -123,9 +123,9 @@ void TutorialApplication::createEntities(void)
 
 	EntityComponent *entComp = new EntityComponent("Ninja.mesh");
 	ogro->addComponent(entComp);
-	ogro->addComponent(new MoveComponent());
 	ogro->addComponent(new CollisionComponent());
-	ogro->addComponent(new AnimationComponent("Walk")); //Le pasas una inicial, luego la cambias desde el input.
+	ogro->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	ogro->addComponent(new MoveComponent());			//Debajo del animation porque lo usa
 
 	actors_.push_back(ogro);
 	
