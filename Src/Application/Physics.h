@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 
+//Physics Manager
 class Physics{
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -16,7 +17,6 @@ class Physics{
 	std::vector<btCollisionShape *> collisionShapes;
 	std::map<std::string, btRigidBody *> physicsAccessors;
 
-	int numObj;
 	void initObjects();
 public:
 	Physics::Physics();

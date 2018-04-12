@@ -3,7 +3,6 @@
 
 Physics::Physics()
 {
-	numObj = 0;
 	initObjects();
 }
 
@@ -20,7 +19,5 @@ void Physics::initObjects() {
 	overlappingPairCache = new btDbvtBroadphase();
 	solver = new btSequentialImpulseConstraintSolver();
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
-	dynamicsWorld->applyGravity();
 
 }
