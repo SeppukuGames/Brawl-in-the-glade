@@ -32,45 +32,45 @@ public:
 		{
 		case OIS::KC_UP:
 		case OIS::KC_W:
-			direction.z = -velocity;
+			direction.z += -velocity;
 			
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:
-			direction.z = velocity;
+			direction.z += velocity;
 			
 			break;
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
-			direction.x = -velocity;
+			direction.x += -velocity;
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
-			direction.x = velocity;
+			direction.x += velocity;
 			break;
 
 		case OIS::KC_PGDOWN:
 		case OIS::KC_E:
-			direction.y = -velocity;
+			direction.y += -velocity;
 			break;
 
 		case OIS::KC_PGUP:
 		case OIS::KC_Q:
-			direction.y = velocity;
+			direction.y += velocity;
 			break;
 
 		case OIS::KC_SPACE:
-			animComp->setAnimation("Attack1", true); //Va guay pero hace falta que la haga entera
+			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
 			break;
 
 		default:
 			break;
 		}
 		//E ORA DO MOVIMENTO
-		//animComp->setAnimation("Walk");
+		//animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
@@ -79,43 +79,43 @@ public:
 		switch (arg.key)
 		{
 		case OIS::KC_UP:
-		case OIS::KC_W:
-			direction.z = 0;
+		case OIS::KC_W: 
+			direction.z += velocity;
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:
-			direction.z = 0;
+			direction.z += -velocity;
 			break;
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
-			direction.x = 0;
+			direction.x += velocity;
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
-			direction.x = 0;
+			direction.x += -velocity;
 			break;
 
 		case OIS::KC_PGDOWN:
 		case OIS::KC_E:
-			direction.y = 0;
+			direction.y += velocity;
 			break;
 
 		case OIS::KC_PGUP:
 		case OIS::KC_Q:
-			direction.y = 0;
+			direction.y += -velocity;
 			break;
 
 		case OIS::KC_SPACE:
-			animComp->setAnimation("Idle2", true);
+			//animComp->setAnimation("Idle2", true);
 			break;
 
-		default:
+		default:  
 			break;
 		}
-		//animComp->setAnimation("Idle2");
+		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
