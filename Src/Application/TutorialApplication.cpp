@@ -21,10 +21,11 @@ http://www.ogre3d.org/tikiwiki/
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "MoveCameraComponent.h"
-#include <stdio.h>
 #include "SoundEngine/irrKlang.h"
+#include <stdio.h>
 #include <time.h>
-
+#include <iostream>
+#include "Enemigo.h"
 
 #if defined(WIN32)
 #include <conio.h>
@@ -145,17 +146,26 @@ void TutorialApplication::createEntities(void)
 	
 	srand(time(NULL));
 	int random = 0;
-	for (int i = 0; i < 10; i++){
-		for (int j = 0; j < 10; j++){
+	for (int i = 0; i < 40; i++){
+		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
 			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
 			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
-			if (random % 7 == 0)
-				OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
-			else
-				OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
+			if (j == 20 && i == 20){
+
+				OgritoQueRota->addComponent(new EntityComponent("Torre.mesh"));
+				std::cout << "POsicion de la torre: " << OgritoQueRota->getNode()->getPosition().x << ", " <<
+					OgritoQueRota->getNode()->getPosition().y << ", " << OgritoQueRota->getNode()->getPosition().z << "\n";
+			}
+			else{
+				if (random % 6 == 0)
+					OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
+				else
+					OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
+			}
+
 			actors_.push_back(OgritoQueRota);
 		}
 	}
@@ -185,7 +195,18 @@ void TutorialApplication::createEntities(void)
 	actors_.push_back(ogro);*/
 
 	//actors_.push_back(ogro);
-	
+
+	for (int i = 0; i < 10; i++){
+		for (int j = 0; j < 10; j++){
+			GameComponent * enemigo = new GameComponent(mSceneMgr);
+			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+
+			enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
+			enemigo->addComponent(new Enemigo());
+			actors_.push_back(enemigo);
+		}
+	}
 
 	//Metodos utiles de la escena:
 }
