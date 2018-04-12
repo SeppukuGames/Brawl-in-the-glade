@@ -88,24 +88,24 @@ public:
 		_gameObject->getNode()->yaw(Ogre::Degree(-rotation * arg.state.X.rel), Ogre::Node::TS_WORLD);
 		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 		*/
-		int mMoveScale = 25;
+		int mMoveScale = 30;
 
 		//X AXIS
-		if (arg.state.X.abs > (_mWindow->getWidth() - 20))
+		if (arg.state.X.abs > (_mWindow->getWidth() - 20) && arg.state.X.abs < _mWindow->getWidth())
 		{
 			direction.x += mMoveScale;
 		}
-		else if (arg.state.X.abs < (20))
+		else if (arg.state.X.abs < (20) && arg.state.X.abs > 0)
 			direction.x -= mMoveScale;
 		else
 			direction.x = 0;
 
 		//Y AXIS
-		if (arg.state.Y.abs >(_mWindow->getHeight() - 20))
+		if (arg.state.Y.abs >(_mWindow->getHeight() - 20) && arg.state.Y.abs < _mWindow->getHeight())
 		{
 			direction.z += mMoveScale;
 		}
-		else if (arg.state.Y.abs < (20))
+		else if (arg.state.Y.abs < (20) && arg.state.Y.abs > 0)
 			direction.z -= mMoveScale;
 		else
 			direction.z = 0;
