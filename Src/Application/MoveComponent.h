@@ -3,6 +3,7 @@
 
 #include "KeyInputComponent.h"
 
+using namespace Ogre;
 
 class MoveComponent : public KeyInputComponent {
 public:
@@ -15,11 +16,12 @@ public:
 
 	virtual void start(){
 		velocity = 50;
+		rotation = 0.13;
 		direction = Ogre::Vector3::ZERO;
 	};
-	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
 
+	virtual void tick(double elapsed){
+		_gameObject->getNode()->translate(direction* elapsed, Ogre::Node::TS_LOCAL);
 	};
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
@@ -101,10 +103,11 @@ public:
 		return true;
 	};
 
+
 private:
 	Ogre::Vector3 direction; 
 	float velocity;
-
+	float rotation;
 };
 
 #endif /* MOVECOMPONENT_H_ */

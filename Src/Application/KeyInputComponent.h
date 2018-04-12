@@ -4,7 +4,7 @@
 #include "Component.h"
 #include <OIS.h>
 
-class KeyInputComponent : public Component, public OIS::KeyListener{
+class KeyInputComponent : public Component, public OIS::KeyListener {
 public:
 
 	//Seguramente haya que pasarle un puntero al GameManager

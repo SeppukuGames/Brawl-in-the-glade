@@ -87,7 +87,7 @@ void TutorialBuffered::createScene(void)
 bool TutorialBuffered::update(void)
 {
 
-	mCamNode->translate(mDirection * 1, Ogre::Node::TS_LOCAL);//ESTO NO SE HACE ASI, HAY QUE MULTIPLICAR MDIRECTION POR UN PARAMETRO DEL UPDATE
+	mCamNode->translate(mDirection * mCamNode->getPosition(), Ogre::Node::TS_LOCAL);//ESTO NO SE HACE ASI, HAY QUE MULTIPLICAR MDIRECTION POR UN PARAMETRO DEL UPDATE
 
 	return true;
 }

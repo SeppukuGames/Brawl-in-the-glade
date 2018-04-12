@@ -20,6 +20,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "GameComponent.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
+#include "MoveCameraComponent.h"
 #include <time.h>
 using namespace Ogre;
 
@@ -55,10 +56,17 @@ void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
 	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//camNode->attachObject(mCamera);
+	//camNode->setPosition(0, 47, 222);
+
+	GameComponent * cam = new GameComponent(mSceneMgr);
+	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
-
+	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
+	actors_.push_back(cam);
+	
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	// create the camera
@@ -109,7 +117,7 @@ void TutorialApplication::createEntities(void)
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
 
-	for (int i = 0; i < 50; i++){
+	for (int i = 0; i < 1; i++){
 		ogro = ObjFactory::getTypeEnemy();
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
 		actors_.push_back(ogro); 
@@ -117,11 +125,20 @@ void TutorialApplication::createEntities(void)
 
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
+=======
+	GameComponent * ogro = new GameComponent(mSceneMgr);
+>>>>>>> origin/CamaraBasica
 	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
 
+	//ogro->getNode()->addChild(camNode);	//Esto es para asociar la cámara a sinbad (no hace falta ahora)
+	
 	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
 	ogro->addComponent(new MoveComponent());
+<<<<<<< HEAD
 	actors_.push_back(ogro);*/
+
+	actors_.push_back(ogro);
+	
 
 	//Metodos utiles de la escena:
 }
