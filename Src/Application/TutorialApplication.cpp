@@ -21,8 +21,21 @@ http://www.ogre3d.org/tikiwiki/
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "MoveCameraComponent.h"
+#include <stdio.h>
+#include "SoundEngine/irrKlang.h"
 #include <time.h>
+
+
+#if defined(WIN32)
+#include <conio.h>
+#else
+#include "../common/conio.h"
+#endif
+
+using namespace irrklang;
 using namespace Ogre;
+
+//#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
@@ -34,6 +47,40 @@ TutorialApplication::TutorialApplication(void)
 {
 }
 */
+//-------------------------------------------------------------------------------------
+
+void TutorialApplication::createSoundEngine(void) 
+{
+	// start the sound engine with default parameters
+	ISoundEngine* engine = createIrrKlangDevice();
+
+	if (!engine)
+	{
+		printf("Could not startup engine\n");
+	}
+
+	// To play a sound, we only to call play2D(). The second parameter
+	// tells the engine to play it looped.
+
+	// play some sound stream, looped
+
+	engine->play2D("../../Media/Sounds/getout.ogg", true);
+
+
+	// play a single sound
+	engine->play2D("../../Media/Sounds/bell.wav");
+
+	// After we are finished, we have to delete the irrKlang Device created earlier
+	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
+	// delete all objects you created with a method or function that starts with 'create'.
+	// (an exception is the play2D()- or play3D()-method, see the documentation or the
+	// next example for an explanation)
+	// The object is deleted simply by calling ->drop().
+
+	//engine->drop(); // delete engine
+
+}
+
 //-------------------------------------------------------------------------------------
 
 void TutorialApplication::createLights(void)
@@ -137,7 +184,7 @@ void TutorialApplication::createEntities(void)
 <<<<<<< HEAD
 	actors_.push_back(ogro);*/
 
-	actors_.push_back(ogro);
+	//actors_.push_back(ogro);
 	
 
 	//Metodos utiles de la escena:
@@ -153,6 +200,8 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
+
+	createSoundEngine();
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

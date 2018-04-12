@@ -36,12 +36,10 @@ public:
 		_gameObject->getNode()->yaw(Ogre::Degree(-rotation * arg.state.X.rel), Ogre::Node::TS_WORLD);
 		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 		}*/
-		int i = 0;
 
 		switch (id)
 		{
 		case OIS::MB_Left:
-			i++;
 			break;
 
 		default:

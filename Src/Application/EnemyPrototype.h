@@ -1,7 +1,6 @@
 #ifndef ENEMYPROTOTYPE_H_
 #define ENEMYPROTOTYPE_H_
 
-
 #include "GameComponent.h"
 
 //Clase virtual para declarar el prototipo del enemigo

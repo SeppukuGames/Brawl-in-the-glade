@@ -1,4 +1,4 @@
-#include "KeyInputComponent.h" //Queda arreglar el MoveComponent
+#include "KeyInputComponent.h" 
 #include "TutorialApplication.h"
 
 KeyInputComponent::KeyInputComponent() : Component()
