@@ -38,6 +38,8 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 #include "GameObject.h"
+#include "Physics.h"
+
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -140,6 +142,9 @@ protected:
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
+
+
+	Physics * physicsEngine;
 
 };
 

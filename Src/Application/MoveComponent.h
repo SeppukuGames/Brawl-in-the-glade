@@ -37,12 +37,12 @@ public:
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
-			direction.x = -velocity;
+			direction.x += -velocity;
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
-			direction.x = velocity;
+			direction.x += velocity;
 			break;
 
 		case OIS::KC_PGDOWN:
@@ -77,12 +77,12 @@ public:
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
-			direction.x = 0;
+			direction.x -= -velocity;
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
-			direction.x = 0;
+			direction.x -= velocity;
 			break;
 
 		case OIS::KC_PGDOWN:

@@ -17,6 +17,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
+#include <iostream>
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
@@ -65,6 +66,7 @@ void BaseApplication::go(void)
 
 	if (!setup())
 		return;
+
 
 	timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
@@ -116,6 +118,29 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
+
+	if (this->physicsEngine != NULL){
+		physicsEngine->getDynamicsWorld()->stepSimulation(1.0f / 60.0f); //suppose you have 60 frames per second
+
+		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
+			btCollisionObject* obj = this->physicsEngine->getDynamicsWorld()->getCollisionObjectArray()[i];
+			btRigidBody* body = btRigidBody::upcast(obj);
+
+			if (body && body->getMotionState()){
+				btTransform trans;
+				body->getMotionState()->getWorldTransform(trans);
+
+				void *userPointer = body->getUserPointer();
+				if (userPointer) {
+					btQuaternion orientation = trans.getRotation();
+					Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(userPointer);
+					sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+					sceneNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+				}
+			}
+		}
+	}
+	
 	//Actualiza todos los objetos
 	for (int i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
@@ -157,6 +182,8 @@ bool BaseApplication::setup(void)
 	chooseSceneManager();
 	createCamera();
 	createViewports();
+
+	physicsEngine = new Physics();
 
 	//Creamos la Escena del método hijo
 	createScene();

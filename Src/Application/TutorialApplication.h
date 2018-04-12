@@ -20,7 +20,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "EnemyPrototype.h"
 #include "Factory.h"
 
-
 class TutorialApplication : public BaseApplication
 {
 	
