@@ -40,6 +40,8 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreOverlaySystem.h>
 
 #include "GameObject.h"
+
+#include "buttonGUI.h"
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -90,6 +92,9 @@ protected:
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
 
+	//Botones
+	void handleButtonEvent(buttonGUI::buttonEvent * e);
+
 	//----------------Window Event Listener---------------
 	//Actualiza el estado del ratón a la nueva ventana
 	virtual void windowResized(Ogre::RenderWindow* rw);//Se le llama cada vez que se escala la ventana
@@ -139,6 +144,8 @@ protected:
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
 
+	//Botones
+	buttonGUI::buttonManager * buttonMgr;
 
 	//Para el bucle principal
 	double lastTime;

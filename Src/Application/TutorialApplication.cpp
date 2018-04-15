@@ -23,8 +23,10 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 
 
+
 #include <time.h>
 using namespace Ogre;
+using namespace buttonGUI;
 
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
@@ -112,7 +114,7 @@ void TutorialApplication::createEntities(void)
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
 
-	for (int i = 0; i < 50; i++){
+	for (int i = 0; i < 2; i++){
 		ogro = ObjFactory::getTypeEnemy();
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
 		actors_.push_back(ogro); 
@@ -162,6 +164,22 @@ void TutorialApplication::createEntities(void)
 
 	// Show the overlay
 	overlay->show();
+
+
+	//CREAR UN BOTON
+	mCamera->setAutoAspectRatio(true);
+
+	//create a text scheme
+	//textScheme  myTextScheme = new textScheme("Trebuchet", 20, 0, 1, 0, 1);
+
+
+	//instanciar el button Manager
+	//buttonMgr = new buttonGUI::buttonManager("myTextAreaMaterial", myTextScheme, mSceneMgr, "MainCam");
+
+	//Crear un boton
+
+	buttonMgr->createButton("building", "Panel", buttonPosition(TOP_RIGHT, 300, 300), 64, 64);
+
 
 
 	/*

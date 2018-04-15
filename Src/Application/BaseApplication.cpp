@@ -18,7 +18,9 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 #include <OgreOverlayManager.h>
+#include "buttonGUI.h"
 
+using namespace buttonGUI;
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
@@ -122,7 +124,30 @@ bool BaseApplication::update(double elapsed)
 	for (int i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
+	buttonEvent * e = buttonMgr->getEvent();            //THE FOLLOWING LOOP IS HOW TO GET EVENTS FROM buttonGUI
+	while (e)
+	{
+		handleButtonEvent(e);
+		e = buttonMgr->getEvent();
+	}
+	buttonMgr->update();
+
 	return true;
+}
+
+
+//Deteccion de input de botones
+//do something with the event
+void handleButtonEvent(buttonEvent * e)
+{
+	std::string name;
+	if (e->actionButton)
+		name = *(e->actionButton->getName());  //store the name of the main button.
+
+	if ((e->action == ONCLICK) && (name == "building"))
+	{
+		//do stuff...
+	}
 }
 
 //Detecta input
@@ -403,6 +428,13 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 //-------------------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)
 {
+	//Botones
+	//when you are done.
+	if (buttonMgr)
+	{
+		delete buttonMgr;
+		buttonMgr = NULL;
+	}
 }
 //-------------------------------------------------------------------------------------
 

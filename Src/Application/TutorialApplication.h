@@ -24,6 +24,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "OgreOverlayManager.h"
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
+#include "buttonGUI.h"
 
 
 
