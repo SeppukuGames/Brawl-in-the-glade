@@ -21,9 +21,10 @@ http://www.ogre3d.org/tikiwiki/
 #include "Factory.h"
 
 
+
 class TutorialApplication : public BaseApplication
 {
-	
+
 	static TutorialApplication * instance;
 	TutorialApplication(void);
 	//virtual ~TutorialApplication(void);

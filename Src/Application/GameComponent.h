@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "Component.h"
 
+//HAY QUE BORRAR ESTO ENTERO: EL H Y EL CPP
+
 //GameObject compuesto por componentes
 class GameComponent : public GameObject {
 

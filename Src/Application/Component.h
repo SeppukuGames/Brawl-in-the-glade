@@ -1,7 +1,10 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include "GameObject.h"
+//Declaración adelantada para evitar ciclo de inclusiones
+class GameObject;
+
+enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION };
 
 class Component {
 public:

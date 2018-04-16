@@ -17,12 +17,18 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialApplication.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-#include "GameComponent.h"
+
+//#include "GameComponent.h"
+#include "GameObject.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "MoveCameraComponent.h"
 #include "SoundEngine/irrKlang.h"
 #include <stdio.h>
+#include "AnimationComponent.h"
+
+//#include "CollisionComponent.h"    se usa?
+
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
@@ -81,6 +87,7 @@ void TutorialApplication::createSoundEngine(void)
 	//engine->drop(); // delete engine
 
 }
+
 
 //-------------------------------------------------------------------------------------
 
@@ -144,12 +151,16 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
+
+	
 	int random = 0;
 	for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
-			GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+			//Game Component ahora es Game Object
+			GameObject * OgritoQueRota = new GameObject(mSceneMgr);
+
 			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
 			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
@@ -170,10 +181,11 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 
+<<<<<<< HEAD
 	ObjFactory::initialize(mSceneMgr);
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
-
+	//Super útil
 	for (int i = 0; i < 1; i++){
 		ogro = ObjFactory::getTypeEnemy();
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
@@ -198,17 +210,23 @@ void TutorialApplication::createEntities(void)
 
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
-			GameComponent * enemigo = new GameComponent(mSceneMgr);
+			//GameComponent a GameObject
+			GameObject * enemigo = new GameComponent(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
 			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-			enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
+			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
 			enemigo->addComponent(new Enemigo());
+			enemigo->addComponent(new CollisionComponent());
+			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 			actors_.push_back(enemigo);
 		}
 	}
 
-	//Metodos utiles de la escena:
+
+	
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -227,9 +245,12 @@ void TutorialApplication::createScene(void)
 
 TutorialApplication *TutorialApplication::instance = 0;
 
+//Había conflicto aqui pero es igual lol
 TutorialApplication *TutorialApplication::getInstance()
 {
 	if (!instance)
 		instance = new TutorialApplication;
 	return instance;
+
 }
+

@@ -21,6 +21,11 @@ public:
 
 	};
 
+	//CREAR EL GET ENTITY
+	Ogre::Entity* getEntity(){
+		return _entity;
+	}
+
 private:
 	Ogre::Entity * _entity;
 	std::string _meshString;
