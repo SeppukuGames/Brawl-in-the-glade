@@ -14,6 +14,8 @@ public:
 	virtual ~EntityComponent(){};
 
 	virtual void start(){
+		//DA ERROR AQUI
+
 		_entity = _gameObject->getNode()->getCreator()->createEntity(_meshString);
 		_gameObject->getNode()->attachObject(_entity);
 	};

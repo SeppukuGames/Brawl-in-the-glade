@@ -12,12 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
     <ClCompile Include="..\..\Src\Application\GameComponent.cpp" />
-=======
     <ClCompile Include="..\..\Src\Application\CollisionComponent.cpp" />
->>>>>>> origin/AnimationComponent
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\KeyInputComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
@@ -31,12 +28,13 @@
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\CollisionComponent.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
-<<<<<<< HEAD
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
     <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
     <ClInclude Include="..\..\Src\Application\Factory.h" />
     <ClInclude Include="..\..\Src\Application\GameComponent.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
+     <ClInclude Include="..\..\Src\Application\CollisionManager.h" />
+      <ClInclude Include="..\..\Src\Application\StaticCollisionComponent.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MouseInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h" />
@@ -63,14 +61,6 @@
     <ClInclude Include="..\..\Src\Application\SoundEngine\ik_SAudioStreamFormat.h" />
     <ClInclude Include="..\..\Src\Application\SoundEngine\ik_vec3d.h" />
     <ClInclude Include="..\..\Src\Application\SoundEngine\irrKlang.h" />
-=======
-    <ClInclude Include="..\..\Src\Application\GameObject.h" />
-    <ClInclude Include="..\..\Src\Application\CollisionManager.h" />
-    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
-    <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
-    <ClInclude Include="..\..\Src\Application\StaticCollisionComponent.h" />
->>>>>>> origin/AnimationComponent
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />

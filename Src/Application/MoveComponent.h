@@ -146,6 +146,7 @@ public:
 	};
 
 private:
+	double rotation;
 	Ogre::Vector3 direction; 
 	float velocity;
 

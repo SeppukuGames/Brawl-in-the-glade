@@ -27,7 +27,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <stdio.h>
 #include "AnimationComponent.h"
 
-//#include "CollisionComponent.h"    se usa?
+#include "CollisionComponent.h"    //Incluido en el merge de animationComponent
 
 #include <time.h>
 #include <iostream>
@@ -181,7 +181,7 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 
-<<<<<<< HEAD
+
 	ObjFactory::initialize(mSceneMgr);
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
@@ -211,7 +211,7 @@ void TutorialApplication::createEntities(void)
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			//GameComponent a GameObject
-			GameObject * enemigo = new GameComponent(mSceneMgr);
+			GameObject * enemigo = new GameObject(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
 			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
