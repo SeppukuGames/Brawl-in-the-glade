@@ -115,7 +115,7 @@ void TutorialApplication::createCameras(void)
 	//camNode->attachObject(mCamera);
 	//camNode->setPosition(0, 47, 222);
 
-	GameComponent * cam = new GameComponent(mSceneMgr);
+	GameObject * cam = new GameObject(mSceneMgr);
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
@@ -208,8 +208,9 @@ void TutorialApplication::createEntities(void)
 
 	//actors_.push_back(ogro);
 
-	for (int i = 0; i < 10; i++){
-		for (int j = 0; j < 10; j++){
+	//20 a 4
+	for (int i = 0; i < 2; i++){
+		for (int j = 0; j < 2; j++){
 			//GameComponent a GameObject
 			GameObject * enemigo = new GameObject(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
@@ -217,15 +218,27 @@ void TutorialApplication::createEntities(void)
 
 			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
 			enemigo->addComponent(new Enemigo());
-			enemigo->addComponent(new CollisionComponent());
+			enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
 			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 			actors_.push_back(enemigo);
 		}
 	}
 
-
 	
+	/*
+	GameObject* ninja = new GameObject(mSceneMgr);
+
+	ninja->getNode()->setScale(0.5, 0.5, 0.5);
+	ninja->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+
+	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	//ninja->addComponent(new Enemigo());
+	ninja->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
+	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	actors_.push_back(ninja);
+	*/
 
 }
 

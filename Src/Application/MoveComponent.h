@@ -77,7 +77,7 @@ public:
 			break;
 
 		case OIS::KC_SPACE:
-			//animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
+			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
 
 			break;
 
@@ -86,7 +86,7 @@ public:
 		}
 
 		//E ORA DO MOVIMENTO
-		//animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
@@ -141,7 +141,7 @@ public:
 		default:  
 			break;
 		}
-		//animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
