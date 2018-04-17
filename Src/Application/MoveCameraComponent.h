@@ -37,9 +37,14 @@ public:
 		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 		}*/
 
+		//int mMoveScale = -1;
+
 		switch (id)
 		{
-		case OIS::MB_Left:
+		case OIS::MB_Middle:
+			//direction.z += mMoveScale;
+/*			_gameObject->getNode()->ca moveRelative(Vector3(0.0, 0.0, -0.1)
+				* mInputDevice->getMouseRelativeZ() * MoveFactor);*/
 			break;
 
 		default:

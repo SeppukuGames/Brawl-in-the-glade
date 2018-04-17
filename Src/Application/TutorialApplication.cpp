@@ -139,6 +139,76 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
+
+
+	//Crear el plano en Ogre
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+
+	Ogre::Entity *entGround = mSceneMgr->createEntity("GroundEntity", "ground");
+	Ogre::SceneNode *groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("groundNode");
+
+	groundNode->attachObject(entGround);
+
+	//create the plane entity to the physics engine, and attach it to the node
+
+	btTransform groundTransform;
+	groundTransform.setIdentity();
+	groundTransform.setOrigin(btVector3(0, -50, 0)); //ESTO TIENE QUE SER ASÍ PORQUE SI: MAGIC NUMERITO 
+	//LUEGO EN LOS COMENTARIOS LO RESUELVE
+
+	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+	btVector3 localGroundInertia(0, 0, 0);
+
+	btCollisionShape *groundShape = new btBoxShape(btVector3(btScalar(150.), btScalar(50.), btScalar(150.)));
+	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+	groundShape->calculateLocalInertia(groundMass, localGroundInertia);
+
+	btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, groundShape, localGroundInertia);
+	btRigidBody *groundBody = new btRigidBody(groundRBInfo);
+
+	//add the body to the dynamics world
+	physicsEngine->getDynamicsWorld()->addRigidBody(groundBody);
+
+
+	for (int i = 0; i < 100; i++)
+	{
+		//CREAMOS UN CUBITO
+		Ogre::Entity *entity = mSceneMgr->createEntity("suelo.mesh");
+
+		btVector3 initialPosition(-20 + i * 3, 300 - i * 3, 0);
+		std::string physicsCubeName = std::to_string(i);
+		Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
+		newNode->attachObject(entity);
+		newNode->setPosition(Ogre::Vector3(-100 + i * 10, 100, 0));
+		//create the new shape, and tell the physics that is a Box
+		btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+		physicsEngine->getCollisionShapes().push_back(newRigidShape);
+
+		//set the initial position and transform. For this demo, we set the tranform to be none
+		btTransform startTransform;
+		startTransform.setIdentity();
+		startTransform.setRotation(btQuaternion(1.0f, 1.0f, 1.0f, 0));
+
+		//set the mass of the object. a mass of "0" means that it is an immovable object
+		btScalar mass = 0.1f;
+		btVector3 localInertia(0, 0, 0);
+
+		startTransform.setOrigin(initialPosition);
+		newRigidShape->calculateLocalInertia(mass, localInertia);
+
+		//actually contruvc the body and add it to the dynamics world
+		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
+
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+		btRigidBody *body = new btRigidBody(rbInfo);
+		body->setRestitution(1);
+		body->setUserPointer(newNode);
+
+		physicsEngine->getDynamicsWorld()->addRigidBody(body);
+		physicsEngine->trackRigidBodyWithName(body, physicsCubeName);
+	}
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	/*
 	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
@@ -151,7 +221,7 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	
-	srand((unsigned int)time(NULL));
+	/*srand((unsigned int)time(NULL));
 
 	
 	int random = 0;
@@ -209,7 +279,7 @@ void TutorialApplication::createEntities(void)
 	//actors_.push_back(ogro);
 
 	//20 a 4
-	for (int i = 0; i < 2; i++){
+	/*for (int i = 0; i < 2; i++){
 		for (int j = 0; j < 2; j++){
 			//GameComponent a GameObject
 			GameObject * enemigo = new GameObject(mSceneMgr);

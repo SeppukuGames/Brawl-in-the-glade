@@ -38,6 +38,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 #include "GameObject.h"
+#include "Physics.h"
 
 #include "CollisionManager.h" //Añadido
 
@@ -149,10 +150,13 @@ protected:
 
 	CollisionManager* collisionManager;
 	
+	Physics * physicsEngine;
 
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
+
+
 
 };
 
