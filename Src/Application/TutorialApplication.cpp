@@ -77,6 +77,13 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
+	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
+	
+	//Todos los rigidbody necesitan una referencia al collision shape.
+	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
+	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
+
+	//---------------------PLANO---------------------------------
 
 	//Crear el plano en Ogre
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
@@ -87,28 +94,82 @@ void TutorialApplication::createEntities(void)
 
 	groundNode->attachObject(entGround);
 
-	//create the plane entity to the physics engine, and attach it to the node
-
 	btTransform groundTransform;
 	groundTransform.setIdentity();
-	groundTransform.setOrigin(btVector3(0, -50, 0)); //ESTO TIENE QUE SER ASÍ PORQUE SI: MAGIC NUMERITO 
-	//LUEGO EN LOS COMENTARIOS LO RESUELVE
+	groundTransform.setOrigin(btVector3(0, -1, 0)); 
 
+	//Masa 0 -> Objeto estático. Masa infinita
 	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
 	btVector3 localGroundInertia(0, 0, 0);
 
-	btCollisionShape *groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(50.), btScalar(50.)));
+	//Creamos un plano en el origen.
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
 	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
 
+	//Añadimos rigidbodies con collision Shapes en la escena
 	groundShape->calculateLocalInertia(groundMass, localGroundInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, groundShape, localGroundInertia);
-	btRigidBody *groundBody = new btRigidBody(groundRBInfo);
+	btRigidBody* groundRigidBody = new btRigidBody(groundRBInfo);
 
-	//add the body to the dynamics world
-	physicsEngine->getDynamicsWorld()->addRigidBody(groundBody);
+	//Añadimos el suelo al mundo
+	physicsEngine->getDynamicsWorld()->addRigidBody(groundRigidBody);
+
+	//---------------------PLANO---------------------------------
+
+	//---------------------ESFERA---------------------------------
+
+	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
+
+	btVector3 initialPosition(0, 100, 0);
+	std::string physicsCubeName = "ogrito";
+	Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
+	//newNode->setScale(0.1, 0.1, 0.1);
+	newNode->attachObject(entity);
+
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShape = new btSphereShape(15);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+	physicsEngine->getCollisionShapes().push_back(fallShape);
+
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setOrigin(initialPosition);
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar mass (100.0f);
+	btVector3 fallInertia(0, 0, 0);
+
+	fallShape->calculateLocalInertia(mass, fallInertia);
+
+	//Construimos el rigidbody y lo añadimos al mundo
+	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
+
+	fallRigidBody->setRestitution(1);
+	fallRigidBody->setUserPointer(newNode);
+	fallRigidBody->setAngularVelocity(btVector3(10,0,0));
+
+	physicsEngine->getDynamicsWorld()->addRigidBody(fallRigidBody);
+	physicsEngine->trackRigidBodyWithName(fallRigidBody, physicsCubeName);
+
+	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
+	SE COPIAN AL OBJETO QUE SE LO DAMOS
+	*/
+	//---------------------ESFERA---------------------------------
 
 
+	//SE DEBEN DESTRUIR
+
+
+
+	/*CREACIÓN DE UN PLANO Y OBJETOS CUBOS
 	for (int i = 0; i < 100; i++)
 	{
 		//CREAMOS UN CUBITO
@@ -147,6 +208,7 @@ void TutorialApplication::createEntities(void)
 		physicsEngine->trackRigidBodyWithName(body, physicsCubeName);
 	}
 
+	*/
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	/*
 	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
