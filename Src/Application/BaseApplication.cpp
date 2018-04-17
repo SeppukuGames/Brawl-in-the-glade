@@ -120,7 +120,7 @@ bool BaseApplication::update(double elapsed)
 {
 
 	if (this->physicsEngine != NULL){
-		physicsEngine->getDynamicsWorld()->stepSimulation(1.0f / 60.0f,10); //suppose you have 60 frames per second
+		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar (1.0f / 60.0f)); //suppose you have 60 frames per second
 
 		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
 			//Obtiene referencia al rigidbody correspondiente

@@ -124,11 +124,11 @@ void TutorialApplication::createEntities(void)
 	btVector3 initialPosition(0, 100, 0);
 	std::string physicsCubeName = "ogrito";
 	Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
-	//newNode->setScale(0.1, 0.1, 0.1);
+	newNode->setScale(0.1, 0.1, 0.1);
 	newNode->attachObject(entity);
 
 	//Creamos la esfera de radio 1
-	btCollisionShape* fallShape = new btSphereShape(15);
+	btCollisionShape* fallShape = new btSphereShape(1);
 	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
 	physicsEngine->getCollisionShapes().push_back(fallShape);
 
@@ -142,7 +142,7 @@ void TutorialApplication::createEntities(void)
 	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar mass (100.0f);
+	btScalar mass (10.0f);
 	btVector3 fallInertia(0, 0, 0);
 
 	fallShape->calculateLocalInertia(mass, fallInertia);
@@ -153,7 +153,6 @@ void TutorialApplication::createEntities(void)
 
 	fallRigidBody->setRestitution(1);
 	fallRigidBody->setUserPointer(newNode);
-	fallRigidBody->setAngularVelocity(btVector3(10,0,0));
 
 	physicsEngine->getDynamicsWorld()->addRigidBody(fallRigidBody);
 	physicsEngine->trackRigidBodyWithName(fallRigidBody, physicsCubeName);
