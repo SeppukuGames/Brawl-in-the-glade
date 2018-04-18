@@ -221,11 +221,11 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	
-	/*srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 
 	
 	int random = 0;
-	for (int i = 0; i < 40; i++){
+	/*for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
@@ -249,7 +249,7 @@ void TutorialApplication::createEntities(void)
 
 			actors_.push_back(OgritoQueRota);
 		}
-	}
+	}*/
 
 
 	ObjFactory::initialize(mSceneMgr);
@@ -323,7 +323,7 @@ void TutorialApplication::createScene(void)
 
 	createEntities();
 
-	createSoundEngine();
+	//createSoundEngine();
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

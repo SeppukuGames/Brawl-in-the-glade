@@ -120,7 +120,10 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
-	
+	//Actualiza todos los objetos
+	for (size_t i = 0; i < actors_.size(); i++)
+		actors_[i]->tick(elapsed);
+
 	if (this->physicsEngine != NULL){
 		physicsEngine->getDynamicsWorld()->stepSimulation(1.0f / 60.0f); //suppose you have 60 frames per second
 
@@ -143,9 +146,7 @@ bool BaseApplication::update(double elapsed)
 		}
 	}
 
-	//Actualiza todos los objetos
-	for (size_t i = 0; i < actors_.size(); i++)
-		actors_[i]->tick(elapsed);
+
 
 	return true;
 }
