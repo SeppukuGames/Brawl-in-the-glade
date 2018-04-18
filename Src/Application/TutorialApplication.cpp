@@ -142,7 +142,7 @@ void TutorialApplication::createEntities(void)
 
 
 	//Crear el plano en Ogre
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	Ogre::Entity *entGround = mSceneMgr->createEntity("GroundEntity", "ground");
@@ -170,7 +170,7 @@ void TutorialApplication::createEntities(void)
 
 	//add the body to the dynamics world
 	physicsEngine->getDynamicsWorld()->addRigidBody(groundBody);
-
+	*/
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -225,7 +225,8 @@ void TutorialApplication::createEntities(void)
 
 	
 	int random = 0;
-	/*for (int i = 0; i < 40; i++){
+	int cont = 200;
+	for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
@@ -241,15 +242,58 @@ void TutorialApplication::createEntities(void)
 					OgritoQueRota->getNode()->getPosition().y << ", " << OgritoQueRota->getNode()->getPosition().z << "\n";
 			}
 			else{
-				if (random % 6 == 0)
+				if (random % 6 == 0) {
 					OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
-				else
-					OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
-			}
+				}
+				else {
 
+					EntityComponent *ogroComp = new EntityComponent("suelo.mesh");
+					OgritoQueRota->addComponent(ogroComp);
+					
+					//CREAMOS UN CUBITO
+					//Ogre::Entity *entity = mSceneMgr->createEntity("suelo.mesh");
+
+					btVector3 initialPosition(OgritoQueRota->getNode()->getPosition().x,
+						OgritoQueRota->getNode()->getPosition().y, OgritoQueRota->getNode()->getPosition().z);
+					std::string physicsCubeName = std::to_string(cont);
+					Ogre::SceneNode *groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
+					//ESTO NO FUNCIONA BIEN
+					groundNode->attachObject(ogroComp->getEntity());
+					groundNode->setPosition(OgritoQueRota->getNode()->getPosition());
+					
+					//create the new shape, and tell the physics that is a Box
+					btCollisionShape *newRigidShape = new btBoxShape(btVector3(btScalar(25.), btScalar(25.), btScalar(25.)));
+					physicsEngine->getCollisionShapes().push_back(newRigidShape);
+
+					//set the initial position and transform. For this demo, we set the tranform to be none
+					btTransform startTransform;
+					startTransform.setIdentity();
+					//startTransform.setRotation(btQuaternion(1.0f, 1.0f, 1.0f, 0));
+
+					//set the mass of the object. a mass of "0" means that it is an immovable object
+					btScalar mass (0.);
+					btVector3 localInertia(0, 0, 0);
+
+					startTransform.setOrigin(initialPosition);
+					newRigidShape->calculateLocalInertia(mass, localInertia);
+
+					//actually contruvc the body and add it to the dynamics world
+					btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
+
+					btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+					btRigidBody *body = new btRigidBody(rbInfo);
+					//body->setRestitution(1);
+					body->setUserPointer(groundNode);
+
+					physicsEngine->getDynamicsWorld()->addRigidBody(body);
+					physicsEngine->trackRigidBodyWithName(body, physicsCubeName);
+					cont++;
+				}
+			}
+			
 			actors_.push_back(OgritoQueRota);
 		}
-	}*/
+	}
 
 
 	ObjFactory::initialize(mSceneMgr);
