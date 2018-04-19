@@ -33,5 +33,4 @@ void Physics::initObjects() {
 
 	//Instanciamos el mundo dinámico
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
 }

@@ -30,8 +30,8 @@ http://www.ogre3d.org/tikiwiki/
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
-
-
+#include "RigidbodyComponent.h"
+#include "DynamicRigidbodyComponent.h"
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -75,8 +75,8 @@ void TutorialApplication::createCameras(void)
 	//camNode->attachObject(mCamera);
 	//camNode->setPosition(0, 47, 222);
 
-	GameObject * cam = new GameObject(mSceneMgr);
-	SceneNode* camNode = cam->getNode()->createChildSceneNode();
+	GameObject * cam = new GameObject(mSceneMgr,"camara");
+	SceneNode* camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
@@ -111,52 +111,40 @@ void TutorialApplication::createEntities(void)
 
 	//Crear el plano en Ogre
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
-	Ogre::Entity *entGround = mSceneMgr->createEntity("GroundEntity", "ground");
-	Ogre::SceneNode *groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("groundNode");
+	GameObject *planito = new GameObject(mSceneMgr,"suelo");
+	planito->addComponent(new EntityComponent("ground"));
 
-	groundNode->attachObject(entGround);
+	//PhysicsComponent
 
+	//MOTION STATE
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(btVector3(0, -1, 0));
 
+	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+	//COLLISION SHAPE
+	//Creamos un plano en el origen.
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
 	//Masa 0 -> Objeto estático. Masa infinita
 	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
 	btVector3 localGroundInertia(0, 0, 0);
 
-	//Creamos un plano en el origen.
-	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
-	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
-	//Añadimos rigidbodies con collision Shapes en la escena
-	groundShape->calculateLocalInertia(groundMass, localGroundInertia);
-
-	btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, groundShape, localGroundInertia);
-	btRigidBody* groundRigidBody = new btRigidBody(groundRBInfo);
-
-	//Añadimos el suelo al mundo
-	physicsEngine->getDynamicsWorld()->addRigidBody(groundRigidBody);
 
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
+	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
+	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
+	esfera->getNode()->setScale(0.1, 0.1, 0.1);
 
-	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
-
-	btVector3 initialPosition(0, 100, 0);
-	std::string physicsCubeName = "ogrito";
-	Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
-	newNode->setScale(0.1, 0.1, 0.1);
-	newNode->attachObject(entity);
-
-	//Creamos la esfera de radio 1
-	btCollisionShape* fallShape = new btSphereShape(1);
-	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
-	physicsEngine->getCollisionShapes().push_back(fallShape);
-
+	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 initialPosition(0, 100, 0);
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(initialPosition);
@@ -165,21 +153,19 @@ void TutorialApplication::createEntities(void)
 	//Esfera a 50 metros de altura
 	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
 
+	//Colision shape
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShape = new btSphereShape(1);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+
 	//set the mass of the object. a mass of "0" means that it is an immovable object
 	btScalar mass(10.0f);
 	btVector3 fallInertia(0, 0, 0);
 
-	fallShape->calculateLocalInertia(mass, fallInertia);
+	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
+	esfera->addComponent(rbComponent);
 
-	//Construimos el rigidbody y lo añadimos al mundo
-	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-
-	fallRigidBody->setRestitution(1);
-	fallRigidBody->setUserPointer(newNode);
-
-	physicsEngine->getDynamicsWorld()->addRigidBody(fallRigidBody);
-	physicsEngine->trackRigidBodyWithName(fallRigidBody, physicsCubeName);
+	rbComponent->getRigidbody()->setRestitution(1);
 
 	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
@@ -228,7 +214,7 @@ void TutorialApplication::createEntities(void)
 		}
 	}*/
 
-
+	/*
 	ObjFactory::initialize(mSceneMgr);
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
@@ -238,6 +224,7 @@ void TutorialApplication::createEntities(void)
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
 		actors_.push_back(ogro); 
 	}
+	*/
 
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);

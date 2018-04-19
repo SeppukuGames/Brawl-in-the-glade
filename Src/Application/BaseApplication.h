@@ -71,6 +71,7 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
 
+	virtual Physics * getPhysicsEngine();
 
 
 protected:

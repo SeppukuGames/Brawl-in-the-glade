@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{b1f7c529-a660-4275-b2ff-2507e92db806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Component\Rigidbody">
+      <UniqueIdentifier>{4f47c67e-1421-411c-825a-1d098081b1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Rigidbody">
+      <UniqueIdentifier>{e741f8d7-314a-42c3-84c6-f70b23ac3f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -65,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Physics.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
+      <Filter>Source Files\Components\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
+      <Filter>Source Files\Components\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +104,6 @@
     <ClInclude Include="..\..\Src\Application\MoveComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
@@ -115,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
+      <Filter>Header Files\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
+      <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
