@@ -74,6 +74,12 @@ public:
 
 
 protected:
+	/// The physics clock is just used to run the physics and runs asynchronously with the gameclock
+	unsigned long time_physics_prev, time_physics_curr;
+
+	/// There's an inner loop in here where things happen once every TickMs. These variables are for that.
+	unsigned long time_gameclock;
+
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
 	virtual bool handleInput(void);//Detecta input

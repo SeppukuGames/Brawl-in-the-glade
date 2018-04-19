@@ -10,7 +10,7 @@ EnemyType1::EnemyType1(Ogre::SceneManager * mSceneMgr) : EnemyPrototype(mSceneMg
 EnemyPrototype * EnemyType1::clone(){
 
 	EnemyType1 * enemy = new EnemyType1(node->getCreator());
-	enemy->getNode()->setScale(Ogre::Vector3(0.10, 0.1, 0.15));
+	enemy->getNode()->setScale(Ogre::Vector3(1, 1, 1));
 
 	//Se añaden los componentes
 	//Hemos metido el ninja aquí por probar. Es importante que el elemento que tenga un Move Component tenga tambien el Animation porque sino se rompe. 

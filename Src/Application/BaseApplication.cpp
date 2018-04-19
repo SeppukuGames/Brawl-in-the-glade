@@ -100,6 +100,9 @@ bool BaseApplication::gameLoop()
 	if (!handleInput())
 		return false;
 
+	/// Reset all of our timers
+	time_physics_prev = time_physics_curr = getMilliseconds();
+	time_gameclock = getMilliseconds();
 	update(elapsed);
 
 	if (!render())
@@ -132,8 +135,10 @@ bool BaseApplication::update(double elapsed)
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
-	if (this->physicsEngine != NULL){
-		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
+	if (this->physicsEngine != NULL){		
+		int maxSubSteps = 1;
+		btScalar fixedTimeStep = btScalar(1.0) / btScalar(60.0); //suppose you have 60 frames per second
+		physicsEngine->getDynamicsWorld()->stepSimulation(fixedTimeStep);
 
 		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
 			//Obtiene referencia al rigidbody correspondiente
@@ -144,7 +149,6 @@ bool BaseApplication::update(double elapsed)
 				//Cogemos el transform del estado del rigidbody correspondiente
 				btTransform trans;
 				body->getMotionState()->getWorldTransform(trans);
-
 
 				//Decir a Ogre que cambie el nodo de posición
 				void *userPointer = body->getUserPointer();

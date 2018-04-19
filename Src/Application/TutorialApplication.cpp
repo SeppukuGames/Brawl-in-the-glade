@@ -78,7 +78,7 @@ void TutorialApplication::createCameras(void)
 	GameObject * cam = new GameObject(mSceneMgr);
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
-	camNode->setPosition(0, 47, 222);
+	camNode->setPosition(0, 0, 80);	
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
 	actors_.push_back(cam);
 	
@@ -111,7 +111,7 @@ void TutorialApplication::createEntities(void)
 
 	//Crear el plano en Ogre
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 512, 512, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	Ogre::Entity *entGround = mSceneMgr->createEntity("GroundEntity", "ground");
 	Ogre::SceneNode *groundNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("groundNode");
@@ -140,7 +140,7 @@ void TutorialApplication::createEntities(void)
 	physicsEngine->getDynamicsWorld()->addRigidBody(groundRigidBody);
 
 	//---------------------PLANO---------------------------------
-
+	
 	//---------------------ESFERA---------------------------------
 
 	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
@@ -148,7 +148,7 @@ void TutorialApplication::createEntities(void)
 	btVector3 initialPosition(0, 100, 0);
 	std::string physicsCubeName = "ogrito";
 	Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
-	newNode->setScale(0.1, 0.1, 0.1);
+	newNode->setScale(0.05, 0.05, 0.05);
 	newNode->attachObject(entity);
 
 	//Creamos la esfera de radio 1
@@ -166,7 +166,7 @@ void TutorialApplication::createEntities(void)
 	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar mass(10.0f);
+	btScalar mass(20.0f);
 	btVector3 fallInertia(0, 0, 0);
 
 	fallShape->calculateLocalInertia(mass, fallInertia);
@@ -200,7 +200,7 @@ void TutorialApplication::createEntities(void)
 	
 	srand((unsigned int)time(NULL));
 
-	
+	//Generacion del mapa
 	int random = 0;
 	/*for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
@@ -228,15 +228,15 @@ void TutorialApplication::createEntities(void)
 		}
 	}*/
 
-
 	ObjFactory::initialize(mSceneMgr);
 
-	EnemyPrototype * ogro;//Prototipo del enemigo
+	EnemyPrototype * enemigo;//Prototipo del enemigo
 	//Super útil
 	for (int i = 0; i < 1; i++){
-		ogro = ObjFactory::getTypeEnemy();
-		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
-		actors_.push_back(ogro); 
+		enemigo = ObjFactory::getTypeEnemy(); //Ninja
+		enemigo->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
+		enemigo->getNode()->setScale(Ogre::Vector3(0.05, 0.05, 0.05));
+		actors_.push_back(enemigo); 
 	}
 
 	/*
