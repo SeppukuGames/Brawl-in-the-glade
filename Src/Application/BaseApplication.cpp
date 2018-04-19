@@ -18,6 +18,15 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 
+#if defined(WIN32)
+#include <conio.h>
+#else
+#include "../common/conio.h"
+#endif
+
+
+using namespace irrklang;
+
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
@@ -110,7 +119,6 @@ bool BaseApplication::handleInput(void){
 	mKeyboard->capture();
 	mMouse->capture();
 
-
 	if (mShutDown)
 		return false;
 
@@ -125,16 +133,20 @@ bool BaseApplication::update(double elapsed)
 		actors_[i]->tick(elapsed);
 
 	if (this->physicsEngine != NULL){
-		physicsEngine->getDynamicsWorld()->stepSimulation(1.0f / 60.0f); //suppose you have 60 frames per second
+		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
 
 		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
+			//Obtiene referencia al rigidbody correspondiente
 			btCollisionObject* obj = this->physicsEngine->getDynamicsWorld()->getCollisionObjectArray()[i];
 			btRigidBody* body = btRigidBody::upcast(obj);
 
 			if (body && body->getMotionState()){
+				//Cogemos el transform del estado del rigidbody correspondiente
 				btTransform trans;
 				body->getMotionState()->getWorldTransform(trans);
 
+
+				//Decir a Ogre que cambie el nodo de posición
 				void *userPointer = body->getUserPointer();
 				if (userPointer) {
 					btQuaternion orientation = trans.getRotation();
@@ -187,8 +199,7 @@ bool BaseApplication::setup(void)
 	createViewports();
 
 	physicsEngine = new Physics();
-	collisionManager = new CollisionManager();
-
+	initSoundEngine();
 	//Creamos la Escena del método hijo
 	createScene();
 
@@ -348,6 +359,37 @@ void BaseApplication::createViewports(void)
 
 //-------------------------------------------------------------------------------------
 
+void BaseApplication::initSoundEngine(void)
+{
+	// start the sound engine with default parameters
+	soundEngine = createIrrKlangDevice();
+
+	if (!soundEngine)
+	{
+		printf("Could not startup engine\n");
+	}
+
+	// To play a sound, we only to call play2D(). The second parameter
+	// tells the engine to play it looped.
+
+	// play some sound stream, looped
+
+	soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
+
+
+	// play a single sound
+	soundEngine->play2D("../../Media/Sounds/bell.wav");
+
+	// After we are finished, we have to delete the irrKlang Device created earlier
+	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
+	// delete all objects you created with a method or function that starts with 'create'.
+	// (an exception is the play2D()- or play3D()-method, see the documentation or the
+	// next example for an explanation)
+	// The object is deleted simply by calling ->drop().
+
+	//engine->drop(); // delete engine
+
+}
 //Inicializa el input
 void BaseApplication::initOIS(void)
 {

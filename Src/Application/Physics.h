@@ -11,14 +11,18 @@
 
 //Physics Manager
 class Physics{
-
+	//Escoger el algoritmo de detección de colisiones. Hay muchos algoritmos. Detecta pares de colisiones
 	btBroadphaseInterface* broadphase;
+
+	//Permite tunear los algoritmos usados para la detección de colisiones
 	btDefaultCollisionConfiguration* collisionConfiguration;
+
+	//registra un callback que filtra las superposiciones haciendo que el sistema no procese las colisiones que no nos interesan
 	btCollisionDispatcher* dispatcher;
 
 	/*Si introducimos diferentes tipos de colisión de objetos
 	(por ejemplo meshes usando btGImpachMeshShape)
-	necesitamos registrar un algoritmo de colisiones 
+	necesitamos registrar un algoritmo de colisiones
 	para obtener las colisiones reconocidas*/
 	//btGImpactCollisionAlgorithm::registerAlgorithm(dispatcher);
 
@@ -26,7 +30,10 @@ class Physics{
 	la gravedad, lógica del juego, fuerzas, colisiones, etc*/
 	//Hay otras versiones para mejorar el rendimiento
 	btSequentialImpulseConstraintSolver* solver;
+
+	//Mundo
 	btDiscreteDynamicsWorld* dynamicsWorld;
+
 	std::vector<btCollisionShape *> collisionShapes;
 	std::map<std::string, btRigidBody *> physicsAccessors;
 

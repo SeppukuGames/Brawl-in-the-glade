@@ -23,23 +23,15 @@ http://www.ogre3d.org/tikiwiki/
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "MoveCameraComponent.h"
-#include "SoundEngine/irrKlang.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
 
-#include "CollisionComponent.h"    //Incluido en el merge de animationComponent
 
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
 
-#if defined(WIN32)
-#include <conio.h>
-#else
-#include "../common/conio.h"
-#endif
 
-using namespace irrklang;
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -55,38 +47,6 @@ TutorialApplication::TutorialApplication(void)
 }
 */
 //-------------------------------------------------------------------------------------
-
-void TutorialApplication::createSoundEngine(void) 
-{
-	// start the sound engine with default parameters
-	ISoundEngine* engine = createIrrKlangDevice();
-
-	if (!engine)
-	{
-		printf("Could not startup engine\n");
-	}
-
-	// To play a sound, we only to call play2D(). The second parameter
-	// tells the engine to play it looped.
-
-	// play some sound stream, looped
-
-	engine->play2D("../../Media/Sounds/getout.ogg", true);
-
-
-	// play a single sound
-	engine->play2D("../../Media/Sounds/bell.wav");
-
-	// After we are finished, we have to delete the irrKlang Device created earlier
-	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
-	// delete all objects you created with a method or function that starts with 'create'.
-	// (an exception is the play2D()- or play3D()-method, see the documentation or the
-	// next example for an explanation)
-	// The object is deleted simply by calling ->drop().
-
-	//engine->drop(); // delete engine
-
-}
 
 
 //-------------------------------------------------------------------------------------
@@ -141,6 +101,14 @@ void TutorialApplication::createEntities(void)
 {
 
 
+	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
+
+	//Todos los rigidbody necesitan una referencia al collision shape.
+	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
+	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
+
+	//---------------------PLANO---------------------------------
+
 	//Crear el plano en Ogre
 	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
@@ -150,65 +118,74 @@ void TutorialApplication::createEntities(void)
 
 	groundNode->attachObject(entGround);
 
-	//create the plane entity to the physics engine, and attach it to the node
-
 	btTransform groundTransform;
 	groundTransform.setIdentity();
-	groundTransform.setOrigin(btVector3(0, -50, 0)); //ESTO TIENE QUE SER ASÍ PORQUE SI: MAGIC NUMERITO 
-	//LUEGO EN LOS COMENTARIOS LO RESUELVE
+	groundTransform.setOrigin(btVector3(0, -1, 0));
 
+	//Masa 0 -> Objeto estático. Masa infinita
 	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
 	btVector3 localGroundInertia(0, 0, 0);
 
-	btCollisionShape *groundShape = new btBoxShape(btVector3(btScalar(150.), btScalar(50.), btScalar(150.)));
+	//Creamos un plano en el origen.
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
 	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
 
+	//Añadimos rigidbodies con collision Shapes en la escena
 	groundShape->calculateLocalInertia(groundMass, localGroundInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo groundRBInfo(groundMass, groundMotionState, groundShape, localGroundInertia);
-	btRigidBody *groundBody = new btRigidBody(groundRBInfo);
+	btRigidBody* groundRigidBody = new btRigidBody(groundRBInfo);
 
-	//add the body to the dynamics world
-	physicsEngine->getDynamicsWorld()->addRigidBody(groundBody);
+	//Añadimos el suelo al mundo
+	physicsEngine->getDynamicsWorld()->addRigidBody(groundRigidBody);
 
+	//---------------------PLANO---------------------------------
 
-	for (int i = 0; i < 100; i++)
-	{
-		//CREAMOS UN CUBITO
-		Ogre::Entity *entity = mSceneMgr->createEntity("suelo.mesh");
+	//---------------------ESFERA---------------------------------
 
-		btVector3 initialPosition(-20 + i * 3, 300 - i * 3, 0);
-		std::string physicsCubeName = std::to_string(i);
-		Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
-		newNode->attachObject(entity);
-		newNode->setPosition(Ogre::Vector3(-100 + i * 10, 100, 0));
-		//create the new shape, and tell the physics that is a Box
-		btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
-		physicsEngine->getCollisionShapes().push_back(newRigidShape);
+	Ogre::Entity *entity = mSceneMgr->createEntity("ogrehead.mesh");
 
-		//set the initial position and transform. For this demo, we set the tranform to be none
-		btTransform startTransform;
-		startTransform.setIdentity();
-		startTransform.setRotation(btQuaternion(1.0f, 1.0f, 1.0f, 0));
+	btVector3 initialPosition(0, 100, 0);
+	std::string physicsCubeName = "ogrito";
+	Ogre::SceneNode *newNode = mSceneMgr->getRootSceneNode()->createChildSceneNode(physicsCubeName);
+	newNode->setScale(0.1, 0.1, 0.1);
+	newNode->attachObject(entity);
 
-		//set the mass of the object. a mass of "0" means that it is an immovable object
-		btScalar mass = 0.1f;
-		btVector3 localInertia(0, 0, 0);
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShape = new btSphereShape(1);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+	physicsEngine->getCollisionShapes().push_back(fallShape);
 
-		startTransform.setOrigin(initialPosition);
-		newRigidShape->calculateLocalInertia(mass, localInertia);
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setOrigin(initialPosition);
 
-		//actually contruvc the body and add it to the dynamics world
-		btDefaultMotionState *myMotionState = new btDefaultMotionState(startTransform);
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
 
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-		btRigidBody *body = new btRigidBody(rbInfo);
-		body->setRestitution(1);
-		body->setUserPointer(newNode);
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar mass(10.0f);
+	btVector3 fallInertia(0, 0, 0);
 
-		physicsEngine->getDynamicsWorld()->addRigidBody(body);
-		physicsEngine->trackRigidBodyWithName(body, physicsCubeName);
-	}
+	fallShape->calculateLocalInertia(mass, fallInertia);
+
+	//Construimos el rigidbody y lo añadimos al mundo
+	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
+
+	fallRigidBody->setRestitution(1);
+	fallRigidBody->setUserPointer(newNode);
+
+	physicsEngine->getDynamicsWorld()->addRigidBody(fallRigidBody);
+	physicsEngine->trackRigidBodyWithName(fallRigidBody, physicsCubeName);
+
+	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
+	SE COPIAN AL OBJETO QUE SE LO DAMOS
+	*/
+	//---------------------ESFERA---------------------------------
 	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
 	/*
 	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
@@ -322,8 +299,6 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
-
-	//createSoundEngine();
 }
 
 TutorialApplication *TutorialApplication::instance = 0;
