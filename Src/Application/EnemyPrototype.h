@@ -9,7 +9,7 @@ class EnemyPrototype : public GameObject{
 public:
 
 	virtual EnemyPrototype * clone() = 0;
-	EnemyPrototype(Ogre::SceneManager *mScn) :GameObject(mScn,"enemigo"){};
+	EnemyPrototype(Ogre::SceneManager *mScn) :GameObject(mScn){};
 
 };
 

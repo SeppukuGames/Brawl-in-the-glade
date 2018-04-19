@@ -10,6 +10,7 @@ public:
 	~DynamicRigidbodyComponent();
 
 	virtual void start();
+	virtual void tick(double elapsed);
 
 	inline btRigidBody * getRigidbody(){ return rigidBody; }
 };

@@ -26,7 +26,7 @@ public:
 	};
 	
 	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
+		_gameObject->getNode()->translate(direction *Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 	};
 
 	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){

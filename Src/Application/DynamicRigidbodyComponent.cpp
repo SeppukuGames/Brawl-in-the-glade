@@ -24,3 +24,17 @@ void DynamicRigidbodyComponent::start()
 	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
 
 }
+
+void DynamicRigidbodyComponent::tick(double elapsed){
+
+	//Cogemos el transform del estado del rigidbody correspondiente
+	btTransform trans;
+	rigidBody->getMotionState()->getWorldTransform(trans);
+
+	btQuaternion orientation = trans.getRotation();
+
+	_gameObject->getNode()->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+	_gameObject->getNode()->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+
+}

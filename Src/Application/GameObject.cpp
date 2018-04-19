@@ -8,7 +8,11 @@
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
-	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name,Ogre::Vector3(0, 0, 0));
+	if (name != "")
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name,Ogre::Vector3(0, 0, 0));
+	else
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+
 }
 
 

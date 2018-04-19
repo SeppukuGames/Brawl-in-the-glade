@@ -128,37 +128,12 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
+	if (this->physicsEngine != NULL)
+		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
+	
 	//Actualiza todos los objetos
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
-
-	if (this->physicsEngine != NULL){
-		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
-
-		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
-			//Obtiene referencia al rigidbody correspondiente
-			btCollisionObject* obj = this->physicsEngine->getDynamicsWorld()->getCollisionObjectArray()[i];
-			btRigidBody* body = btRigidBody::upcast(obj);
-
-			if (body && body->getMotionState()){
-				//Cogemos el transform del estado del rigidbody correspondiente
-				btTransform trans;
-				body->getMotionState()->getWorldTransform(trans);
-
-
-				//Decir a Ogre que cambie el nodo de posición
-				void *userPointer = body->getUserPointer();
-				if (userPointer) {
-					btQuaternion orientation = trans.getRotation();
-					Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(userPointer);
-					sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-					sceneNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-				}
-			}
-		}
-	}
-
-
 
 	return true;
 }
@@ -510,21 +485,21 @@ bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
 	return true;
 }
 
 bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
 	return true;
 }
 
 bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseReleased(arg, id);
 	return true;
 }

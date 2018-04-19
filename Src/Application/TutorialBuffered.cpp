@@ -21,8 +21,8 @@ using namespace Ogre;
 
 //-------------------------------------------------------------------------------------
 TutorialBuffered::TutorialBuffered(void) : 
-	mRotate(.13),
-	mMove(250),
+	mRotate(Ogre::Real(.13)),
+	mMove(Ogre::Real(250)),
 	mDirection(Ogre::Vector3::ZERO)
 {
 }
@@ -35,7 +35,7 @@ TutorialBuffered::~TutorialBuffered(void)
 
 void TutorialBuffered::createLights(void)
 {
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(.2, .2, .2));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(.2f, .2f, .2f));
 
 	Ogre::Light* light = mSceneMgr->createLight("Light1");
 	light->setType(Ogre::Light::LT_POINT);

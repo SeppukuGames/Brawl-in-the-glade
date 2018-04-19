@@ -13,13 +13,13 @@ public:
 	virtual ~Enemigo(){};
 
 	virtual void start(){
-		velocity = 0.15;
+		velocity = 0.15f;
 		direction = Ogre::Vector3::ZERO;
 	};
 
 	virtual void tick(double elapsed){	
 		obtenerDireccion();
-		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
+		_gameObject->getNode()->translate(direction * Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 	};	
 
 	//Con la posicion del objetivo y la nuestra, calculamos la trayectoria y 

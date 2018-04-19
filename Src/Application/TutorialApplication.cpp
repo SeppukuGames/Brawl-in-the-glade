@@ -75,7 +75,7 @@ void TutorialApplication::createCameras(void)
 	//camNode->attachObject(mCamera);
 	//camNode->setPosition(0, 47, 222);
 
-	GameObject * cam = new GameObject(mSceneMgr,"camara");
+	GameObject * cam = new GameObject(mSceneMgr);
 	SceneNode* camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
@@ -134,13 +134,14 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
+	actors_.push_back(planito);
 
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
 	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
-	esfera->getNode()->setScale(0.1, 0.1, 0.1);
+	esfera->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -166,6 +167,9 @@ void TutorialApplication::createEntities(void)
 	esfera->addComponent(rbComponent);
 
 	rbComponent->getRigidbody()->setRestitution(1);
+
+	actors_.push_back(esfera);
+
 
 	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
@@ -213,18 +217,18 @@ void TutorialApplication::createEntities(void)
 			actors_.push_back(OgritoQueRota);
 		}
 	}*/
-
-	/*
+	
+	
 	ObjFactory::initialize(mSceneMgr);
 
 	EnemyPrototype * ogro;//Prototipo del enemigo
 	//Super útil
 	for (int i = 0; i < 1; i++){
 		ogro = ObjFactory::getTypeEnemy();
-		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
+		ogro->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
 		actors_.push_back(ogro); 
 	}
-	*/
+	
 
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
