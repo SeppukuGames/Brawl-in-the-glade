@@ -4,6 +4,8 @@
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include "Component.h"
+#include "Mensaje.h"
+#include <list>
 
 class GameObject; // declaración adelantada
 
@@ -42,6 +44,13 @@ public:
 
 	inline Ogre::SceneNode* getNode(){ return node; };
 
+
+	void pushMensaje(Mensaje* msj);	//Pushea un mensaje a los recibidos
+	virtual void leeMensajes() = 0;	//Cada componente va a definir en funcion de los mensajes que quiera leer
+
+									//Vuelca los mensajes del recieved al deliver para mandarlos en el siguiente tick.
+	void vuelcaMensajes();
+
 protected:
 
 	Ogre::SceneNode* node = nullptr;
@@ -49,6 +58,13 @@ protected:
 
 	std::vector<Component*> components;
 
+	/*
+	La lista delivered es para hacer el delivery en un tick y enviar los mensajes a los componentes.
+	La segunda lista, recibidos, es donde guardamos los mensajes generados en ese tick -por los componentes- que se la pasamos
+	a delivered al final del tick para que la lean al siguiente tick.
+	*/
+	std::list <Mensaje*> deliver;			//Mensajes que envias
+	std::list <Mensaje*> recibidos;			//ROGER ROGER	//Mensajes que recibes de los componentes
 
 	//UN PUNTERO AL GAME/ GAMEMANAGER?
 };

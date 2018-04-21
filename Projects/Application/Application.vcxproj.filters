@@ -34,11 +34,11 @@
     <Filter Include="Header Files\Escenas\Tutoriales">
       <UniqueIdentifier>{bdbb6c2f-7ddc-4824-b6db-1fe439235395}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Observers">
-      <UniqueIdentifier>{b18086d6-694e-4147-b267-539dca6a7f4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{b1f7c529-a660-4275-b2ff-2507e92db806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mensajes">
+      <UniqueIdentifier>{b18086d6-694e-4147-b267-539dca6a7f4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Mensaje.h">
+      <Filter>Header Files\Mensajes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
