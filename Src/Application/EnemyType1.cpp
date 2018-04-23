@@ -18,7 +18,7 @@ EnemyPrototype * EnemyType1::clone(){
 	enemy->addComponent(new EntityComponent("ninja.mesh")); //Se añade la entidad
 	enemy->addComponent(new AnimationComponent("Idle1"));//Se añade un componente
 	enemy->addComponent(new MoveComponent());//Se añade un componente
-
+	
 	return enemy;
 }
 

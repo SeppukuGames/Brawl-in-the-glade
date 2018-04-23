@@ -122,8 +122,8 @@ void GameObject::pushMensaje(Mensaje* msj) {
 //Vuelca los mensajes del recieved al deliver para mandarlos en el siguiente tick.
 void GameObject::vuelcaMensajes() {
 
-	while (!recibidos.empty) {
-		Mensaje* msj = recibidos.front;
+	while (!recibidos.empty()) {
+		Mensaje* msj = recibidos.front();
 		recibidos.pop_front();
 		//metemos el mensaje al deliver para mandarlo
 		deliver.push_back(msj);

@@ -540,3 +540,10 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 	mouseInputObservers.push_back(observer);
 }
 
+
+
+//CUTRADA MÁXIMA, PROMETO CAMBIARLO
+/*static void meteEnActores(GameObject* obj){
+	BaseApplication::actors_.push_back(obj);
+}*/
+

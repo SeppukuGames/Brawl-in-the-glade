@@ -1,4 +1,3 @@
-
 #ifndef MOVECOMPONENT_H_
 #define MOVECOMPONENT_H_
 
@@ -10,8 +9,9 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "GameObject.h"
+#include "Factory.h"
 
-
+#include <iostream>
 class MoveComponent : public KeyInputComponent {
 public:
 
@@ -25,7 +25,7 @@ public:
 		velocity = 50;
 		rotation = 0.13;
 		direction = Ogre::Vector3::ZERO;
-		//animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
+		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	};
 
 	virtual void tick(double elapsed){
@@ -78,9 +78,14 @@ public:
 			break;
 
 		case OIS::KC_SPACE:
-			//animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
-			MensajeAnimacion * animmsj = new MensajeAnimacion("Backflip", AnimationComponent::BlendWhileAnimating, 0.2, true);
-			_gameObject->pushMensaje(animmsj);
+		
+			//ESTO NO VA AQUI, LO HACEMOS PARA PROBAR
+			//Dispara una bala.
+			dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion!
+			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), dirBala, _gameObject->getNode()->getPosition());
+			//
+			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
+
 			break;
 
 		default:
@@ -88,8 +93,7 @@ public:
 		}
 
 		//E ORA DO MOVIMENTO
-		MensajeAnimacion * animmsj2 = new MensajeAnimacion("Walk", AnimationComponent::BlendWhileAnimating, 0.2, true);
-		_gameObject->pushMensaje(animmsj2);
+		animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
@@ -144,8 +148,7 @@ public:
 		default:  
 			break;
 		}
-		MensajeAnimacion * animmsj3 = new MensajeAnimacion("Idle2", AnimationComponent::BlendWhileAnimating, 0.2, true);
-		_gameObject->pushMensaje(animmsj3);
+		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
 		return true;
 	};
 
@@ -153,9 +156,9 @@ private:
 	double rotation;
 	Ogre::Vector3 direction; 
 	float velocity;
-
+	Ogre::Quaternion dirBala;
 	//Puntero a la animacion
-	//AnimationComponent* animComp;
+	AnimationComponent* animComp;
 
 };
 

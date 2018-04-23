@@ -14,7 +14,6 @@ public:
 
 	virtual void start() = 0;
 	virtual void tick(double elapsed) = 0;
-	virtual void leeMensajes() = 0;	//Cada componente va a definir en funcion de los mensajes que quiera leer
 
 	inline void setGameObject(GameObject * gameObject){ _gameObject = gameObject; };
 

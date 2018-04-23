@@ -2,6 +2,7 @@
 #define FACTORY_H_
 
 #include "EnemyType1.h"
+#include "Bala.h"
 
 //Factoría para la creación de enemigos
 class ObjFactory{
@@ -16,6 +17,22 @@ public:
 	}
 
 	static EnemyPrototype * getTypeEnemy(){ return typeEnemy->clone(); };
+
+};
+
+class BulletFactory{
+
+	public:
+
+	//No debería ser static porque entonces pa qué quieres una clase jaja
+		//Pero de momento se queda así.
+		static void creaBala(Ogre::SceneManager* mSceneManager, Ogre::Quaternion dir, Ogre::Vector3 pos){
+
+	        Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
+
+			
+	}
+
 
 };
 

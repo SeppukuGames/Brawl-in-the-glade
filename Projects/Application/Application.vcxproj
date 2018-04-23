@@ -22,6 +22,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
+    <ClInclude Include="..\..\Src\Application\Bala.h" />
+    <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />

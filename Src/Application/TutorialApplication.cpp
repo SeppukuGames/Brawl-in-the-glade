@@ -301,6 +301,7 @@ void TutorialApplication::createScene(void)
 	createEntities();
 }
 
+
 TutorialApplication *TutorialApplication::instance = 0;
 
 //Había conflicto aqui pero es igual lol

@@ -83,21 +83,6 @@ public:
 		}
 
 	};
-
-	void leeMensajes(){
-		//Si el mensaje es de tipo animación, lo escuchamos
-		std::list <Mensaje*> mensajes = _gameObject->getMensajes();
-		std::list<Mensaje*>::iterator it;
-		
-
-		for (it = mensajes.begin(); it != mensajes.end(); ++it){
-				if (dynamic_cast<MensajeAnimacion*>(*it)){
-					//Tomamos ese mensaje
-					MensajeAnimacion* msj = (MensajeAnimacion*)(*it);
-					//blend(msj->_animacion, msj->_blending, msj->_duracion, msj->_loop); Falta arreglar una cosilla aqui y ya estaría
-				}
-			}
-	}
 	
 
 	//Cambia la animación

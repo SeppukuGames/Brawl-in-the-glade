@@ -71,8 +71,6 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
 
-
-
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
