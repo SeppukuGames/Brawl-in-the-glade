@@ -12,6 +12,7 @@ class Mensaje
 	class GameObject; //Le decimos que existe
 public:
 	enum TipoMensaje { MensajeBala, MensajeMovimiento };
+	virtual void TieneQueEstarParaPoderHacerDynamics(){}; //Se explica solo.
 };
 #endif
 

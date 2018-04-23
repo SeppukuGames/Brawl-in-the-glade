@@ -46,10 +46,11 @@ public:
 
 
 	void pushMensaje(Mensaje* msj);	//Pushea un mensaje a los recibidos
-	virtual void leeMensajes() = 0;	//Cada componente va a definir en funcion de los mensajes que quiera leer
-
-									//Vuelca los mensajes del recieved al deliver para mandarlos en el siguiente tick.
+	
+	//Vuelca los mensajes del recieved al deliver para mandarlos en el siguiente tick.
 	void vuelcaMensajes();
+
+	std::list<Mensaje*> getMensajes(){ return deliver; }
 
 protected:
 
