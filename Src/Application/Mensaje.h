@@ -2,8 +2,7 @@
 #define Mensaje_H_
 
 #include <vector>
-
-//Añadir más
+#include "AnimationComponent.h" //Para el enum
 
 
 //Clase abstracta para las demás
@@ -59,8 +58,16 @@ public:
 class MensajeAnimacion : public Mensaje {
 
 public:
-	MensajeAnimacion(TipoMensaje tipo, std::string animacion) {
-
+	MensajeAnimacion(std::string animacion, AnimationComponent::BlendingTransition blending, double duracion, bool loop) {
+		_animacion = animacion;
+		_blending = blending;
+		_duracion = duracion;
+		_loop = loop;
 
 	}
+
+	std::string _animacion;
+	AnimationComponent::BlendingTransition _blending;
+	double _duracion;
+	bool _loop;
 };

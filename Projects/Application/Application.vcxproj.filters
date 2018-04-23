@@ -116,7 +116,7 @@
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Mensaje.h">
+    <ClInclude Include="..\..\Src\Application\Mensaje.h">
       <Filter>Header Files\Mensajes</Filter>
     </ClInclude>
   </ItemGroup>

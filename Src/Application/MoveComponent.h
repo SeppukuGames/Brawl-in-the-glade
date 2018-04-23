@@ -24,7 +24,7 @@ public:
 		velocity = 50;
 		rotation = 0.13;
 		direction = Ogre::Vector3::ZERO;
-		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
+		//animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	};
 
 	virtual void tick(double elapsed){
@@ -77,8 +77,9 @@ public:
 			break;
 
 		case OIS::KC_SPACE:
-			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
-
+			//animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
+			MensajeAnimacion * animmsj = new MensajeAnimacion("Backflip", AnimationComponent::BlendWhileAnimating, 0.2, true);
+			_gameObject->pushMensaje(animmsj);
 			break;
 
 		default:
@@ -86,7 +87,8 @@ public:
 		}
 
 		//E ORA DO MOVIMENTO
-		animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
+		MensajeAnimacion * animmsj2 = new MensajeAnimacion("Walk", AnimationComponent::BlendWhileAnimating, 0.2, true);
+		_gameObject->pushMensaje(animmsj2);
 		return true;
 	};
 
@@ -141,7 +143,8 @@ public:
 		default:  
 			break;
 		}
-		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
+		MensajeAnimacion * animmsj3 = new MensajeAnimacion("Idle2", AnimationComponent::BlendWhileAnimating, 0.2, true);
+		_gameObject->pushMensaje(animmsj3);
 		return true;
 	};
 
@@ -151,7 +154,7 @@ private:
 	float velocity;
 
 	//Puntero a la animacion
-	AnimationComponent* animComp;
+	//AnimationComponent* animComp;
 
 };
 
