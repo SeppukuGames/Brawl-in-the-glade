@@ -112,6 +112,8 @@ void TutorialApplication::createEntities(void)
 
 	//---------------------PLANO---------------------------------
 
+	//COMENTADO YA QUE SE HACE ABAJO CON TILES. LO HE DEJADO PARA PODER CONSULTAR LA ESTRUCTURA
+	
 	//Crear el plano en Ogre
 	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
@@ -144,7 +146,7 @@ void TutorialApplication::createEntities(void)
 	//---------------------ESFERA---------------------------------
 	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
-	esfera->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
+	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -175,21 +177,13 @@ void TutorialApplication::createEntities(void)
 	actors_.push_back(esfera);
 
 
-	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	/*
+	EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
 	SE COPIAN AL OBJETO QUE SE LO DAMOS
 	*/
-	//---------------------ESFERA---------------------------------
-	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-	/*
-	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
 
-	//Componentes que se añaden al Game Component
-	OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5,5,5)));
-	OgritoQueRota->addComponent(new Transform(Ogre::Vector3(1, 0, 0)));
-	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
-	actors_.push_back(OgritoQueRota);
-	*/
+	//---------------------ESFERA---------------------------------
 
 	
 	srand((unsigned int)time(NULL));
@@ -250,30 +244,15 @@ void TutorialApplication::createEntities(void)
 	
 	ObjFactory::initialize(mSceneMgr);
 
-	EnemyPrototype * ogro;//Prototipo del enemigo
+	EnemyPrototype * ninja;//Prototipo del enemigo
 	//Super útil
 	for (int i = 0; i < 1; i++){
-		ogro = ObjFactory::getTypeEnemy();
-		ogro->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
-		actors_.push_back(ogro); 
+		ninja = ObjFactory::getTypeEnemy();
+		ninja->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
+		ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+		actors_.push_back(ninja);
 	}
 	
-
-	/*
-	GameComponent * ogro= new GameComponent(mSceneMgr);
-=======
-	GameComponent * ogro = new GameComponent(mSceneMgr);
->>>>>>> origin/CamaraBasica
-	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
-
-	//ogro->getNode()->addChild(camNode);	//Esto es para asociar la cámara a sinbad (no hace falta ahora)
-	
-	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
-	ogro->addComponent(new MoveComponent());
-<<<<<<< HEAD
-	actors_.push_back(ogro);*/
-
-	//actors_.push_back(ogro);
 
 	//20 a 4
 	/*for (int i = 0; i < 2; i++){
@@ -291,7 +270,7 @@ void TutorialApplication::createEntities(void)
 			actors_.push_back(enemigo);
 		}
 	}
-
+	*/
 	
 	/*
 	GameObject* ninja = new GameObject(mSceneMgr);
@@ -323,7 +302,6 @@ void TutorialApplication::createScene(void)
 
 TutorialApplication *TutorialApplication::instance = 0;
 
-//Había conflicto aqui pero es igual lol
 TutorialApplication *TutorialApplication::getInstance()
 {
 	if (!instance)
