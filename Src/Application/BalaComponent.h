@@ -1,3 +1,6 @@
+#ifndef _h_BalaComponent_h_
+#define _h_BalaComponent_h_
+
 #include "GameObject.h"
 #include "EntityComponent.h"
 
@@ -39,3 +42,4 @@ private:
 	Ogre::Quaternion direccion;
 
 };
+#endif

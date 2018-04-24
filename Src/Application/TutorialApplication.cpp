@@ -39,6 +39,8 @@ using namespace Ogre;
 //-------------------------------------------------------------------------------------
 TutorialApplication::TutorialApplication(void)
 {
+
+
 }
 //-------------------------------------------------------------------------------------
 
@@ -290,7 +292,11 @@ void TutorialApplication::createEntities(void)
 
 }
 
-void TutorialApplication::meteBala(Bala * nuevaBala){
+//void TutorialApplication::meteBala(Bala * nuevaBala){
+//	actors_.push_back(nuevaBala);
+//}
+
+void TutorialApplication::meteBala(GameObject * nuevaBala){
 	actors_.push_back(nuevaBala);
 }
 //-------------------------------------------------------------------------------------

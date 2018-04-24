@@ -33,7 +33,8 @@ class TutorialApplication : public BaseApplication
 public:
 
 	static TutorialApplication *getInstance();
-	void meteBala(Bala*);
+	//void meteBala(Bala*);
+	void meteBala(GameObject*);
 protected:
 	virtual void createScene(void);
 

@@ -3,7 +3,6 @@
 
 #include "EnemyType1.h"
 #include "Bala.h"
-//#include "TutorialApplication.h"
 
 //Factoría para la creación de enemigos
 class ObjFactory{
@@ -31,11 +30,7 @@ class BulletFactory{
 
 	        Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
 
-			TutorialApplication * tuto = TutorialApplication::getInstance();
-			tuto->meteBala(nuevaBala);
-			
-			
-			
+			TutorialApplication::getInstance()->TutorialApplication::meteBala(nuevaBala);
 	}
 
 		
