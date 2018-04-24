@@ -110,11 +110,6 @@ void TutorialApplication::createLights(void)
 void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
-	//LA CÁMARA YA VIENE CREADA POR BASE APPLICATION, SOLO CREAMOS EL NODO
-	//SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//camNode->attachObject(mCamera);
-	//camNode->setPosition(0, 47, 222);
-
 	GameObject * cam = new GameObject(mSceneMgr);
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
@@ -139,18 +134,6 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
-	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-	/*
-	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
-
-	//Componentes que se añaden al Game Component
-	OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5,5,5)));
-	OgritoQueRota->addComponent(new Transform(Ogre::Vector3(1, 0, 0)));
-	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
-	actors_.push_back(OgritoQueRota);
-	*/
-
-	
 	srand((unsigned int)time(NULL));
 
 	
@@ -167,7 +150,7 @@ void TutorialApplication::createEntities(void)
 			if (j == 20 && i == 20){
 
 				OgritoQueRota->addComponent(new EntityComponent("Torre.mesh"));
-				std::cout << "POsicion de la torre: " << OgritoQueRota->getNode()->getPosition().x << ", " <<
+				std::cout << "Posicion de la torre: " << OgritoQueRota->getNode()->getPosition().x << ", " <<
 					OgritoQueRota->getNode()->getPosition().y << ", " << OgritoQueRota->getNode()->getPosition().z << "\n";
 			}
 			else{
@@ -191,22 +174,6 @@ void TutorialApplication::createEntities(void)
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
 		actors_.push_back(ogro); 
 	}
-
-	/*
-	GameComponent * ogro= new GameComponent(mSceneMgr);
-=======
-	GameComponent * ogro = new GameComponent(mSceneMgr);
->>>>>>> origin/CamaraBasica
-	ogro->getNode()->setScale(Ogre::Vector3(0.5, 0.5, 0.55));
-
-	//ogro->getNode()->addChild(camNode);	//Esto es para asociar la cámara a sinbad (no hace falta ahora)
-	
-	ogro->addComponent(new EntityComponent("ogrehead.mesh"));
-	ogro->addComponent(new MoveComponent());
-<<<<<<< HEAD
-	actors_.push_back(ogro);*/
-
-	//actors_.push_back(ogro);
 
 	//20 a 4
 	for (int i = 0; i < 2; i++){
