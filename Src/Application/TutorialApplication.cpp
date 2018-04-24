@@ -110,7 +110,7 @@ void TutorialApplication::createEntities(void)
 	//---------------------PLANO---------------------------------
 
 	//Crear el plano en Ogre
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	GameObject *planito = new GameObject(mSceneMgr,"suelo");
@@ -134,7 +134,7 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
-	actors_.push_back(planito);
+	actors_.push_back(planito);*/
 
 	//---------------------PLANO---------------------------------
 
@@ -192,31 +192,53 @@ void TutorialApplication::createEntities(void)
 
 	
 	int random = 0;
-	/*for (int i = 0; i < 40; i++){
+	for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
-			GameObject * OgritoQueRota = new GameObject(mSceneMgr);
-
-			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+			GameObject *planito = new GameObject(mSceneMgr);
+			planito->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			planito->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
 			if (j == 20 && i == 20){
 
-				OgritoQueRota->addComponent(new EntityComponent("Torre.mesh"));
-				std::cout << "POsicion de la torre: " << OgritoQueRota->getNode()->getPosition().x << ", " <<
-					OgritoQueRota->getNode()->getPosition().y << ", " << OgritoQueRota->getNode()->getPosition().z << "\n";
+				planito->addComponent(new EntityComponent("Torre.mesh"));
+				std::cout << "POsicion de la torre: " << planito->getNode()->getPosition().x << ", " <<
+					planito->getNode()->getPosition().y << ", " << planito->getNode()->getPosition().z << "\n";
+				actors_.push_back(planito);
 			}
 			else{
-				if (random % 6 == 0)
-					OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
-				else
-					OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
-			}
+				if (random % 6 == 0){
+					planito->addComponent(new EntityComponent("arbol.mesh"));
+					actors_.push_back(planito);
+				}
+				else{
 
-			actors_.push_back(OgritoQueRota);
+					planito->addComponent(new EntityComponent("suelo.mesh"));
+
+					//MOTION STATE
+					btTransform groundTransform;
+					groundTransform.setIdentity();
+					groundTransform.setOrigin(btVector3(0, -1, 0));
+
+					btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+					//COLLISION SHAPE
+					//Creamos un plano en el origen.
+					btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
+					//Masa 0 -> Objeto estático. Masa infinita
+					btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+					btVector3 localGroundInertia(0, 0, 0);
+
+					planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
+
+					actors_.push_back(planito);
+
+					//---------------------PLANO---------------------------------
+				}
+			}
 		}
-	}*/
+	}
 	
 	
 	ObjFactory::initialize(mSceneMgr);
