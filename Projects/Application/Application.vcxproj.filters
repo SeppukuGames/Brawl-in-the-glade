@@ -46,6 +46,9 @@
     <Filter Include="Source Files\Components\Rigidbody">
       <UniqueIdentifier>{e741f8d7-314a-42c3-84c6-f70b23ac3f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Component\Enemy">
+      <UniqueIdentifier>{7aea96f8-70f2-4c5c-8842-8c0426b91eff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EnemyComponent.h">
+      <Filter>Header Files\Component\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

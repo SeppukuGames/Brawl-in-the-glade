@@ -28,7 +28,7 @@ http://www.ogre3d.org/tikiwiki/
 
 #include <time.h>
 #include <iostream>
-#include "Enemigo.h"
+#include "EnemyComponent.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 using namespace Ogre;
@@ -170,7 +170,6 @@ void TutorialApplication::createEntities(void)
 
 	actors_.push_back(esfera);
 
-
 	/*
 	EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
@@ -179,36 +178,34 @@ void TutorialApplication::createEntities(void)
 
 	//---------------------ESFERA---------------------------------
 
-
 	srand((unsigned int)time(NULL));
 
-	
 	int random = 0;
 	int cont = 200;
 
-	for (int i = 0; i < 40; i++){
-		for (int j = 0; j < 40; j++){
+	for (int i = 0; i < 1; i++){
+		for (int j = 0; j < 1; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
 			GameObject *planito = new GameObject(mSceneMgr);
 			planito->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
 			planito->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
-			if (j == 20 && i == 20){
-
+			if (j == 20 && i == 20)
+			{
 				planito->addComponent(new EntityComponent("Torre.mesh"));
 				std::cout << "Posicion de la torre: " << planito->getNode()->getPosition().x << ", " <<
 					planito->getNode()->getPosition().y << ", " << planito->getNode()->getPosition().z << "\n";
 				actors_.push_back(planito);
 			}
 			else{
-
-				if (random % 6 == 0){
+				if (random % 6 == 0)
+				{
 					planito->addComponent(new EntityComponent("arbol.mesh"));
 					actors_.push_back(planito);
 				}
-				else{
-
+				else
+				{
 					planito->addComponent(new EntityComponent("suelo.mesh"));
 
 					//MOTION STATE
@@ -246,24 +243,42 @@ void TutorialApplication::createEntities(void)
 		actors_.push_back(ninja);
 	}*/
 
-	//20 a 4
+
+	
+
 	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 2; j++){
-			//GameComponent a GameObject
+		for (int j = 0; j < 20; j++){
 			GameObject * enemigo = new GameObject(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
-			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
 			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
-			enemigo->addComponent(new Enemigo());
 			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
 			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+			btVector3 enemyInitialPosition((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300);
+			btTransform enemyTransform;
+			enemyTransform.setIdentity();
+			enemyTransform.setOrigin(enemyInitialPosition);
+
+
+			//actually contruvc the body and add it to the dynamics world
+			//Esfera a 50 metros de altura
+			btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+
+			//Colision shape
+			btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
+
+			//set the mass of the object. a mass of "0" means that it is an immovable object
+			btScalar enemyMass(10.0f);
+			btVector3 enemyInertia(0, 0, 0);
+
+			DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, newRigidShape, enemyMass, enemyInertia);
+			enemigo->addComponent(enemyRbComponent);
+			enemigo->addComponent(new EnemyComponent());
+
 			actors_.push_back(enemigo);
 		}
 	}
-	
-	
 	
 	GameObject* ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(1.4), Ogre::Real(1.4), Ogre::Real(1.4));
@@ -286,13 +301,13 @@ void TutorialApplication::createEntities(void)
 	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
 
 	//Colision shape
-	btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
+	btCollisionShape *newRigidShapeNinja = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
 	btScalar ninjaMass(10.0f);
 	btVector3 ninjaInertia(0, 0, 0);
 
-	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
+	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShapeNinja, ninjaMass, ninjaInertia);
 	ninja->addComponent(ninjaRbComponent);
 
 	ninjaRbComponent->getRigidbody()->setRestitution(1);

@@ -3,6 +3,7 @@
 
 #include "EntityComponent.h"
 #include "KeyInputComponent.h"
+#include "RigidbodyComponent.h"
 #include "MoveComponent.h"
 #include "AnimationComponent.h"
 
@@ -106,6 +107,17 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			AnimationComponent* comp = dynamic_cast<AnimationComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+	case ComponentName::RIGIDBODY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			RigidbodyComponent* comp = dynamic_cast<RigidbodyComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

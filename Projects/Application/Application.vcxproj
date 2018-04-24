@@ -27,6 +27,7 @@
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
+    <ClInclude Include="..\..\Src\Application\EnemyComponent.h" />
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
     <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
     <ClInclude Include="..\..\Src\Application\Factory.h" />

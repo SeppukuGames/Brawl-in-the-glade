@@ -14,6 +14,8 @@ public:
 	EnemyPrototype * clone();
 
 
+
+
 };
 
 #endif /* ENEMYTYPE1_H_*/
