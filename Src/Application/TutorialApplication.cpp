@@ -94,9 +94,7 @@ void TutorialApplication::createCameras(void)
 void TutorialApplication::createEntities(void)
 {
 
-	//Crear el plano en Ogre
-	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	
 
 	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
 
@@ -109,11 +107,10 @@ void TutorialApplication::createEntities(void)
 	//COMENTADO YA QUE SE HACE ABAJO CON TILES. LO HE DEJADO PARA PODER CONSULTAR LA ESTRUCTURA
 	
 	//Crear el plano en Ogre
-	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	//Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	//Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	GameObject *planito = new GameObject(mSceneMgr,"suelo");
-	planito->addComponent(new EntityComponent("ground"));
 
 	//PhysicsComponent
 
@@ -133,7 +130,7 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
-	actors_.push_back(planito);*/
+	actors_.push_back(planito);
 
 	//---------------------PLANO---------------------------------
 
@@ -183,48 +180,31 @@ void TutorialApplication::createEntities(void)
 	int random = 0;
 	int cont = 200;
 
-	for (int i = 0; i < 1; i++){
-		for (int j = 0; j < 1; j++){
+	for (int i = 0; i < 40; i++){
+		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
-			GameObject *planito = new GameObject(mSceneMgr);
-			planito->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			planito->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+			GameObject *suelo = new GameObject(mSceneMgr);
+			suelo->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			suelo->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
 			if (j == 20 && i == 20)
 			{
-				planito->addComponent(new EntityComponent("Torre.mesh"));
-				std::cout << "Posicion de la torre: " << planito->getNode()->getPosition().x << ", " <<
-					planito->getNode()->getPosition().y << ", " << planito->getNode()->getPosition().z << "\n";
+				suelo->addComponent(new EntityComponent("Torre.mesh"));
+				std::cout << "Posicion de la torre: " << suelo->getNode()->getPosition().x << ", " <<
+					suelo->getNode()->getPosition().y << ", " << suelo->getNode()->getPosition().z << "\n";
 				actors_.push_back(planito);
 			}
 			else{
 				if (random % 6 == 0)
 				{
-					planito->addComponent(new EntityComponent("arbol.mesh"));
+					suelo->addComponent(new EntityComponent("arbol.mesh"));
 					actors_.push_back(planito);
 				}
 				else
 				{
-					planito->addComponent(new EntityComponent("suelo.mesh"));
-
-					//MOTION STATE
-					btTransform groundTransform;
-					groundTransform.setIdentity();
-					groundTransform.setOrigin(btVector3(0, -1, 0));
-
-					btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
-
-					//COLLISION SHAPE
-					//Creamos un plano en el origen.
-					btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
-					//Masa 0 -> Objeto estático. Masa infinita
-					btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
-					btVector3 localGroundInertia(0, 0, 0);
-
-					planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
-
-					actors_.push_back(planito);
+					suelo->addComponent(new EntityComponent("suelo.mesh"));
+					actors_.push_back(suelo);
 
 				}
 			}
@@ -232,53 +212,53 @@ void TutorialApplication::createEntities(void)
 	}
 	
 	
-	ObjFactory::initialize(mSceneMgr);
+	EnemyFactory::initialize(mSceneMgr);
 
-	//EnemyPrototype * ninja;//Prototipo del enemigo
+	EnemyPrototype * enemigui;//Prototipo del enemigo
 	//Super útil
-	/*for (int i = 0; i < 1; i++){
-		ninja = ObjFactory::getTypeEnemy();
-		ninja->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
-		ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-		actors_.push_back(ninja);
-	}*/
+	for (int i = 0; i < 100; i++){
+		enemigui = EnemyFactory::getTypeEnemy();
+		enemigui->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 100, (rand() % 40 * 50) - 300));
+		enemigui->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+		actors_.push_back(enemigui);
+	}
 
 
 	
 
-	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 20; j++){
-			GameObject * enemigo = new GameObject(mSceneMgr);
-			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+	//for (int i = 0; i < 2; i++){
+	//	for (int j = 0; j < 20; j++){
+	//		GameObject * enemigo = new GameObject(mSceneMgr);
+	//		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
 
-			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
-			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
-			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-			btVector3 enemyInitialPosition((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300);
-			btTransform enemyTransform;
-			enemyTransform.setIdentity();
-			enemyTransform.setOrigin(enemyInitialPosition);
+	//		enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
+	//		//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
+	//		//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	//		//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	//		btVector3 enemyInitialPosition((rand() % 40 * 50) - 300, 100, (rand() % 40 * 50) - 300);
+	//		btTransform enemyTransform;
+	//		enemyTransform.setIdentity();
+	//		enemyTransform.setOrigin(enemyInitialPosition);
 
 
-			//actually contruvc the body and add it to the dynamics world
-			//Esfera a 50 metros de altura
-			btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+	//		//actually contruvc the body and add it to the dynamics world
+	//		//Esfera a 50 metros de altura
+	//		btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
 
-			//Colision shape
-			btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
+	//		//Colision shape
+	//		btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
 
-			//set the mass of the object. a mass of "0" means that it is an immovable object
-			btScalar enemyMass(10.0f);
-			btVector3 enemyInertia(0, 0, 0);
+	//		//set the mass of the object. a mass of "0" means that it is an immovable object
+	//		btScalar enemyMass(10.0f);
+	//		btVector3 enemyInertia(0, 0, 0);
 
-			DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, newRigidShape, enemyMass, enemyInertia);
-			enemigo->addComponent(enemyRbComponent);
-			enemigo->addComponent(new EnemyComponent());
+	//		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, newRigidShape, enemyMass, enemyInertia);
+	//		enemigo->addComponent(enemyRbComponent);
+	//		//enemigo->addComponent(new EnemyComponent());
 
-			actors_.push_back(enemigo);
-		}
-	}
+	//		actors_.push_back(enemigo);
+	//	}
+	//}
 	
 	GameObject* ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(1.4), Ogre::Real(1.4), Ogre::Real(1.4));

@@ -3,27 +3,21 @@
 #include "AnimationComponent.h"
 #include "MoveComponent.h" 
 #include "DynamicRigidbodyComponent.h"
+#include "EnemyComponent.h"
 
 EnemyType1::EnemyType1(Ogre::SceneManager * mSceneMgr) : EnemyPrototype(mSceneMgr)
 {
-}
-
-EnemyPrototype * EnemyType1::clone(){
-
-	EnemyType1 * enemy = new EnemyType1(node->getCreator());
-	enemy->getNode()->setScale(Ogre::Vector3(Ogre::Real(0.10), Ogre::Real(0.1), Ogre::Real(0.15)));
+	
+	node->setScale(Ogre::Vector3(Ogre::Real(0.10), Ogre::Real(0.1), Ogre::Real(0.15)));
 
 	//Se añaden los componentes
 	//Hemos metido el ninja aquí por probar. Es importante que el elemento que tenga un Move Component tenga tambien el Animation porque sino se rompe. 
 	//(Idealmente, solo el jugador va a tener el moveComponent asi que no debería haber problema, ¿no?)
-	enemy->addComponent(new EntityComponent("ninja.mesh")); //Se añade la entidad
-	enemy->addComponent(new AnimationComponent("Idle1"));//Se añade un componente
-	enemy->addComponent(new MoveComponent());//Se añade un componente
-
+	addComponent(new EntityComponent("ninja.mesh")); //Se añade la entidad
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 initialPosition(20,100 , 0);
+	btVector3 initialPosition(20, 100, 0);
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(initialPosition);
@@ -43,11 +37,17 @@ EnemyPrototype * EnemyType1::clone(){
 
 	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
 
-
-	enemy->addComponent(rbComponent);//Se añade un componente
+	addComponent(rbComponent);//Se añade un componente
 
 	rbComponent->getRigidbody()->setRestitution(1);
 
-	return enemy;
+	addComponent(new EnemyComponent());
+
+
+}
+
+EnemyPrototype * EnemyType1::clone(){
+	return (new EnemyType1(*this));
+	
 }
 

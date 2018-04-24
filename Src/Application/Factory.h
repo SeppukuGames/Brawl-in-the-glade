@@ -4,7 +4,7 @@
 #include "EnemyType1.h"
 
 //Factoría para la creación de enemigos
-class ObjFactory{
+ class EnemyFactory{
 
 public:
 

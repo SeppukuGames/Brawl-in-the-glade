@@ -2,7 +2,7 @@
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
 
-EnemyPrototype* ObjFactory::typeEnemy = 0;
+EnemyPrototype* EnemyFactory::typeEnemy = 0;
 
 
 #ifdef _DEBUG || !_WIN32
