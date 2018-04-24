@@ -71,8 +71,8 @@ void tutorial2::createLights(void)
 	directionalLight->setType(Light::LT_DIRECTIONAL); //Tipo de luz para la luz direccional
 
 	//IMPORTANTE: La clase Light define un método de SetAttenuagtion que te permite controlar cómo se disipa la luz según se aleja del emisor
-	directionalLight->setDiffuseColour(ColourValue(0.4, 0, 0));
-	directionalLight->setSpecularColour(ColourValue(0.4, 0, 0));
+	directionalLight->setDiffuseColour(ColourValue(0.4f, 0.0f, 0.0f));
+	directionalLight->setSpecularColour(ColourValue(0.4f, 0.0f, 0.0f));
 
 
 	directionalLight->setDirection(Vector3::NEGATIVE_UNIT_Z);
@@ -84,8 +84,8 @@ void tutorial2::createLights(void)
 	Light* pointLight = mSceneMgr->createLight("PointLight");
 	pointLight->setType(Light::LT_POINT);
 
-	pointLight->setDiffuseColour(0.3, 0.3, 0.3);
-	pointLight->setSpecularColour(0.3, 0.3, 0.3);
+	pointLight->setDiffuseColour(Ogre::Real(0.3), Ogre::Real(0.3), Ogre::Real(0.3));
+	pointLight->setSpecularColour(Ogre::Real(0.3), Ogre::Real(0.3), Ogre::Real(0.3));
 
 	SceneNode* pointLightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pointLightNode->attachObject(pointLight);

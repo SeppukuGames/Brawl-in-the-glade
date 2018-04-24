@@ -18,6 +18,15 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 
+#if defined(WIN32)
+#include <conio.h>
+#else
+#include "../common/conio.h"
+#endif
+
+
+using namespace irrklang;
+
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
@@ -86,7 +95,7 @@ bool BaseApplication::gameLoop()
 	if (mWindow->isClosed()) return false;
 
 	double current = timer->getMilliseconds();
-	double elapsed = (current - lastTime) /1000 ;
+	double elapsed = (current - lastTime) / 1000;
 
 	if (!handleInput())
 		return false;
@@ -110,7 +119,6 @@ bool BaseApplication::handleInput(void){
 	mKeyboard->capture();
 	mMouse->capture();
 
-
 	if (mShutDown)
 		return false;
 
@@ -120,33 +128,12 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
+	if (this->physicsEngine != NULL)
+		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
+	
 	//Actualiza todos los objetos
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
-
-	if (this->physicsEngine != NULL){
-		physicsEngine->getDynamicsWorld()->stepSimulation(1.0f / 60.0f); //suppose you have 60 frames per second
-
-		for (int i = 0; i < this->physicsEngine->getCollisionObjectCount(); i++) {
-			btCollisionObject* obj = this->physicsEngine->getDynamicsWorld()->getCollisionObjectArray()[i];
-			btRigidBody* body = btRigidBody::upcast(obj);
-
-			if (body && body->getMotionState()){
-				btTransform trans;
-				body->getMotionState()->getWorldTransform(trans);
-
-				void *userPointer = body->getUserPointer();
-				if (userPointer) {
-					btQuaternion orientation = trans.getRotation();
-					Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(userPointer);
-					sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-					sceneNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-				}
-			}
-		}
-	}
-
-
 
 	return true;
 }
@@ -187,8 +174,7 @@ bool BaseApplication::setup(void)
 	createViewports();
 
 	physicsEngine = new Physics();
-	collisionManager = new CollisionManager();
-
+	initSoundEngine();
 	//Creamos la Escena del método hijo
 	createScene();
 
@@ -348,6 +334,37 @@ void BaseApplication::createViewports(void)
 
 //-------------------------------------------------------------------------------------
 
+void BaseApplication::initSoundEngine(void)
+{
+	// start the sound engine with default parameters
+	soundEngine = createIrrKlangDevice();
+
+	if (!soundEngine)
+	{
+		printf("Could not startup engine\n");
+	}
+
+	// To play a sound, we only to call play2D(). The second parameter
+	// tells the engine to play it looped.
+
+	// play some sound stream, looped
+
+	soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
+
+
+	// play a single sound
+	soundEngine->play2D("../../Media/Sounds/bell.wav");
+
+	// After we are finished, we have to delete the irrKlang Device created earlier
+	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
+	// delete all objects you created with a method or function that starts with 'create'.
+	// (an exception is the play2D()- or play3D()-method, see the documentation or the
+	// next example for an explanation)
+	// The object is deleted simply by calling ->drop().
+
+	//engine->drop(); // delete engine
+
+}
 //Inicializa el input
 void BaseApplication::initOIS(void)
 {
@@ -363,7 +380,7 @@ void BaseApplication::initOIS(void)
 	//Permite ver el cursor
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-	
+
 	// insert the following lines right before calling mInputSystem = OIS::InputManager::createInputSystem( paramList );
 #if defined OIS_WIN32_PLATFORM
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
@@ -449,7 +466,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 	{
 		int a = 0;
 	}
-	
+
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
@@ -468,21 +485,21 @@ bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
 	return true;
 }
 
 bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
 	return true;
 }
 
 bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseReleased(arg, id);
 	return true;
 }
@@ -498,3 +515,8 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 	mouseInputObservers.push_back(observer);
 }
 
+
+Physics * BaseApplication::getPhysicsEngine()
+{
+	return physicsEngine;
+}

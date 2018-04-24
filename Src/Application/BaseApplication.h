@@ -39,8 +39,7 @@ http://www.ogre3d.org/tikiwiki/
 
 #include "GameObject.h"
 #include "Physics.h"
-
-#include "CollisionManager.h" //Añadido
+#include "irrKlang.h"
 
 //																									-Listeners de OIS-
 class BaseApplication :
@@ -72,7 +71,7 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
 
-	virtual CollisionManager* getCollisionManager(){ return collisionManager; };
+	virtual Physics * getPhysicsEngine();
 
 
 protected:
@@ -92,6 +91,7 @@ protected:
 	virtual void createViewports(void);
 
 	virtual void initOIS(void);
+	virtual void initSoundEngine(void);
 
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
@@ -147,16 +147,14 @@ protected:
 
 	std::vector<OIS::MouseListener*> mouseInputObservers;
 
-
-	CollisionManager* collisionManager;
 	
 	Physics * physicsEngine;
+	
+	irrklang::ISoundEngine* soundEngine;
 
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
-
-
 
 };
 
