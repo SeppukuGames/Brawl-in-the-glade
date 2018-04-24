@@ -239,6 +239,7 @@ void TutorialApplication::createEntities(void)
 		actors_.push_back(ogro); 
 	}
 
+	
 	/*
 	GameComponent * ogro= new GameComponent(mSceneMgr);
 =======
@@ -289,6 +290,9 @@ void TutorialApplication::createEntities(void)
 
 }
 
+void TutorialApplication::meteBala(Bala * nuevaBala){
+	actors_.push_back(nuevaBala);
+}
 //-------------------------------------------------------------------------------------
 void TutorialApplication::createScene(void)
 {

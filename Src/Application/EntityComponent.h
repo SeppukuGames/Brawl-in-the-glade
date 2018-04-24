@@ -21,7 +21,7 @@ public:
 	virtual void tick(double elapsed){
 
 	};
-
+	
 	//CREAR EL GET ENTITY
 	Ogre::Entity* getEntity(){
 		return _entity;

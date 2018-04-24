@@ -3,6 +3,7 @@
 
 #include "EnemyType1.h"
 #include "Bala.h"
+//#include "TutorialApplication.h"
 
 //Factoría para la creación de enemigos
 class ObjFactory{
@@ -25,14 +26,19 @@ class BulletFactory{
 	public:
 
 	//No debería ser static porque entonces pa qué quieres una clase jaja
-		//Pero de momento se queda así.
+	//Pero de momento se queda así.
 		static void creaBala(Ogre::SceneManager* mSceneManager, Ogre::Quaternion dir, Ogre::Vector3 pos){
 
 	        Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
 
+			TutorialApplication * tuto = TutorialApplication::getInstance();
+			tuto->meteBala(nuevaBala);
+			
+			
 			
 	}
 
+		
 
 };
 

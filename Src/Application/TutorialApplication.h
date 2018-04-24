@@ -19,6 +19,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include "EnemyPrototype.h"
 #include "Factory.h"
+#include "Bala.h"
 
 
 
@@ -32,7 +33,7 @@ class TutorialApplication : public BaseApplication
 public:
 
 	static TutorialApplication *getInstance();
-
+	void meteBala(Bala*);
 protected:
 	virtual void createScene(void);
 

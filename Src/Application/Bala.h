@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "EntityComponent.h"
+#include "BalaComponent.h"
 #include <iostream>
 //COSAS DE UN HIPOTETICO PHYSICS MANAGER
 /*#include <OgreBulletDynamicsRigidBody.h>
@@ -13,18 +14,20 @@ public:
 	//La posicion de la bala es local
 	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 posisao, Ogre::Quaternion dir) : GameObject(mSceneMgr){
 		std::cout << "Pium" << std::endl;
-		//PROBLEMA: METERLO EN LA LISTA DE ACTORESSSS
 		posicion = posisao;
 		direccion = dir;
 		_sceneMgr = mSceneMgr;
+		
 
+		//Creamos un entity
+		this->addComponent(new EntityComponent("ball.mesh"));		//Tenemos una bola con componente entidad.
+		this->addComponent(new BalaComponent());
+		this->getNode()->setScale(0.2, 0.2, 0.2);
 	}
 
 	void disparaBala(){
 
-		//Creamos un entity
-		this->addComponent(new EntityComponent("ball.mesh"));		//Tenemos una bola con componente entidad.
-		this->getNode()->setScale(0.2, 0.2, 0.2);				
+		
 
 		//Fisica
 		//OgreBulletCollisions::CollisionShape *bodyShape = new OgreBulletCollisions::SphereCollisionShape(0.2);
