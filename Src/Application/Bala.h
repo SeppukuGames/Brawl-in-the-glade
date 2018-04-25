@@ -16,26 +16,28 @@ class Bala : public GameObject{
 
 public:
 	//La posicion de la bala es local
-	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 posisao, Ogre::Quaternion dir) : GameObject(mSceneMgr){
+	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 pos, Ogre::Quaternion dir) : GameObject(mSceneMgr){
 		
-		posicion = posisao;
+		posicion = pos;
 		direccion = dir;
 		_sceneMgr = mSceneMgr;
 		
 
 		//Creamos un entity
+		
 		this->addComponent(new EntityComponent("ogrehead.mesh"));		//Tenemos una bola con componente entidad.
 		this->addComponent(new BalaComponent());
 		//this->getNode()->setScale(0.2, 0.2, 0.2);
+		this->getNode()->translate(posicion);			//Situamos la bala en la posicion que queremos (la del objeto que la dispara).
 
-		TutorialApplication::getInstance()->añadeGameObject(this);
+		TutorialApplication::getInstance()->añadeGameObject(this);			//Añadimos la bala a los actores.
 		
 	}
 
-	void disparaBala(){
+	void fisicaBala(){
 
 		
-
+		//TODO: Meterle física. Una velocidad lineal o algo así.
 		//Fisica
 		//OgreBulletCollisions::CollisionShape *bodyShape = new OgreBulletCollisions::SphereCollisionShape(0.2);
 		//OgreBulletDynamics::RigidBody *rigidBody =

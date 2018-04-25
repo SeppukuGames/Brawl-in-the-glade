@@ -26,6 +26,7 @@ public:
 		if (vida > 0){
 			std::cout << vida << std::endl;
 			posicion += Ogre::Vector3(10, 0, 10);//Ogre::Vector3::NEGATIVE_UNIT_Z;
+			_gameObject->getNode()->translate(posicion);
 			vida--;
 		}
 	
