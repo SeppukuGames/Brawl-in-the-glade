@@ -161,8 +161,8 @@ void TutorialApplication::createEntities(void)
 
 	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
 	ninja->addComponent(rbComponent);
-	ninja->addComponent(new AnimationComponent("Idle1"));
-	ninja->addComponent(new MoveComponent());
+//	ninja->addComponent(new AnimationComponent("Idle1"));
+	//ninja->addComponent(new MoveComponent());
 	rbComponent->getRigidbody()->setRestitution(1);
 
 	actors_.push_back(ninja);
@@ -239,7 +239,7 @@ void TutorialApplication::createEntities(void)
 	}
 	
 	
-	ObjFactory::initialize(mSceneMgr);
+	//ObjFactory::initialize(mSceneMgr);
 
 	/*EnemyPrototype * ogro;//Prototipo del enemigo
 	//Super útil
