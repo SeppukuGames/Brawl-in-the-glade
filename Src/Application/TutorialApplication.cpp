@@ -25,7 +25,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "MoveCameraComponent.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
-
+#include "Factory.h"
 
 #include <time.h>
 #include <iostream>
@@ -81,7 +81,7 @@ void TutorialApplication::createCameras(void)
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
-	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
+	//cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr)); //COMENTADO PARA EL MOUSE xd
 	actors_.push_back(cam);
 	
 	/*

@@ -69,7 +69,7 @@ public:
 
 	virtual void registerKeyInputObserver(OIS::KeyListener *observer);
 
-	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
+	virtual void registerMouseInputObserver(OIS::MouseListener *observer); 
 
 	virtual void añadeGameObject(GameObject * nuevo);
 

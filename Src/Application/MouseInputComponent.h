@@ -2,6 +2,7 @@
 #define MOUSEINPUTCOMPONENT_H_
 
 #include "Component.h"
+#include "TutorialApplication.h"
 #include <OIS.h>
 
 class MouseInputComponent : public Component, public OIS::MouseListener{
@@ -13,7 +14,6 @@ public:
 	};
 	virtual ~MouseInputComponent(){};
 
-private:
 };
 
 #endif /* RENDERCOMPONENT_H_ */

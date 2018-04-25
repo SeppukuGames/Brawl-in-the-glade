@@ -9,7 +9,7 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "GameObject.h"
-#include "Factory.h"
+
 
 #include <iostream>
 class MoveComponent : public KeyInputComponent {
@@ -95,11 +95,6 @@ public:
 
 		case OIS::KC_SPACE:
 		
-			//ESTO NO VA AQUI, LO HACEMOS PARA PROBAR
-			//Dispara una bala.
-			dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion!
-			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), dirBala, _gameObject->getNode()->getPosition());
-			//
 			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
 
 			break;
@@ -176,7 +171,7 @@ private:
 	//Direcciones
 	Ogre::Vector3 direction; 
 	float velocity;
-	Ogre::Quaternion dirBala;
+
 	//Puntero a la animacion
 	AnimationComponent* animComp;
 
