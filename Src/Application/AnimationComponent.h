@@ -65,7 +65,7 @@ public:
 				{
 					// still blending, advance weights
 					animacionActual->setWeight(mTimeleft / mDuration);
-					animacionSiguiente->setWeight(1.0 - mTimeleft / mDuration);
+					animacionSiguiente->setWeight(Ogre::Real(1.0 - mTimeleft / mDuration));
 					if (mTransition == BlendingTransition::BlendWhileAnimating)
 						animacionSiguiente->addTime((Ogre::Real)elapsed);
 				}
@@ -137,7 +137,7 @@ public:
 					}
 					animacionSiguiente = nuevaAnim;
 					animacionSiguiente->setEnabled(true);
-					animacionSiguiente->setWeight(1.0 - mTimeleft / mDuration);
+					animacionSiguiente->setWeight(Ogre::Real(1.0 - mTimeleft / mDuration));
 					animacionSiguiente->setTimePosition(0);
 				}
 			}

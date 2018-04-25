@@ -3,14 +3,16 @@
 
 #include "EntityComponent.h"
 #include "KeyInputComponent.h"
-#include "StaticCollisionComponent.h"
-#include "CollisionComponent.h"
 #include "MoveComponent.h"
 #include "AnimationComponent.h"
 
-GameObject::GameObject(Ogre::SceneManager * mSceneMgr)  :components(0){
+GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
-	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+	if (name != "")
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name,Ogre::Vector3(0, 0, 0));
+	else
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+
 }
 
 
@@ -63,34 +65,11 @@ Component* GameObject::getComponent(ComponentName component) {
 
 	switch (component)
 	{
-	case ComponentName::COLLISION:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			CollisionComponent* comp = dynamic_cast<CollisionComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
 
 	case ComponentName::ENTITY:
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::STATICCOLLISION:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			StaticCollisionComponent* comp = dynamic_cast<StaticCollisionComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

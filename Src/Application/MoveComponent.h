@@ -22,13 +22,12 @@ public:
 
 	virtual void start(){
 		velocity = 50;
-		rotation = 0.13;
 		direction = Ogre::Vector3::ZERO;
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	};
 
 	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction* elapsed, Ogre::Node::TS_LOCAL);
+		_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 		Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed; //He añadido esto.
 	};
 
@@ -77,7 +76,7 @@ public:
 			break;
 
 		case OIS::KC_SPACE:
-			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
+			animComp->blend("Backflip", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 
 			break;
 
@@ -86,7 +85,7 @@ public:
 		}
 
 		//E ORA DO MOVIMENTO
-		animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Walk", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 		return true;
 	};
 
@@ -141,12 +140,11 @@ public:
 		default:  
 			break;
 		}
-		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Idle2", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 		return true;
 	};
 
 private:
-	double rotation;
 	Ogre::Vector3 direction; 
 	float velocity;
 

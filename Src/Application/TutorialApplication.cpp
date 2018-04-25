@@ -23,23 +23,15 @@ http://www.ogre3d.org/tikiwiki/
 #include "EntityComponent.h"
 #include "MoveComponent.h"
 #include "MoveCameraComponent.h"
-#include "SoundEngine/irrKlang.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
 
-#include "CollisionComponent.h"    //Incluido en el merge de animationComponent
 
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
-
-#if defined(WIN32)
-#include <conio.h>
-#else
-#include "../common/conio.h"
-#endif
-
-using namespace irrklang;
+#include "RigidbodyComponent.h"
+#include "DynamicRigidbodyComponent.h"
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -55,38 +47,6 @@ TutorialApplication::TutorialApplication(void)
 }
 */
 //-------------------------------------------------------------------------------------
-
-void TutorialApplication::createSoundEngine(void) 
-{
-	// start the sound engine with default parameters
-	ISoundEngine* engine = createIrrKlangDevice();
-
-	if (!engine)
-	{
-		printf("Could not startup engine\n");
-	}
-
-	// To play a sound, we only to call play2D(). The second parameter
-	// tells the engine to play it looped.
-
-	// play some sound stream, looped
-
-	engine->play2D("../../Media/Sounds/getout.ogg", true);
-
-
-	// play a single sound
-	engine->play2D("../../Media/Sounds/bell.wav");
-
-	// After we are finished, we have to delete the irrKlang Device created earlier
-	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
-	// delete all objects you created with a method or function that starts with 'create'.
-	// (an exception is the play2D()- or play3D()-method, see the documentation or the
-	// next example for an explanation)
-	// The object is deleted simply by calling ->drop().
-
-	//engine->drop(); // delete engine
-
-}
 
 
 //-------------------------------------------------------------------------------------
@@ -111,7 +71,7 @@ void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
 	GameObject * cam = new GameObject(mSceneMgr);
-	SceneNode* camNode = cam->getNode()->createChildSceneNode();
+	SceneNode* camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
@@ -134,6 +94,98 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
+
+
+	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
+
+	//Todos los rigidbody necesitan una referencia al collision shape.
+	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
+	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
+
+	//---------------------PLANO---------------------------------
+
+	//Crear el plano en Ogre
+	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+
+	GameObject *planito = new GameObject(mSceneMgr,"suelo");
+	planito->addComponent(new EntityComponent("ground"));
+
+	//PhysicsComponent
+
+	//MOTION STATE
+	btTransform groundTransform;
+	groundTransform.setIdentity();
+	groundTransform.setOrigin(btVector3(0, -1, 0));
+
+	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+	//COLLISION SHAPE
+	//Creamos un plano en el origen.
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
+	//Masa 0 -> Objeto estático. Masa infinita
+	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+	btVector3 localGroundInertia(0, 0, 0);
+
+	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
+
+	actors_.push_back(planito);*/
+
+	//---------------------PLANO---------------------------------
+
+	//---------------------ESFERA---------------------------------
+	
+	GameObject *ninja = new GameObject(mSceneMgr,"ninja");
+	ninja->addComponent(new EntityComponent("ninja.mesh"));
+	ninja->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
+
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 initialPosition(0, 100, 0);
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setOrigin(initialPosition);
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
+
+	//Colision shape
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShape = new btSphereShape(1);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar mass(10.0f);
+	btVector3 fallInertia(0, 0, 0);
+
+	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
+	ninja->addComponent(rbComponent);
+	ninja->addComponent(new AnimationComponent("Idle1"));
+	ninja->addComponent(new MoveComponent());
+	rbComponent->getRigidbody()->setRestitution(1);
+
+	actors_.push_back(ninja);
+
+
+	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
+	SE COPIAN AL OBJETO QUE SE LO DAMOS
+	*/
+	//---------------------ESFERA---------------------------------
+	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
+	/*
+	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
+
+	//Componentes que se añaden al Game Component
+	OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5,5,5)));
+	OgritoQueRota->addComponent(new Transform(Ogre::Vector3(1, 0, 0)));
+	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
+	actors_.push_back(OgritoQueRota);
+	*/
+
+	
+
 	srand((unsigned int)time(NULL));
 
 	
@@ -142,38 +194,62 @@ void TutorialApplication::createEntities(void)
 		for (int j = 0; j < 40; j++){
 			random = rand() % 101;
 			//Game Component ahora es Game Object
-			GameObject * OgritoQueRota = new GameObject(mSceneMgr);
-
-			OgritoQueRota->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			OgritoQueRota->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+			GameObject *planito = new GameObject(mSceneMgr);
+			planito->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
+			planito->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 
 			if (j == 20 && i == 20){
 
-				OgritoQueRota->addComponent(new EntityComponent("Torre.mesh"));
-				std::cout << "Posicion de la torre: " << OgritoQueRota->getNode()->getPosition().x << ", " <<
-					OgritoQueRota->getNode()->getPosition().y << ", " << OgritoQueRota->getNode()->getPosition().z << "\n";
+				planito->addComponent(new EntityComponent("Torre.mesh"));
+				std::cout << "Posicion de la torre: " << planito->getNode()->getPosition().x << ", " <<
+					planito->getNode()->getPosition().y << ", " << planito->getNode()->getPosition().z << "\n";
+				actors_.push_back(planito);
 			}
 			else{
-				if (random % 6 == 0)
-					OgritoQueRota->addComponent(new EntityComponent("arbol.mesh"));
-				else
-					OgritoQueRota->addComponent(new EntityComponent("suelo.mesh"));
-			}
+				if (random % 6 == 0){
+					planito->addComponent(new EntityComponent("arbol.mesh"));
+					actors_.push_back(planito);
+				}
+				else{
 
-			actors_.push_back(OgritoQueRota);
+					planito->addComponent(new EntityComponent("suelo.mesh"));
+
+					//MOTION STATE
+					btTransform groundTransform;
+					groundTransform.setIdentity();
+					groundTransform.setOrigin(btVector3(0, -1, 0));
+
+					btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+					//COLLISION SHAPE
+					//Creamos un plano en el origen.
+					btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
+					//Masa 0 -> Objeto estático. Masa infinita
+					btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+					btVector3 localGroundInertia(0, 0, 0);
+
+					planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
+
+					actors_.push_back(planito);
+
+					//---------------------PLANO---------------------------------
+				}
+			}
 		}
 	}
-
-
+	
+	
 	ObjFactory::initialize(mSceneMgr);
 
-	EnemyPrototype * ogro;//Prototipo del enemigo
+	/*EnemyPrototype * ogro;//Prototipo del enemigo
 	//Super útil
 	for (int i = 0; i < 1; i++){
 		ogro = ObjFactory::getTypeEnemy();
-		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
+		ogro->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
+		//ogro->addComponent(new MoveComponent());
 		actors_.push_back(ogro); 
-	}
+	}*/
+	
 
 	//20 a 4
 	for (int i = 0; i < 2; i++){
@@ -185,7 +261,7 @@ void TutorialApplication::createEntities(void)
 
 			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
 			enemigo->addComponent(new Enemigo());
-			enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
+			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
 			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 			actors_.push_back(enemigo);
@@ -219,8 +295,6 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
-
-	createSoundEngine();
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

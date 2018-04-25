@@ -26,7 +26,7 @@ public:
 	static const Ogre::uint32 MY_QUERY_MASK = 1; // << 0; //Lo tienen todos los objetos que quiero procesar
 	static const Ogre::uint32 O_QUERY_MASK = 0;
 	*/
-	GameObject(Ogre::SceneManager * mSceneMgr);
+	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
 
 	virtual void addComponent(Component* comp);
 	virtual Component* getComponent(ComponentName component);

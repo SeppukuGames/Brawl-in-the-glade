@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{b1f7c529-a660-4275-b2ff-2507e92db806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Component\Rigidbody">
+      <UniqueIdentifier>{4f47c67e-1421-411c-825a-1d098081b1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Rigidbody">
+      <UniqueIdentifier>{e741f8d7-314a-42c3-84c6-f70b23ac3f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -60,14 +66,17 @@
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
       <Filter>Source Files\Escenas\Tutoriales</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CollisionComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\StaticCollisionComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
+      <Filter>Source Files\Components\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
+      <Filter>Source Files\Components\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,18 +104,6 @@
     <ClInclude Include="..\..\Src\Application\MoveComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CollisionComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\StaticCollisionComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CollisionManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
@@ -119,74 +116,23 @@
     <ClInclude Include="..\..\Src\Application\Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
+    <ClInclude Include="..\..\Src\Application\Physics.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundEngineOptions.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ESoundOutputDrivers.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
+      <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_EStreamModes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioRecorder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IAudioStreamLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IFileReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IRefCounted.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_irrKlangTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundDeviceList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEffectControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundMixedOutputReceiver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundSource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_ISoundStopEventReceiver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_IVirtualRefCounted.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_SAudioStreamFormat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\ik_vec3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SoundEngine\irrKlang.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
+      <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
