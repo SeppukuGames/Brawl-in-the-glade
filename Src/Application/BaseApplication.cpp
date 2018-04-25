@@ -29,22 +29,22 @@ using namespace irrklang;
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
-	: mRoot(0),
-	mResourcesCfg(Ogre::BLANKSTRING),
-	mPluginsCfg(Ogre::BLANKSTRING),
+: mRoot(0),
+mResourcesCfg(Ogre::BLANKSTRING),
+mPluginsCfg(Ogre::BLANKSTRING),
 
-	mWindow(0),
+mWindow(0),
 
-	mSceneMgr(0),
-	mCamera(0),
+mSceneMgr(0),
+mCamera(0),
 
-	mInputManager(0),
-	mMouse(0),
-	mKeyboard(0),
+mInputManager(0),
+mMouse(0),
+mKeyboard(0),
 
-	//mCursorWasVisible(false),
-	mShutDown(false)
-	//mOverlaySystem(0)
+//mCursorWasVisible(false),
+mShutDown(false)
+//mOverlaySystem(0)
 {
 }
 
@@ -95,7 +95,7 @@ bool BaseApplication::gameLoop()
 	if (mWindow->isClosed()) return false;
 
 	double current = timer->getMilliseconds();
-	double elapsed = (current - lastTime) /1000 ;
+	double elapsed = (current - lastTime) / 1000;
 
 	if (!handleInput())
 		return false;
@@ -405,7 +405,7 @@ void BaseApplication::initOIS(void)
 	//Permite ver el cursor
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-	
+
 	// insert the following lines right before calling mInputSystem = OIS::InputManager::createInputSystem( paramList );
 #if defined OIS_WIN32_PLATFORM
 	pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
@@ -491,7 +491,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 	{
 		int a = 0;
 	}
-	
+
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
@@ -540,10 +540,13 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 	mouseInputObservers.push_back(observer);
 }
 
+void BaseApplication::añadeGameObject(GameObject * nuevo){
+	actors_.push_back(nuevo);
+}
 
 
 //CUTRADA MÁXIMA, PROMETO CAMBIARLO
 /*static void meteEnActores(GameObject* obj){
 	BaseApplication::actors_.push_back(obj);
-}*/
+	}*/
 

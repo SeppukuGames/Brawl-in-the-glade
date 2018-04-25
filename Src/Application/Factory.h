@@ -20,6 +20,7 @@ public:
 
 };
 
+class TutorialApplication;
 class BulletFactory{
 
 	public:
@@ -29,8 +30,6 @@ class BulletFactory{
 		static void creaBala(Ogre::SceneManager* mSceneManager, Ogre::Quaternion dir, Ogre::Vector3 pos){
 
 	        Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
-
-			TutorialApplication::getInstance()->TutorialApplication::meteBala(nuevaBala);
 	}
 
 		

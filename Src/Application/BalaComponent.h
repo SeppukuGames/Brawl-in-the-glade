@@ -1,8 +1,8 @@
 #ifndef _h_BalaComponent_h_
 #define _h_BalaComponent_h_
 
-#include "GameObject.h"
-#include "EntityComponent.h"
+#include "Component.h"
+#include <iostream>
 
 //COSAS DE UN HIPOTETICO PHYSICS MANAGER
 /*#include <OgreBulletDynamicsRigidBody.h>
@@ -18,18 +18,19 @@ public:
 		posicion = _gameObject->getNode()->getPosition();
 		direccion = _gameObject->getNode()->getOrientation();
 
-		vida = 10000;
+		vida = 1000;
 	}
 	//Suma la posicion, y luego en caso de chocarse con algo mandará un mensaje
 	virtual void tick(double elapsed){
-	
+		
 		if (vida > 0){
-			posicion += Ogre::Vector3::NEGATIVE_UNIT_Z;
+			std::cout << vida << std::endl;
+			posicion += Ogre::Vector3(10, 0, 10);//Ogre::Vector3::NEGATIVE_UNIT_Z;
 			vida--;
 		}
 	
 		//Si vida = 0, se para.
-		vida--;
+		
 	}
 
 	int vida; //Duracion de la bala en el aire.

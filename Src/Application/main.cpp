@@ -1,7 +1,8 @@
 #include "TutorialApplication.h"
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
-
+#include "EnemyPrototype.h"
+#include "Factory.h"
 EnemyPrototype* ObjFactory::typeEnemy = 0;
 
 

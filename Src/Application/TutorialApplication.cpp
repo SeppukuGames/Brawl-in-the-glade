@@ -238,7 +238,8 @@ void TutorialApplication::createEntities(void)
 	for (int i = 0; i < 1; i++){
 		ogro = ObjFactory::getTypeEnemy();
 		ogro->getNode()->setPosition(Ogre::Vector3((i * 20), 0, (i * 20)));
-		actors_.push_back(ogro); 
+		//actors_.push_back(ogro);
+		añadeGameObject(ogro);
 	}
 
 	
@@ -292,13 +293,6 @@ void TutorialApplication::createEntities(void)
 
 }
 
-//void TutorialApplication::meteBala(Bala * nuevaBala){
-//	actors_.push_back(nuevaBala);
-//}
-
-void TutorialApplication::meteBala(GameObject * nuevaBala){
-	actors_.push_back(nuevaBala);
-}
 //-------------------------------------------------------------------------------------
 void TutorialApplication::createScene(void)
 {
