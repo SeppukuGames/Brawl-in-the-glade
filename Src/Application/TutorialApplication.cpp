@@ -26,7 +26,6 @@ http://www.ogre3d.org/tikiwiki/
 #include <stdio.h>
 #include "AnimationComponent.h"
 
-
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
@@ -185,56 +184,74 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	
-
+	//ACTUAL TERRENO
 	srand((unsigned int)time(NULL));
+	GameObject *planito = new GameObject(mSceneMgr);
+	planito->getNode()->setPosition(Ogre::Vector3(50 - 300, -20, 50 - 300));
+	planito->getNode()->setScale(Ogre::Vector3(500, 5, 500));
+	planito->addComponent(new EntityComponent("Suelo.mesh"));
+	actors_.push_back(planito);
+
+	//Torre
+	GameObject *Torre = new GameObject(mSceneMgr);
+	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
+	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+	Torre->addComponent(new EntityComponent("Torre.mesh"));
+	actors_.push_back(Torre);
+
+	//MOTION STATE
+	btTransform groundTransform;
+	groundTransform.setIdentity();
+	groundTransform.setOrigin(btVector3(0, -1, 0));
+
+	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
+
+	//COLLISION SHAPE
+	//Creamos un plano en el origen.
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
+	//Masa 0 -> Objeto estático. Masa infinita
+	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
+	btVector3 localGroundInertia(0, 0, 0);
+
+	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
 	
+	//Arboles
 	int random = 0;
 	for (int i = 0; i < 40; i++){
 		for (int j = 0; j < 40; j++){
-			random = rand() % 101;
-			//Game Component ahora es Game Object
-			GameObject *planito = new GameObject(mSceneMgr);
-			planito->getNode()->setPosition(Ogre::Vector3((i * 50) - 300, -20, (j * 50) - 300));
-			planito->getNode()->setScale(Ogre::Vector3(5, 5, 5));
-
-			if (j == 20 && i == 20){
-
-				planito->addComponent(new EntityComponent("Torre.mesh"));
-				std::cout << "Posicion de la torre: " << planito->getNode()->getPosition().x << ", " <<
-					planito->getNode()->getPosition().y << ", " << planito->getNode()->getPosition().z << "\n";
-				actors_.push_back(planito);
-			}
-			else{
-				if (random % 6 == 0){
-					planito->addComponent(new EntityComponent("arbol.mesh"));
-					actors_.push_back(planito);
+			random = rand() % 101;			
+			int pos = (5 + rand() % 5);
+			
+			if (random % 6 == 0){
+				GameObject *arbol_ = new GameObject(mSceneMgr);				
+				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));				
+				//Falta rotacion
+				arbol_->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+				random = rand() % 6;
+				switch (random)
+				{
+				case 0:
+					arbol_->addComponent(new EntityComponent("Arbol.mesh")); break;
+				case 1:
+					arbol_->addComponent(new EntityComponent("Arbol_new.mesh")); break;
+				case 2:
+					arbol_->addComponent(new EntityComponent("Arbol2.mesh")); break;
+				case 3:
+					arbol_->addComponent(new EntityComponent("Arbol3.mesh")); break;
+				case 4:
+					arbol_->addComponent(new EntityComponent("Arbol4.mesh")); break;
+				case 5:
+					arbol_->addComponent(new EntityComponent("Arbol5.mesh")); break;
+				case 6:
+					arbol_->addComponent(new EntityComponent("Bosque.mesh")); break;
+				default:
+					break;
 				}
-				else{
-
-					planito->addComponent(new EntityComponent("suelo.mesh"));
-
-					//MOTION STATE
-					btTransform groundTransform;
-					groundTransform.setIdentity();
-					groundTransform.setOrigin(btVector3(0, -1, 0));
-
-					btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
-
-					//COLLISION SHAPE
-					//Creamos un plano en el origen.
-					btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
-					//Masa 0 -> Objeto estático. Masa infinita
-					btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
-					btVector3 localGroundInertia(0, 0, 0);
-
-					planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
-
-					actors_.push_back(planito);
-
-					//---------------------PLANO---------------------------------
-				}
-			}
+				
+				actors_.push_back(arbol_);
+									
+			}			
 		}
 	}
 	
@@ -252,8 +269,8 @@ void TutorialApplication::createEntities(void)
 	
 
 	//20 a 4
-	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 2; j++){
+	for (int i = 0; i < 5; i++){
+		for (int j = 0; j < 5; j++){
 			//GameComponent a GameObject
 			GameObject * enemigo = new GameObject(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);

@@ -174,7 +174,7 @@ bool BaseApplication::setup(void)
 	createViewports();
 
 	physicsEngine = new Physics();
-	initSoundEngine();
+	//initSoundEngine();
 	//Creamos la Escena del método hijo
 	createScene();
 
