@@ -5,6 +5,7 @@
 #include "KeyInputComponent.h"
 #include "MoveComponent.h"
 #include "AnimationComponent.h"
+#include "DynamicRigidbodyComponent.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -106,6 +107,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			AnimationComponent* comp = dynamic_cast<AnimationComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::RIGIDBODY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			DynamicRigidbodyComponent* comp = dynamic_cast<DynamicRigidbodyComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

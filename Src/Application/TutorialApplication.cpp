@@ -138,7 +138,7 @@ void TutorialApplication::createEntities(void)
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
-	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
+	/*GameObject *esfera = new GameObject(mSceneMgr,"esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
 	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 
@@ -170,7 +170,7 @@ void TutorialApplication::createEntities(void)
 
 	actors_.push_back(esfera);
 
-
+	*/
 	/*
 	EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
@@ -178,6 +178,36 @@ void TutorialApplication::createEntities(void)
 	*/
 
 	//---------------------ESFERA---------------------------------
+
+	GameObject* ninja = new GameObject(mSceneMgr);
+	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 ninjaInitialPosition(0, 50, 0);
+	btTransform ninjaTransform;
+	ninjaTransform.setIdentity();
+	ninjaTransform.setOrigin(ninjaInitialPosition);
+
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
+
+	//Colision shape
+	btCollisionShape *newRigidShape = new btBoxShape(btVector3(2.0f, 3.0f, 2.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar ninjaMass(10.0f);
+	btVector3 ninjaInertia(0, 0, 0);
+
+	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
+	ninja->addComponent(ninjaRbComponent);
+	ninjaRbComponent->getRigidbody()->setRestitution(1);
+	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	actors_.push_back(ninja);
 
 
 	srand((unsigned int)time(NULL));
@@ -265,40 +295,7 @@ void TutorialApplication::createEntities(void)
 	
 	
 	
-	GameObject* ninja = new GameObject(mSceneMgr);
-	ninja->getNode()->setScale(Ogre::Real(1.4), Ogre::Real(1.4), Ogre::Real(1.4));
 	
-	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
-	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-	//ninja->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
-
-	//Motion state
-	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 ninjaInitialPosition(0, 200, 0);
-	btTransform ninjaTransform;
-	startTransform.setIdentity();
-	startTransform.setOrigin(ninjaInitialPosition);
-
-
-	//actually contruvc the body and add it to the dynamics world
-	//Esfera a 50 metros de altura
-	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
-
-	//Colision shape
-	btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 5.0f, 5.0f));
-
-	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar ninjaMass(10.0f);
-	btVector3 ninjaInertia(0, 0, 0);
-
-	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
-	ninja->addComponent(ninjaRbComponent);
-
-	ninjaRbComponent->getRigidbody()->setRestitution(1);
-
-	
-	actors_.push_back(ninja);
 	
 }
 
