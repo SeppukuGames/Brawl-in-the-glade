@@ -27,15 +27,17 @@ public:
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 
-		direction = { 0, -2, 0 };
+		direction = { 0, -2, 0 };	
 		
 	};
 
 	virtual void tick(double elapsed){
 
 		rb->getRigidbody()->setLinearVelocity(direction *2);
-//		_gameObject->setLinearVelocity(btVector3(Bspeed.x * 100 + Velocity.x, Bspeed.y * 100 + Velocity.y, Bspeed.z * 100 + Velocity.z));
 		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
+
+		//PARA ROTAR EL PERSONAJE
+		//rb->getRigidbody()->applyTorqueImpulse(btVector3(0, 100, 0));
 	};
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
