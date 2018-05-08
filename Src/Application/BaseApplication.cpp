@@ -510,21 +510,21 @@ bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (int i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
 	return true;
 }
 
 bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (int i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
 	return true;
 }
 
 bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (int i = 0; i < keyInputObservers.size(); i++)
+	for (int i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseReleased(arg, id);
 	return true;
 }
