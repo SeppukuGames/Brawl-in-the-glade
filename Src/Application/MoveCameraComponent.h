@@ -118,6 +118,10 @@ public:
 		return true;
 	}
 
+	void MoveCameraComponent::changePosition(Vector3 newPos) {
+		direction = newPos;
+	}
+
 
 private:
 	
