@@ -46,6 +46,8 @@ public:
 			//direction.z += mMoveScale;
 /*			_gameObject->getNode()->ca moveRelative(Vector3(0.0, 0.0, -0.1)
 				* mInputDevice->getMouseRelativeZ() * MoveFactor);*/
+			direction.y += mMoveScale;
+			direction.z += mMoveScale;
 			break;
 
 		default:
@@ -84,6 +86,19 @@ public:
 
 	virtual bool mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID id)
 	{
+		switch (id)
+		{
+		case OIS::MB_Middle:
+			//direction.z += mMoveScale;
+			/*			_gameObject->getNode()->ca moveRelative(Vector3(0.0, 0.0, -0.1)
+			* mInputDevice->getMouseRelativeZ() * MoveFactor);*/
+			direction.y = 0;
+			direction.z = 0;
+			break;
+
+		default:
+			break;
+		}
 		return true;
 	};
 
@@ -94,7 +109,8 @@ public:
 		_gameObject->getNode()->yaw(Ogre::Degree(-rotation * arg.state.X.rel), Ogre::Node::TS_WORLD);
 		_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 		*/
-		int mMoveScale = 30;
+		
+		
 
 		//X AXIS
 		if (arg.state.X.abs > (_mWindow->getWidth() - 20) && arg.state.X.abs < _mWindow->getWidth())
@@ -115,6 +131,32 @@ public:
 			direction.z -= mMoveScale;
 		else
 			direction.z = 0;
+
+		//ZOOM
+		actualZoom = arg.state.Z.abs;
+
+		if (actualZoom >= maxZoomOut){
+			actualZoom = maxZoomOut;
+		}
+		else if (actualZoom <= maxZoomIn){
+			actualZoom = maxZoomIn;
+		}
+		std::cout << "Camera Z: " << arg.state.Z.abs << std::endl;
+
+		if (antiguoZoom < actualZoom && actualZoom < maxZoomOut)
+			{
+				_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y +mZoomScale, _gameObject->getNode()->getPosition().z +mZoomScale);
+				//direction.y += mZoomScale;
+				//direction.z += mZoomScale;
+			}
+		else if (antiguoZoom > actualZoom && actualZoom > maxZoomIn){
+				_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y - mZoomScale, _gameObject->getNode()->getPosition().z - mZoomScale);
+				//direction.y -= mZoomScale;
+				//direction.z -= mZoomScale;
+			}
+
+		
+			antiguoZoom = actualZoom;
 
 		return true;
 	}
@@ -170,6 +212,14 @@ private:
 	btVector3 pos;
 	btTransform transform;
 	GameObject* _player;
+	
+	//ESCALAS MOVIMIENTO DE CÁMARA
+	const int mMoveScale = 30;
+	const int mZoomScale = 15;
+	const int maxZoomIn = -1500;
+	const int maxZoomOut = 1500;
+	int antiguoZoom = 0, actualZoom = 0;
+
 
 };
 
