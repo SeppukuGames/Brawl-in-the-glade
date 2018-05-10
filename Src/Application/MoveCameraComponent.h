@@ -134,23 +134,23 @@ public:
 
 		//ZOOM
 		actualZoom = arg.state.Z.abs;
+				
+		if (actualZoom > antiguoZoom && aumento < maxZoomOut)		//AUMENTAR
+			aumento++;
+		else if(actualZoom < antiguoZoom && aumento > maxZoomIn)	//DISMINUIR
+			aumento--;
 
-		/*if (actualZoom >= maxZoomOut){
-			actualZoom = arg.state.Z.abs - maxZoomOut;
-		}
-		else if (actualZoom <= maxZoomIn){
-			actualZoom = arg.state.Z.abs + maxZoomIn;
-		}*/
 
 		std::cout << "Camera Z: " << arg.state.Z.abs << std::endl;
 
-		if (antiguoZoom < actualZoom && actualZoom < maxZoomOut)
+
+		if (aumento < maxZoomOut && actualZoom > antiguoZoom)
 			{
 				_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y +mZoomScale, _gameObject->getNode()->getPosition().z +mZoomScale);
 				//direction.y += mZoomScale;
 				//direction.z += mZoomScale;
 			}
-		else if (antiguoZoom > actualZoom && actualZoom > maxZoomIn){
+		else if (actualZoom < antiguoZoom && aumento > maxZoomIn){
 				_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y - mZoomScale, _gameObject->getNode()->getPosition().z - mZoomScale);
 				//direction.y -= mZoomScale;
 				//direction.z -= mZoomScale;
@@ -171,6 +171,7 @@ public:
 			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
 			_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
 			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
+			aumento = 0;
 			break;
 
 		default:
@@ -217,8 +218,9 @@ private:
 	//ESCALAS MOVIMIENTO DE CÁMARA
 	const int mMoveScale = 30;
 	const int mZoomScale = 15;
-	const int maxZoomIn = -1500;
-	const int maxZoomOut = 1500;
+	const int maxZoomIn = -10;
+	const int maxZoomOut = 10;
+	int aumento = 0;
 	int antiguoZoom = 0, actualZoom = 0;
 
 
