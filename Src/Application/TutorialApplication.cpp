@@ -17,8 +17,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialApplication.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-
-//#include "GameComponent.h"
 #include "GameObject.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
@@ -69,8 +67,8 @@ void TutorialApplication::createLights(void)
 void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
-	GameObject * cam = new GameObject(mSceneMgr);
-	SceneNode* camNode = cam->getNode();
+	cam = new GameObject(mSceneMgr);
+	camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
@@ -94,6 +92,9 @@ void TutorialApplication::createCameras(void)
 void TutorialApplication::createEntities(void)
 {
 
+	//Crear el plano en Ogre
+	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 
 	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
 
@@ -103,6 +104,8 @@ void TutorialApplication::createEntities(void)
 
 	//---------------------PLANO---------------------------------
 
+	//COMENTADO YA QUE SE HACE ABAJO CON TILES. LO HE DEJADO PARA PODER CONSULTAR LA ESTRUCTURA
+	
 	//Crear el plano en Ogre
 	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
@@ -133,10 +136,11 @@ void TutorialApplication::createEntities(void)
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
-	
-	GameObject *ninja = new GameObject(mSceneMgr,"ninja");
-	ninja->addComponent(new EntityComponent("ninja.mesh"));
-	ninja->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
+
+	/*GameObject *esfera = new GameObject(mSceneMgr,"esfera");
+	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
+	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -144,6 +148,7 @@ void TutorialApplication::createEntities(void)
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(initialPosition);
+
 
 	//actually contruvc the body and add it to the dynamics world
 	//Esfera a 50 metros de altura
@@ -166,25 +171,51 @@ void TutorialApplication::createEntities(void)
 
 	actors_.push_back(ninja);
 
-
-	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	*/
+	/*
+	EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
 	SE COPIAN AL OBJETO QUE SE LO DAMOS
 	*/
+
 	//---------------------ESFERA---------------------------------
-	//Creamos entidades. DEBERIAMOS DAR NOMBRES A ENTIDADES Y NODOS
-	/*
-	GameComponent * OgritoQueRota = new GameComponent(mSceneMgr);
 
-	//Componentes que se añaden al Game Component
-	OgritoQueRota->addComponent(new componenteEscalado(Ogre::Vector3(5,5,5)));
-	OgritoQueRota->addComponent(new Transform(Ogre::Vector3(1, 0, 0)));
-	OgritoQueRota->addComponent(new RenderComponent("arbol.mesh"));
-	actors_.push_back(OgritoQueRota);
-	*/
-
+	ninja = new GameObject(mSceneMgr);
+	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 	
-	//ACTUAL TERRENO
+
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 ninjaInitialPosition(0, 20, 0);
+	btTransform ninjaTransform;
+	ninjaTransform.setIdentity();
+	ninjaTransform.setOrigin(ninjaInitialPosition);
+
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
+
+	//Colision shape
+	btCollisionShape *newRigidShape = new btBoxShape(btVector3(2.0f, 3.0f, 2.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar ninjaMass(10.0f);
+	btVector3 ninjaInertia(0, 0, 0);
+
+	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
+	ninja->addComponent(ninjaRbComponent);
+	ninjaRbComponent->getRigidbody()->setRestitution(1);
+	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	actors_.push_back(ninja);
+
+	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
+
+	camMove->setUpPlayer(ninja);
+
+
 	srand((unsigned int)time(NULL));
 	GameObject *planito = new GameObject(mSceneMgr);
 	planito->getNode()->setPosition(Ogre::Vector3(50 - 300, -20, 50 - 300));
@@ -203,6 +234,7 @@ void TutorialApplication::createEntities(void)
 	btTransform groundTransform;
 	groundTransform.setIdentity();
 	groundTransform.setOrigin(btVector3(0, -1, 0));
+
 
 	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
 
@@ -247,6 +279,7 @@ void TutorialApplication::createEntities(void)
 					arbol_->addComponent(new EntityComponent("Bosque.mesh")); break;
 				default:
 					break;
+
 				}
 				
 				actors_.push_back(arbol_);
@@ -268,9 +301,11 @@ void TutorialApplication::createEntities(void)
 	}*/
 	
 
+
+
 	//20 a 4
-	for (int i = 0; i < 5; i++){
-		for (int j = 0; j < 5; j++){
+	for (int i = 0; i < 2; i++){
+		for (int j = 0; j < 2; j++){
 			//GameComponent a GameObject
 			GameObject * enemigo = new GameObject(mSceneMgr);
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
@@ -284,22 +319,11 @@ void TutorialApplication::createEntities(void)
 			actors_.push_back(enemigo);
 		}
 	}
-
 	
-	/*
-	GameObject* ninja = new GameObject(mSceneMgr);
-
-	ninja->getNode()->setScale(0.5, 0.5, 0.5);
-	ninja->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
-
-	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
-	//ninja->addComponent(new Enemigo());
-	ninja->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
-	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-	actors_.push_back(ninja);
-	*/
-
+	
+	
+	
+	
 }
 
 //-------------------------------------------------------------------------------------
@@ -316,7 +340,6 @@ void TutorialApplication::createScene(void)
 
 TutorialApplication *TutorialApplication::instance = 0;
 
-//Había conflicto aqui pero es igual lol
 TutorialApplication *TutorialApplication::getInstance()
 {
 	if (!instance)

@@ -3,16 +3,17 @@
 
 #include "Component.h"
 #include "MouseInputComponent.h"
+#include "DynamicRigidbodyComponent.h"
 
 using namespace Ogre;
 
 
-class MoveCameraComponent : public MouseInputComponent
+class MoveCameraComponent : public MouseInputComponent, public Component, public KeyInputComponent
 {
 
 public:
 
-	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent()
+	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent(), Component()
 	{
 		_mWindow = mWindow;
 	}
@@ -118,6 +119,44 @@ public:
 		return true;
 	}
 
+	virtual bool keyPressed(const OIS::KeyEvent &arg) {
+		switch (arg.key)
+		{
+		case OIS::KC_SPACE:
+			_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
+			_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+			_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
+			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
+			break;
+
+		default:
+			break;
+		}
+
+		return true;
+	};
+
+	virtual bool keyReleased(const OIS::KeyEvent &arg) {
+
+		switch (arg.key)
+		{
+		case OIS::KC_SPACE:
+			direction = Ogre::Vector3::ZERO;
+			break;
+
+		default:
+			break;
+		}
+		return true;
+	};
+
+	void MoveCameraComponent::setUpPlayer(GameObject* player) {
+		_player = player;
+		_playerMove = dynamic_cast<MoveComponent*> (_player->getComponent(ComponentName::MOVE));
+		
+	}
+
 
 private:
 	
@@ -126,6 +165,11 @@ private:
 	float rotation;
 	RenderWindow* _mWindow;
 	SceneManager* _mSceneMgr;
+	DynamicRigidbodyComponent* _rb;
+	MoveComponent* _playerMove;
+	btVector3 pos;
+	btTransform transform;
+	GameObject* _player;
 
 };
 
