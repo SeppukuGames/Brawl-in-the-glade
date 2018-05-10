@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
+#include <iostream>
 
 class MoveComponent : public KeyInputComponent, public Component {
 public:
@@ -33,6 +34,10 @@ public:
 	virtual void tick(double elapsed){
 
 		rb->getRigidbody()->setLinearVelocity(direction *2);
+		//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;
+		btTransform transform;
+		rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
 		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 
 		//PARA ROTAR EL PERSONAJE
@@ -86,7 +91,7 @@ public:
 
 		case OIS::KC_SPACE:
 			animComp->blend("Backflip", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
-			resetCamPosition = true;
+			//resetCamPosition = true;
 			break;
 
 		default:
@@ -146,7 +151,7 @@ public:
 
 		case OIS::KC_SPACE:
 			//animComp->setAnimation("Idle2", true);
-			resetCamPosition = false;
+			//resetCamPosition = false;
 			break;
 
 		default:  

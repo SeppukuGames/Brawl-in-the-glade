@@ -125,9 +125,9 @@ public:
 		case OIS::KC_SPACE:
 			_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
 			_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
-			direction = (transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ());
-			
-			_gameObject->getNode()->translate(direction);
+			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+			_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
+			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
 			break;
 
 		default:
