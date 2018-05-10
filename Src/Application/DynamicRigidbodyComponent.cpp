@@ -18,7 +18,8 @@ DynamicRigidbodyComponent::~DynamicRigidbodyComponent()
 
 void DynamicRigidbodyComponent::start()
 {
-	rigidBody->setUserPointer(_gameObject->getNode());
+	//En UserPointer metemos información que queremos utilizar para resolver las colisiones (GameObject)
+	rigidBody->setUserPointer(_gameObject);
 
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());

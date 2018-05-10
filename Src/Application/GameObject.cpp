@@ -117,4 +117,12 @@ Component* GameObject::getComponent(ComponentName component) {
 
 	return NULL;
 
+
+
+}
+
+void GameObject::onCollision(GameObject *collision){
+
+	for (size_t i = 0; i < components.size(); i++)
+		components[i]->onCollision(collision);
 }

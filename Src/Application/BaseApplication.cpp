@@ -135,6 +135,39 @@ bool BaseApplication::update(double elapsed)
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
+	int numManifolds = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+
+		GameObject *gameObjectA =  (GameObject*) obA->getUserPointer();
+		GameObject *gameObjectB = (GameObject*)obB->getUserPointer();
+
+		//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
+		if (gameObjectA == nullptr && gameObjectB == nullptr)
+		{
+
+		}
+		else if (gameObjectA == nullptr)
+		{
+			gameObjectB->onCollision(nullptr);
+		}
+		else if (gameObjectB == nullptr)
+		{
+			gameObjectA->onCollision(nullptr);
+		}
+		else
+		{
+			//Informa a todos los componentes del gameobject de la colision
+			gameObjectA->onCollision(gameObjectB);
+			gameObjectB->onCollision(gameObjectA);
+		}
+
+	}
+
 	return true;
 }
 

@@ -22,6 +22,9 @@ void RigidbodyComponent::start()
 {
 	//Añadimos al mundo
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
+
+	//En UserPointer metemos información que queremos utilizar para resolver las colisiones (GameObject)
+	rigidBody->setUserPointer(_gameObject);
 }
 
 void RigidbodyComponent::tick(double elapsed){}

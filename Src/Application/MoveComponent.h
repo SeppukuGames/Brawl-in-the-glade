@@ -9,7 +9,7 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "GameObject.h"
-
+#include <iostream>
 
 class MoveComponent : public KeyInputComponent {
 public:
@@ -29,6 +29,14 @@ public:
 	virtual void tick(double elapsed){
 		_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 		Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed; //He añadido esto.
+	};
+
+	virtual void onCollision(GameObject *collision){
+		if (collision != nullptr)
+			std::cout << "Colisión con " + collision->getNode()->getName() + '\n';
+		else
+			std::cout << "Colisión con objeto estático" + '\n';
+
 	};
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
