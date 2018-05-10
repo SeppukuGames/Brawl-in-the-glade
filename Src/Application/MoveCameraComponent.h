@@ -135,12 +135,13 @@ public:
 		//ZOOM
 		actualZoom = arg.state.Z.abs;
 
-		if (actualZoom >= maxZoomOut){
-			actualZoom = maxZoomOut;
+		/*if (actualZoom >= maxZoomOut){
+			actualZoom = arg.state.Z.abs - maxZoomOut;
 		}
 		else if (actualZoom <= maxZoomIn){
-			actualZoom = maxZoomIn;
-		}
+			actualZoom = arg.state.Z.abs + maxZoomIn;
+		}*/
+
 		std::cout << "Camera Z: " << arg.state.Z.abs << std::endl;
 
 		if (antiguoZoom < actualZoom && actualZoom < maxZoomOut)
