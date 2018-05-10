@@ -81,7 +81,7 @@ void TutorialApplication::createCameras(void)
 	SceneNode* camNode = cam->getNode()->createChildSceneNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
-	//cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr)); //COMENTADO PARA EL MOUSE xd
+	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
 	actors_.push_back(cam);
 	
 	/*
