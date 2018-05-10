@@ -12,10 +12,10 @@
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 
-class MoveComponent : public KeyInputComponent {
+class MoveComponent : public KeyInputComponent, public Component {
 public:
 
-	MoveComponent() : KeyInputComponent()
+	MoveComponent() : KeyInputComponent(), Component()
 	{
 		
 	};
@@ -26,7 +26,6 @@ public:
 		//direction = Ogre::Vector3::ZERO;
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
-
 		direction = { 0, -2, 0 };	
 		
 	};
@@ -87,7 +86,7 @@ public:
 
 		case OIS::KC_SPACE:
 			animComp->blend("Backflip", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
-
+			resetCamPosition = true;
 			break;
 
 		default:
@@ -147,6 +146,7 @@ public:
 
 		case OIS::KC_SPACE:
 			//animComp->setAnimation("Idle2", true);
+			resetCamPosition = false;
 			break;
 
 		default:  
@@ -157,16 +157,17 @@ public:
 	};
 
 
-	
+	btVector3 direction;
 
 private:
 	//Ogre::Vector3 direction; 
 	float velocity;
-	btVector3 direction;
+	
 	DynamicRigidbodyComponent* rb;
 	//Puntero a la animacion
 	AnimationComponent* animComp;
 
+	bool resetCamPosition;
 };
 
 #endif /* MOVECOMPONENT_H_ */

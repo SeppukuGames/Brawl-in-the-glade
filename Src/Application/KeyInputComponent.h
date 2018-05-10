@@ -6,11 +6,11 @@
 #include <OIS.h>
 
 
-class KeyInputComponent : public Component, public OIS::KeyListener{
+class KeyInputComponent : public OIS::KeyListener{
 public:
 
 	//Seguramente haya que pasarle un puntero al GameManager
-	KeyInputComponent() : Component()
+	KeyInputComponent()
 	{
 		TutorialApplication::getInstance()->registerKeyInputObserver(this);
 	};

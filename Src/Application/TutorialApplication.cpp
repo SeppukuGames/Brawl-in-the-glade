@@ -17,7 +17,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "TutorialApplication.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-//#include "GameComponent.h"
 #include "GameObject.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
@@ -69,8 +68,8 @@ void TutorialApplication::createLights(void)
 void TutorialApplication::createCameras(void)
 {
 	//Creamos camara
-	GameObject * cam = new GameObject(mSceneMgr);
-	SceneNode* camNode = cam->getNode();
+	cam = new GameObject(mSceneMgr);
+	camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
@@ -179,7 +178,7 @@ void TutorialApplication::createEntities(void)
 
 	//---------------------ESFERA---------------------------------
 
-	GameObject* ninja = new GameObject(mSceneMgr);
+	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
@@ -209,6 +208,9 @@ void TutorialApplication::createEntities(void)
 	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 	actors_.push_back(ninja);
 
+	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
+
+	camMove->setUpPlayer(ninja);
 
 	srand((unsigned int)time(NULL));
 

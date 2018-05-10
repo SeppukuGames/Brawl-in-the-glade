@@ -19,8 +19,11 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include "EnemyPrototype.h"
 #include "Factory.h"
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
+#include "GameObject.h"
 
-
+using namespace Ogre;
 
 class TutorialApplication : public BaseApplication
 {
@@ -29,16 +32,24 @@ class TutorialApplication : public BaseApplication
 	TutorialApplication(void);
 	//virtual ~TutorialApplication(void);
 
+
 public:
 
 	static TutorialApplication *getInstance();
 
 protected:
-	virtual void createScene(void);
 
+
+	GameObject * cam;
+	SceneNode* camNode;
+	GameObject* ninja;
+
+	virtual void createScene(void);
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
+
+
 
 };
 
