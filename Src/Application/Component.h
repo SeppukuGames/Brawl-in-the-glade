@@ -12,8 +12,8 @@ public:
 	{};
 	virtual ~Component(){};
 
-	virtual void start() = 0;
-	virtual void tick(double elapsed) = 0;
+	virtual void start() {};
+	virtual void tick(double elapsed) {};
 	virtual void onCollision(GameObject *collision){};
 
 	inline void setGameObject(GameObject * gameObject){ _gameObject = gameObject; };

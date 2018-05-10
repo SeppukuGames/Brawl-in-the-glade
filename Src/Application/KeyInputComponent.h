@@ -8,7 +8,7 @@
 
 class KeyInputComponent : public Component, public OIS::KeyListener{
 public:
-
+//----------------------MÉTODOS---------------------------
 	//Seguramente haya que pasarle un puntero al GameManager
 	KeyInputComponent() : Component()
 	{
@@ -16,8 +16,9 @@ public:
 	};
 
 	virtual ~KeyInputComponent(){};
+	
+//----------------------MÉTODOS---------------------------
 
-private:
 };
 
-#endif /* RENDERCOMPONENT_H_ */
+#endif /* KEYINPUTCOMPONENT_H_*/

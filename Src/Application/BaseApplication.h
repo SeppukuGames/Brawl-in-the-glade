@@ -48,6 +48,49 @@ class BaseApplication :
 	public OIS::KeyListener,
 	public OIS::MouseListener
 {
+	//--------------------------------------ATRIBUTOS-----------------------------------------------
+
+	//Permite inicializar el core de Ogre facilmente
+	Ogre::Root *mRoot;
+
+	//Strings que utilizaremos durante el setup
+	Ogre::String mResourcesCfg;
+	Ogre::String mPluginsCfg;
+
+	//RenderSystem
+	Ogre::RenderWindow* mWindow;
+
+	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
+	Ogre::Camera* mCamera;
+
+	//OIS Input devices
+	OIS::InputManager* mInputManager;
+	OIS::Mouse*    mMouse;
+	OIS::Keyboard* mKeyboard;
+
+
+	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
+	bool mShutDown;
+	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+
+
+	//Todos los objetos de las escena
+	std::vector<GameObject*> actors_;
+
+	std::vector<OIS::KeyListener*> keyInputObservers;
+
+	std::vector<OIS::MouseListener*> mouseInputObservers;
+
+
+	Physics * physicsEngine;
+
+	irrklang::ISoundEngine* soundEngine;
+
+	//Para el bucle principal
+	double lastTime;
+	Ogre::Timer *timer;
+	//--------------------------------------ATRIBUTOS-----------------------------------------------
+
 public:
 	/*
 	Ciclo básico de Ogre:
@@ -112,50 +155,6 @@ protected:
 	virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 	//------------Input Listener----------------------------
-
-
-	//ATRIBUTOS
-
-	//Permite inicializar el core de Ogre facilmente
-	Ogre::Root *mRoot;
-
-	//Strings que utilizaremos durante el setup
-	Ogre::String mResourcesCfg;
-	Ogre::String mPluginsCfg;
-
-	//RenderSystem
-	Ogre::RenderWindow* mWindow;
-
-	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
-	Ogre::Camera* mCamera;
-
-	//OIS Input devices
-	OIS::InputManager* mInputManager;
-	OIS::Mouse*    mMouse;
-	OIS::Keyboard* mKeyboard;
-
-
-	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
-	bool mShutDown;
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
-
-
-	//Todos los objetos de las escena
-	std::vector<GameObject*> actors_;
-
-	std::vector<OIS::KeyListener*> keyInputObservers;
-
-	std::vector<OIS::MouseListener*> mouseInputObservers;
-
-	
-	Physics * physicsEngine;
-	
-	irrklang::ISoundEngine* soundEngine;
-
-	//Para el bucle principal
-	double lastTime;
-	Ogre::Timer *timer;
-
 };
 
 #endif // #ifndef __BaseApplication_h_

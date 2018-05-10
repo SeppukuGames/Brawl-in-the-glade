@@ -107,8 +107,7 @@ bool BaseApplication::gameLoop()
 
 	lastTime = current;
 
-
-	return true;	//Return true puesto.
+	return true;
 
 }
 
@@ -135,6 +134,8 @@ bool BaseApplication::update(double elapsed)
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
+	//----------------------------------------COLISIONES-------------------------------------------
+	//Detecta las colisiones y envía mensajes a los correspondientes Game Object
 	int numManifolds = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getNumManifolds();
 	for (int i = 0; i < numManifolds; i++)
 	{
@@ -146,38 +147,30 @@ bool BaseApplication::update(double elapsed)
 		GameObject *gameObjectA =  (GameObject*) obA->getUserPointer();
 		GameObject *gameObjectB = (GameObject*)obB->getUserPointer();
 
-		//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
-		if (gameObjectA == nullptr && gameObjectB == nullptr)
+		//Si hay contacto entre los 2 objetos, se mandan los mensajes de colision
+		if (contactManifold->getNumContacts() > 0)
 		{
-
+			//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
+			if (gameObjectA != nullptr && gameObjectB != nullptr)
+			{
+				//Informa a todos los componentes del gameobject de la colision
+				gameObjectA->onCollision(gameObjectB);
+				gameObjectB->onCollision(gameObjectA);
+			}
+			else if (gameObjectA == nullptr)		
+				gameObjectB->onCollision(nullptr);
+			
+			else if (gameObjectB == nullptr)
+				gameObjectA->onCollision(nullptr);
 		}
-		else if (gameObjectA == nullptr)
-		{
-			gameObjectB->onCollision(nullptr);
-		}
-		else if (gameObjectB == nullptr)
-		{
-			gameObjectA->onCollision(nullptr);
-		}
-		else
-		{
-			//Informa a todos los componentes del gameobject de la colision
-			gameObjectA->onCollision(gameObjectB);
-			gameObjectB->onCollision(gameObjectA);
-		}
-
 	}
+	//----------------------------------------COLISIONES-------------------------------------------
 
 	return true;
 }
 
-//Detecta input
 bool BaseApplication::render(void){
-
-	//Se profundiza en el TUTORIAL4
-	if (!mRoot->renderOneFrame()) return false;
-
-	return true;
+	return (mRoot->renderOneFrame());
 }
 
 
@@ -479,6 +472,7 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 //-------------------------------------------------------------------------------------
 void BaseApplication::destroyScene(void)
 {
+
 }
 //-------------------------------------------------------------------------------------
 

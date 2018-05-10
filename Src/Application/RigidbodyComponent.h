@@ -10,7 +10,6 @@ public:
 	virtual ~RigidbodyComponent();
 
 	virtual void start();
-	virtual void tick(double elapsed);
 
 protected:
 	btRigidBody* rigidBody;

@@ -11,11 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
+    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
+    <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\MoveComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Physics.cpp" />
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />

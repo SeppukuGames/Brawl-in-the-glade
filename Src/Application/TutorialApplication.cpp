@@ -41,10 +41,12 @@ TutorialApplication::TutorialApplication(void)
 }
 //-------------------------------------------------------------------------------------
 
-/*TutorialApplication::~TutorialApplication(void)
-{
-}
-*/
+//Borrar luz, cámara,
+//TutorialApplication::~TutorialApplication(void)
+//{
+//	
+//}
+
 //-------------------------------------------------------------------------------------
 
 
@@ -56,7 +58,7 @@ void TutorialApplication::createLights(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	//Creamos una luz
-	Light* light = mSceneMgr->createLight("MainLight");
+	light = mSceneMgr->createLight("MainLight");
 	SceneNode* lightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	lightNode->attachObject(light);
 
@@ -161,7 +163,7 @@ void TutorialApplication::createEntities(void)
 	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
 	ninja->addComponent(rbComponent);
 //	ninja->addComponent(new AnimationComponent("Idle1"));
-	//ninja->addComponent(new MoveComponent());
+	ninja->addComponent(new MoveComponent());
 	rbComponent->getRigidbody()->setRestitution(1);
 
 	actors_.push_back(ninja);
@@ -192,13 +194,6 @@ void TutorialApplication::createEntities(void)
 	planito->addComponent(new EntityComponent("Suelo.mesh"));
 	actors_.push_back(planito);
 
-	//Torre
-	GameObject *Torre = new GameObject(mSceneMgr);
-	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
-	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
-	Torre->addComponent(new EntityComponent("Torre.mesh"));
-	actors_.push_back(Torre);
-
 	//MOTION STATE
 	btTransform groundTransform;
 	groundTransform.setIdentity();
@@ -215,6 +210,12 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
+	//Torre
+	GameObject *Torre = new GameObject(mSceneMgr);
+	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
+	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+	Torre->addComponent(new EntityComponent("Torre.mesh"));
+	actors_.push_back(Torre);
 	
 	//Arboles
 	int random = 0;

@@ -23,7 +23,6 @@ void DynamicRigidbodyComponent::start()
 
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
-
 }
 
 void DynamicRigidbodyComponent::tick(double elapsed){

@@ -6,32 +6,26 @@
 #include <OgreEntity.h>
 
 class EntityComponent : public Component{
-public:
-	EntityComponent(std::string meshString) : Component()
-	{
-		_meshString = meshString;
-		
-	};
-	virtual ~EntityComponent(){};
 
-	virtual void start(){
-		//DA ERROR AQUI
-
-		_entity = _gameObject->getNode()->getCreator()->createEntity(_meshString);
-		_gameObject->getNode()->attachObject(_entity);
-	};
-	virtual void tick(double elapsed){
-
-	};
-
-	//CREAR EL GET ENTITY
-	Ogre::Entity* getEntity(){
-		return _entity;
-	}
-
+//-----------------------------------ATRIBUTOS-------------------------
 private:
 	Ogre::Entity * _entity;
 	std::string _meshString;
+
+//-----------------------------------ATRIBUTOS-------------------------
+
+//-----------------------------------MÉTODOS----------------------------
+public:
+	EntityComponent(std::string meshString);
+
+	virtual ~EntityComponent();
+
+	virtual void start();
+
+	inline Ogre::Entity* getEntity(){return _entity;}
+
+//-----------------------------------MÉTODOS----------------------------
+
 };
 
-#endif /* RENDERCOMPONENT_H_ */
+#endif /* ENTITYCOMPONENT_H_ */
