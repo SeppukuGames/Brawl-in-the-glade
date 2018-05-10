@@ -134,5 +134,8 @@
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\buttonGUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

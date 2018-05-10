@@ -41,6 +41,11 @@ http://www.ogre3d.org/tikiwiki/
 #include "Physics.h"
 #include "irrKlang.h"
 
+//Ouverlei
+#include "buttonGUI.h"
+#include <OgreOverlay.h>
+#include <OgreOverlaySystem.h>
+
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -87,6 +92,8 @@ protected:
 	virtual void loadResources(void);//Carga todos los recursos
 
 	virtual void chooseSceneManager(void);
+	//Overlay
+	virtual void initOverlay(void);
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 
@@ -137,8 +144,7 @@ protected:
 
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	bool mShutDown;
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
-
+	Ogre::OverlaySystem *mOverlaySystem;
 
 	//Todos los objetos de las escena
 	std::vector<GameObject*> actors_;

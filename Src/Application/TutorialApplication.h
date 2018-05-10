@@ -23,6 +23,14 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreEntity.h>
 #include "GameObject.h"
 
+//Ouverlei
+#include "OgreTextAreaOverlayElement.h"
+#include "OgreFontManager.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
+#include "OgreBorderPanelOverlayElement.h"
+#include "buttonGUI.h"
+
 using namespace Ogre;
 
 class TutorialApplication : public BaseApplication

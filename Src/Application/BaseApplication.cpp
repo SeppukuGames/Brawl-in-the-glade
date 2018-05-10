@@ -170,6 +170,7 @@ bool BaseApplication::setup(void)
 	//createResourceListener();
 
 	chooseSceneManager();
+	initOverlay();
 	createCamera();
 	createViewports();
 
@@ -307,7 +308,15 @@ void BaseApplication::chooseSceneManager(void)
 }
 
 //-------------------------------------------------------------------------------------
+void BaseApplication::initOverlay(void)
+{
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
+}
 
+//-------------------------------------------------------------------------------------
 void BaseApplication::createCamera(void)
 {
 	//Creamos la cámara
