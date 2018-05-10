@@ -23,21 +23,24 @@ public:
 	virtual ~MoveComponent(){};
 
 	virtual void start(){
-		velocity = 50;
+		velocity = 500;
 		//direction = Ogre::Vector3::ZERO;
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
-		direction = { 0, -2, 0 };	
-		
+		direction = { 0, 0, 0 };	
+		oldDirection = direction;
 	};
 
 	virtual void tick(double elapsed){
 
-		rb->getRigidbody()->setLinearVelocity(direction *2);
+		if (oldDirection != direction) {
+			rb->getRigidbody()->setLinearVelocity(direction * 10 * Ogre::Real(elapsed));
+			oldDirection = direction;
+		}
 		//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;
 		btTransform transform;
 		rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
-		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+		std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
 		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 
 		//PARA ROTAR EL PERSONAJE
@@ -91,7 +94,6 @@ public:
 
 		case OIS::KC_SPACE:
 			animComp->blend("Backflip", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
-			//resetCamPosition = true;
 			break;
 
 		default:
@@ -151,7 +153,6 @@ public:
 
 		case OIS::KC_SPACE:
 			//animComp->setAnimation("Idle2", true);
-			//resetCamPosition = false;
 			break;
 
 		default:  
@@ -162,17 +163,15 @@ public:
 	};
 
 
-	btVector3 direction;
+	
 
 private:
 	//Ogre::Vector3 direction; 
 	float velocity;
-	
+	btVector3 direction, oldDirection;
 	DynamicRigidbodyComponent* rb;
 	//Puntero a la animacion
 	AnimationComponent* animComp;
-
-	bool resetCamPosition;
 };
 
 #endif /* MOVECOMPONENT_H_ */

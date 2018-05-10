@@ -462,10 +462,10 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 	{
 		mShutDown = true;
 	}
-	else if (arg.key == OIS::KC_A)
+	/*else if (arg.key == OIS::KC_A)
 	{
 		int a = 0;
-	}
+	}*/
 
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)

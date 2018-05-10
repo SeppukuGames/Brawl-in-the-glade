@@ -16,6 +16,7 @@ public:
 	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent(), Component()
 	{
 		_mWindow = mWindow;
+		
 	}
 
 	virtual ~MoveCameraComponent()
@@ -120,13 +121,13 @@ public:
 	}
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg) {
+		
 		switch (arg.key)
 		{
-		case OIS::KC_SPACE:
-			_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
-			_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+		case OIS::KC_SPACE:			
+			//_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+			//_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
 			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
-			_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
 			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
 			break;
 
@@ -142,7 +143,7 @@ public:
 		switch (arg.key)
 		{
 		case OIS::KC_SPACE:
-			direction = Ogre::Vector3::ZERO;
+			//direction = Ogre::Vector3::ZERO;
 			break;
 
 		default:
@@ -152,9 +153,8 @@ public:
 	};
 
 	void MoveCameraComponent::setUpPlayer(GameObject* player) {
-		_player = player;
-		_playerMove = dynamic_cast<MoveComponent*> (_player->getComponent(ComponentName::MOVE));
-		
+		//_player = player;
+		//_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
 	}
 
 
@@ -166,7 +166,6 @@ private:
 	RenderWindow* _mWindow;
 	SceneManager* _mSceneMgr;
 	DynamicRigidbodyComponent* _rb;
-	MoveComponent* _playerMove;
 	btVector3 pos;
 	btTransform transform;
 	GameObject* _player;
