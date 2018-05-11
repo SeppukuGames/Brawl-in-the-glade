@@ -14,6 +14,7 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
+
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
@@ -23,7 +24,6 @@ http://www.ogre3d.org/tikiwiki/
 #else
 #include "../common/conio.h"
 #endif
-
 
 using namespace irrklang;
 
@@ -164,6 +164,8 @@ bool BaseApplication::update(double elapsed)
 				gameObjectA->onCollision(nullptr);
 		}
 	}
+
+
 	//----------------------------------------COLISIONES-------------------------------------------
 
 	return true;
@@ -211,7 +213,7 @@ bool BaseApplication::setup(void)
 };
 
 //-------------------------------------------------------------------------------------
-//HAY QUE ELIMINAR LOS WARNINGS DE AQUI
+//TODO: HAY QUE ELIMINAR LOS WARNINGS DE AQUI
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void BaseApplication::setupResources(void)
 {
@@ -223,7 +225,6 @@ void BaseApplication::setupResources(void)
 	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
 	//String auxiliares para guardar información del archivo de configuracion parseado
-
 	Ogre::String pathName;//Ruta de los recursos
 	Ogre::String formatName;//Formato del archivo (Zip, Filesystem)
 
@@ -261,6 +262,7 @@ bool BaseApplication::configure(void)
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
 	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog(NULL)))
 		return false;
+
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
 	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
 
@@ -334,15 +336,10 @@ void BaseApplication::chooseSceneManager(void)
 
 //-------------------------------------------------------------------------------------
 
+//Crea la cámara, sin nodo
 void BaseApplication::createCamera(void)
 {
-	//Creamos la cámara
 	mCamera = mSceneMgr->createCamera("MainCam");
-
-	//La inicializamos
-	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
-	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
-	mCamera->setNearClipDistance(5);
 }
 
 //-------------------------------------------------------------------------------------
@@ -486,14 +483,7 @@ void BaseApplication::destroyScene(void)
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_ESCAPE)
-	{
 		mShutDown = true;
-	}
-	else if (arg.key == OIS::KC_A)
-	{
-		int a = 0;
-	}
-
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
@@ -503,7 +493,6 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
-
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyReleased(arg);
 
@@ -512,21 +501,23 @@ bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
-	for (size_t i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
+
 	return true;
 }
 
 bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (size_t i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
+
 	return true;
 }
 
 bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
-	for (size_t i = 0; i < keyInputObservers.size(); i++)
+	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseReleased(arg, id);
 	return true;
 }
@@ -543,7 +534,4 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 }
 
 
-Physics * BaseApplication::getPhysicsEngine()
-{
-	return physicsEngine;
-}
+

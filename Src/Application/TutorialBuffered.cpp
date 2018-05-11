@@ -98,7 +98,7 @@ bool TutorialBuffered::keyPressed(const OIS::KeyEvent& ke)
 	switch (ke.key)
 	{
 	case OIS::KC_ESCAPE:
-		mShutDown = true;
+		//mShutDown = true;
 		break;
 	case OIS::KC_1:
 		mCamera->getParentSceneNode()->detachObject(mCamera);

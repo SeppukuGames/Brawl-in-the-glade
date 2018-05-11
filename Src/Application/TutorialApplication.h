@@ -20,16 +20,14 @@ http://www.ogre3d.org/tikiwiki/
 #include "EnemyPrototype.h"
 #include "Factory.h"
 
-
-
 class TutorialApplication : public BaseApplication
 {
-
+protected:
 	static TutorialApplication * instance;
-	TutorialApplication(void);
-	//virtual ~TutorialApplication(void);
 
 public:
+	TutorialApplication(void);
+	//virtual ~TutorialApplication(void);
 
 	static TutorialApplication *getInstance();
 
@@ -39,7 +37,6 @@ protected:
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
-
 };
 
 

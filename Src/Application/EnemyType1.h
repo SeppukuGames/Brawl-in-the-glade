@@ -4,12 +4,13 @@
 
 #include "EnemyPrototype.h"
 
+//EnemyPrototype* ObjFactory::typeEnemy = 0;
+
 //Clase que define un tipo concreto de enemigo
 class EnemyType1 : public EnemyPrototype
 {
 
 public:
-
 	EnemyType1(Ogre::SceneManager * mSceneMgr);
 	EnemyPrototype * clone();
 

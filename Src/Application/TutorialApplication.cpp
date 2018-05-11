@@ -58,7 +58,7 @@ void TutorialApplication::createLights(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	//Creamos una luz
-	light = mSceneMgr->createLight("MainLight");
+	Light* light = mSceneMgr->createLight("MainLight");
 	SceneNode* lightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	lightNode->attachObject(light);
 
@@ -70,6 +70,11 @@ void TutorialApplication::createLights(void)
 
 void TutorialApplication::createCameras(void)
 {
+	//La inicializamos
+	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
+	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
+	mCamera->setNearClipDistance(5);
+
 	//Creamos camara
 	GameObject * cam = new GameObject(mSceneMgr);
 	SceneNode* camNode = cam->getNode();
