@@ -91,6 +91,69 @@ void TutorialApplication::createCameras(void)
 
 void TutorialApplication::createEntities(void)
 {
+	//------------------------- OVERLAY ---------------------------------------
+
+	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	//FontManager& fM = FontManager::getSingleton(); //Error de memoria
+
+	// Create a panel
+	OverlayContainer* panel = static_cast<OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "PanelName"));
+
+	panel->setMetricsMode(Ogre::GMM_PIXELS);
+	panel->setPosition(100, 100);
+	panel->setDimensions(300, 200);
+	//panel->setMaterialName("panel"); // Optional background material //ESTO DA ERROR DE MEMORIA
+	/*
+	Ogre::BorderPanelOverlayElement* bpanel = static_cast<BorderPanelOverlayElement*>(
+		overlayManager.createOverlayElement("BorderPanel", "BorderPanelName"));
+
+	bpanel->setBorderSize(0.2, 0.2);
+
+	
+	// Create a text area
+	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
+		overlayManager.createOverlayElement("TextArea", "TextAreaName"));
+	textArea->setMetricsMode(Ogre::GMM_PIXELS);
+	textArea->setPosition(50, 100);
+	textArea->setDimensions(100, 100);
+	textArea->setCaption("Hola, soy un panel de prueba!");
+	textArea->setCharHeight(16);
+	textArea->setFontName("Trebuchet");
+	textArea->setColourBottom(ColourValue(0.8, 0.5, 0.3));
+	textArea->setColourTop(ColourValue(0.5, 0.7, 0.5));
+	
+	// Create an overlay, and add the panel
+	Overlay* overlay = overlayManager.create("OverlayName");
+	overlay->add2D(panel);
+
+	// Add the text area to the panel
+	panel->addChild(textArea);
+
+	// Show the overlay
+	overlay->show();
+	
+	//CREAR UN BOTON
+	mCamera->setAutoAspectRatio(true);
+
+	//create a text scheme
+	//textScheme  myTextScheme = new textScheme("Trebuchet", 20, 0, 1, 0, 1);
+
+
+	//instanciar el button Manager
+	//buttonMgr = new buttonGUI::buttonManager("myTextAreaMaterial", myTextScheme, mSceneMgr, "MainCam");
+
+	//Crear un boton
+
+	//buttonMgr->createButton("building", "Panel", buttonGUI::buttonPosition(buttonGUI::TOP_RIGHT, 300, 300), 64, 64); //ERROR de linkado
+	*/
+	//------------------------- OVERLAY ----------------------------------
+
+
+
+
+
+
 
 	//Crear el plano en Ogre
 	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);

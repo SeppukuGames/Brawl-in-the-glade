@@ -23,7 +23,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreEntity.h>
 #include "GameObject.h"
 
-//Ouverlei
+//Overlay
 #include "OgreTextAreaOverlayElement.h"
 #include "OgreFontManager.h"
 #include "OgreOverlayManager.h"

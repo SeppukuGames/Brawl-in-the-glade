@@ -41,7 +41,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "Physics.h"
 #include "irrKlang.h"
 
-//Ouverlei
+//Overlay
 #include "buttonGUI.h"
 #include <OgreOverlay.h>
 #include <OgreOverlaySystem.h>
@@ -91,9 +91,7 @@ protected:
 	virtual bool configure(void);//Configura el RenderSystem y crea la ventana
 	virtual void loadResources(void);//Carga todos los recursos
 
-	virtual void chooseSceneManager(void);
-	//Overlay
-	virtual void initOverlay(void);
+	virtual void chooseSceneManager(void);	
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 
@@ -102,6 +100,11 @@ protected:
 
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
+
+	//Overlay
+	virtual void initOverlay(void);	
+	virtual void handleButtonEvent(buttonGUI::buttonEvent * e);
+
 
 	//----------------Window Event Listener---------------
 	//Actualiza el estado del ratón a la nueva ventana
@@ -150,12 +153,12 @@ protected:
 	std::vector<GameObject*> actors_;
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
-
 	std::vector<OIS::MouseListener*> mouseInputObservers;
 
-	
-	Physics * physicsEngine;
-	
+	buttonGUI::buttonManager * buttonMgr;
+
+	//Engines
+	Physics * physicsEngine;	
 	irrklang::ISoundEngine* soundEngine;
 
 	//Para el bucle principal

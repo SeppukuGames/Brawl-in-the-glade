@@ -18,6 +18,11 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 
+#include <OgreOverlayManager.h>
+#include "buttonGUI.h"
+
+#include <iostream>
+
 #if defined(WIN32)
 #include <conio.h>
 #else
@@ -43,8 +48,8 @@ BaseApplication::BaseApplication(void)
 	mKeyboard(0),
 
 	//mCursorWasVisible(false),
-	mShutDown(false)
-	//mOverlaySystem(0)
+	mShutDown(false),
+	mOverlaySystem(0)
 {
 }
 
@@ -107,9 +112,7 @@ bool BaseApplication::gameLoop()
 
 	lastTime = current;
 
-
 	return true;	//Return true puesto.
-
 }
 
 //Detecta input
@@ -136,6 +139,21 @@ bool BaseApplication::update(double elapsed)
 		actors_[i]->tick(elapsed);
 
 	return true;
+}
+
+//Deteccion de input de botones
+//do something with the event
+void BaseApplication::handleButtonEvent(buttonGUI::buttonEvent * e)
+{
+	std::string name;
+	if (e->actionButton)
+		name = *(e->actionButton->getName());  //store the name of the main button.
+
+	if ((e->action == buttonGUI::ONCLICK) && (name == "building"))
+	{
+		std::cout << "BOTON PULSADO" << std::endl;
+		//do stuff...
+	}
 }
 
 //Detecta input
@@ -358,7 +376,7 @@ void BaseApplication::initSoundEngine(void)
 
 	// play some sound stream, looped
 
-	soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
+	//soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
 
 
 	// play a single sound
