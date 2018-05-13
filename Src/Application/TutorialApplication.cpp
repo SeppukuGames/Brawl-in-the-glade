@@ -103,14 +103,14 @@ void TutorialApplication::createEntities(void)
 	panel->setMetricsMode(Ogre::GMM_PIXELS);
 	panel->setPosition(100, 100);
 	panel->setDimensions(300, 200);
-	//panel->setMaterialName("panel"); // Optional background material //ESTO DA ERROR DE MEMORIA
-	/*
+	panel->setMaterialName("panel"); // Optional background material //ESTO DA ERROR DE MEMORIA
+	
 	Ogre::BorderPanelOverlayElement* bpanel = static_cast<BorderPanelOverlayElement*>(
 		overlayManager.createOverlayElement("BorderPanel", "BorderPanelName"));
 
 	bpanel->setBorderSize(0.2, 0.2);
 
-	
+	/*
 	// Create a text area
 	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", "TextAreaName"));
@@ -123,12 +123,12 @@ void TutorialApplication::createEntities(void)
 	textArea->setColourBottom(ColourValue(0.8, 0.5, 0.3));
 	textArea->setColourTop(ColourValue(0.5, 0.7, 0.5));
 	
-	// Create an overlay, and add the panel
+	// Create an overlay, and add the panel*/
 	Overlay* overlay = overlayManager.create("OverlayName");
 	overlay->add2D(panel);
 
 	// Add the text area to the panel
-	panel->addChild(textArea);
+	//panel->addChild(textArea);
 
 	// Show the overlay
 	overlay->show();
@@ -139,14 +139,13 @@ void TutorialApplication::createEntities(void)
 	//create a text scheme
 	//textScheme  myTextScheme = new textScheme("Trebuchet", 20, 0, 1, 0, 1);
 
-
 	//instanciar el button Manager
 	//buttonMgr = new buttonGUI::buttonManager("myTextAreaMaterial", myTextScheme, mSceneMgr, "MainCam");
 
 	//Crear un boton
 
 	//buttonMgr->createButton("building", "Panel", buttonGUI::buttonPosition(buttonGUI::TOP_RIGHT, 300, 300), 64, 64); //ERROR de linkado
-	*/
+	
 	//------------------------- OVERLAY ----------------------------------
 
 
