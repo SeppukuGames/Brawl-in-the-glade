@@ -32,26 +32,23 @@ BaseApplication::BaseApplication(void)
 	: mRoot(0),
 	mResourcesCfg(Ogre::BLANKSTRING),
 	mPluginsCfg(Ogre::BLANKSTRING),
-
+	mInputManager(0),
 	mWindow(0),
-
 	mSceneMgr(0),
 	mCamera(0),
-
-	mInputManager(0),
 	mMouse(0),
 	mKeyboard(0),
 
 	//mCursorWasVisible(false),
-	mShutDown(false)
-	//mOverlaySystem(0)
+	mShutDown(false),
+	mOverlaySystem(0)
 {
 }
 
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-	//if (mOverlaySystem) delete mOverlaySystem;
+	//if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -184,25 +181,34 @@ bool BaseApplication::setup(void)
 	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
 	mRoot = new Ogre::Root(mPluginsCfg);
 
-	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
-	//No los inicializa, solo establece donde buscar los potenciales recursos
-	setupResources();
-
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
 
+	//Scene Manager
+	chooseSceneManager();
+	initOverlay();
+
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
+
 	//Carga todos los recursos
 	loadResources();
+
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
-	chooseSceneManager();
 	createCamera();
 	createViewports();
 
+	//Inicializa el motor de Física
 	physicsEngine = new Physics();
+
+	//Inicializa el motor de Sonido
 	//initSoundEngine();
+
 	//Creamos la Escena del método hijo
 	createScene();
 
@@ -253,7 +259,22 @@ void BaseApplication::setupResources(void)
 	}
 }
 
+//Carga todos los recursos
+void BaseApplication::loadResources(void)
+{
+	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
+
+	//Establecemos el número por defecto de mipmaps que se usarán.
+	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
 //-------------------------------------------------------------------------------------
+
 //Configura el RenderSystem y crea la ventana
 bool BaseApplication::configure(void)
 {
@@ -306,19 +327,7 @@ bool BaseApplication::configure(void)
 }
 //-------------------------------------------------------------------------------------
 
-//Carga todos los recursos
-void BaseApplication::loadResources(void)
-{
-	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
 
-	//Establecemos el número por defecto de mipmaps que se usarán.
-	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	//Inicializa todos los recursos encontrados por Ogre
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-}
 
 //-------------------------------------------------------------------------------------
 
@@ -326,16 +335,18 @@ void BaseApplication::chooseSceneManager(void)
 {
 	//Creamos el SceneManager
 	mSceneMgr = mRoot->createSceneManager();
-
-	/*No lo utilizamos??
-	// Inicializa el OverlaySystem
-	mOverlaySystem = new Ogre::OverlaySystem();
-	mSceneMgr->addRenderQueueListener(mOverlaySystem);
-	*/
 }
 
 //-------------------------------------------------------------------------------------
+void BaseApplication::initOverlay(void)
+{
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
+}
+//-------------------------------------------------------------------------------------
 //Crea la cámara, sin nodo
 void BaseApplication::createCamera(void)
 {
@@ -467,13 +478,24 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 }
 
 //-------------------------------------------------------------------------------------
+//TODO, ELIMINAR LOS RECURSOS
 void BaseApplication::destroyScene(void)
 {
 
+	////Destruye todos los actores
+	//for (size_t i = 0; i < actors_.size(); i++)
+	//	delete(actors_[i]);
+
+	////Destruye todos los observadores (Mouse y Keyboard)
+	//for (size_t i = 0; i < keyInputObservers.size(); i++)
+	//	delete(keyInputObservers[i]);
+
+	//for (size_t i = 0; i < mouseInputObservers.size(); i++)
+	//	delete(mouseInputObservers[i]);
+
+
+
 }
-//-------------------------------------------------------------------------------------
-
-
 //-------------------------------------------------------------------------------------
 
 

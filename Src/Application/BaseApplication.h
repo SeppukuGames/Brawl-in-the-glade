@@ -32,6 +32,11 @@ http://www.ogre3d.org/tikiwiki/
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+//Overlay
+#include <OgreOverlay.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlaySystem.h>
+
 #include <OgreLogManager.h>
 #include <OgreMeshManager.h>
 //#include <OgreFrameListener.h>
@@ -51,6 +56,8 @@ class BaseApplication :
 
 	//--------------------------------------ATRIBUTOS-----------------------------------------------
 protected:
+
+	//Quizá los SceneNodes deberían estar aquí, como Luz, Cámara
 	//Permite inicializar el core de Ogre facilmente
 	Ogre::Root *mRoot;
 
@@ -70,26 +77,31 @@ protected:
 	OIS::Keyboard* mKeyboard;
 
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+	
+	//Motor de sonido
+	irrklang::ISoundEngine* soundEngine;
 
+	//Overlay
+	Ogre::OverlaySystem *mOverlaySystem;
+
+	//Motor de física
+	Physics * physicsEngine;
 
 	//Todos los objetos de las escena
 	std::vector<GameObject*> actors_;
 
+	//Observadores
 	std::vector<OIS::KeyListener*> keyInputObservers;
 	std::vector<OIS::MouseListener*> mouseInputObservers;
 
 
-	Physics * physicsEngine;
-
-	irrklang::ISoundEngine* soundEngine;
 
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
 
 private:
-	//
+	
 	bool mShutDown;
 
 	//--------------------------------------ATRIBUTOS-----------------------------------------------
@@ -137,7 +149,9 @@ protected:
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 
+	//Inicialización de OIS, Overlay y SoundEngine
 	virtual void initOIS(void);
+	virtual void initOverlay(void);
 	virtual void initSoundEngine(void);
 
 	virtual void createScene(void) = 0; // Override me!
