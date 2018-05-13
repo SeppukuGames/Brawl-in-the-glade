@@ -37,14 +37,16 @@ http://www.ogre3d.org/tikiwiki/
 //#include <OgreOverlaySystem.h>
 #include <OgreTextureManager.h>
 
-#include "GameObject.h"
-#include "Physics.h"
-#include "irrKlang.h"
-
 //Overlay
 #include "buttonGUI.h"
 #include <OgreOverlay.h>
 #include <OgreOverlaySystem.h>
+
+#include "GameObject.h"
+#include "Physics.h"
+#include "irrKlang.h"
+
+
 
 //																									-Listeners de OIS-
 class BaseApplication :

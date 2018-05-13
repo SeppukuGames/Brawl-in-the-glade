@@ -94,7 +94,7 @@ void TutorialApplication::createEntities(void)
 	//------------------------- OVERLAY ---------------------------------------
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
-	//FontManager& fM = FontManager::getSingleton(); //Error de memoria
+	FontManager& fM = FontManager::getSingleton(); //Error de memoria
 
 	// Create a panel
 	OverlayContainer* panel = static_cast<OverlayContainer*>(
@@ -110,7 +110,7 @@ void TutorialApplication::createEntities(void)
 
 	bpanel->setBorderSize(0.2, 0.2);
 
-	/*
+	
 	// Create a text area
 	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", "TextAreaName"));
@@ -128,13 +128,13 @@ void TutorialApplication::createEntities(void)
 	overlay->add2D(panel);
 
 	// Add the text area to the panel
-	//panel->addChild(textArea);
+	panel->addChild(textArea);
 
 	// Show the overlay
 	overlay->show();
 	
 	//CREAR UN BOTON
-	mCamera->setAutoAspectRatio(true);
+	//mCamera->setAutoAspectRatio(true);
 
 	//create a text scheme
 	//textScheme  myTextScheme = new textScheme("Trebuchet", 20, 0, 1, 0, 1);

@@ -35,7 +35,7 @@ using namespace irrklang;
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
 	: mRoot(0),
-	mResourcesCfg(Ogre::BLANKSTRING),
+	mResourcesCfg(Ogre::BLANKSTRING), 
 	mPluginsCfg(Ogre::BLANKSTRING),
 
 	mWindow(0),
@@ -174,25 +174,33 @@ bool BaseApplication::setup(void)
 	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
 	mRoot = new Ogre::Root(mPluginsCfg);
 
-	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
-	//No los inicializa, solo establece donde buscar los potenciales recursos
-	setupResources();
+
+
 
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
 
+	chooseSceneManager();
+
+	//Inicializamos Overlay
+	initOverlay();
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
 	//Carga todos los recursos
 	loadResources();
+
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
-	chooseSceneManager();
-	initOverlay();
+
 	createCamera();
 	createViewports();
 
 	physicsEngine = new Physics();
+
 	//initSoundEngine();
 	//Creamos la Escena del método hijo
 	createScene();
