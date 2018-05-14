@@ -4,35 +4,12 @@
 #include "GameObject.h"
 #include "EntityComponent.h"
 #include "BalaComponent.h"
-#include "TutorialApplication.h"
-#include <iostream>
-//COSAS DE UN HIPOTETICO PHYSICS MANAGER
-/*#include <OgreBulletDynamicsRigidBody.h>
-#include <OgreBulletCollisionsStaticPlaneShape.h>
-#include <OgreBulletCollisionsBoxShape.h>
 
-*/
 class Bala : public GameObject{
 
 public:
 	//La posicion de la bala es local
-	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 pos, Ogre::Quaternion dir) : GameObject(mSceneMgr){
-		
-		posicion = pos;
-		direccion = dir;
-		_sceneMgr = mSceneMgr;
-		
-
-		//Creamos un entity
-		
-		this->addComponent(new EntityComponent("ogrehead.mesh"));		//Tenemos una bola con componente entidad.
-		this->addComponent(new BalaComponent());
-		//this->getNode()->setScale(0.2, 0.2, 0.2);
-		this->getNode()->translate(posicion);			//Situamos la bala en la posicion que queremos (la del objeto que la dispara).
-
-		TutorialApplication::getInstance()->añadeGameObject(this);			//Añadimos la bala a los actores.
-		
-	}
+	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 pos, Ogre::Quaternion dir); 
 
 	void fisicaBala(){
 

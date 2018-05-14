@@ -1,5 +1,5 @@
-#ifndef MOVECAMERACOMPONENT_H_
-#define MOVECAMERACOMPONENT_H_
+#ifndef MOUSECOMPONENT_H_
+#define MOUSECOMPONENT_H_
 
 #include "Component.h"
 #include "MouseInputComponent.h"

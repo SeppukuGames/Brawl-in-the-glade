@@ -3,18 +3,20 @@
 
 #include "Component.h"
 #include "MouseInputComponent.h"
+#include "DynamicRigidbodyComponent.h"
 
 using namespace Ogre;
 
 
-class MoveCameraComponent : public MouseInputComponent
+class MoveCameraComponent : public MouseInputComponent, public KeyInputComponent
 {
 
 public:
 
-	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent()
+	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent()
 	{
 		_mWindow = mWindow;
+		
 	}
 
 	virtual ~MoveCameraComponent()
@@ -26,7 +28,7 @@ public:
 	};
 	
 	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction * elapsed, Ogre::Node::TS_LOCAL);
+		_gameObject->getNode()->translate(direction *Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 	};
 
 	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
@@ -118,6 +120,43 @@ public:
 		return true;
 	}
 
+	virtual bool keyPressed(const OIS::KeyEvent &arg) {
+		
+		switch (arg.key)
+		{
+		case OIS::KC_SPACE:			
+			//_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+			//_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
+			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
+			break;
+
+		default:
+			break;
+		}
+
+		return true;
+	};
+
+	virtual bool keyReleased(const OIS::KeyEvent &arg) {
+
+		switch (arg.key)
+		{
+		case OIS::KC_SPACE:
+			//direction = Ogre::Vector3::ZERO;
+			break;
+
+		default:
+			break;
+		}
+		return true;
+	};
+
+	void MoveCameraComponent::setUpPlayer(GameObject* player) {
+		//_player = player;
+		//_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
+	}
+
 
 private:
 	
@@ -126,6 +165,12 @@ private:
 	float rotation;
 	RenderWindow* _mWindow;
 	SceneManager* _mSceneMgr;
+	DynamicRigidbodyComponent* _rb;
+
+
+	btVector3 pos;
+	btTransform transform;
+	GameObject* _player;
 
 };
 

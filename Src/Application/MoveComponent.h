@@ -9,102 +9,75 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "GameObject.h"
+#include "RigidbodyComponent.h"
+#include "DynamicRigidbodyComponent.h"
 
-
-#include <iostream>
-class MoveComponent : public KeyInputComponent {
+class MoveComponent : public KeyInputComponent, public Component {
 public:
 
-	MoveComponent() : KeyInputComponent()
+	MoveComponent() : KeyInputComponent(), Component()
 	{
-
+		
 	};
 	virtual ~MoveComponent(){};
 
 	virtual void start(){
-		velocity = 50;
-		rotation = 0.13;
-		direction = Ogre::Vector3::ZERO;
-		sigueRotando = false;
-		//Componente de animación
+		velocity = 500;
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
+		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
+		direction = { 0, 0, 0 };	
+		oldDirection = direction;
 	};
 
 	virtual void tick(double elapsed){
-		_gameObject->getNode()->translate(direction* elapsed, Ogre::Node::TS_LOCAL);
-		Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed; 
-		if (sigueRotando){
-			_gameObject->getNode()->yaw(Ogre::Degree(5 * rotation));
+
+		if (oldDirection != direction) {
+			rb->getRigidbody()->setLinearVelocity(direction * 10 * Ogre::Real(elapsed));
+			oldDirection = direction;
 		}
-	};
+		btTransform transform;
+		rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
+
+		//PARA ROTAR EL PERSONAJE
+		//rb->getRigidbody()->applyTorqueImpulse(btVector3(0, 100, 0));
+	}
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
 		switch (arg.key)
 		{
 		case OIS::KC_UP:
 		case OIS::KC_W:
-
-			direction.z += -velocity;
+			direction.setZ((-velocity));
+			//direction.z += -velocity;
 		
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:
 
-			direction.z += velocity;
+			direction.setZ((velocity));
+			//direction.z += velocity;
 			
 			break;
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
 
-			direction.x += -velocity;
-
+			//direction.x += -velocity;
+			direction.setX((-velocity));
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
 
-			direction.x += velocity;
-
-			break;
-
-		case OIS::KC_PGDOWN:
-		case OIS::KC_E:
-
-			//direction.y += -velocity;
-			if (!sigueRotando) sigueRotando = true;
-			
-
-			//quatRot = Ogre::Quaternion(Ogre::Degree(5* rotation), Ogre::Vector3::UNIT_Y);
-			//_gameObject->getNode()->setOrientation(quatRot);
-			//
-			//_gameObject->getNode()->rotate(quatRot, Ogre::Node::TS_LOCAL);
-			//std::cout << _gameObject->getNode()->getOrientation() << std::endl; 
-			break;
-
-		case OIS::KC_PGUP:
-		case OIS::KC_Q:
-			//_gameObject->getNode()->yaw(Ogre::Degree(-5 * rotation));
-			//direction.y += velocity; 
-			//quatRot = Ogre::Quaternion(Ogre::Degree(-5 * rotation), Ogre::Vector3(1, 1, 0));
-			
-			//_gameObject->getNode()->rotate(quatRot);
-			//_gameObject->getNode()->setOrientation(quatRot);
-			break;
-
-		case OIS::KC_SPACE:
-		
-			animComp->blend("Backflip", animComp->BlendWhileAnimating, 0.2, true);
-
-			break;
-
-		default:
+			//direction.x += velocity;
+			direction.setX((velocity));
 			break;
 		}
 
 		//E ORA DO MOVIMENTO
-		animComp->blend("Walk", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Walk", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 		return true;
 	};
 
@@ -115,66 +88,46 @@ public:
 		case OIS::KC_UP:
 
 		case OIS::KC_W: 
-			direction.z += velocity;
-
+			//direction.z += velocity;
+			direction.setZ((0));
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:
 
-			direction.z += -velocity;
-
+			//direction.z += -velocity;
+			direction.setZ((0));
 			break;
 
 		case OIS::KC_LEFT:
 		case OIS::KC_A:
 
-			direction.x += velocity;
-
+			//direction.x += velocity;
+			direction.setX((0));
 			break;
 
 		case OIS::KC_RIGHT:
 		case OIS::KC_D:
 
-			direction.x += -velocity;
+			//direction.x += -velocity;
+			direction.setX((0));
 
-			break;
-
-		case OIS::KC_PGDOWN:
-		case OIS::KC_E:
-			if (sigueRotando) sigueRotando = false;
-			//direction.y += velocity;
-
-			break;
-
-		case OIS::KC_PGUP:
-		case OIS::KC_Q:
-			//direction.y += -velocity;
-			break;
-
-		case OIS::KC_SPACE:
-			//animComp->setAnimation("Idle2", true);
-			break;
-
-		default:  
 			break;
 		}
-		animComp->blend("Idle2", animComp->BlendWhileAnimating, 0.2, true);
+		animComp->blend("Idle2", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 		return true;
 	};
 
-private:
-	//Rotaciones
-	double rotation;
-	Ogre::Quaternion quatRot;
-	bool sigueRotando;
-	//Direcciones
-	Ogre::Vector3 direction; 
-	float velocity;
 
+	
+
+private:
+	//Ogre::Vector3 direction; 
+	float velocity;
+	btVector3 direction, oldDirection;
+	DynamicRigidbodyComponent* rb;
 	//Puntero a la animacion
 	AnimationComponent* animComp;
-
 };
 
 #endif /* MOVECOMPONENT_H_ */

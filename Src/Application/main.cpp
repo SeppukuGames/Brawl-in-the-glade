@@ -7,7 +7,6 @@ EnemyPrototype* ObjFactory::typeEnemy = 0;
 
 
 #ifdef _DEBUG || !_WIN32
-
 int main(){
 	printf("Hola, Mundo!\n");
 	#else

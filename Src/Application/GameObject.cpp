@@ -5,10 +5,16 @@
 #include "KeyInputComponent.h"
 #include "MoveComponent.h"
 #include "AnimationComponent.h"
+#include "DynamicRigidbodyComponent.h"
+#include "MoveCameraComponent.h"
 
-GameObject::GameObject(Ogre::SceneManager * mSceneMgr)  :components(0){
+GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
-	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+	if (name != "")
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name,Ogre::Vector3(0, 0, 0));
+	else
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
+
 }
 
 
@@ -98,10 +104,34 @@ Component* GameObject::getComponent(ComponentName component) {
 
 		break;
 
+	case ComponentName::MOVE_CAMERA:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			MoveCameraComponent* comp = dynamic_cast<MoveCameraComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
 	case ComponentName::ANIMATION:
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			AnimationComponent* comp = dynamic_cast<AnimationComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::RIGIDBODY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			DynamicRigidbodyComponent* comp = dynamic_cast<DynamicRigidbodyComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

@@ -28,22 +28,19 @@ public:
 	static const Ogre::uint32 MY_QUERY_MASK = 1; // << 0; //Lo tienen todos los objetos que quiero procesar
 	static const Ogre::uint32 O_QUERY_MASK = 0;
 	*/
-	GameObject(Ogre::SceneManager * mSceneMgr);
+	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
 
 	virtual void addComponent(Component* comp);
 	virtual Component* getComponent(ComponentName component);
 
-
 	// from GameObject
 	virtual void tick(double elapsed);
-
 
 	virtual void setObjMan(Ogre::MovableObject* mObj);
 
 	virtual ~GameObject();
 
 	inline Ogre::SceneNode* getNode(){ return node; };
-
 
 	void pushMensaje(Mensaje* msj);	//Pushea un mensaje a los recibidos
 	virtual void leeMensajes() {};	//Cada componente va a definir en funcion de los mensajes que quiera leer

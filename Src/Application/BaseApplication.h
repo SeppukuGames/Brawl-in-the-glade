@@ -71,6 +71,9 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer); 
 
+
+	virtual Physics * getPhysicsEngine();
+
 	virtual void añadeGameObject(GameObject * nuevo);
 
 protected:

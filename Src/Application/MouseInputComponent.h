@@ -5,10 +5,10 @@
 #include "TutorialApplication.h"
 #include <OIS.h>
 
-class MouseInputComponent : public Component, public OIS::MouseListener{
+class MouseInputComponent : public OIS::MouseListener, public Component{
 public:
 
-	MouseInputComponent() : Component()
+	MouseInputComponent()
 	{
 		TutorialApplication::getInstance()->registerMouseInputObserver(this);
 	};
