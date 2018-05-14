@@ -188,7 +188,7 @@ void TutorialApplication::createEntities(void)
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 ninjaInitialPosition(0, 20, 0);
+	btVector3 ninjaInitialPosition(0, 0, 0);
 	btTransform ninjaTransform;
 	ninjaTransform.setIdentity();
 	ninjaTransform.setOrigin(ninjaInitialPosition);
@@ -199,10 +199,10 @@ void TutorialApplication::createEntities(void)
 	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
 
 	//Colision shape
-	btCollisionShape *newRigidShape = new btBoxShape(btVector3(2.0f, 3.0f, 2.0f));
+	btCollisionShape *newRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar ninjaMass(10.0f);
+	btScalar ninjaMass(1.0f);
 	btVector3 ninjaInertia(0, 0, 0);
 
 	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);

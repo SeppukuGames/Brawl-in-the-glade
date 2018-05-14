@@ -141,7 +141,7 @@ public:
 			aumento--;
 
 
-		std::cout << "Camera Z: " << arg.state.Z.abs << std::endl;
+		//std::cout << "Camera Z: " << arg.state.Z.abs << std::endl;
 
 
 		if (aumento < maxZoomOut && actualZoom > antiguoZoom)
@@ -197,8 +197,6 @@ public:
 
 	void MoveCameraComponent::setUpPlayer(GameObject* player) {
 		_player = player;
-		_playerMove = dynamic_cast<MoveComponent*> (_player->getComponent(ComponentName::MOVE));
-		
 	}
 
 
@@ -210,7 +208,6 @@ private:
 	RenderWindow* _mWindow;
 	SceneManager* _mSceneMgr;
 	DynamicRigidbodyComponent* _rb;
-	MoveComponent* _playerMove;
 	btVector3 pos;
 	btTransform transform;
 	GameObject* _player;
