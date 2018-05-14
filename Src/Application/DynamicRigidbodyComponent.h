@@ -3,6 +3,7 @@
 
 #include "RigidbodyComponent.h"
 
+//Rigidbody dinámico. Es asociado a objetos físicos que tienen movimiento 
 class DynamicRigidbodyComponent : public RigidbodyComponent
 {
 public:

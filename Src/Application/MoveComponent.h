@@ -5,7 +5,6 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "GameObject.h"
-#include <iostream>
 
 class MoveComponent : public KeyInputComponent {
 //---------------------------ATRIBUTOS-------------------------
@@ -28,7 +27,6 @@ public:
 
 	virtual void tick(double elapsed);
 
-	virtual void onCollision(GameObject *collision);
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 

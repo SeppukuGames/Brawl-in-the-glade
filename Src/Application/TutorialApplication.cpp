@@ -31,6 +31,9 @@ http://www.ogre3d.org/tikiwiki/
 #include "Enemigo.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
+#include "TestCollisionComponent1.h"
+#include "TestCollisionComponent2.h"
+
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -167,12 +170,45 @@ void TutorialApplication::createEntities(void)
 
 	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
 	ninja->addComponent(rbComponent);
-//	ninja->addComponent(new AnimationComponent("Idle1"));
-	ninja->addComponent(new MoveComponent());
 	rbComponent->getRigidbody()->setRestitution(1);
+
+	ninja->addComponent(new TestCollisionComponent1());
 
 	actors_.push_back(ninja);
 
+	//////////
+
+	GameObject *cabeza = new GameObject(mSceneMgr, "cabeza");
+	cabeza->addComponent(new EntityComponent("ogrehead.mesh"));
+	cabeza->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
+
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 initialPositionc(0, 20, 0);
+	btTransform startTransformc;
+	startTransformc.setIdentity();
+	startTransformc.setOrigin(initialPositionc);
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *fallMotionStatec = new btDefaultMotionState(startTransformc);
+
+	//Colision shape
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShapec = new btSphereShape(1);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar massc(10.0f);
+	btVector3 fallInertiac(0, 0, 0);
+
+	DynamicRigidbodyComponent* rbComponentc = new DynamicRigidbodyComponent(fallMotionStatec, fallShapec, massc, fallInertiac);
+	cabeza->addComponent(rbComponentc);
+	rbComponentc->getRigidbody()->setRestitution(1);
+
+	cabeza->addComponent(new TestCollisionComponent2());
+
+	actors_.push_back(cabeza);
 
 	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE

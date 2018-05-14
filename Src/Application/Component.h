@@ -4,7 +4,7 @@
 //Declaración adelantada para evitar ciclo de inclusiones
 class GameObject;
 
-enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION };
+enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION,TESTCOLLISIONCOMPONENT2 };
 
 class Component {
 public:

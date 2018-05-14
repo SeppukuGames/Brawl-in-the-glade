@@ -7,14 +7,14 @@
 
 class EntityComponent : public Component{
 
-//-----------------------------------ATRIBUTOS-------------------------
+	//-----------------------------------ATRIBUTOS-------------------------
 private:
 	Ogre::Entity * _entity;
 	std::string _meshString;
 
-//-----------------------------------ATRIBUTOS-------------------------
+	//-----------------------------------ATRIBUTOS-------------------------
 
-//-----------------------------------MÉTODOS----------------------------
+	//-----------------------------------MÉTODOS----------------------------
 public:
 	EntityComponent(std::string meshString);
 
@@ -22,9 +22,9 @@ public:
 
 	virtual void start();
 
-	inline Ogre::Entity* getEntity(){return _entity;}
+	inline Ogre::Entity* getEntity(){ return _entity; }
 
-//-----------------------------------MÉTODOS----------------------------
+	//-----------------------------------MÉTODOS----------------------------
 
 };
 

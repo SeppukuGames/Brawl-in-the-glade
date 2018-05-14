@@ -5,11 +5,12 @@
 #include "KeyInputComponent.h"
 #include "MoveComponent.h"
 #include "AnimationComponent.h"
+#include "TestCollisionComponent2.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
 	if (name != "")
-		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name,Ogre::Vector3(0, 0, 0));
+		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 	else
 		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
 
@@ -113,8 +114,19 @@ Component* GameObject::getComponent(ComponentName component) {
 		}
 
 		break;
-	}
 
+	case ComponentName::TESTCOLLISIONCOMPONENT2:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			TestCollisionComponent2* comp = dynamic_cast<TestCollisionComponent2*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+	}
 	return NULL;
 
 

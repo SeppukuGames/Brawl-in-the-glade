@@ -15,15 +15,6 @@ void  MoveComponent::tick(double elapsed){
 	Ogre::Vector3 movement = direction*  (Ogre::Real) elapsed; //He añadido esto.
 };
 
-void  MoveComponent::onCollision(GameObject *collision)
-{
-	if (collision != nullptr)
-		std::cout << "Colisión con " + collision->getNode()->getName() + '\n';
-	else
-		std::cout << "Colisión con objeto estático" + '\n';
-
-};
-
 bool  MoveComponent::keyPressed(const OIS::KeyEvent &arg){
 	switch (arg.key)
 	{

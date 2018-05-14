@@ -46,6 +46,9 @@
     <Filter Include="Source Files\Components\Rigidbody">
       <UniqueIdentifier>{e741f8d7-314a-42c3-84c6-f70b23ac3f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Component\Input">
+      <UniqueIdentifier>{fbdd6982-bd5b-47a4-a45c-5ef54946f0db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\main.cpp">
@@ -90,6 +93,12 @@
     <ClCompile Include="..\..\Src\Application\MoveComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameObject.h">
@@ -110,9 +119,6 @@
     <ClInclude Include="..\..\Src\Application\tutorial2.h">
       <Filter>Header Files\Escenas\Tutoriales</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\MoveComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
@@ -131,9 +137,6 @@
     <ClInclude Include="..\..\Src\Application\Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
@@ -145,6 +148,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
+      <Filter>Header Files\Component\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
+      <Filter>Header Files\Component\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
