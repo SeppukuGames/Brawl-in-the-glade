@@ -2,12 +2,13 @@
 #define MOVECAMERACOMPONENT_H_
 
 #include "DynamicRigidbodyComponent.h"
-#include "KeyMouseInputComponent.h"
-
+#include "KeyInputComponent.h"
+#include "MouseInputComponent.h"
 using namespace Ogre;
 
-class MoveCameraComponent : public KeyMouseInputComponent 
+class MoveCameraComponent : public KeyInputComponent , public Component, public MouseInputComponent
 {
+
 private:
 
 	Vector3 direction;
@@ -19,8 +20,18 @@ private:
 	btVector3 pos;
 	btTransform transform;
 	GameObject* _player;
+	
+	//ESCALAS MOVIMIENTO DE CÁMARA
+	const int mMoveScale = 30;
+	const int mZoomScale = 15;
+	const int maxZoomIn = -10;
+	const int maxZoomOut = 10;
+	int aumento = 0;
+	int antiguoZoom = 0, actualZoom = 0;
+
 
 public:
+	
 	MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr);
 	virtual ~MoveCameraComponent();
 

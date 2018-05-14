@@ -6,9 +6,9 @@
 #include "TutorialApplication.h"
 
 //Componente que escucha los eventos de teclado
-class KeyInputComponent : public Component, public OIS::KeyListener{
+class KeyInputComponent : public OIS::KeyListener{
 public:
-	KeyInputComponent() : Component()
+	KeyInputComponent()
 	{
 		TutorialApplication::getInstance()->registerKeyInputObserver(this);
 	};

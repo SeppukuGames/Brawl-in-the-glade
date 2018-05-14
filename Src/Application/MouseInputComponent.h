@@ -6,7 +6,7 @@
 #include "TutorialApplication.h"
 
 //Componente que escucha los eventos de ratón
-class MouseInputComponent : public Component, public OIS::MouseListener{
+class MouseInputComponent : public OIS::MouseListener{
 public:
 
 	MouseInputComponent()
