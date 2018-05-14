@@ -1,23 +1,23 @@
 #include "TutorialApplication.h"
-#include "TutorialBuffered.h"
-#include "tutorial2.h"
-
-EnemyPrototype* ObjFactory::typeEnemy = 0;
+//#include "TutorialBuffered.h"
+//#include "tutorial2.h"
 
 
 #ifdef _DEBUG || !_WIN32
 int main(){
 	printf("Hola, Mundo!\n");
-	#else
+#else
 #include <Windows.h>
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
 
 #endif
-
+	//Inicializa Ogre y el juego
 	TutorialApplication::getInstance()->go();
+
 	return 0;
 }
-/*
+
+/*TODO: Para que no salga la consola en modo release, tocar esto
 #ifdef _DEBUG || !_WIN32
 
 int main(){
@@ -28,14 +28,14 @@ int main(){
 #include <Windows.h> //Hay que incluir la API de windows
 
 int CALLBACK WinMain(
-	_In_ HINSTANCE hInstance,
-	_In_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nCmdShow) {
+_In_ HINSTANCE hInstance,
+_In_ HINSTANCE hPrevInstance,
+_In_ LPSTR lpCmdLine,
+_In_ int nCmdShow) {
 
 #endif
 
-	ProyectoBasico * pb = new ProyectoBasico();
-	pb->go();
-	return 0;
+ProyectoBasico * pb = new ProyectoBasico();
+pb->go();
+return 0;
 }*/

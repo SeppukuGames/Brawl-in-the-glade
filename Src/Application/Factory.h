@@ -4,19 +4,17 @@
 #include "EnemyType1.h"
 
 //Factoría para la creación de enemigos
-class ObjFactory{
-
+static class ObjFactory{
 public:
 
-	static EnemyPrototype* typeEnemy;
+	EnemyPrototype* typeEnemy;
 
 	//Se crea el enemigo
-	static void initialize(Ogre::SceneManager * mSceneMgr){
+	void initialize(Ogre::SceneManager * mSceneMgr){
 		typeEnemy = new EnemyType1(mSceneMgr);
 	}
 
-	static EnemyPrototype * getTypeEnemy(){ return typeEnemy->clone(); };
-
+	EnemyPrototype * getTypeEnemy(){ return typeEnemy->clone(); };
 };
 
 #endif /* FACTORY_H_ */

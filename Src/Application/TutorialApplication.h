@@ -23,33 +23,25 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreEntity.h>
 #include "GameObject.h"
 
-using namespace Ogre;
 
 class TutorialApplication : public BaseApplication
 {
-
+protected:
 	static TutorialApplication * instance;
-	TutorialApplication(void);
-	//virtual ~TutorialApplication(void);
 
 
 public:
+	TutorialApplication(void);
+	//virtual ~TutorialApplication(void);
 
 	static TutorialApplication *getInstance();
 
 protected:
 
-
-	GameObject * cam;
-	SceneNode* camNode;
-	GameObject* ninja;
-
 	virtual void createScene(void);
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
-
-
 
 };
 

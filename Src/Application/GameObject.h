@@ -35,6 +35,8 @@ public:
 	// from GameObject
 	virtual void tick(double elapsed);
 
+	virtual void onCollision(GameObject *collision);
+
 
 	virtual void setObjMan(Ogre::MovableObject* mObj);
 

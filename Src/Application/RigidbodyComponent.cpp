@@ -24,5 +24,3 @@ void RigidbodyComponent::start()
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 }
 
-void RigidbodyComponent::tick(double elapsed){}
-

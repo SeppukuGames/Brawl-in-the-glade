@@ -3,8 +3,10 @@
 
 #include "Component.h"
 #include <OIS.h>
+#include "TutorialApplication.h"
 
-class MouseInputComponent : public OIS::MouseListener{
+//Componente que escucha los eventos de ratón
+class MouseInputComponent : public Component, public OIS::MouseListener{
 public:
 
 	MouseInputComponent()
@@ -13,7 +15,6 @@ public:
 	};
 	virtual ~MouseInputComponent(){};
 
-private:
 };
 
-#endif /* RENDERCOMPONENT_H_ */
+#endif /* MOUSEINPUTCOMPONENT_H_ */

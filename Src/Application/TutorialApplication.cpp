@@ -29,6 +29,9 @@ http://www.ogre3d.org/tikiwiki/
 #include "Enemigo.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
+#include "TestCollisionComponent1.h"
+#include "TestCollisionComponent2.h"
+
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -39,10 +42,12 @@ TutorialApplication::TutorialApplication(void)
 }
 //-------------------------------------------------------------------------------------
 
-/*TutorialApplication::~TutorialApplication(void)
-{
-}
-*/
+//Borrar luz, cámara,
+//TutorialApplication::~TutorialApplication(void)
+//{
+//	
+//}
+
 //-------------------------------------------------------------------------------------
 
 
@@ -66,9 +71,14 @@ void TutorialApplication::createLights(void)
 
 void TutorialApplication::createCameras(void)
 {
+	//La inicializamos
+	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
+	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
+	mCamera->setNearClipDistance(5);
+
 	//Creamos camara
-	cam = new GameObject(mSceneMgr);
-	camNode = cam->getNode();
+	GameObject * cam = new GameObject(mSceneMgr);
+	SceneNode *camNode = cam->getNode();
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
@@ -131,20 +141,20 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
-	actors_.push_back(planito);*/
+	actors_.push_back(planito);
 
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
-
-	/*GameObject *esfera = new GameObject(mSceneMgr,"esfera");
+	*/
+	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
 	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-
+	
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 initialPosition(0, 100, 0);
+	btVector3 initialPosition(-20, 100, 0);
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(initialPosition);
@@ -164,23 +174,55 @@ void TutorialApplication::createEntities(void)
 	btVector3 fallInertia(0, 0, 0);
 
 	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
-	ninja->addComponent(rbComponent);
-//	ninja->addComponent(new AnimationComponent("Idle1"));
-	//ninja->addComponent(new MoveComponent());
+	esfera->addComponent(rbComponent);
 	rbComponent->getRigidbody()->setRestitution(1);
 
-	actors_.push_back(ninja);
+	esfera->addComponent(new TestCollisionComponent1());
 
-	*/
-	/*
-	EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+	actors_.push_back(esfera);
+
+
+	GameObject *cabeza = new GameObject(mSceneMgr, "cabeza");
+	cabeza->addComponent(new EntityComponent("ogrehead.mesh"));
+	cabeza->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
+
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 initialPositionc(-20, 20, 0);
+	btTransform startTransformc;
+	startTransformc.setIdentity();
+	startTransformc.setOrigin(initialPositionc);
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *fallMotionStatec = new btDefaultMotionState(startTransformc);
+
+	//Colision shape
+	//Creamos la esfera de radio 1
+	btCollisionShape* fallShapec = new btSphereShape(1);
+	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar massc(10.0f);
+	btVector3 fallInertiac(0, 0, 0);
+
+	DynamicRigidbodyComponent* rbComponentc = new DynamicRigidbodyComponent(fallMotionStatec, fallShapec, massc, fallInertiac);
+	cabeza->addComponent(rbComponentc);
+	rbComponentc->getRigidbody()->setRestitution(1);
+
+	cabeza->addComponent(new TestCollisionComponent2());
+
+	actors_.push_back(cabeza);
+
+	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
+>>>>>>> Colisiones
 	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
 	SE COPIAN AL OBJETO QUE SE LO DAMOS
 	*/
 
 	//---------------------ESFERA---------------------------------
 
-	ninja = new GameObject(mSceneMgr);
+	GameObject * ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
@@ -211,9 +253,9 @@ void TutorialApplication::createEntities(void)
 	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 	actors_.push_back(ninja);
 
-	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
+	//MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
 
-	camMove->setUpPlayer(ninja);
+	//camMove->setUpPlayer(ninja);
 
 
 	srand((unsigned int)time(NULL));
@@ -222,13 +264,6 @@ void TutorialApplication::createEntities(void)
 	planito->getNode()->setScale(Ogre::Vector3(500, 5, 500));
 	planito->addComponent(new EntityComponent("Suelo.mesh"));
 	actors_.push_back(planito);
-
-	//Torre
-	GameObject *Torre = new GameObject(mSceneMgr);
-	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
-	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
-	Torre->addComponent(new EntityComponent("Torre.mesh"));
-	actors_.push_back(Torre);
 
 	//MOTION STATE
 	btTransform groundTransform;
@@ -247,6 +282,12 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
+	//Torre
+	GameObject *Torre = new GameObject(mSceneMgr);
+	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
+	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
+	Torre->addComponent(new EntityComponent("Torre.mesh"));
+	actors_.push_back(Torre);
 	
 	//Arboles
 	int random = 0;

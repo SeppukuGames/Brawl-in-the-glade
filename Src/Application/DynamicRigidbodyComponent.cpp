@@ -18,11 +18,11 @@ DynamicRigidbodyComponent::~DynamicRigidbodyComponent()
 
 void DynamicRigidbodyComponent::start()
 {
-	rigidBody->setUserPointer(_gameObject->getNode());
+	//En UserPointer metemos información que queremos utilizar para resolver las colisiones (GameObject)
+	rigidBody->setUserPointer(_gameObject);
 
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
-
 }
 
 void DynamicRigidbodyComponent::tick(double elapsed){
@@ -35,6 +35,4 @@ void DynamicRigidbodyComponent::tick(double elapsed){
 
 	_gameObject->getNode()->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
 	_gameObject->getNode()->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-
-
 }

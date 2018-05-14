@@ -11,13 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
+    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
+    <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\MoveComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Physics.cpp" />
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp" />
+    <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp" />
     <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
@@ -38,6 +44,8 @@
     <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
+    <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h" />
+    <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />

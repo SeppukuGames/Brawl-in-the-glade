@@ -14,8 +14,9 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#ifndef __BaseApplication_h_
-#define __BaseApplication_h_
+
+#ifndef BASEAPPLICATION_H_
+#define BASEAPPLICATION_H_
 
 #include <OgreRoot.h>
 #include <OgreConfigFile.h> //Para parsear los .cfg
@@ -31,6 +32,11 @@ http://www.ogre3d.org/tikiwiki/
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+//Overlay
+#include <OgreOverlay.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlaySystem.h>
+
 #include <OgreLogManager.h>
 #include <OgreMeshManager.h>
 //#include <OgreFrameListener.h>
@@ -41,13 +47,65 @@ http://www.ogre3d.org/tikiwiki/
 #include "Physics.h"
 #include "irrKlang.h"
 
-//																									-Listeners de OIS-
 class BaseApplication :
-	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
-	//public Ogre::FrameListener, //Para poder llamar cada frame al input (buffered o no)
+	public Ogre::WindowEventListener, //OIS, Utilizamos windowResized() y windowClosed()
 	public OIS::KeyListener,
 	public OIS::MouseListener
+	//public Ogre::FrameListener, //Para poder llamar cada frame al input (buffered o no)
 {
+
+	//--------------------------------------ATRIBUTOS-----------------------------------------------
+protected:
+
+	//Quizá los SceneNodes deberían estar aquí, como Luz, Cámara
+	//Permite inicializar el core de Ogre facilmente
+	Ogre::Root *mRoot;
+
+	//Strings con los nombres de los archivos de configuración
+	Ogre::String mResourcesCfg;
+	Ogre::String mPluginsCfg;
+
+	//RenderSystem
+	Ogre::RenderWindow* mWindow;
+
+	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
+	Ogre::Camera* mCamera;
+
+	//OIS Input devices
+	OIS::InputManager* mInputManager;
+	OIS::Mouse*    mMouse;
+	OIS::Keyboard* mKeyboard;
+
+	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
+	
+	//Motor de sonido
+	irrklang::ISoundEngine* soundEngine;
+
+	//Overlay
+	Ogre::OverlaySystem *mOverlaySystem;
+
+	//Motor de física
+	Physics * physicsEngine;
+
+	//Todos los objetos de las escena
+	std::vector<GameObject*> actors_;
+
+	//Observadores
+	std::vector<OIS::KeyListener*> keyInputObservers;
+	std::vector<OIS::MouseListener*> mouseInputObservers;
+
+
+
+	//Para el bucle principal
+	double lastTime;
+	Ogre::Timer *timer;
+
+private:
+	
+	bool mShutDown;
+
+	//--------------------------------------ATRIBUTOS-----------------------------------------------
+
 public:
 	/*
 	Ciclo básico de Ogre:
@@ -71,13 +129,14 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
 
-	virtual Physics * getPhysicsEngine();
-
+	inline virtual Physics * getPhysicsEngine(){ return physicsEngine; }
 
 protected:
-	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	virtual bool gameLoop(void);
 
-	virtual bool handleInput(void);//Detecta input
+	//Métodos de bucle principal
+	virtual bool handleInput(void);
 	virtual bool update(double elapsed);
 	virtual bool render(void);
 
@@ -90,17 +149,21 @@ protected:
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 
+	//Inicialización de OIS, Overlay y SoundEngine
 	virtual void initOIS(void);
+	virtual void initOverlay(void);
 	virtual void initSoundEngine(void);
 
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
 
 	//----------------Window Event Listener---------------
-	//Actualiza el estado del ratón a la nueva ventana
-	virtual void windowResized(Ogre::RenderWindow* rw);//Se le llama cada vez que se escala la ventana
+
+	//Actualiza el estado del ratón a la nueva ventana. Se le llama cada vez que se escala la ventana
+	virtual void windowResized(Ogre::RenderWindow* rw);
 	//Destruye OIS antes de que se cierre la ventana
 	virtual void windowClosed(Ogre::RenderWindow* rw);
+
 	//----------------Window Event Listener---------------
 
 	//------------Input Listener----------------------------
@@ -112,50 +175,6 @@ protected:
 	virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 	//------------Input Listener----------------------------
-
-
-	//ATRIBUTOS
-
-	//Permite inicializar el core de Ogre facilmente
-	Ogre::Root *mRoot;
-
-	//Strings que utilizaremos durante el setup
-	Ogre::String mResourcesCfg;
-	Ogre::String mPluginsCfg;
-
-	//RenderSystem
-	Ogre::RenderWindow* mWindow;
-
-	Ogre::SceneManager* mSceneMgr;//Inicializa recursos y rutinas de renderizado
-	Ogre::Camera* mCamera;
-
-	//OIS Input devices
-	OIS::InputManager* mInputManager;
-	OIS::Mouse*    mMouse;
-	OIS::Keyboard* mKeyboard;
-
-
-	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
-	bool mShutDown;
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
-
-
-	//Todos los objetos de las escena
-	std::vector<GameObject*> actors_;
-
-	std::vector<OIS::KeyListener*> keyInputObservers;
-
-	std::vector<OIS::MouseListener*> mouseInputObservers;
-
-	
-	Physics * physicsEngine;
-	
-	irrklang::ISoundEngine* soundEngine;
-
-	//Para el bucle principal
-	double lastTime;
-	Ogre::Timer *timer;
-
 };
 
-#endif // #ifndef __BaseApplication_h_
+#endif // #ifndef BASEAPPLICATION_H_

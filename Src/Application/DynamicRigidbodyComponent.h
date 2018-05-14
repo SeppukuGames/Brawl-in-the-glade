@@ -3,6 +3,7 @@
 
 #include "RigidbodyComponent.h"
 
+//Rigidbody dinámico. Es asociado a objetos físicos que tienen movimiento 
 class DynamicRigidbodyComponent : public RigidbodyComponent
 {
 public:
@@ -11,6 +12,7 @@ public:
 
 	virtual void start();
 	virtual void tick(double elapsed);
+
 
 	inline btRigidBody * getRigidbody(){ return rigidBody; }
 };

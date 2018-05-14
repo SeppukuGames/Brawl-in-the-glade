@@ -14,6 +14,7 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
+
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
@@ -24,7 +25,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "../common/conio.h"
 #endif
 
-
 using namespace irrklang;
 
 //-------------------------------------------------------------------------------------
@@ -32,26 +32,23 @@ BaseApplication::BaseApplication(void)
 	: mRoot(0),
 	mResourcesCfg(Ogre::BLANKSTRING),
 	mPluginsCfg(Ogre::BLANKSTRING),
-
+	mInputManager(0),
 	mWindow(0),
-
 	mSceneMgr(0),
 	mCamera(0),
-
-	mInputManager(0),
 	mMouse(0),
 	mKeyboard(0),
 
 	//mCursorWasVisible(false),
-	mShutDown(false)
-	//mOverlaySystem(0)
+	mShutDown(false),
+	mOverlaySystem(0)
 {
 }
 
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-	//if (mOverlaySystem) delete mOverlaySystem;
+	//if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -107,8 +104,7 @@ bool BaseApplication::gameLoop()
 
 	lastTime = current;
 
-
-	return true;	//Return true puesto.
+	return true;
 
 }
 
@@ -135,16 +131,45 @@ bool BaseApplication::update(double elapsed)
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
+	//----------------------------------------COLISIONES-------------------------------------------
+	//Detecta las colisiones y envía mensajes a los correspondientes Game Object
+	int numManifolds = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+
+		GameObject *gameObjectA =  (GameObject*) obA->getUserPointer();
+		GameObject *gameObjectB = (GameObject*)obB->getUserPointer();
+
+		//Si hay contacto entre los 2 objetos, se mandan los mensajes de colision
+		if (contactManifold->getNumContacts() > 0)
+		{
+			//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
+			if (gameObjectA != nullptr && gameObjectB != nullptr)
+			{
+				//Informa a todos los componentes del gameobject de la colision
+				gameObjectA->onCollision(gameObjectB);
+				gameObjectB->onCollision(gameObjectA);
+			}
+			else if (gameObjectA == nullptr)		
+				gameObjectB->onCollision(nullptr);
+			
+			else if (gameObjectB == nullptr)
+				gameObjectA->onCollision(nullptr);
+		}
+	}
+
+
+	//----------------------------------------COLISIONES-------------------------------------------
+
 	return true;
 }
 
-//Detecta input
 bool BaseApplication::render(void){
-
-	//Se profundiza en el TUTORIAL4
-	if (!mRoot->renderOneFrame()) return false;
-
-	return true;
+	return (mRoot->renderOneFrame());
 }
 
 
@@ -156,25 +181,34 @@ bool BaseApplication::setup(void)
 	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
 	mRoot = new Ogre::Root(mPluginsCfg);
 
-	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
-	//No los inicializa, solo establece donde buscar los potenciales recursos
-	setupResources();
-
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
 
+	//Scene Manager
+	chooseSceneManager();
+	initOverlay();
+
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
+
 	//Carga todos los recursos
 	loadResources();
+
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
-	chooseSceneManager();
 	createCamera();
 	createViewports();
 
+	//Inicializa el motor de Física
 	physicsEngine = new Physics();
+
+	//Inicializa el motor de Sonido
 	//initSoundEngine();
+
 	//Creamos la Escena del método hijo
 	createScene();
 
@@ -185,7 +219,7 @@ bool BaseApplication::setup(void)
 };
 
 //-------------------------------------------------------------------------------------
-//HAY QUE ELIMINAR LOS WARNINGS DE AQUI
+//TODO: HAY QUE ELIMINAR LOS WARNINGS DE AQUI
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void BaseApplication::setupResources(void)
 {
@@ -197,7 +231,6 @@ void BaseApplication::setupResources(void)
 	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
 	//String auxiliares para guardar información del archivo de configuracion parseado
-
 	Ogre::String pathName;//Ruta de los recursos
 	Ogre::String formatName;//Formato del archivo (Zip, Filesystem)
 
@@ -226,7 +259,22 @@ void BaseApplication::setupResources(void)
 	}
 }
 
+//Carga todos los recursos
+void BaseApplication::loadResources(void)
+{
+	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
+
+	//Establecemos el número por defecto de mipmaps que se usarán.
+	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
 //-------------------------------------------------------------------------------------
+
 //Configura el RenderSystem y crea la ventana
 bool BaseApplication::configure(void)
 {
@@ -235,6 +283,7 @@ bool BaseApplication::configure(void)
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
 	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog(NULL)))
 		return false;
+
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
 	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
 
@@ -278,19 +327,7 @@ bool BaseApplication::configure(void)
 }
 //-------------------------------------------------------------------------------------
 
-//Carga todos los recursos
-void BaseApplication::loadResources(void)
-{
-	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
 
-	//Establecemos el número por defecto de mipmaps que se usarán.
-	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	//Inicializa todos los recursos encontrados por Ogre
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-}
 
 //-------------------------------------------------------------------------------------
 
@@ -298,25 +335,22 @@ void BaseApplication::chooseSceneManager(void)
 {
 	//Creamos el SceneManager
 	mSceneMgr = mRoot->createSceneManager();
-
-	/*No lo utilizamos??
-	// Inicializa el OverlaySystem
-	mOverlaySystem = new Ogre::OverlaySystem();
-	mSceneMgr->addRenderQueueListener(mOverlaySystem);
-	*/
 }
 
 //-------------------------------------------------------------------------------------
+void BaseApplication::initOverlay(void)
+{
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
 
+}
+//-------------------------------------------------------------------------------------
+//Crea la cámara, sin nodo
 void BaseApplication::createCamera(void)
 {
-	//Creamos la cámara
 	mCamera = mSceneMgr->createCamera("MainCam");
-
-	//La inicializamos
-	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
-	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
-	mCamera->setNearClipDistance(5);
 }
 
 //-------------------------------------------------------------------------------------
@@ -444,12 +478,24 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 }
 
 //-------------------------------------------------------------------------------------
+//TODO, ELIMINAR LOS RECURSOS
 void BaseApplication::destroyScene(void)
 {
+
+	////Destruye todos los actores
+	//for (size_t i = 0; i < actors_.size(); i++)
+	//	delete(actors_[i]);
+
+	////Destruye todos los observadores (Mouse y Keyboard)
+	//for (size_t i = 0; i < keyInputObservers.size(); i++)
+	//	delete(keyInputObservers[i]);
+
+	//for (size_t i = 0; i < mouseInputObservers.size(); i++)
+	//	delete(mouseInputObservers[i]);
+
+
+
 }
-//-------------------------------------------------------------------------------------
-
-
 //-------------------------------------------------------------------------------------
 
 
@@ -459,14 +505,7 @@ void BaseApplication::destroyScene(void)
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_ESCAPE)
-	{
 		mShutDown = true;
-	}
-	/*else if (arg.key == OIS::KC_A)
-	{
-		int a = 0;
-	}*/
-
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
@@ -476,7 +515,6 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
-
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyReleased(arg);
 
@@ -487,6 +525,7 @@ bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
 	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
+
 	return true;
 }
 
@@ -494,6 +533,7 @@ bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonI
 {
 	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
+
 	return true;
 }
 
@@ -516,7 +556,4 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 }
 
 
-Physics * BaseApplication::getPhysicsEngine()
-{
-	return physicsEngine;
-}
+

@@ -4,7 +4,7 @@
 //Declaración adelantada para evitar ciclo de inclusiones
 class GameObject;
 
-enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION, RIGIDBODY, MOVE_CAMERA };
+enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION, RIGIDBODY, MOVE_CAMERA, TESTCOLLISIONCOMPONENT2 };
 
 class Component {
 public:
@@ -12,8 +12,9 @@ public:
 	{};
 	virtual ~Component(){};
 
-	virtual void start() = 0;
-	virtual void tick(double elapsed) = 0;
+	virtual void start() {};
+	virtual void tick(double elapsed) {};
+	virtual void onCollision(GameObject *collision){};
 
 	inline void setGameObject(GameObject * gameObject){ _gameObject = gameObject; };
 
