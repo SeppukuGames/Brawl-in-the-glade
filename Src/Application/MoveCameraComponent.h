@@ -1,14 +1,12 @@
 #ifndef MOVECAMERACOMPONENT_H_
 #define MOVECAMERACOMPONENT_H_
 
-#include "MouseInputComponent.h"
 #include "DynamicRigidbodyComponent.h"
-#include "KeyInputComponent.h"
+#include "KeyMouseInputComponent.h"
 
 using namespace Ogre;
 
-//HEREDAR DE LOS DOS NO LO HAGAIS, SI NECESITAIS INPUT DE TECLADO, HACER OTRO COMPONENTE
-class MoveCameraComponent : public MouseInputComponent//, public KeyInputComponent
+class MoveCameraComponent : public KeyMouseInputComponent 
 {
 private:
 
@@ -35,8 +33,8 @@ public:
 
 
 
-	//virtual bool keyPressed(const OIS::KeyEvent &arg);
-	//virtual bool keyReleased(const OIS::KeyEvent &arg);
+	virtual bool keyPressed(const OIS::KeyEvent &arg);
+	virtual bool keyReleased(const OIS::KeyEvent &arg);
 	void MoveCameraComponent::setUpPlayer(GameObject* player);
 };
 

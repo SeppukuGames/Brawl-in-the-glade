@@ -1,6 +1,6 @@
 #include "MoveCameraComponent.h"
 #include "GameObject.h"
-MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent()
+MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : KeyMouseInputComponent()
 {
 	_mWindow = mWindow;
 }
@@ -109,37 +109,37 @@ bool MoveCameraComponent::mouseMoved(const OIS::MouseEvent &arg)
 	return true;
 }
 
-//bool MoveCameraComponent::keyPressed(const OIS::KeyEvent &arg) {
-//
-//	switch (arg.key)
-//	{
-//	case OIS::KC_SPACE:
-//		//_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
-//		//_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
-//		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
-//		//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
-//		break;
-//
-//	default:
-//		break;
-//	}
-//
-//	return true;
-//};
-//
-//bool MoveCameraComponent::keyReleased(const OIS::KeyEvent &arg) {
-//
-//	switch (arg.key)
-//	{
-//	case OIS::KC_SPACE:
-//		//direction = Ogre::Vector3::ZERO;
-//		break;
-//
-//	default:
-//		break;
-//	}
-//	return true;
-//};
+bool MoveCameraComponent::keyPressed(const OIS::KeyEvent &arg) {
+
+	switch (arg.key)
+	{
+	case OIS::KC_SPACE:
+		//_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+		//_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() +222);
+		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+		//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
+		break;
+
+	default:
+		break;
+	}
+
+	return true;
+};
+
+bool MoveCameraComponent::keyReleased(const OIS::KeyEvent &arg) {
+
+	switch (arg.key)
+	{
+	case OIS::KC_SPACE:
+		//direction = Ogre::Vector3::ZERO;
+		break;
+
+	default:
+		break;
+	}
+	return true;
+};
 
 void MoveCameraComponent::setUpPlayer(GameObject* player) {
 	//_player = player;

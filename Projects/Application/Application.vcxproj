@@ -37,6 +37,7 @@
     <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
     <ClInclude Include="..\..\Src\Application\Factory.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
+    <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\Physics.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MouseInputComponent.h" />
