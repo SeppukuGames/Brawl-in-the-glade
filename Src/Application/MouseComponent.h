@@ -57,11 +57,15 @@ public:
 	//Cada vez que movemos el ratón vamos guardando sus coodenadas
 	virtual bool mouseMoved(const OIS::MouseEvent &arg)
 	{
-	
-		
+        posMouseX = arg.state.X.abs;
+        posMouseY = arg.state.Y.abs;
+
 		return true;
 	}
 
+    Vector3 getMousePos(){
+        return Vector3(posMouseX, 0, posMouseY);
+    }
 	
 private:
 	int posMouseX, posMouseY;
