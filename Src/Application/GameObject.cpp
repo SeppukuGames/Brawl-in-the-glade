@@ -8,6 +8,7 @@
 #include "DynamicRigidbodyComponent.h"
 #include "MoveCameraComponent.h"
 #include "TestCollisionComponent2.h"
+#include "Enemigo.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -146,6 +147,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			TestCollisionComponent2* comp = dynamic_cast<TestCollisionComponent2*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::ENEMY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			Enemigo* comp = dynamic_cast<Enemigo*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];
