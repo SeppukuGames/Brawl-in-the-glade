@@ -7,6 +7,7 @@ EntityComponent::EntityComponent(std::string meshString) : Component(){
 
 EntityComponent::~EntityComponent()
 {
+	delete _entity;
 }
 
 void EntityComponent::start(){

@@ -9,6 +9,7 @@ AnimationComponent::AnimationComponent(std::string animName)
 
 AnimationComponent::~AnimationComponent()
 {
+	
 }
 
 void AnimationComponent::start()

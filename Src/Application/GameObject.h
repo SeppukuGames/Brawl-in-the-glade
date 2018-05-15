@@ -27,6 +27,7 @@ public:
 	static const Ogre::uint32 O_QUERY_MASK = 0;
 	*/
 	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
+	virtual ~GameObject();
 
 	virtual void addComponent(Component* comp);
 	virtual Component* getComponent(ComponentName component);
@@ -40,7 +41,7 @@ public:
 
 	virtual void setObjMan(Ogre::MovableObject* mObj);
 
-	virtual ~GameObject();
+	
 
 	inline Ogre::SceneNode* getNode(){ return node; };
 

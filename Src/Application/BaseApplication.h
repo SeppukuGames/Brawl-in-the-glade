@@ -79,13 +79,13 @@ protected:
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	
 	//Motor de sonido
-	irrklang::ISoundEngine* soundEngine;
+	irrklang::ISoundEngine* mSoundEngine;
 
 	//Overlay
 	Ogre::OverlaySystem *mOverlaySystem;
 
 	//Motor de física
-	Physics * physicsEngine;
+	Physics * mPhysicsEngine;
 
 	//Todos los objetos de las escena
 	std::vector<GameObject*> actors_;
@@ -129,7 +129,7 @@ public:
 
 	virtual void registerMouseInputObserver(OIS::MouseListener *observer);//¿Conflicto?
 
-	inline virtual Physics * getPhysicsEngine(){ return physicsEngine; }
+	inline virtual Physics * getPhysicsEngine(){ return mPhysicsEngine; }
 
 protected:
 	//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame

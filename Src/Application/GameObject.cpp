@@ -26,10 +26,14 @@ GameObject::~GameObject() {
 		components[i] = nullptr;
 	}
 
-	UserControl* pCtrl = Ogre::any_cast<UserControl*>(
-		node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
-		getUserObjectBindings().getUserAny());
-	delete pCtrl;
+	//PUEH BUENO PPUEH AHI ETAH :)
+	//UserControl* pCtrl = Ogre::any_cast<UserControl*>(
+	//	node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
+	//	getUserObjectBindings().getUserAny());
+
+	//unsigned int  = 0;
+	//node->detachObject(hola);
+	//delete pCtrl;
 }
 
 void GameObject::setObjMan(Ogre::MovableObject* mObj) {

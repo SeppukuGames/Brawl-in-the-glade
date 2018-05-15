@@ -38,7 +38,8 @@ BaseApplication::BaseApplication(void)
 	mCamera(0),
 	mMouse(0),
 	mKeyboard(0),
-
+	mSoundEngine(0),
+	mPhysicsEngine(0),
 	//mCursorWasVisible(false),
 	mShutDown(false),
 	mOverlaySystem(0)
@@ -48,11 +49,14 @@ BaseApplication::BaseApplication(void)
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-	//if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
+
+	if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
+
+	//Último en borrar,es el más importante
 	delete mRoot;
 }
 
@@ -124,8 +128,8 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
-	if (this->physicsEngine != NULL)
-		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
+	if (this->mPhysicsEngine != NULL)
+		mPhysicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
 	
 	//Actualiza todos los objetos
 	for (size_t i = 0; i < actors_.size(); i++)
@@ -204,7 +208,7 @@ bool BaseApplication::setup(void)
 	createViewports();
 
 	//Inicializa el motor de Física
-	physicsEngine = new Physics();
+	mPhysicsEngine = new Physics();
 
 	//Inicializa el motor de Sonido
 	//initSoundEngine();
@@ -327,8 +331,6 @@ bool BaseApplication::configure(void)
 }
 //-------------------------------------------------------------------------------------
 
-
-
 //-------------------------------------------------------------------------------------
 
 void BaseApplication::chooseSceneManager(void)
@@ -371,9 +373,9 @@ void BaseApplication::createViewports(void)
 void BaseApplication::initSoundEngine(void)
 {
 	// start the sound engine with default parameters
-	soundEngine = createIrrKlangDevice();
+	mSoundEngine = createIrrKlangDevice();
 
-	if (!soundEngine)
+	if (!mSoundEngine)
 	{
 		printf("Could not startup engine\n");
 	}
@@ -383,11 +385,11 @@ void BaseApplication::initSoundEngine(void)
 
 	// play some sound stream, looped
 
-	soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
+	mSoundEngine->play2D("../../Media/Sounds/getout.ogg", true);
 
 
 	// play a single sound
-	soundEngine->play2D("../../Media/Sounds/bell.wav");
+	mSoundEngine->play2D("../../Media/Sounds/bell.wav");
 
 	// After we are finished, we have to delete the irrKlang Device created earlier
 	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
@@ -482,9 +484,9 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 void BaseApplication::destroyScene(void)
 {
 
-	////Destruye todos los actores
-	//for (size_t i = 0; i < actors_.size(); i++)
-	//	delete(actors_[i]);
+	//Destruye todos los actores
+	for (size_t i = 0; i < actors_.size(); i++)
+		delete(actors_[i]);
 
 	////Destruye todos los observadores (Mouse y Keyboard)
 	//for (size_t i = 0; i < keyInputObservers.size(); i++)
