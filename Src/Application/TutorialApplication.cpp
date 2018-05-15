@@ -94,7 +94,7 @@ void TutorialApplication::createEntities(void)
 	//------------------------- OVERLAY ---------------------------------------
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
-	FontManager& fM = FontManager::getSingleton(); //Error de memoria
+	FontManager& fM = FontManager::getSingleton(); 
 
 	// Create a panel
 	OverlayContainer* panel = static_cast<OverlayContainer*>(
@@ -103,7 +103,7 @@ void TutorialApplication::createEntities(void)
 	panel->setMetricsMode(Ogre::GMM_PIXELS);
 	panel->setPosition(100, 100);
 	panel->setDimensions(300, 200);
-	panel->setMaterialName("panel"); // Optional background material //ESTO DA ERROR DE MEMORIA
+	panel->setMaterialName("panel"); // Optional background material 
 	
 	Ogre::BorderPanelOverlayElement* bpanel = static_cast<BorderPanelOverlayElement*>(
 		overlayManager.createOverlayElement("BorderPanel", "BorderPanelName"));
@@ -134,13 +134,14 @@ void TutorialApplication::createEntities(void)
 	overlay->show();
 	
 	//CREAR UN BOTON
-	//mCamera->setAutoAspectRatio(true);
+	mCamera->setAutoAspectRatio(true);
 
 	//create a text scheme
-	//textScheme  myTextScheme = new textScheme("Trebuchet", 20, 0, 1, 0, 1);
+	buttonGUI::textScheme  myTextScheme ("Trebuchet", 20, 0, 1, 0, 1);
 
+	std::string pene = "sida";
 	//instanciar el button Manager
-	//buttonMgr = new buttonGUI::buttonManager("myTextAreaMaterial", myTextScheme, mSceneMgr, "MainCam");
+	//buttonMgr = new buttonGUI::buttonManager(pene, myTextScheme, mSceneMgr, "mainCamera");
 
 	//Crear un boton
 

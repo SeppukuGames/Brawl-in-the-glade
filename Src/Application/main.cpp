@@ -1,6 +1,7 @@
 #include "TutorialApplication.h"
 #include "TutorialBuffered.h"
 #include "tutorial2.h"
+#include "EscenaMenu.h"
 
 EnemyPrototype* ObjFactory::typeEnemy = 0;
 
@@ -14,7 +15,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 
 #endif
 
-	TutorialApplication::getInstance()->go();
+	//TutorialApplication::getInstance()->go();
+	EscenaMenu::getInstance()->go();
 	return 0;
 }
 /*

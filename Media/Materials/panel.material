@@ -8,8 +8,8 @@ material panel
         {
           texture_unit
           {
-            texture panel1.png
-            scale 5.0 3.0
+            texture Fondo.png
+            scale 1.0 1.0
             // this means that the texture will be tiled 10 times (1/10 = 0.1)
             //colour_op_ex source1 src_manual src_current 1 0 0
 

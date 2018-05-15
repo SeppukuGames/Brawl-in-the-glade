@@ -15,6 +15,7 @@
     <ClCompile Include="..\..\Src\Application\buttonGUI.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
+    <ClCompile Include="..\..\Src\Application\EscenaMenu.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
     <ClCompile Include="..\..\Src\Application\Physics.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
     <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
+    <ClInclude Include="..\..\Src\Application\EscenaMenu.h" />
     <ClInclude Include="..\..\Src\Application\Factory.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\Physics.h" />

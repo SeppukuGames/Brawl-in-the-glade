@@ -9,7 +9,7 @@
 Trebuchet
 {
 	type 		truetype
-	source 		TrebuchetMS.ttf
+	source 		TrebuchetMS.otf
 	size 		16
 	resolution 	96
 }
