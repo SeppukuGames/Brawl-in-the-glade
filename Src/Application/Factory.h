@@ -29,7 +29,8 @@ class BulletFactory{
 	//Pero de momento se queda así.
 		static void creaBala(Ogre::SceneManager* mSceneManager, Ogre::Quaternion dir, Ogre::Vector3 pos){
 
-	        Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
+			//Ogre::Quaternion testDir = Ogre::Quaternion(0, 0, 1,0); //180º
+			Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
 	}
 
 		

@@ -23,9 +23,10 @@
 class MoveComponent : public KeyInputComponent, public Component {
 public:
 
-	MoveComponent() : KeyInputComponent(), Component()
+	MoveComponent(Ogre::AxisAlignedBox pl) : KeyInputComponent(), Component()
 	{
-		
+		//"Awake"
+		plano = pl;
 	};
 	virtual ~MoveComponent(){};
 
@@ -57,7 +58,9 @@ public:
 		std::cout << "Posicion Ninja: " << ninjaPos << std::endl;
 
         // Construir un vector de direccion apuntando desde el centro del personaje hacia la posicion donde queremos que mire.
-		Vector3 vectorDirector = Vector3(0, 0, -1);
+		Vector3 vectorDirector = Vector3(-1, 0, 0);
+		//Vector3 vectorDirector = Vector3(0, 0, -1);
+
 		std::cout << "Vector Director: " << vectorDirector << std::endl;
 
         // Multiplicamos el vector por el quaternion para obtener el vector comienzo
@@ -85,7 +88,9 @@ public:
 		std::cout << "Producto escalar: " << dotProduct << std::endl;
 
         //if (!a){
-		rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.y * dotProduct, 0));
+
+			rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.x * dotProduct, 0));
+		
         //a = true;
         //}
 		std::cout << "------------------------------------------" << std::endl;
@@ -171,6 +176,7 @@ public:
 
 private:
     bool a =  false;
+	Ogre::AxisAlignedBox plano;
 	//Ogre::Vector3 direction; 
 	float velocity;
 	btVector3 direction, oldDirection;

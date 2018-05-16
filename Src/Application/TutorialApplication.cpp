@@ -185,48 +185,12 @@ void TutorialApplication::createEntities(void)
 
 	//---------------------ESFERA---------------------------------
 
-	ninja = new GameObject(mSceneMgr);
-	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
-	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	ninja->addComponent(new MouseComponent());
-	
-
-	//Motion state
-	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 ninjaInitialPosition(0, 5, 0);
-	btTransform ninjaTransform;
-	ninjaTransform.setIdentity();
-	ninjaTransform.setOrigin(ninjaInitialPosition);
-
-
-	//actually contruvc the body and add it to the dynamics world
-	//Esfera a 50 metros de altura
-	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
-
-	//Colision shape
-	btCollisionShape *newRigidShape = new btBoxShape(btVector3(2.0f, 2.0f, 2.0f));
-
-	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar ninjaMass(10.0f);
-	btVector3 ninjaInertia(0, 0, 0);
-
-	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
-	ninja->addComponent(ninjaRbComponent);
-	ninjaRbComponent->getRigidbody()->setRestitution(1);
-	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-	actors_.push_back(ninja);
-
-	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
-
-	camMove->setUpPlayer(ninja);
-
-
 	srand((unsigned int)time(NULL));
 	GameObject *planito = new GameObject(mSceneMgr);
 	planito->getNode()->setPosition(Ogre::Vector3(50 - 300, -20, 50 - 300));
 	planito->getNode()->setScale(Ogre::Vector3(500, 5, 500));
 	planito->addComponent(new EntityComponent("Suelo.mesh"));
+
 	actors_.push_back(planito);
 
 	//Torre
@@ -293,7 +257,43 @@ void TutorialApplication::createEntities(void)
 			}			
 		}
 	}
+	//JUGADOR
+	ninja = new GameObject(mSceneMgr);
+	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	ninja->addComponent(new MouseComponent(cam));
 
+
+	//Motion state
+	//set the initial position and transform. For this demo, we set the tranform to be none
+	btVector3 ninjaInitialPosition(0, 5, 0);
+	btTransform ninjaTransform;
+	ninjaTransform.setIdentity();
+	ninjaTransform.setOrigin(ninjaInitialPosition);
+
+
+	//actually contruvc the body and add it to the dynamics world
+	//Esfera a 50 metros de altura
+	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
+
+	//Colision shape
+	btCollisionShape *newRigidShape = new btBoxShape(btVector3(2.0f, 2.0f, 2.0f));
+
+	//set the mass of the object. a mass of "0" means that it is an immovable object
+	btScalar ninjaMass(10.0f);
+	btVector3 ninjaInertia(0, 0, 0);
+
+	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
+	ninja->addComponent(ninjaRbComponent);
+	ninjaRbComponent->getRigidbody()->setRestitution(1);
+	Ogre::AxisAlignedBox plano = dynamic_cast<EntityComponent*> (planito->getComponent(ComponentName::ENTITY))->getAxisAlignedBox();
+	ninja->addComponent(new MoveComponent(plano));			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	actors_.push_back(ninja);
+
+	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
+
+	camMove->setUpPlayer(ninja);
 
 	//20 a 4
 	for (int i = 0; i < 2; i++){

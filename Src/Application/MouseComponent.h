@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "MouseInputComponent.h"
 #include "Factory.h"
+#include "GameObject.h"
 #include <iostream>
 
 using namespace Ogre;
@@ -14,9 +15,9 @@ class MouseComponent : public MouseInputComponent
 
 public:
 
-	MouseComponent() : MouseInputComponent()
+	MouseComponent(GameObject * cam) : MouseInputComponent()
 	{
-		
+		Cam = cam;
 	}
 
 	virtual ~MouseComponent()
@@ -57,9 +58,16 @@ public:
 	//Cada vez que movemos el ratón vamos guardando sus coodenadas
 	virtual bool mouseMoved(const OIS::MouseEvent &arg)
 	{
-        posMouseX = arg.state.X.abs;
-        posMouseY = arg.state.Y.abs;
+		// get window height and width
+		Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
+		Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
 
+		// convert to 0-1 offset
+		posMouseX = arg.state.X.abs / screenWidth;
+		posMouseY = arg.state.Y.abs / screenHeight;
+       
+		//http://wiki.ogre3d.org/Get+XZ+coordinates
+		//Ray mouseRay = Cam->getNode()->getCameraToViewportRay(offsetX, offsetY);
 		return true;
 	}
 
@@ -71,6 +79,8 @@ public:
 private:
 	int posMouseX, posMouseY;
 	Ogre::Quaternion dirBala;
+
+	GameObject * Cam;
 
 };
 

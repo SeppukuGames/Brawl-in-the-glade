@@ -27,6 +27,10 @@ public:
 		return _entity;
 	}
 
+	Ogre::AxisAlignedBox getAxisAlignedBox() {
+		return _entity->getBoundingBox();
+	}
+
 private:
 	Ogre::Entity * _entity;
 	std::string _meshString;

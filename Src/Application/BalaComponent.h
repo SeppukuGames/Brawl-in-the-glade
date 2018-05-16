@@ -25,7 +25,7 @@ public:
 		
 		if (vida > 0){
 			std::cout << vida << std::endl;
-			posicion += direccion *Ogre::Vector3::NEGATIVE_UNIT_Z; //Ogre::Vector3(10, 0, 10); //Hay que darle otra vuelta a esto.
+			posicion += direccion * Ogre::Vector3(0, 0, 1);
 			_gameObject->getNode()->translate(posicion);
 			vida--;
 		}
@@ -40,6 +40,7 @@ public:
 private:
 
 	Ogre::Vector3 posicion;
+	
 	Ogre::SceneManager* _sceneMgr;
 	Ogre::Quaternion direccion;
 
