@@ -1,126 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\GameObject">
-      <UniqueIdentifier>{c4042cdf-adec-4f90-aa52-4be33b44de51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameObject">
-      <UniqueIdentifier>{6031c1d0-9012-4559-9634-31a79123ad30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component">
-      <UniqueIdentifier>{6a22a369-bbba-4ce1-a5f5-02730accecf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Escenas">
-      <UniqueIdentifier>{7ac6a383-f3fa-4e84-a1e2-18d015e5c7e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Escenas">
-      <UniqueIdentifier>{9648c88e-d283-40bc-b508-193dd9cd714e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Escenas\Tutoriales">
-      <UniqueIdentifier>{2754aadb-3e9e-49c2-ad5b-8446afcfac30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Escenas\Tutoriales">
-      <UniqueIdentifier>{bdbb6c2f-7ddc-4824-b6db-1fe439235395}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Observers">
-      <UniqueIdentifier>{b18086d6-694e-4147-b267-539dca6a7f4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{b1f7c529-a660-4275-b2ff-2507e92db806}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Rigidbody">
-      <UniqueIdentifier>{4f47c67e-1421-411c-825a-1d098081b1a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components\Rigidbody">
-      <UniqueIdentifier>{e741f8d7-314a-42c3-84c6-f70b23ac3f11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Input">
-      <UniqueIdentifier>{fbdd6982-bd5b-47a4-a45c-5ef54946f0db}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Src\Application\main.cpp">
+    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GameObject.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BaseApplication.cpp">
-      <Filter>Source Files\Escenas</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp">
-      <Filter>Source Files\Escenas</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\tutorial2.cpp">
-      <Filter>Source Files\Escenas\Tutoriales</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
-      <Filter>Source Files\Escenas\Tutoriales</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
+    <ClCompile Include="..\..\Src\Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
-      <Filter>Source Files\Components\Rigidbody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
-      <Filter>Source Files\Components\Rigidbody</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\MoveComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
+      <Filter>Source Files\Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BaseApplication.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
+      <Filter>Source Files\Scenes\Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\tutorial2.cpp">
+      <Filter>Source Files\Scenes\Tutorials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
+      <Filter>Source Files\Component\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Application\Component.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BaseApplication.h">
-      <Filter>Header Files\Escenas</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TutorialApplication.h">
-      <Filter>Header Files\Escenas</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TutorialBuffered.h">
-      <Filter>Header Files\Escenas\Tutoriales</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\tutorial2.h">
-      <Filter>Header Files\Escenas\Tutoriales</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MoveComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
-      <Filter>Header Files\Component</Filter>
+    <ClInclude Include="..\..\Src\Application\Enemigo.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h">
       <Filter>Header Files</Filter>
@@ -134,24 +66,44 @@
     <ClInclude Include="..\..\Src\Application\Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
-      <Filter>Header Files\Component\Input</Filter>
+    <ClInclude Include="..\..\Src\Application\TutorialApplication.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BaseApplication.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\tutorial2.h">
+      <Filter>Header Files\Scenes\Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\TutorialBuffered.h">
+      <Filter>Header Files\Scenes\Tutorials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\GameObject.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Component.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
-      <Filter>Header Files\Component\Input</Filter>
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MoveComponent.h">
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h">
       <Filter>Header Files\Component</Filter>
@@ -159,23 +111,58 @@
     <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\GameObject.h">
-      <Filter>Header Files\GameObject</Filter>
+    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
+      <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h">
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
-=======
->>>>>>> 551d8dd52bdb6c00181d78054510582d2435b828
-    <ClInclude Include="..\..\Src\Application\Enemigo.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
-<<<<<<< HEAD
-      <Filter>Header Files</Filter>
-=======
       <Filter>Header Files\Component</Filter>
->>>>>>> 551d8dd52bdb6c00181d78054510582d2435b828
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{65811be4-7bc1-4f7d-926e-33ba4787fdd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{69e0500b-d723-42b5-8312-a00726698648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Input">
+      <UniqueIdentifier>{cc98bb35-0d4d-40c1-b7fd-ad003cb84ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component\Rigidbody">
+      <UniqueIdentifier>{0117af31-5c8b-44a3-bc1b-f7531a257d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{354a067a-4bc8-43aa-a161-7c9dcedb1e05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{60662341-d0e1-4d10-b2cd-0ce9cbc5d965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{86fe19d2-15e3-4feb-aac4-04edd62ec822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes\Tutorials">
+      <UniqueIdentifier>{cb23eb01-a996-42e4-8c7b-9e85a881f0a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObject">
+      <UniqueIdentifier>{0c6c19a0-2103-478e-b180-6b65fdd0f78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Observers">
+      <UniqueIdentifier>{485e63c0-ee0b-44f4-8e43-f043e5597791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component\Rigidbody">
+      <UniqueIdentifier>{f437c49d-368e-4690-b49b-9b69c17fb297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{28b61d84-aa21-410e-b7d9-36f6c68fbdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Tutorials">
+      <UniqueIdentifier>{45132655-ab3b-45a0-ac89-6698e110962f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObject">
+      <UniqueIdentifier>{e0a06e28-1c21-4307-89d3-1538c74564a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
