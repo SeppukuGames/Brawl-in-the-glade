@@ -6,6 +6,8 @@
 #include <time.h>
 #include <iostream>
 
+#include "Boton.h"
+
 using namespace Ogre;
 
 EscenaMenu::EscenaMenu(void){}
@@ -65,108 +67,19 @@ void EscenaMenu::createEntities(void)
 	Fondo->setPosition(30, 0);
 	Fondo->setDimensions(1000, 500);
 	Fondo->setMaterialName("panel"); // Optional background material 
-
-	// Create a panel
-	for (int i = 1; i <= 3; i++){
-
-		OverlayContainer* panel = static_cast<OverlayContainer*>(
-			overlayManager.createOverlayElement("Panel", "panel" + std::to_string(i)));
-
-		panel->setMetricsMode(Ogre::GMM_PIXELS);
-		panel->setPosition(450, 450+(50*i));
-		panel->setDimensions(0, 0);
-		panel->setMaterialName("panel"); // Optional background material 
-
-		//texto		
-		TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
-			overlayManager.createOverlayElement("TextArea", "TextAreaName" + std::to_string(i)));
-		textArea->setMetricsMode(Ogre::GMM_PIXELS);
-		textArea->setAlignment(Ogre::TextAreaOverlayElement::Center);
-		textArea->setPosition(70, 50);
-		textArea->setDimensions(100, 100);
-		switch (i)
-		{
-		case 1:
-			textArea->setCaption("Comenzar partida");
-			break;
-		case 2:
-			textArea->setCaption("Controles");
-			break;
-		case 3:
-			textArea->setCaption("Salir");
-			break;
-		default:
-			break;
-		}
-		
-		textArea->setCharHeight(50);
-		textArea->setFontName("Trebuchet");	
-		textArea->setColourBottom(ColourValue(0.0, 0.0, 0.0));
-		textArea->setColourTop(ColourValue(1.0, 1.0, 1.0));
-
-		// Add the text area to the panel		
-		panel->addChild(textArea);
-
-		botones.push_back(panel);
-	}	
-
+	
 	// Create an overlay, and add the panel*/
-	overlay = overlayManager.create("OverlayName");
-	for (int i = 0; i < botones.size(); i++){
-		overlay->add2D(botones[i]);			
-	}
-	overlay->add2D(Fondo);
-
-	// Show the overlay*/
-	overlay->show();	
-
-	Refrescar(1, "Controles");
-
-}
-
-void EscenaMenu::Refrescar(int boton, std::string textoBoton)
-{
-	OverlayManager& overlayManager = OverlayManager::getSingleton();
-	FontManager& fM = FontManager::getSingleton();
-
-	delete botones[boton];
-	overlay = nullptr;
-
-	OverlayContainer* panel = static_cast<OverlayContainer*>(
-		overlayManager.createOverlayElement("Panel", "panel" + std::to_string(cont)));
-
-	panel->setMetricsMode(Ogre::GMM_PIXELS);
-	panel->setPosition(450, 450 + (50*(boton+1)));
-	panel->setDimensions(0, 0);
-	panel->setMaterialName("panel"); // Optional background material 
-
-	//texto		
-	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
-		overlayManager.createOverlayElement("TextArea", "TextAreaName"));
-	textArea->setMetricsMode(Ogre::GMM_PIXELS);
-	textArea->setAlignment(Ogre::TextAreaOverlayElement::Center);
-	textArea->setPosition(70, 50);
-	textArea->setDimensions(100, 100);
-	textArea->setCaption(textoBoton);
-
-	textArea->setCharHeight(50);
-	textArea->setFontName("Trebuchet");
-	textArea->setColourBottom(ColourValue(0.0, 0.0, 1.0));
-	textArea->setColourTop(ColourValue(0.0, 1.0, 1.0));
-
-	// Add the text area to the panel		
-	panel->addChild(textArea);
-	botones[boton] = panel;
-
-	// Refrescar overlay*/
-	overlay = overlayManager.create("OverlayName" + std::to_string(cont));
-	for (int i = 0; i < botones.size(); i++){
-		overlay->add2D(botones[i]);
-	}
+	overlay = overlayManager.create("OverlayName");	
 	overlay->add2D(Fondo);
 
 	// Show the overlay*/
 	overlay->show();
+
+	boton = new GameObject(mSceneMgr);
+	boton->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+	boton->addComponent(new Boton());
+
+	actors_.push_back(boton);
 }
 
 //-------------------------------------------------------------------------------------
@@ -179,6 +92,7 @@ void EscenaMenu::createScene(void)
 	createCameras();
 
 	createEntities();
+
 }
 
 EscenaMenu *EscenaMenu::instance = 0;

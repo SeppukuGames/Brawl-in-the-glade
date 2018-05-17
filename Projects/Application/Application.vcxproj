@@ -27,6 +27,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
+    <ClInclude Include="..\..\Src\Application\Boton.h" />
     <ClInclude Include="..\..\Src\Application\buttonGUI.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />

@@ -14,38 +14,31 @@
 #include "OgreOverlayManager.h"
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
-#include "buttonGUI.h"
 
 using namespace Ogre;
 
 class EscenaMenu : public BaseApplication
 {
-
 	static EscenaMenu * instance;
 	EscenaMenu(void);
-	//virtual ~TutorialApplication(void);
-
 
 public:
-
 	static EscenaMenu *getInstance();
 
 protected:
-
-	std::vector<OverlayContainer*> botones;
+	
 	OverlayContainer* Fondo;
-	int cont = 0;
-
-	void Refrescar(int boton, std::string textoBoton); //le pasamos el index del boton que vamos a alterar
+	
 	Overlay* overlay;
 
 	GameObject * cam;
 	SceneNode* camNode;	
+	GameObject* boton;
 
 	virtual void createScene(void);
 	virtual void createLights(void);
 	virtual void createCameras(void);
-	virtual void createEntities(void);
+	virtual void createEntities(void);	
 
 };
 

@@ -27,8 +27,7 @@ public:
 		//direction = Ogre::Vector3::ZERO;
 		animComp =  dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
-		direction = { 0, -2, 0 };	
-		
+		direction = { 0, -2, 0 };		
 	};
 
 	virtual void tick(double elapsed){

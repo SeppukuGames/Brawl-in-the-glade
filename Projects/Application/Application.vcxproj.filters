@@ -146,5 +146,8 @@
     <ClInclude Include="..\..\Src\Application\EscenaMenu.h">
       <Filter>Header Files\Escenas</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Boton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
