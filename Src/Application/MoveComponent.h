@@ -4,6 +4,7 @@
 #include "KeyInputComponent.h"
 #include "AnimationComponent.h"
 #include "DynamicRigidbodyComponent.h"
+#include "PlayerComponent.h"
 
 class MoveComponent : public KeyInputComponent, public Component {
 public:
@@ -20,7 +21,6 @@ public:
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);
 
-
 	//btVector3 direction;
 	
 private:
@@ -34,7 +34,8 @@ private:
 	btTransform transform;
 
 	bool resetCamPosition;
-
+	
+	PlayerComponent* player;
 };
 
 #endif /* MOVECOMPONENT_H_ */

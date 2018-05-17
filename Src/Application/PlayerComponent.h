@@ -11,19 +11,28 @@ private:
 
 	//PLAYER STATS
 	float life;
-	float maxLife;
-	float attackPower;
+	const float maxLife = 1000.f;
+	const float attackPower = 100.f;
+
+	UICanvas* playerUI;
+	float maxWidth, maxHeight;
 
 public:
 
-	PlayerComponent(float newLife, float newAttackPower) : Component()
+	PlayerComponent() : Component()
 	{
-		life = maxLife = newLife;
-		attackPower = newAttackPower;
+		life = maxLife;
 	}
 
 	virtual ~PlayerComponent()
 	{
+	}
+
+	void setPlayerUI() {
+		playerUI = dynamic_cast<UICanvas*> (_gameObject->getComponent(ComponentName::UI));
+		maxWidth = playerUI->getUIWidth();
+		maxHeight = playerUI->getUIHeight();
+		updateUI();
 	}
 
 	virtual void start() {
@@ -47,6 +56,23 @@ public:
 
 	void hitPlayer(float amount) {
 		life -= amount;
+	}
+
+	//UI METHODS
+
+	void setNewUISize(float x, float y) {
+		playerUI->setNewUISize(x, y);
+	}
+
+	float getUIWidth() {
+		return maxWidth;
+	}
+
+	float getUIHeigth() {
+		return maxHeight;
+	}
+	void updateUI() {
+		playerUI->updateUI();
 	}
 };
 

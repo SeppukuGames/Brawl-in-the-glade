@@ -22,7 +22,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameObject.h"
-
+#include "UICanvas.h"
 //Overlay
 #include "OgreTextAreaOverlayElement.h"
 #include "OgreFontManager.h"
@@ -51,8 +51,9 @@ protected:
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
-	Overlay* overlay;
-	OverlayContainer* lifeGUI;
+	//Overlay* overlay;
+	//OverlayContainer* lifeGUI;
+	//GameObject* lifeCanvas;
 
 	virtual void createScene(void);
 	virtual void createLights(void);

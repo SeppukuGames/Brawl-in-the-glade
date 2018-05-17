@@ -222,7 +222,7 @@ void TutorialApplication::createEntities(void)
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	ninja->addComponent(new PlayerComponent(1000.f, 100.f));
+	ninja->addComponent(new PlayerComponent());
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -391,21 +391,34 @@ void TutorialApplication::createGUI(){
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
 	//FontManager& fM = FontManager::getSingleton();
 
-	//------FONDO---------
-	lifeGUI = static_cast<OverlayContainer*>(
+	OverlayContainer* lifeGUI = static_cast<OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "health"));
+
 
 	lifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
 	lifeGUI->setPosition(0, 0);
-	lifeGUI->setDimensions(400, 35);
+	lifeGUI->setDimensions(300, 35);
 	lifeGUI->setMaterialName("health"); // Optional background material 
 
+	OverlayContainer* backLifeGUI = static_cast<OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "backHealth"));
+
+	backLifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
+	backLifeGUI->setPosition(0, 0);
+	backLifeGUI->setDimensions(300, 35);
+	backLifeGUI->setMaterialName("backHealth"); // Optional background material */
+
 	// Create an overlay, and add the panel*/
-	overlay = overlayManager.create("OverlayPlayer");
+	Overlay* overlay = overlayManager.create("OverlayPlayer");
+	overlay->add2D(backLifeGUI);
 	overlay->add2D(lifeGUI);
 
+	//lifeCanvas = new GameObject(mSceneMgr);
+	ninja->addComponent(new UICanvas(lifeGUI, overlay));
+	dynamic_cast<PlayerComponent*> (ninja->getComponent(ComponentName::PLAYER))->setPlayerUI();
+	//dynamic_cast<UICanvas*> (ninja->getComponent(ComponentName::UI))->updateUI();
 	// Show the overlay*/
-	overlay->show();
+	//overlay->show();
 }
 
 //-------------------------------------------------------------------------------------

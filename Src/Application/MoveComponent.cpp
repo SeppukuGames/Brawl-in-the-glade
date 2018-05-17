@@ -7,6 +7,7 @@ void MoveComponent::start() {
 	//direction = Ogre::Vector3::ZERO;
 	animComp = dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
+	player = dynamic_cast<PlayerComponent*> (_gameObject->getComponent(ComponentName::PLAYER));
 	direction = { 0, 0, 0 };
 	transform = rb->getRigidbody()->getWorldTransform();
 };
@@ -29,6 +30,9 @@ void MoveComponent::tick(double elapsed) {
 	//std::cout << "Rotation X: " << transform.getRotation().getX() << "\n Rotation Y: " << transform.getRotation().getY() << "\n Rotation Z: " << transform.getRotation().getZ() << std::endl;
 	//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Y: " << transform.getOrigin().getY() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
 
+	//DEBUG UI: BORRAR CUANDO TERMINEN LAS PRUEBAS
+	if(player != NULL)
+		player->updateUI();
 };
 
 bool MoveComponent::keyPressed(const OIS::KeyEvent &arg) {
@@ -38,7 +42,8 @@ bool MoveComponent::keyPressed(const OIS::KeyEvent &arg) {
 	case OIS::KC_W:
 		direction.setZ((-velocity));
 		//direction.z += -velocity;
-
+		player->hitPlayer(100);
+		player->setNewUISize((player->getUIWidth() * player->getCurrentLife()) / player->getMaxLife(), player->getUIHeigth());
 		break;
 
 	case OIS::KC_DOWN:
