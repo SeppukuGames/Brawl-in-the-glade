@@ -44,14 +44,14 @@ public:
 			rb->getRigidbody()->setLinearVelocity(direction * 10 * Ogre::Real(elapsed));
 			oldDirection = direction;
 		}
-		btTransform transform;
-		rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+		//btTransform transform;
+		//rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
 		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 
 		//PARA ROTAR EL PERSONAJE
 		std::cout << "------------------------------------------" << std::endl;
 		Vector3 mousePos = mouseComponent->getMousePos();
-		std::cout << "Posicion Mouse: " << mousePos << std::endl;
+		
        
         Vector3 ninjaPos = _gameObject->getNode()->getPosition();
 		
@@ -84,18 +84,28 @@ public:
         Real dotProduct = vectorComienzo.dotProduct(vectorFinal);
         dotProduct = asin(dotProduct) * 180.0 / PI;
 		
-		std::cout << "Posicion Old Mouse: " << mouseOldPos << std::endl;
+		std::cout << "Prcuto vectorial: " << crossProduct << std::endl;
 		//if (){ }
-		if (mousePos.x < mouseOldPos.x)
-			rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.y * dotProduct * 2, 0));
-
-		else {
-			rb->getRigidbody()->applyTorque(btVector3(0, (-1) * crossProduct.y * dotProduct * 2, 0));
+	
 
 		//Los valores actuales pasan a ser los antiguos
-			mouseOldPos = mousePos;
+		if (crossProduct != Vector3(0, 0, 0)) {
+			//	if (mousePos.x < mouseOldPos.x)
+			if (crossProduct.x < 0)
+				rb->getRigidbody()->setAngularVelocity(btVector3(0, crossProduct.y * dotProduct * Ogre::Real(elapsed), 0));
+			else if (crossProduct.x > 0)
+				rb->getRigidbody()->setAngularVelocity(btVector3(0, (-1) * crossProduct.y * dotProduct * Ogre::Real(elapsed), 0));
+			else 
+				rb->getRigidbody()->setAngularVelocity(btVector3(0, 0, 0));
+
+			//	else if (mousePos.x > mouseOldPos.x){
+			//		rb->getRigidbody()->setAngularVelocity(btVector3(0, (-1) * crossProduct.y * dotProduct, 0));
+			//
+			//	mouseOldPos = mousePos;
+			//}
 		}
         
+		
 		std::cout << "------------------------------------------" << std::endl;
 	}
 
