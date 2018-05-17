@@ -3,12 +3,13 @@
 Filename:    TutorialApplication.cpp
 -----------------------------------------------------------------------------
 This source file is part of the
-___                 __    __ _ _    _
-/___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-//  // _` | '__/ _ \ \ \/  \/ / | |/ / |
+   ___                 __    __ _ _    _
+  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
+ //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
 / \_// (_| | | |  __/  \  /\  /| |   <| |
 \___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-|___/
+	  |___/
+
 Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
@@ -24,7 +25,6 @@ http://www.ogre3d.org/tikiwiki/
 #include <stdio.h>
 #include "AnimationComponent.h"
 #include "PlayerComponent.h"
-
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
@@ -384,13 +384,9 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 	
-	
-	
-	
-	
 }
 
-void TutorialApplication::createGUI() {
+void TutorialApplication::createGUI(){
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
 	//FontManager& fM = FontManager::getSingleton();
@@ -404,7 +400,7 @@ void TutorialApplication::createGUI() {
 	lifeGUI->setDimensions(400, 35);
 	lifeGUI->setMaterialName("health"); // Optional background material 
 
-										// Create an overlay, and add the panel*/
+	// Create an overlay, and add the panel*/
 	overlay = overlayManager.create("OverlayPlayer");
 	overlay->add2D(lifeGUI);
 
@@ -424,6 +420,7 @@ void TutorialApplication::createScene(void)
 	createEntities();
 
 	createGUI();
+
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

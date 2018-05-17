@@ -7,10 +7,12 @@
 #include <cmath> 
 #include <iostream>
 
-class Enemigo: public Component {
+class Enemigo : public Component {
 public:
 
-	Enemigo(){
+	Enemigo() : Component() 
+	{
+
 	};
 
 	virtual ~Enemigo(){};
@@ -26,6 +28,7 @@ public:
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 		
 	};
+
 
 	virtual void tick(double elapsed){	
 
@@ -45,6 +48,7 @@ public:
 		rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
 		
 	};	
+
 
 	float obtenerDistancia() {
 		
@@ -66,6 +70,7 @@ public:
 	void setUpPlayer(GameObject* player) {
 		_player = player;
 		_player_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
+
 	}
 
 private:
@@ -84,4 +89,4 @@ private:
 
 };
 
-#endif /* MOVECOMPONENT_H_ */
+#endif /* ENEMYCOMPONENT */

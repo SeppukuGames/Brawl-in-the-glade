@@ -146,6 +146,7 @@
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
@@ -164,11 +165,17 @@
     <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h">
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
+=======
+>>>>>>> 551d8dd52bdb6c00181d78054510582d2435b828
     <ClInclude Include="..\..\Src\Application\Enemigo.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
+<<<<<<< HEAD
       <Filter>Header Files</Filter>
+=======
+      <Filter>Header Files\Component</Filter>
+>>>>>>> 551d8dd52bdb6c00181d78054510582d2435b828
     </ClInclude>
   </ItemGroup>
 </Project>
