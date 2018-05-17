@@ -23,6 +23,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "MoveCameraComponent.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
+#include "PlayerComponent.h"
 
 #include <time.h>
 #include <iostream>
@@ -221,7 +222,7 @@ void TutorialApplication::createEntities(void)
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	
+	ninja->addComponent(new PlayerComponent(1000.f, 100.f));
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -389,6 +390,28 @@ void TutorialApplication::createEntities(void)
 	
 }
 
+void TutorialApplication::createGUI() {
+
+	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	//FontManager& fM = FontManager::getSingleton();
+
+	//------FONDO---------
+	lifeGUI = static_cast<OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "health"));
+
+	lifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
+	lifeGUI->setPosition(0, 0);
+	lifeGUI->setDimensions(400, 35);
+	lifeGUI->setMaterialName("health"); // Optional background material 
+
+										// Create an overlay, and add the panel*/
+	overlay = overlayManager.create("OverlayPlayer");
+	overlay->add2D(lifeGUI);
+
+	// Show the overlay*/
+	overlay->show();
+}
+
 //-------------------------------------------------------------------------------------
 void TutorialApplication::createScene(void)
 {
@@ -399,6 +422,8 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
+
+	createGUI();
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

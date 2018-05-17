@@ -164,5 +164,11 @@
     <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h">
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Enemigo.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
