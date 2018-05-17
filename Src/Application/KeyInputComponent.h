@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "TutorialApplication.h"
+#include "EscenaMenu.h"
 #include <OIS.h>
 
 
@@ -13,6 +14,7 @@ public:
 	KeyInputComponent()
 	{
 		TutorialApplication::getInstance()->registerKeyInputObserver(this);
+		EscenaMenu::getInstance()->registerKeyInputObserver(this);
 	};
 
 	virtual ~KeyInputComponent(){};
