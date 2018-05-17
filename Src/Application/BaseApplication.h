@@ -41,6 +41,10 @@ http://www.ogre3d.org/tikiwiki/
 #include "Physics.h"
 #include "irrKlang.h"
 
+//Overlay
+#include <OgreOverlay.h>
+#include <OgreOverlaySystem.h>
+
 //																									-Listeners de OIS-
 class BaseApplication :
 	public Ogre::WindowEventListener, //Para OIS, queremos sobreescribir windowResized() y windowClosed()
@@ -96,6 +100,9 @@ protected:
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
 
+	//Overlay
+	virtual void initOverlay(void);
+
 	//----------------Window Event Listener---------------
 	//Actualiza el estado del ratón a la nueva ventana
 	virtual void windowResized(Ogre::RenderWindow* rw);//Se le llama cada vez que se escala la ventana
@@ -137,7 +144,7 @@ protected:
 
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
 	bool mShutDown;
-	//Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
+	Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
 
 
 	//Todos los objetos de las escena

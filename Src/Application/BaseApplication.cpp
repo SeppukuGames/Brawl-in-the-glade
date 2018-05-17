@@ -17,6 +17,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
+#include <OgreOverlayManager.h>
 
 #if defined(WIN32)
 #include <conio.h>
@@ -156,20 +157,25 @@ bool BaseApplication::setup(void)
 	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
 	mRoot = new Ogre::Root(mPluginsCfg);
 
-	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
-	//No los inicializa, solo establece donde buscar los potenciales recursos
-	setupResources();
-
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
+
+	chooseSceneManager();
+
+	//Inicializamos Overlay
+	initOverlay();
+
+	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
+	//No los inicializa, solo establece donde buscar los potenciales recursos
+	setupResources();
 
 	//Carga todos los recursos
 	loadResources();
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
-	chooseSceneManager();
+
 	createCamera();
 	createViewports();
 
@@ -304,6 +310,16 @@ void BaseApplication::chooseSceneManager(void)
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 	*/
+}
+
+//-------------------------------------------------------------------------------------
+
+void BaseApplication::initOverlay(void)
+{
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
 }
 
 //-------------------------------------------------------------------------------------

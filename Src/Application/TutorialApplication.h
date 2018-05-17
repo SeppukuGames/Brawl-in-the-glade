@@ -23,6 +23,14 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreEntity.h>
 #include "GameObject.h"
 
+//Overlay
+#include "OgreTextAreaOverlayElement.h"
+#include "OgreFontManager.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
+#include "OgreBorderPanelOverlayElement.h"
+//#include "buttonGUI.h"
+
 using namespace Ogre;
 
 class TutorialApplication : public BaseApplication
@@ -43,12 +51,14 @@ protected:
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
+	Overlay* overlay;
+	OverlayContainer* lifeGUI;
 
 	virtual void createScene(void);
 	virtual void createLights(void);
 	virtual void createCameras(void);
 	virtual void createEntities(void);
-
+	virtual void createGUI(void);
 
 
 };

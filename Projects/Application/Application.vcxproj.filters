@@ -134,5 +134,11 @@
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Enemigo.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

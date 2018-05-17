@@ -27,6 +27,7 @@
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
+    <ClInclude Include="..\..\Src\Application\Enemigo.h" />
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
     <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
     <ClInclude Include="..\..\Src\Application\Factory.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h" />
     <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h" />
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />

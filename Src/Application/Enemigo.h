@@ -4,10 +4,12 @@
 //#include "GameComponent.h"
 #include "Component.h"
 
-class Enemigo: public Component {
+class Enemigo : public Component {
 public:
 
-	Enemigo(){
+	Enemigo() : Component() 
+	{
+
 	};
 
 	virtual ~Enemigo(){};
@@ -17,14 +19,14 @@ public:
 		direction = Ogre::Vector3::ZERO;
 	};
 
-	virtual void tick(double elapsed){	
+	virtual void tick(double elapsed){
 		obtenerDireccion();
 		_gameObject->getNode()->translate(direction * Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
-	};	
+	};
 
 	//Con la posicion del objetivo y la nuestra, calculamos la trayectoria y 
 	//esta se irá sumando (con la velocidad) poco a poco hasta llegar al objetivo
-	void obtenerDireccion(){			
+	void obtenerDireccion(){
 		direction = (Torre - _gameObject->getNode()->getPosition())*velocity;
 	}
 
@@ -35,4 +37,4 @@ private:
 
 };
 
-#endif /* MOVECOMPONENT_H_ */
+#endif /* ENEMYCOMPONENT */
