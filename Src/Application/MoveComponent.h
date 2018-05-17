@@ -34,6 +34,7 @@ public:
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
         mouseComponent = dynamic_cast<MouseComponent*> (_gameObject->getComponent(ComponentName::MOUSE));
 		direction = { 0, 0, 0 };	
+		mouseOldPos = mouseComponent->getMousePos();
 		oldDirection = direction;
 	};
 
@@ -49,48 +50,51 @@ public:
 
 		//PARA ROTAR EL PERSONAJE
 		std::cout << "------------------------------------------" << std::endl;
-        Vector3 mousePos = mouseComponent->getMousePos();
+		Vector3 mousePos = mouseComponent->getMousePos();
 		std::cout << "Posicion Mouse: " << mousePos << std::endl;
        
         Vector3 ninjaPos = _gameObject->getNode()->getPosition();
-		std::cout << "Posicion Ninja: " << ninjaPos << std::endl;
+		
 
         // Construir un vector de direccion apuntando desde el centro del personaje hacia la posicion donde queremos que mire.
 		// Vector3 vectorDirector = Vector3(-1, 0, 0);
 		Vector3 vectorDirector = Vector3(0, 1, 0);
 		// Vector3 vectorDirector = Vector3(0, 0, -1);
 
-		std::cout << "Vector Director: " << vectorDirector << std::endl;
-
         // Multiplicamos el vector por el quaternion para obtener el vector comienzo
         Quaternion aux = _gameObject->getNode()->getOrientation();
 		Vector3 vectorComienzo = aux * vectorDirector;
-		std::cout << "Vector Comienzo: " << vectorComienzo << std::endl;
+		
 
         // Restamos la posicion del raton en coordenadas globales desde el centro del personaje para obtener el vector final
 		btVector3 centroDeMasa = rb->getRigidbody()->getCenterOfMassPosition();
 		Vector3 centerOfMass = Vector3(centroDeMasa.m_floats[0], centroDeMasa.m_floats[1], centroDeMasa.m_floats[2]);
 		Vector3 vectorFinal = mousePos - centerOfMass;
-		std::cout << "Vector Final: " << vectorFinal << std::endl;
+		
 
         // Obtenemos el producto vectorial de los dos anteriores (el orden importa, comienzo * final es lo que queremos) para obtener el eje de rotacion
 		vectorComienzo.normalise();
 		vectorFinal.normalise();
 		Vector3 crossProduct = vectorComienzo;
         crossProduct.crossProduct(vectorFinal);
-		std::cout << "Producto vectorial: " << crossProduct << std::endl;
+		
 
         // Obtenemos el producto escalar del comienzo y el final (ambos deben estar normalizados) para obtener el coseno del angulo de rotacion.
         // Usamos el arcocoseno en el para obtener el angulo ENTRE DOS.
         Real dotProduct = vectorComienzo.dotProduct(vectorFinal);
         dotProduct = asin(dotProduct) * 180.0 / PI;
-		std::cout << "Producto escalar: " << dotProduct << std::endl;
-
+		
+		std::cout << "Posicion Old Mouse: " << mouseOldPos << std::endl;
 		//if (){ }
-
+		if (mousePos.x < mouseOldPos.x)
 			rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.y * dotProduct * 2, 0));
 
-		
+		else {
+			rb->getRigidbody()->applyTorque(btVector3(0, (-1) * crossProduct.y * dotProduct * 2, 0));
+
+		//Los valores actuales pasan a ser los antiguos
+			mouseOldPos = mousePos;
+		}
         
 		std::cout << "------------------------------------------" << std::endl;
 	}
@@ -174,7 +178,7 @@ public:
 	
 
 private:
-    bool a =  false;
+	Vector3 mouseOldPos;
 	
 	//Ogre::Vector3 direction; 
 	float velocity;
