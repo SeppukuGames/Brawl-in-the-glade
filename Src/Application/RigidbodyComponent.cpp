@@ -14,6 +14,7 @@ RigidbodyComponent::RigidbodyComponent(btMotionState *motionState, btCollisionSh
 
 RigidbodyComponent::~RigidbodyComponent()
 {
+	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->removeRigidBody(rigidBody);
 	delete rigidBody;
 }
 

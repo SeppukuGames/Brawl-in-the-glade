@@ -49,12 +49,17 @@ BaseApplication::BaseApplication(void)
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-
 	if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
+
+	delete timer;
+
+	delete mPhysicsEngine;
+
+	delete mSoundEngine;
 
 	//Último en borrar,es el más importante
 	delete mRoot;
@@ -483,19 +488,11 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 //TODO, ELIMINAR LOS RECURSOS
 void BaseApplication::destroyScene(void)
 {
-
 	//Destruye todos los actores
 	for (size_t i = 0; i < actors_.size(); i++)
 		delete(actors_[i]);
 
-	////Destruye todos los observadores (Mouse y Keyboard)
-	//for (size_t i = 0; i < keyInputObservers.size(); i++)
-	//	delete(keyInputObservers[i]);
-
-	//for (size_t i = 0; i < mouseInputObservers.size(); i++)
-	//	delete(mouseInputObservers[i]);
-
-
+	//Los observers del input se destruyen dentro de los actores, no hace falta volver a eliminarlos
 
 }
 //-------------------------------------------------------------------------------------

@@ -94,11 +94,9 @@ protected:
 	std::vector<OIS::KeyListener*> keyInputObservers;
 	std::vector<OIS::MouseListener*> mouseInputObservers;
 
-
-
 	//Para el bucle principal
-	double lastTime;
 	Ogre::Timer *timer;
+	double lastTime;
 
 private:
 	

@@ -14,6 +14,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 	//Inicializa Ogre y el juego
 	TutorialApplication::getInstance()->go();
 
+	delete TutorialApplication::getInstance();
+
 	return 0;
 }
 
