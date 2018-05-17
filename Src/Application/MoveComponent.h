@@ -12,7 +12,6 @@
 #include "MouseComponent.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
-
 #include <stdlib.h>
 #include <math.h>       /* acos */
 #include <iostream>
@@ -23,10 +22,9 @@
 class MoveComponent : public KeyInputComponent, public Component {
 public:
 
-	MoveComponent(Ogre::AxisAlignedBox pl) : KeyInputComponent(), Component()
+	MoveComponent() : KeyInputComponent(), Component()
 	{
-		//"Awake"
-		plano = pl;
+		
 	};
 	virtual ~MoveComponent(){};
 
@@ -58,8 +56,9 @@ public:
 		std::cout << "Posicion Ninja: " << ninjaPos << std::endl;
 
         // Construir un vector de direccion apuntando desde el centro del personaje hacia la posicion donde queremos que mire.
-		Vector3 vectorDirector = Vector3(-1, 0, 0);
-		//Vector3 vectorDirector = Vector3(0, 0, -1);
+		// Vector3 vectorDirector = Vector3(-1, 0, 0);
+		Vector3 vectorDirector = Vector3(0, 1, 0);
+		// Vector3 vectorDirector = Vector3(0, 0, -1);
 
 		std::cout << "Vector Director: " << vectorDirector << std::endl;
 
@@ -87,12 +86,12 @@ public:
         dotProduct = asin(dotProduct) * 180.0 / PI;
 		std::cout << "Producto escalar: " << dotProduct << std::endl;
 
-        //if (!a){
+		//if (){ }
 
-			rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.x * dotProduct, 0));
+			rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.y * dotProduct * 2, 0));
+
 		
-        //a = true;
-        //}
+        
 		std::cout << "------------------------------------------" << std::endl;
 	}
 
@@ -176,7 +175,7 @@ public:
 
 private:
     bool a =  false;
-	Ogre::AxisAlignedBox plano;
+	
 	//Ogre::Vector3 direction; 
 	float velocity;
 	btVector3 direction, oldDirection;

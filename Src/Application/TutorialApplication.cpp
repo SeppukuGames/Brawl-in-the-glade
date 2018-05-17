@@ -258,11 +258,14 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 	//JUGADOR
+	Ogre::AxisAlignedBox  plano = dynamic_cast<EntityComponent*> (planito->getComponent(ComponentName::ENTITY))->getEntity()->getBoundingBox();
+	Ogre::Camera * ninjaCam = mCamera;
+
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	ninja->addComponent(new MouseComponent(cam));
+	ninja->addComponent(new MouseComponent(ninjaCam, &plano));
 
 
 	//Motion state
@@ -287,8 +290,8 @@ void TutorialApplication::createEntities(void)
 	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
 	ninja->addComponent(ninjaRbComponent);
 	ninjaRbComponent->getRigidbody()->setRestitution(1);
-	Ogre::AxisAlignedBox plano = dynamic_cast<EntityComponent*> (planito->getComponent(ComponentName::ENTITY))->getAxisAlignedBox();
-	ninja->addComponent(new MoveComponent(plano));			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	
+	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 	actors_.push_back(ninja);
 
 	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));

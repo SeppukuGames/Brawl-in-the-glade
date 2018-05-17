@@ -15,9 +15,11 @@ class MouseComponent : public MouseInputComponent
 
 public:
 
-	MouseComponent(GameObject * cam) : MouseInputComponent()
+	MouseComponent(Ogre::Camera * cam, Ogre::AxisAlignedBox * pl) : MouseInputComponent()
 	{
 		Cam = cam;
+		//"Awake"
+		plano = (*pl);
 	}
 
 	virtual ~MouseComponent()
@@ -67,20 +69,32 @@ public:
 		posMouseY = arg.state.Y.abs / screenHeight;
        
 		//http://wiki.ogre3d.org/Get+XZ+coordinates
-		//Ray mouseRay = Cam->getNode()->getCameraToViewportRay(offsetX, offsetY);
+		Ray mouseRay = Cam->getCameraToViewportRay(posMouseX, posMouseY);
+
+		std::pair<bool, Real> result = mouseRay.intersects(plano);
+
+		//Si result. first == true significa que estás en el plano, y entonces quieres actualizar posición
+		//El plano no es puntero porque no se va a modificar, pero coge la referencia
+		if (result.first){
+			// get the point where the intersection is
+			resultado = mouseRay.getPoint(result.second);
+		}
+
 		return true;
 	}
 
     Vector3 getMousePos(){
 		
-        return Vector3(posMouseX, 0, posMouseY);
+        return resultado;
     }
 	
 private:
 	int posMouseX, posMouseY;
 	Ogre::Quaternion dirBala;
 
-	GameObject * Cam;
+	Vector3 resultado;
+	Ogre::Camera * Cam;
+	Ogre::AxisAlignedBox plano;
 
 };
 
