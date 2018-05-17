@@ -155,7 +155,7 @@ bool MoveCameraComponent::keyPressed(const OIS::KeyEvent &arg) {
 	switch (arg.key)
 	{
 	case OIS::KC_SPACE:
-		_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
+
 		_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
 		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
 		_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() + 222);
@@ -186,4 +186,5 @@ bool MoveCameraComponent::keyReleased(const OIS::KeyEvent &arg) {
 
 void MoveCameraComponent::setUpPlayer(GameObject* player) {
 	_player = player;
+	_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
 }

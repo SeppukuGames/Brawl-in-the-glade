@@ -14,16 +14,17 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-
 #include "BaseApplication.h"
 #include <OgreException.h>
 #include <OgreTimer.h>
+#include <OgreOverlayManager.h>
 
 #if defined(WIN32)
 #include <conio.h>
 #else
 #include "../common/conio.h"
 #endif
+
 
 using namespace irrklang;
 
@@ -32,25 +33,27 @@ BaseApplication::BaseApplication(void)
 	: mRoot(0),
 	mResourcesCfg(Ogre::BLANKSTRING),
 	mPluginsCfg(Ogre::BLANKSTRING),
-	mInputManager(0),
+
 	mWindow(0),
+
 	mSceneMgr(0),
 	mCamera(0),
+
+	mInputManager(0),
 	mMouse(0),
 	mKeyboard(0),
-	mSoundEngine(0),
-	mPhysicsEngine(0),
+	soundEngine(0),
+	physicsEngine(0),
 	//mCursorWasVisible(false),
-	mShutDown(false),
-	mOverlaySystem(0)
+	mShutDown(false)
+	//mOverlaySystem(0)
 {
 }
 
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
-
-	if (mOverlaySystem) delete mOverlaySystem; //no sé si esto hace falta
+	//if (mOverlaySystem) delete mOverlaySystem;
 
 	//Remove ourself as a Window listener
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
@@ -108,12 +111,13 @@ bool BaseApplication::gameLoop()
 
 	lastTime = current;
 
-	return true;
+
+	return true;	//Return true puesto.
 
 }
 
 //Detecta input
-bool BaseApplication::handleInput(void){
+bool BaseApplication::handleInput(void) {
 
 	//Need to capture/update each device
 	mKeyboard->capture();
@@ -128,52 +132,25 @@ bool BaseApplication::handleInput(void){
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
-	if (this->mPhysicsEngine != NULL)
-		mPhysicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
-	
-	//Actualiza todos los objetos
+
+	if (this->physicsEngine != NULL)
+		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
+
+																				   //Actualiza todos los objetos
+
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
-
-	//----------------------------------------COLISIONES-------------------------------------------
-	//Detecta las colisiones y envía mensajes a los correspondientes Game Object
-	int numManifolds = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getNumManifolds();
-	for (int i = 0; i < numManifolds; i++)
-	{
-		btPersistentManifold* contactManifold = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
-
-		const btCollisionObject* obA = contactManifold->getBody0();
-		const btCollisionObject* obB = contactManifold->getBody1();
-
-		GameObject *gameObjectA =  (GameObject*) obA->getUserPointer();
-		GameObject *gameObjectB = (GameObject*)obB->getUserPointer();
-
-		//Si hay contacto entre los 2 objetos, se mandan los mensajes de colision
-		if (contactManifold->getNumContacts() > 0)
-		{
-			//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
-			if (gameObjectA != nullptr && gameObjectB != nullptr)
-			{
-				//Informa a todos los componentes del gameobject de la colision
-				gameObjectA->onCollision(gameObjectB);
-				gameObjectB->onCollision(gameObjectA);
-			}
-			else if (gameObjectA == nullptr)		
-				gameObjectB->onCollision(nullptr);
-			
-			else if (gameObjectB == nullptr)
-				gameObjectA->onCollision(nullptr);
-		}
-	}
-
-
-	//----------------------------------------COLISIONES-------------------------------------------
 
 	return true;
 }
 
-bool BaseApplication::render(void){
-	return (mRoot->renderOneFrame());
+//Detecta input
+bool BaseApplication::render(void) {
+
+	//Se profundiza en el TUTORIAL4
+	if (!mRoot->renderOneFrame()) return false;
+
+	return true;
 }
 
 
@@ -189,10 +166,10 @@ bool BaseApplication::setup(void)
 	bool carryOn = configure();
 	if (!carryOn) return false;
 
-	//Scene Manager
 	chooseSceneManager();
-	initOverlay();
 
+	//Inicializamos Overlay
+	initOverlay();
 
 	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
 	//No los inicializa, solo establece donde buscar los potenciales recursos
@@ -200,15 +177,16 @@ bool BaseApplication::setup(void)
 
 	//Carga todos los recursos
 	loadResources();
-
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
+
 
 	createCamera();
 	createViewports();
 
+
 	//Inicializa el motor de Física
-	mPhysicsEngine = new Physics();
+	physicsEngine = new Physics();
 
 	//Inicializa el motor de Sonido
 	//initSoundEngine();
@@ -223,7 +201,7 @@ bool BaseApplication::setup(void)
 };
 
 //-------------------------------------------------------------------------------------
-//TODO: HAY QUE ELIMINAR LOS WARNINGS DE AQUI
+//HAY QUE ELIMINAR LOS WARNINGS DE AQUI
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void BaseApplication::setupResources(void)
 {
@@ -235,6 +213,7 @@ void BaseApplication::setupResources(void)
 	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
 	//String auxiliares para guardar información del archivo de configuracion parseado
+
 	Ogre::String pathName;//Ruta de los recursos
 	Ogre::String formatName;//Formato del archivo (Zip, Filesystem)
 
@@ -263,22 +242,7 @@ void BaseApplication::setupResources(void)
 	}
 }
 
-//Carga todos los recursos
-void BaseApplication::loadResources(void)
-{
-	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
-
-	//Establecemos el número por defecto de mipmaps que se usarán.
-	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-	//Inicializa todos los recursos encontrados por Ogre
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-}
-
 //-------------------------------------------------------------------------------------
-
 //Configura el RenderSystem y crea la ventana
 bool BaseApplication::configure(void)
 {
@@ -287,7 +251,6 @@ bool BaseApplication::configure(void)
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
 	if (!(mRoot->restoreConfig() || mRoot->showConfigDialog(NULL)))
 		return false;
-
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
 	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
 
@@ -331,28 +294,56 @@ bool BaseApplication::configure(void)
 }
 //-------------------------------------------------------------------------------------
 
+
+//Carga todos los recursos
+void BaseApplication::loadResources(void)
+{
+	//Cargamos todos los recursos. Para más profundidad en el tema y cargar los recursos solo cuando los necesitamos, habrá que mirar TUTORIALES DEPTH
+
+	//Establecemos el número por defecto de mipmaps que se usarán.
+	//Permite utilizar diferentes niveles de detalles para texturas dependiendo de lo lejos que esté de la cámara
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+	//Inicializa todos los recursos encontrados por Ogre
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+}
+
 //-------------------------------------------------------------------------------------
 
 void BaseApplication::chooseSceneManager(void)
 {
 	//Creamos el SceneManager
 	mSceneMgr = mRoot->createSceneManager();
+
+	/*No lo utilizamos??
+	// Inicializa el OverlaySystem
+	mOverlaySystem = new Ogre::OverlaySystem();
+	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+	*/
 }
 
 //-------------------------------------------------------------------------------------
+
 void BaseApplication::initOverlay(void)
 {
 	// Inicializa el OverlaySystem
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
 }
+
 //-------------------------------------------------------------------------------------
-//Crea la cámara, sin nodo
+
 void BaseApplication::createCamera(void)
 {
+	//Creamos la cámara
 	mCamera = mSceneMgr->createCamera("MainCam");
+
+	//La inicializamos
+	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
+	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
+	mCamera->setNearClipDistance(5);
 }
 
 //-------------------------------------------------------------------------------------
@@ -373,9 +364,9 @@ void BaseApplication::createViewports(void)
 void BaseApplication::initSoundEngine(void)
 {
 	// start the sound engine with default parameters
-	mSoundEngine = createIrrKlangDevice();
+	soundEngine = createIrrKlangDevice();
 
-	if (!mSoundEngine)
+	if (!soundEngine)
 	{
 		printf("Could not startup engine\n");
 	}
@@ -385,11 +376,11 @@ void BaseApplication::initSoundEngine(void)
 
 	// play some sound stream, looped
 
-	mSoundEngine->play2D("../../Media/Sounds/getout.ogg", true);
+	soundEngine->play2D("../../Media/Sounds/getout.ogg", true);
 
 
 	// play a single sound
-	mSoundEngine->play2D("../../Media/Sounds/bell.wav");
+	soundEngine->play2D("../../Media/Sounds/bell.wav");
 
 	// After we are finished, we have to delete the irrKlang Device created earlier
 	// with createIrrKlangDevice(). Use ::drop() to do that. In irrKlang, you should
@@ -480,9 +471,9 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 }
 
 //-------------------------------------------------------------------------------------
-//TODO, ELIMINAR LOS RECURSOS
 void BaseApplication::destroyScene(void)
 {
+
 
 	//Destruye todos los actores
 	for (size_t i = 0; i < actors_.size(); i++)
@@ -495,9 +486,11 @@ void BaseApplication::destroyScene(void)
 	//for (size_t i = 0; i < mouseInputObservers.size(); i++)
 	//	delete(mouseInputObservers[i]);
 
-
-
 }
+//-------------------------------------------------------------------------------------
+
+
+
 //-------------------------------------------------------------------------------------
 
 
@@ -507,7 +500,14 @@ void BaseApplication::destroyScene(void)
 bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_ESCAPE)
+	{
 		mShutDown = true;
+	}
+	else if (arg.key == OIS::KC_A)
+	{
+		int a = 0;
+	}
+
 
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyPressed(arg);
@@ -517,6 +517,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
+
 	for (size_t i = 0; i < keyInputObservers.size(); i++)
 		keyInputObservers[i]->keyReleased(arg);
 
@@ -527,7 +528,6 @@ bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
 	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mouseMoved(arg);
-
 	return true;
 }
 
@@ -535,7 +535,6 @@ bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonI
 {
 	for (size_t i = 0; i < mouseInputObservers.size(); i++)
 		mouseInputObservers[i]->mousePressed(arg, id);
-
 	return true;
 }
 
@@ -558,4 +557,7 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 }
 
 
-
+Physics * BaseApplication::getPhysicsEngine()
+{
+	return physicsEngine;
+}

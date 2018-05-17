@@ -3,12 +3,13 @@
 Filename:    TutorialApplication.cpp
 -----------------------------------------------------------------------------
 This source file is part of the
-___                 __    __ _ _    _
-/___\__ _ _ __ ___  / / /\ \ (_) | _(_)
-//  // _` | '__/ _ \ \ \/  \/ / | |/ / |
+   ___                 __    __ _ _    _
+  /___\__ _ _ __ ___  / / /\ \ (_) | _(_)
+ //  // _` | '__/ _ \ \ \/  \/ / | |/ / |
 / \_// (_| | | |  __/  \  /\  /| |   <| |
 \___/ \__, |_|  \___|   \/  \/ |_|_|\_\_|
-|___/
+	  |___/
+
 Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
@@ -23,7 +24,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "MoveCameraComponent.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
-
+#include "PlayerComponent.h"
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
@@ -142,11 +143,11 @@ void TutorialApplication::createEntities(void)
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
 	actors_.push_back(planito);
-
+	*/
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
-	*/
+	
 	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
 	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
@@ -214,19 +215,14 @@ void TutorialApplication::createEntities(void)
 
 	actors_.push_back(cabeza);
 
-	/*EXPLICACIÓN DE BTRIGIDBODY::btRigidBodyConstructionInfo:
->>>>>>> Colisiones
-	SI QUEREMOS CREAR OBJETOS SIMILARES, UTILIZAMOS EL MISMO BTRIGIDBODYCONSTRUCTIONINFO, YA QUE
-	SE COPIAN AL OBJETO QUE SE LO DAMOS
-	*/
-
 	//---------------------ESFERA---------------------------------
 
+	//----------------------NINJA---------------------------------
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-	
+	ninja->addComponent(new PlayerComponent(1000.f, 100.f));
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -238,7 +234,6 @@ void TutorialApplication::createEntities(void)
 
 
 	//actually contruvc the body and add it to the dynamics world
-	//Esfera a 50 metros de altura
 	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
 
 	//Colision shape
@@ -259,6 +254,7 @@ void TutorialApplication::createEntities(void)
 
 	camMove->setUpPlayer(ninja);
 
+	//----------------------NINJA---------------------------------
 
 	srand((unsigned int)time(NULL));
 	GameObject *planito = new GameObject(mSceneMgr);
@@ -344,18 +340,43 @@ void TutorialApplication::createEntities(void)
 	}*/
 	
 
-
-
-	//20 a 4
+	//ENEMIGOS QUE VAN A LA TORRE
 	for (int i = 0; i < 2; i++){
 		for (int j = 0; j < 2; j++){
 			//GameComponent a GameObject
 			GameObject * enemigo = new GameObject(mSceneMgr);
+			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
 			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
 			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
+			btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+
+			btTransform enemyTransform;
+			enemyTransform.setIdentity();
+			enemyTransform.setOrigin(enemyInitialPosition);
+
+
+			//actually contruvc the body and add it to the dynamics world
+			//Esfera a 50 metros de altura
+			btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+
+			//Colision shape
+			btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+
+
+			//set the mass of the object. a mass of "0" means that it is an immovable object
+			btScalar enemyMass(1.0f);
+			btVector3 enemyInertia(0, 0, 0);
+
+			DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
+			enemigo->addComponent(enemyRbComponent);
+			enemyRbComponent->getRigidbody()->setRestitution(1);
 			enemigo->addComponent(new Enemigo());
+			
+			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+
+
 			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
 			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
@@ -363,10 +384,28 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 	
-	
-	
-	
-	
+}
+
+void TutorialApplication::createGUI(){
+
+	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	//FontManager& fM = FontManager::getSingleton();
+
+	//------FONDO---------
+	lifeGUI = static_cast<OverlayContainer*>(
+		overlayManager.createOverlayElement("Panel", "health"));
+
+	lifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
+	lifeGUI->setPosition(0, 0);
+	lifeGUI->setDimensions(400, 35);
+	lifeGUI->setMaterialName("health"); // Optional background material 
+
+	// Create an overlay, and add the panel*/
+	overlay = overlayManager.create("OverlayPlayer");
+	overlay->add2D(lifeGUI);
+
+	// Show the overlay*/
+	overlay->show();
 }
 
 //-------------------------------------------------------------------------------------
@@ -379,6 +418,9 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
+
+	createGUI();
+
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

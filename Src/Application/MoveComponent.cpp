@@ -3,12 +3,12 @@
 
 
 void MoveComponent::start() {
-	velocity = 50;
+	velocity = 150;
 	//direction = Ogre::Vector3::ZERO;
 	animComp = dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 	direction = { 0, 0, 0 };
-	transform.setIdentity();
+	transform = rb->getRigidbody()->getWorldTransform();
 };
 
 void MoveComponent::tick(double elapsed) {
