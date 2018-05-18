@@ -27,11 +27,11 @@ public:
 	}
 
 	virtual void start(){
-		
+
 	};
-	
+
 	virtual void tick(double elapsed){
-		
+
 	};
 
 	virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
@@ -43,7 +43,7 @@ public:
 
 		if (id == OIS::MB_Left){
 			//Dispara una bala.
-			
+
 			dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion
 			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), dirBala, _gameObject->getNode()->getPosition());
 		}
@@ -67,11 +67,13 @@ public:
 		// convert to 0-1 offset
 		posMouseX = arg.state.X.abs / screenWidth;
 		posMouseY = arg.state.Y.abs / screenHeight;
-       
+
 		//http://wiki.ogre3d.org/Get+XZ+coordinates
 		Ray mouseRay = Cam->getCameraToViewportRay(posMouseX, posMouseY);
 
+
 		std::pair<bool, Real> result = mouseRay.intersects(plano);
+
 
 		//Si result. first == true significa que estás en el plano, y entonces quieres actualizar posición
 		//El plano no es puntero porque no se va a modificar, pero coge la referencia
@@ -80,22 +82,28 @@ public:
 			resultado = mouseRay.getPoint(result.second);
 		}
 
+		else {
+			Vector3 heatMe = mouseRay.getOrigin();
+			resultado = heatMe;
+		}
+
 		return true;
 	}
 
-    Vector3 getMousePos(){
-		
-        return resultado;
-    }
-	
+	Vector3   getMousePos(){
+
+		return resultado;
+	}
+
 private:
-	int posMouseX, posMouseY;
+	Ogre::Real posMouseX, posMouseY;
 	Ogre::Quaternion dirBala;
 
-	Vector3 resultado;
+	Vector3 resultado = Vector3(0, 0, 0);
 	Ogre::Camera * Cam;
 	Ogre::AxisAlignedBox plano;
 
 };
 
 #endif /* MOVECAMERACOMPONENT_H_ */
+
