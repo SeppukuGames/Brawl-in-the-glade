@@ -42,8 +42,6 @@ bool MoveComponent::keyPressed(const OIS::KeyEvent &arg) {
 	case OIS::KC_W:
 		direction.setZ((-velocity));
 		//direction.z += -velocity;
-		player->hitPlayer(100);
-		player->setNewUISize((player->getUIWidth() * player->getCurrentLife()) / player->getMaxLife(), player->getUIHeigth());
 		break;
 
 	case OIS::KC_DOWN:

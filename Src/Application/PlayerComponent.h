@@ -56,6 +56,8 @@ public:
 
 	void hitPlayer(float amount) {
 		life -= amount;
+		setNewUISize((maxWidth * life) / maxLife, maxHeight);
+		updateUI();
 	}
 
 	//UI METHODS

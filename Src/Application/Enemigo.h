@@ -24,29 +24,47 @@ public:
 		direction = { 0, 0, 0 };
 		Torre = { 700, 0, 700 };
 		objetivo = Torre;
-
+		timeCheck = 0;
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
-		
+		canMove = true;
 	};
 
 
 	virtual void tick(double elapsed){	
 
 		float dist = obtenerDistancia();
+		
 		if (dist < maxDistance) {
+			timeCheck += elapsed;
 			//std::cout << "Reaching tower! Distance: " << dist << std::endl;
 			objetivo = _player_rb->getRigidbody()->getWorldTransform().getOrigin();
+
+			if (dist < fireDistance) {
+				//std::cout << " Time: " << timeCheck << std::endl;
+				canMove = false;
+				if (timeCheck >= fireCadence) {
+					timeCheck = 0.f;
+					Fire();
+				}
+			}
+			else
+				canMove = true;
+				
+
+			
 		}
 		else {
 			objetivo = Torre;
 		}
-		obtenerDireccion();
-		//_gameObject->getNode()->translate(direction * Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
-		rb->getRigidbody()->getWorldTransform().setOrigin(rb->getRigidbody()->getWorldTransform().getOrigin() + direction * elapsed);
-		rb->getRigidbody()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
-		rb->getRigidbody()->getMotionState()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
-		rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
-		
+
+		if (canMove) {
+			obtenerDireccion();
+			//_gameObject->getNode()->translate(direction * Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
+			rb->getRigidbody()->getWorldTransform().setOrigin(rb->getRigidbody()->getWorldTransform().getOrigin() + direction * elapsed);
+			rb->getRigidbody()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
+			rb->getRigidbody()->getMotionState()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
+			rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
+		}
 	};	
 
 
@@ -67,6 +85,14 @@ public:
 		direction = (objetivo - rb->getRigidbody()->getWorldTransform().getOrigin()) * velocity;
 	}
 
+	void Fire() {
+
+		//AQUÍ HAY QUE ANIMAR AL ENEMIGO PARA QUE ATAQUE
+
+		playerHealth = dynamic_cast <PlayerComponent*> (_player->getComponent(ComponentName::PLAYER));
+		playerHealth->hitPlayer(attackPower);
+	}
+
 	void setUpPlayer(GameObject* player) {
 		_player = player;
 		_player_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
@@ -80,8 +106,14 @@ private:
 	DynamicRigidbodyComponent* rb;
 	DynamicRigidbodyComponent* _player_rb;
 	float velocity;
-	const float maxDistance = 150.f;	//Max distance between enemy-player
+	const float maxDistance = 250.f;	//Max distance between enemy-player
+	const float fireDistance = 100.f;	//Distance of enemy's ability to fire
 	GameObject* _player;				//Player Reference
+	PlayerComponent* playerHealth;		//Player's health Reference
+	const float fireCadence = 2.f;
+	float timeCheck;
+	bool canMove;
+
 	//Atributos del enemigo
 	float life;							//La vida del enemigo en cada momento
 	const float maxLife = 100;			//La vida máxima del enemigo como atributo
