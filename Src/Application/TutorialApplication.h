@@ -30,6 +30,8 @@ http://www.ogre3d.org/tikiwiki/
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
 //#include "buttonGUI.h"
+#include <OgreBillboard.h>
+#include <OgreBillboardSet.h>
 
 using namespace Ogre;
 
@@ -51,6 +53,8 @@ protected:
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
+	BillboardSet* billboardSet;
+	Billboard* billboard;
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;
 	//GameObject* lifeCanvas;

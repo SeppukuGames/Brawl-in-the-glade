@@ -11,6 +11,7 @@
 #include "Enemigo.h"
 #include "UICanvas.h"
 #include "PlayerComponent.h"
+#include "TowerComponent.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -189,6 +190,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			PlayerComponent* comp = dynamic_cast<PlayerComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::TOWER:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			TowerComponent* comp = dynamic_cast<TowerComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

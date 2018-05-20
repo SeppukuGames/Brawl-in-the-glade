@@ -4,8 +4,11 @@
 //#include "GameComponent.h"
 #include "Component.h"
 #include "DynamicRigidbodyComponent.h"
+#include "TowerComponent.h"
 #include <cmath> 
 #include <iostream>
+
+enum objetiveType { _PLAYER, _TOWER, _NULL };
 
 class Enemigo : public Component {
 public:
@@ -27,19 +30,23 @@ public:
 		timeCheck = 0;
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 		canMove = true;
+		objType = _NULL;
 	};
 
 
 	virtual void tick(double elapsed){	
 
-		float dist = obtenerDistancia();
+		pos1 = rb->getRigidbody()->getWorldTransform().getOrigin();			//Posición del enemigo
+		pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
+		dist = obtenerDistancia();
 		
-		if (dist < maxDistance) {
-			timeCheck += elapsed;
+		if (dist < maxPlayerDistance) {
+			
 			//std::cout << "Reaching tower! Distance: " << dist << std::endl;
 			objetivo = _player_rb->getRigidbody()->getWorldTransform().getOrigin();
-
+			objType = _PLAYER;
 			if (dist < fireDistance) {
+				timeCheck += elapsed;
 				//std::cout << " Time: " << timeCheck << std::endl;
 				canMove = false;
 				if (timeCheck >= fireCadence) {
@@ -54,7 +61,22 @@ public:
 			
 		}
 		else {
+			pos2 = Torre;	//Posición de la torre
+			dist = obtenerDistancia();
 			objetivo = Torre;
+			objType = _TOWER;
+			
+
+			if (dist < fireDistance) {	
+				canMove = false;
+				timeCheck += elapsed;
+				if (timeCheck >= fireCadence) {
+					timeCheck = 0.f;
+					Fire();
+				}
+			}
+			else
+				canMove = true;
 		}
 
 		if (canMove) {
@@ -70,8 +92,8 @@ public:
 
 	float obtenerDistancia() {
 		
-		btVector3 pos1 = rb->getRigidbody()->getWorldTransform().getOrigin();			//Posición del enemigo
-		btVector3 pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
+		//btVector3 pos1 = rb->getRigidbody()->getWorldTransform().getOrigin();			//Posición del enemigo
+		//btVector3 pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
 
 		float distanceX = pow((float)pos2.getX() - (float)pos1.getX(), 2);
 		float distanceZ = pow((float)pos2.getZ() - (float)pos1.getZ(), 2);
@@ -89,13 +111,26 @@ public:
 
 		//AQUÍ HAY QUE ANIMAR AL ENEMIGO PARA QUE ATAQUE
 
-		playerHealth = dynamic_cast <PlayerComponent*> (_player->getComponent(ComponentName::PLAYER));
-		playerHealth->hitPlayer(attackPower);
+		if (objType == _PLAYER) {
+			playerHealth = dynamic_cast <PlayerComponent*> (_player->getComponent(ComponentName::PLAYER));
+			playerHealth->hitPlayer(attackPower);
+		}
+		else if (objType == _TOWER) {
+			towerHealth->hitTower(attackPower);
+		}
+		else std::cout << "ERROR: Enemy objetive type not allowed!" << std::endl;
+		
 	}
 
 	void setUpPlayer(GameObject* player) {
 		_player = player;
 		_player_rb = dynamic_cast<DynamicRigidbodyComponent*> (_player->getComponent(ComponentName::RIGIDBODY));
+
+	}
+
+	void setUpTower(GameObject* tower) {
+		_tower = tower;
+		towerHealth = dynamic_cast<TowerComponent*> (_tower->getComponent(ComponentName::TOWER));
 
 	}
 
@@ -106,18 +141,25 @@ private:
 	DynamicRigidbodyComponent* rb;
 	DynamicRigidbodyComponent* _player_rb;
 	float velocity;
-	const float maxDistance = 250.f;	//Max distance between enemy-player
-	const float fireDistance = 100.f;	//Distance of enemy's ability to fire
-	GameObject* _player;				//Player Reference
-	PlayerComponent* playerHealth;		//Player's health Reference
+	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
+	//const float maxTowerDistance = 250.f;	//Max distance between enemy-player
+	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
+	GameObject* _player;					//Player Reference
+	PlayerComponent* playerHealth;			//Player's health Reference
+	GameObject* _tower;						//Tower Reference
+	TowerComponent* towerHealth;			//Tower's health Reference
 	const float fireCadence = 2.f;
 	float timeCheck;
 	bool canMove;
+
+	btVector3 pos1, pos2;
+	float dist;
 
 	//Atributos del enemigo
 	float life;							//La vida del enemigo en cada momento
 	const float maxLife = 100;			//La vida máxima del enemigo como atributo
 	const float attackPower = 50;		//El poder de ataque del enemigo
+	objetiveType objType;
 
 };
 

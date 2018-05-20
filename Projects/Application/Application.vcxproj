@@ -49,6 +49,7 @@
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
     <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h" />
     <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h" />
+    <ClInclude Include="..\..\Src\Application\TowerComponent.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
     <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />

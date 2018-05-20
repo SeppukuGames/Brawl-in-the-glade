@@ -25,6 +25,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <stdio.h>
 #include "AnimationComponent.h"
 #include "PlayerComponent.h"
+#include "TowerComponent.h"
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
@@ -32,6 +33,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "DynamicRigidbodyComponent.h"
 #include "TestCollisionComponent1.h"
 #include "TestCollisionComponent2.h"
+
 
 using namespace Ogre;
 
@@ -280,13 +282,32 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
-	//Torre
+	//----------------------TORRE---------------------------------
 	GameObject *Torre = new GameObject(mSceneMgr);
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
 	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 	Torre->addComponent(new EntityComponent("Torre.mesh"));
-	actors_.push_back(Torre);
+	Torre->addComponent(new TowerComponent());
+
+	/*material = MaterialManager.Singleton.Create(name + "Material", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME);
+	material.GetTechnique(0).GetPass(0).CreateTextureUnitState(this.texture.Name);
+	material.SetSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+	material.SetDepthCheckEnabled(false);*/
 	
+	billboardSet = mSceneMgr->createBillboardSet();
+	billboardSet->setMaterialName("health");
+	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+	billboardSet->setDefaultDimensions(25, 2);
+	//billboardSet->setBillboardOrigin(BillboardOrigin::BBO_TOP_CENTER);
+	billboard = billboardSet->createBillboard(Vector3::ZERO);
+	billboard->setPosition(Vector3(0, 35, 0));
+	//billboard->mColour = ColourValue::ZERO;
+
+	Torre->getNode()->attachObject(billboardSet);
+	actors_.push_back(Torre);
+
+	//----------------------TORRE---------------------------------
+
 	//Arboles
 	int random = 0;
 	for (int i = 0; i < 40; i++){
@@ -375,7 +396,16 @@ void TutorialApplication::createEntities(void)
 			
 			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
 			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
 
+			billboardSet = mSceneMgr->createBillboardSet();
+			billboardSet->setMaterialName("health");
+			billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+			billboardSet->setDefaultDimensions(100, 10);
+			//billboardSet->setBillboardOrigin(BillboardOrigin::BBO_TOP_CENTER);
+			billboard = billboardSet->createBillboard(Vector3::ZERO);
+			billboard->setPosition(Vector3(0, 40, 0));
+			enemigo->getNode()->attachObject(billboardSet);
 
 			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
 			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.

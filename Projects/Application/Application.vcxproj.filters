@@ -123,6 +123,9 @@
     <ClInclude Include="..\..\Src\Application\UICanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\TowerComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
