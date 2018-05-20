@@ -11,12 +11,45 @@
 enum objetiveType { _PLAYER, _TOWER, _NULL };
 
 class Enemigo : public Component {
+
+private:
+
+	btVector3 direction, Torre, objetivo;
+
+	float velocity;
+	float timeCheck;
+	bool canMove;
+
+	//UI
+	BillboardSet* enemyUI;
+	float maxWidth, maxHeight;
+
+	//Distance
+	btVector3 pos1, pos2;
+	float dist;
+
+	//Atributos del enemigo
+	float life;								//La vida del enemigo en cada momento
+	const float maxLife = 100;				//La vida máxima del enemigo como atributo
+	const float attackPower = 50;			//El poder de ataque del enemigo
+	objetiveType objType;					//Tipo de entidad a la que está atacando (player/torre)
+
+	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
+	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
+	const float fireCadence = 2.f;			//Amount of seconds between each attack
+
+	DynamicRigidbodyComponent* rb;			//Enemy's Rigidbody
+	GameObject* _player;					//Player Reference
+	DynamicRigidbodyComponent* _player_rb;	//Player's Rigidbody Reference
+	PlayerComponent* playerHealth;			//Player's health Reference
+	GameObject* _tower;						//Tower Reference
+	TowerComponent* towerHealth;			//Tower's health Reference
+
+
+
 public:
 
-	Enemigo() : Component() 
-	{
-
-	};
+	Enemigo() : Component()	{};
 
 	virtual ~Enemigo(){};
 
@@ -55,10 +88,7 @@ public:
 				}
 			}
 			else
-				canMove = true;
-				
-
-			
+				canMove = true;		
 		}
 		else {
 			pos2 = Torre;	//Posición de la torre
@@ -81,7 +111,6 @@ public:
 
 		if (canMove) {
 			obtenerDireccion();
-			//_gameObject->getNode()->translate(direction * Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 			rb->getRigidbody()->getWorldTransform().setOrigin(rb->getRigidbody()->getWorldTransform().getOrigin() + direction * elapsed);
 			rb->getRigidbody()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
 			rb->getRigidbody()->getMotionState()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
@@ -100,10 +129,12 @@ public:
 
 		return sqrt(distanceZ + distanceX);		//Cálculo de distancia
 	}
-	//Con la posicion del objetivo y la nuestra, calculamos la trayectoria y 
-	//esta se irá sumando (con la velocidad) poco a poco hasta llegar al objetivo
+
+	/*
+	Con la posicion del objetivo y la nuestra, calculamos la trayectoria y 
+	esta se irá sumando (con la velocidad) poco a poco hasta llegar al objetivo
+	*/
 	void obtenerDireccion(){
-		//direction = (Torre - _gameObject->getNode()->getPosition())*velocity;
 		direction = (objetivo - rb->getRigidbody()->getWorldTransform().getOrigin()) * velocity;
 	}
 
@@ -134,32 +165,16 @@ public:
 
 	}
 
-private:
-	//Ogre::Vector3 Torre = { 700, 0, 700 };
-	//Ogre::Vector3 direction;
-	btVector3 direction, Torre, objetivo;
-	DynamicRigidbodyComponent* rb;
-	DynamicRigidbodyComponent* _player_rb;
-	float velocity;
-	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
-	//const float maxTowerDistance = 250.f;	//Max distance between enemy-player
-	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
-	GameObject* _player;					//Player Reference
-	PlayerComponent* playerHealth;			//Player's health Reference
-	GameObject* _tower;						//Tower Reference
-	TowerComponent* towerHealth;			//Tower's health Reference
-	const float fireCadence = 2.f;
-	float timeCheck;
-	bool canMove;
+	void setEnemyUI(BillboardSet* newBillboard) {
+		enemyUI = newBillboard;
+		maxWidth = enemyUI->getDefaultWidth();
+		maxHeight = enemyUI->getDefaultHeight();
+	}
 
-	btVector3 pos1, pos2;
-	float dist;
-
-	//Atributos del enemigo
-	float life;							//La vida del enemigo en cada momento
-	const float maxLife = 100;			//La vida máxima del enemigo como atributo
-	const float attackPower = 50;		//El poder de ataque del enemigo
-	objetiveType objType;
+	void hitEmemy(float amount) {
+		life -= amount;
+		enemyUI->setDefaultDimensions((maxWidth * life) / maxLife, maxHeight);
+	}
 
 };
 

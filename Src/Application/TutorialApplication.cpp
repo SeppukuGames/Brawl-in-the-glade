@@ -86,7 +86,7 @@ void TutorialApplication::createCameras(void)
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
 	actors_.push_back(cam);
-	
+
 	/*
 	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	// create the camera
@@ -118,7 +118,7 @@ void TutorialApplication::createEntities(void)
 	//---------------------PLANO---------------------------------
 
 	//COMENTADO YA QUE SE HACE ABAJO CON TILES. LO HE DEJADO PARA PODER CONSULTAR LA ESTRUCTURA
-	
+
 	//Crear el plano en Ogre
 	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
@@ -149,11 +149,11 @@ void TutorialApplication::createEntities(void)
 	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
-	
-	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
+
+	GameObject *esfera = new GameObject(mSceneMgr, "esfera");
 	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
 	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-	
+
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -287,13 +287,12 @@ void TutorialApplication::createEntities(void)
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
 	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 	Torre->addComponent(new EntityComponent("Torre.mesh"));
-	Torre->addComponent(new TowerComponent());
 
 	/*material = MaterialManager.Singleton.Create(name + "Material", ResourceGroupManager.DEFAULT_RESOURCE_GROUP_NAME);
 	material.GetTechnique(0).GetPass(0).CreateTextureUnitState(this.texture.Name);
 	material.SetSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
 	material.SetDepthCheckEnabled(false);*/
-	
+
 	billboardSet = mSceneMgr->createBillboardSet();
 	billboardSet->setMaterialName("health");
 	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
@@ -301,23 +300,26 @@ void TutorialApplication::createEntities(void)
 	//billboardSet->setBillboardOrigin(BillboardOrigin::BBO_TOP_CENTER);
 	billboard = billboardSet->createBillboard(Vector3::ZERO);
 	billboard->setPosition(Vector3(0, 35, 0));
-	//billboard->mColour = ColourValue::ZERO;
-
 	Torre->getNode()->attachObject(billboardSet);
+
+	TowerComponent* newTower = new TowerComponent();
+	newTower->setTowerUI(billboardSet);
+	Torre->addComponent(newTower);
+
 	actors_.push_back(Torre);
 
 	//----------------------TORRE---------------------------------
 
 	//Arboles
 	int random = 0;
-	for (int i = 0; i < 40; i++){
-		for (int j = 0; j < 40; j++){
-			random = rand() % 101;			
+	for (int i = 0; i < 40; i++) {
+		for (int j = 0; j < 40; j++) {
+			random = rand() % 101;
 			int pos = (5 + rand() % 5);
-			
-			if (random % 6 == 0){
-				GameObject *arbol_ = new GameObject(mSceneMgr);				
-				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));				
+
+			if (random % 6 == 0) {
+				GameObject *arbol_ = new GameObject(mSceneMgr);
+				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));
 				//Falta rotacion
 				arbol_->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 				random = rand() % 6;
@@ -341,82 +343,63 @@ void TutorialApplication::createEntities(void)
 					break;
 
 				}
-				
+
 				actors_.push_back(arbol_);
-									
-			}			
+
+			}
 		}
 	}
-	
-	
-	//ObjFactory::initialize(mSceneMgr);
 
-	/*EnemyPrototype * ogro;//Prototipo del enemigo
-	//Super útil
-	for (int i = 0; i < 1; i++){
-		ogro = ObjFactory::getTypeEnemy();
-		ogro->getNode()->setPosition(Ogre::Vector3(Ogre::Real(i * 20), Ogre::Real(0), Ogre::Real(i * 20)));
-		//ogro->addComponent(new MoveComponent());
-		actors_.push_back(ogro); 
-	}*/
-	
+	//ENEMIGOS
+	for (int i = 0; i < 8; i++) {
 
-	//ENEMIGOS QUE VAN A LA TORRE
-	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 2; j++){
-			//GameComponent a GameObject
-			GameObject * enemigo = new GameObject(mSceneMgr);
-			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
-			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
-			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+		GameObject * enemigo = new GameObject(mSceneMgr);
+		enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
+		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-			btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-			btTransform enemyTransform;
-			enemyTransform.setIdentity();
-			enemyTransform.setOrigin(enemyInitialPosition);
+		btTransform enemyTransform;
+		enemyTransform.setIdentity();
+		enemyTransform.setOrigin(enemyInitialPosition);
 
+		btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
 
-			//actually contruvc the body and add it to the dynamics world
-			//Esfera a 50 metros de altura
-			btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+		//Colision shape
+		btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
-			//Colision shape
-			btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+		//set the mass of the object. a mass of "0" means that it is an immovable object
+		btScalar enemyMass(1.0f);
+		btVector3 enemyInertia(0, 0, 0);
 
+		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
+		enemigo->addComponent(enemyRbComponent);
+		enemyRbComponent->getRigidbody()->setRestitution(1);
+		enemigo->addComponent(new Enemigo());
 
-			//set the mass of the object. a mass of "0" means that it is an immovable object
-			btScalar enemyMass(1.0f);
-			btVector3 enemyInertia(0, 0, 0);
+		Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+		enemyRef->setUpPlayer(ninja);
+		enemyRef->setUpTower(Torre);
 
-			DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
-			enemigo->addComponent(enemyRbComponent);
-			enemyRbComponent->getRigidbody()->setRestitution(1);
-			enemigo->addComponent(new Enemigo());
-			
-			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-			enemyRef->setUpPlayer(ninja);
-			enemyRef->setUpTower(Torre);
+		billboardSet = mSceneMgr->createBillboardSet();
+		billboardSet->setMaterialName("health");
+		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+		billboardSet->setDefaultDimensions(100, 10);
 
-			billboardSet = mSceneMgr->createBillboardSet();
-			billboardSet->setMaterialName("health");
-			billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
-			billboardSet->setDefaultDimensions(100, 10);
-			//billboardSet->setBillboardOrigin(BillboardOrigin::BBO_TOP_CENTER);
-			billboard = billboardSet->createBillboard(Vector3::ZERO);
-			billboard->setPosition(Vector3(0, 40, 0));
-			enemigo->getNode()->attachObject(billboardSet);
+		billboard = billboardSet->createBillboard(Vector3::ZERO);
+		billboard->setPosition(Vector3(0, 40, 0));
+		enemigo->getNode()->attachObject(billboardSet);
 
-			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
-			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-			actors_.push_back(enemigo);
-		}
+		//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
+		//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+		//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+		actors_.push_back(enemigo);
 	}
-	
+
 }
 
-void TutorialApplication::createGUI(){
+void TutorialApplication::createGUI() {
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
 	//FontManager& fM = FontManager::getSingleton();
