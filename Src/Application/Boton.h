@@ -80,12 +80,14 @@ public:
 
 		// Show the overlay*/
 		overlay->show();
+		Refrescar(0, "Comenzar partida", true);
+		cont = 0;
 	};
 
 	virtual ~Boton(){};
 
 	virtual void start(){
-		cont = 0;
+		
 	};
 
 	virtual void tick(double elapsed){
@@ -105,24 +107,38 @@ public:
 		switch (arg.key)
 		{
 		case OIS::KC_UP:
-		case OIS::KC_W:			
+		case OIS::KC_W:	
+			switch (cont)
+			{
+			case 1:
+				Refrescar(1, "Controles", false);
+				Refrescar(0, "Comenzar partida", true);
+				break;
+
+			case 2:
+				Refrescar(2, "Salir", false);
+				Refrescar(1, "Controles", true);
+				break;
+			}
 			cont--;
 			break;
 
 		case OIS::KC_DOWN:
 		case OIS::KC_S:		
-			cont++;
+			
 			switch (cont)
 			{
 			case 0:
-				Refrescar(cont, "Controles", true);
-				Refrescar(cont-1, "Comenzar partida", false);
+				Refrescar(1, "Controles", true);
+				Refrescar(0, "Comenzar partida", false);
 				break;
+				
 			case 1:
-				Refrescar(cont, "Salir", true);
-				Refrescar(cont - 1, "Controles", false);
+				Refrescar(2, "Salir", true);
+				Refrescar(1, "Controles", false);
 				break;
 			}
+			cont++;
 			break;
 		
 
@@ -133,7 +149,7 @@ public:
 			case 1:
 			case 2:
 
-				std::cout << "mu bien!has pulsao el boton" << cont << std::endl;
+				std::cout << "mu bien!has pulsao el boton " << cont << std::endl;
 				break;
 
 			default:
@@ -180,11 +196,11 @@ public:
 		textArea->setFontName("Trebuchet");
 
 		if (azul)
-			textArea->setColourBottom(ColourValue(0.0, 0.0, 1.0));
+			textArea->setColourBottom(ColourValue(0.0, 0.0, 0.8));
 		else
 			textArea->setColourBottom(ColourValue(0.0, 0.0, 0.0));
 
-		textArea->setColourTop(ColourValue(0.0, 1.0, 1.0));
+		textArea->setColourTop(ColourValue(1.0, 1.0, 1.0));
 
 		// Add the text area to the panel		
 		panel->addChild(textArea);
@@ -193,6 +209,7 @@ public:
 		// Refrescar overlay*/
 
 		overlay->remove2D(botones[boton]);
+
 		overlay->add2D(botones[boton]);
 
 		// Show the overlay*/
