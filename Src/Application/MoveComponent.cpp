@@ -8,6 +8,7 @@ void MoveComponent::start() {
 	animComp = dynamic_cast<AnimationComponent*> (_gameObject->getComponent(ComponentName::ANIMATION));
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 	player = dynamic_cast<PlayerComponent*> (_gameObject->getComponent(ComponentName::PLAYER));
+	mouseComponent = dynamic_cast<MouseComponent*> (_gameObject->getComponent(ComponentName::MOUSE));
 	direction = { 0, 0, 0 };
 	transform = rb->getRigidbody()->getWorldTransform();
 };
@@ -15,12 +16,12 @@ void MoveComponent::start() {
 void MoveComponent::tick(double elapsed) {
 
 	//rb->getRigidbody()->setLinearVelocity(direction *2);
-	rb->getRigidbody()->getCenterOfMassTransform();
+
 	transform.setOrigin(transform.getOrigin() + direction * elapsed);
 	//rb->getRigidbody()->setWorldTransform(transform);
+
 	rb->getRigidbody()->setCenterOfMassTransform(transform);
 	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-
 
 	//NO BORRAR, ÚTIL PARA DEBUG
 	//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;

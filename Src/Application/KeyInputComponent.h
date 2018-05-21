@@ -6,9 +6,9 @@
 #include "MainGame.h"
 
 //Componente que escucha los eventos de teclado
-class KeyInputComponent : public OIS::KeyListener{
+class KeyInputComponent : public OIS::KeyListener,  public Component{
 public:
-	KeyInputComponent()
+	KeyInputComponent() : Component()
 	{
 		MainGame::getInstance()->registerKeyInputObserver(this);
 	};

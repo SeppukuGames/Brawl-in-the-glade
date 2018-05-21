@@ -21,6 +21,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "GameObject.h"
 #include "EntityComponent.h"
 #include "MoveComponent.h"
+#include "MouseComponent.h"
 #include "MoveCameraComponent.h"
 #include <stdio.h>
 #include "AnimationComponent.h"
@@ -187,11 +188,14 @@ void MainGame::createEntities(void)
 	//---------------------ESFERA---------------------------------
 
 	//----------------------NINJA---------------------------------
+
+
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 	ninja->addComponent(new PlayerComponent());
+
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
@@ -217,6 +221,8 @@ void MainGame::createEntities(void)
 	ninja->addComponent(ninjaRbComponent);
 	ninjaRbComponent->getRigidbody()->setRestitution(1);
 	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	ninja->addComponent(new MouseComponent(mCamera));
+
 	actors_.push_back(ninja);
 
 	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
@@ -325,48 +331,48 @@ void MainGame::createEntities(void)
 	//----------------------ARBOLES-------------------------------
 
 	//----------------------ENEMIGOS------------------------------
-	for (int i = 0; i < 8; i++) {
+	//for (int i = 0; i < 8; i++) {
 
-		GameObject * enemigo = new GameObject(mSceneMgr);
-		enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
-		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
-		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+	//	GameObject * enemigo = new GameObject(mSceneMgr);
+	//	enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
+	//	enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+	//	enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+	//	btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-		btTransform enemyTransform;
-		enemyTransform.setIdentity();
-		enemyTransform.setOrigin(enemyInitialPosition);
+	//	btTransform enemyTransform;
+	//	enemyTransform.setIdentity();
+	//	enemyTransform.setOrigin(enemyInitialPosition);
 
-		btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+	//	btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
 
-		//Colision shape
-		btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+	//	//Colision shape
+	//	btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
-		//set the mass of the object. a mass of "0" means that it is an immovable object
-		btScalar enemyMass(1.0f);
-		btVector3 enemyInertia(0, 0, 0);
+	//	//set the mass of the object. a mass of "0" means that it is an immovable object
+	//	btScalar enemyMass(1.0f);
+	//	btVector3 enemyInertia(0, 0, 0);
 
-		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
-		enemigo->addComponent(enemyRbComponent);
-		enemyRbComponent->getRigidbody()->setRestitution(1);
-		enemigo->addComponent(new Enemigo());
+	//	DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
+	//	enemigo->addComponent(enemyRbComponent);
+	//	enemyRbComponent->getRigidbody()->setRestitution(1);
+	//	enemigo->addComponent(new Enemigo());
 
-		Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-		enemyRef->setUpPlayer(ninja);
-		enemyRef->setUpTower(Torre);
+	//	Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+	//	enemyRef->setUpPlayer(ninja);
+	//	enemyRef->setUpTower(Torre);
 
-		billboardSet = mSceneMgr->createBillboardSet();
-		billboardSet->setMaterialName("health");
-		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
-		billboardSet->setDefaultDimensions(100, 10);
+	//	billboardSet = mSceneMgr->createBillboardSet();
+	//	billboardSet->setMaterialName("health");
+	//	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+	//	billboardSet->setDefaultDimensions(100, 10);
 
-		billboard = billboardSet->createBillboard(Vector3::ZERO);
-		billboard->setPosition(Vector3(0, 40, 0));
-		enemigo->getNode()->attachObject(billboardSet);
+	//	billboard = billboardSet->createBillboard(Vector3::ZERO);
+	//	billboard->setPosition(Vector3(0, 40, 0));
+	//	enemigo->getNode()->attachObject(billboardSet);
 
-		actors_.push_back(enemigo);
-	}
+	//	actors_.push_back(enemigo);
+	//}
 
 	//----------------------ENEMIGOS------------------------------
 }

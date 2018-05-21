@@ -12,6 +12,7 @@
 #include "UICanvas.h"
 #include "PlayerComponent.h"
 #include "TowerComponent.h"
+#include "MouseComponent.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -202,6 +203,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			TowerComponent* comp = dynamic_cast<TowerComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::MOUSE:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			MouseComponent* comp = dynamic_cast<MouseComponent*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

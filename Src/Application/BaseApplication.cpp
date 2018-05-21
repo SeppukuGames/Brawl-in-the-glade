@@ -556,6 +556,9 @@ void BaseApplication::registerMouseInputObserver(OIS::MouseListener *observer)
 	mouseInputObservers.push_back(observer);
 }
 
+void BaseApplication::añadeGameObject(GameObject * nuevo){
+	actors_.push_back(nuevo);
+}
 
 Physics * BaseApplication::getPhysicsEngine()
 {

@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include <iostream>
 
-MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent(), Component()
+MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : KeyMouseInputComponent()
 {
 	_mWindow = mWindow;
 }
@@ -102,68 +102,6 @@ bool MoveCameraComponent::mouseMoved(const OIS::MouseEvent &arg)
 	_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 	*/
 
-	Plane mPlane(Vector3::UNIT_Y, 0);
-
-	// get window height and width
-	Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-	Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-
-	// convert to 0-1 offset
-	Ogre::Real offsetX = arg.state.X.abs / screenWidth;
-	Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
-
-	// set up the ray
-	Ray mouseRay = _camera->getCameraToViewportRay(offsetX, offsetY);
-
-	// check if the ray intersects our plane
-	// intersects() will return whether it intersects or not (the bool value) and
-	// what distance (the Real value) along the ray the intersection is
-	std::pair<bool, Real> result = mouseRay.intersects(mPlane);
-
-	if (result.first) {
-		// if the ray intersect the plane, we have a distance value
-		// telling us how far from the ray origin the intersection occurred.
-		// the last thing we need is the point of the intersection.
-		// Ray provides us getPoint() function which returns a point
-		// along the ray, supplying it with a distance value.
-
-		// get the point where the intersection is
-		Vector3 point = mouseRay.getPoint(result.second);
-
-		// assume that "forward" for the player in local-frame is +zAxis
-		// and that the player is constrained to rotate about yAxis (+yAxis is "up")
-		btVector3 localLook(0.0f, 0.0f, 1.0f); // zAxis
-		btVector3 rotationAxis(0.0f, 1.0f, 0.0f); // yAxis
-
-		btTransform transform = _rb->getRigidbody()->getCenterOfMassTransform();
-		btTransform identity = transform.getIdentity();
-		btQuaternion rotation = transform.getRotation();
-		btVector3 rotVector(rotation.getX(), rotation.getY(), rotation.getZ());
-		// compute currentLook and angle
-		btVector3 currentLook = localLook * -rotation.getW();
-		btVector3 newLook(point.x, 0, point.z);
-		btScalar angle;
-		
-		if (point.x >= 0) {
-			angle = currentLook.angle(newLook);
-			angle = -angle;
-		}
-		else {
-			angle = currentLook.angle(newLook);
-		}
-		
-		//std::cout << "Angulo rotacion: " << newLook.getX() << std::endl;
-		// compute new rotation
-		btQuaternion deltaRotation(rotationAxis, angle);
-		btQuaternion newRotation = deltaRotation * rotation;
-
-		// apply new rotation
-		transform.setRotation(newRotation);
-		_rb->getRigidbody()->setCenterOfMassTransform(transform);
-		_rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-		
-		
-	}
 
 
 	//X AXIS

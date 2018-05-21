@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\Bala.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
@@ -30,6 +31,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
+    <ClInclude Include="..\..\Src\Application\Bala.h" />
+    <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
@@ -39,6 +42,7 @@
     <ClInclude Include="..\..\Src\Application\Factory.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h" />
+    <ClInclude Include="..\..\Src\Application\MouseComponent.h" />
     <ClInclude Include="..\..\Src\Application\Physics.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MouseInputComponent.h" />

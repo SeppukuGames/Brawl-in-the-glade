@@ -5,11 +5,13 @@
 #include "AnimationComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "PlayerComponent.h"
+#include "MouseComponent.h"
 
-class MoveComponent : public KeyInputComponent, public Component {
+
+class MoveComponent : public KeyInputComponent {
 public:
 
-	MoveComponent() : KeyInputComponent(), Component()
+	MoveComponent() : KeyInputComponent()
 	{
 
 	};
@@ -36,6 +38,8 @@ private:
 	bool resetCamPosition;
 	
 	PlayerComponent* player;
+
+	MouseComponent * mouseComponent;
 };
 
 #endif /* MOVECOMPONENT_H_ */
