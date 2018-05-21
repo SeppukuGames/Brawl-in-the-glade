@@ -29,6 +29,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "Enemigo.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
+#include "Boton.h"
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -319,9 +320,11 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 	
-	
-	
-	
+	boton = new GameObject(mSceneMgr);
+	boton->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
+	boton->addComponent(new Boton());
+
+	actors_.push_back(boton);	
 	
 }
 

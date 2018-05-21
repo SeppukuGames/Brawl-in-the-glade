@@ -20,22 +20,20 @@ public:
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();
-
+		
 		// Create a panel
 		for (int i = 0; i < 3; i++){
 			OverlayContainer* panel = static_cast<OverlayContainer*>(
 				overlayManager.createOverlayElement("Panel", "menu" + std::to_string(i)));
 
-			nombres.push_back(panel->getName()); //Para acceder posteriormente
-
-			std::cout << nombres[i] << std::endl;
+			nombres.push_back(panel->getName()); //Para acceder posteriormente			
 
 			panel->setMetricsMode(Ogre::GMM_PIXELS);
 			panel->setPosition(450, 450 + (50 * i));
 			panel->setDimensions(0, 0);
 			panel->setMaterialName("panel"); // Optional background material 						
 
-			posiciones.push_back(450 + (50*i));
+			posiciones.push_back(450 + (50 * i));
 
 			//texto		
 			TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
@@ -44,18 +42,21 @@ public:
 			textArea->setAlignment(Ogre::TextAreaOverlayElement::Center);
 			textArea->setPosition(70, 50);
 			textArea->setDimensions(100, 100);
-			nombres2.push_back(textArea->getName());
+			nombresText.push_back(textArea->getName());
 
 			switch (i)
 			{
 			case 0:
 				textArea->setCaption("Comenzar partida");
+				textoBoton.push_back("Comenzar partida");
 				break;
 			case 1:
 				textArea->setCaption("Controles");
+				textoBoton.push_back("Controles");
 				break;
 			case 2:
 				textArea->setCaption("Salir");
+				textoBoton.push_back("Salir");
 				break;
 			default:
 				break;
@@ -70,7 +71,20 @@ public:
 			panel->addChild(textArea);
 
 			botones.push_back(panel);
-		}
+		}		
+
+		//Fondo
+		OverlayContainer* panel = static_cast<OverlayContainer*>(
+			overlayManager.createOverlayElement("Panel", "fondito"));
+
+		nombres.push_back(panel->getName()); //Para acceder posteriormente			
+
+		panel->setMetricsMode(Ogre::GMM_PIXELS);
+		panel->setPosition(70, 470);
+		panel->setDimensions(900, 200);
+		panel->setMaterialName("panel2"); // Optional background material 						
+
+		botones.push_back(panel);		
 
 		// Create an overlay, and add the panel*/
 		overlay = overlayManager.create("OverlayManager");
@@ -80,14 +94,16 @@ public:
 
 		// Show the overlay*/
 		overlay->show();
-		Refrescar(0, "Comenzar partida", true);
+		Refrescar(0, true);		
+		Refrescar(1, false);
+		Refrescar(2, false);
 		cont = 0;
 	};
 
 	virtual ~Boton(){};
 
 	virtual void start(){
-		
+
 	};
 
 	virtual void tick(double elapsed){
@@ -106,41 +122,37 @@ public:
 
 		switch (arg.key)
 		{
+
 		case OIS::KC_UP:
-		case OIS::KC_W:	
+		case OIS::KC_W:
 			switch (cont)
 			{
 			case 1:
-				Refrescar(1, "Controles", false);
-				Refrescar(0, "Comenzar partida", true);
-				break;
-
 			case 2:
-				Refrescar(2, "Salir", false);
-				Refrescar(1, "Controles", true);
-				break;
-			}
-			cont--;
+				if (show){
+					Refrescar(cont, false);
+					Refrescar(cont-1, true);
+					cont--;
+				}
+				break;			
+			}			
 			break;
 
 		case OIS::KC_DOWN:
-		case OIS::KC_S:		
-			
+		case OIS::KC_S:
+
 			switch (cont)
 			{
 			case 0:
-				Refrescar(1, "Controles", true);
-				Refrescar(0, "Comenzar partida", false);
-				break;
-				
 			case 1:
-				Refrescar(2, "Salir", true);
-				Refrescar(1, "Controles", false);
-				break;
-			}
-			cont++;
+				if (show){
+					Refrescar(cont+1, true);
+					Refrescar(cont, false);
+					cont++;
+				}
+				break;				
+			}			
 			break;
-		
 
 		case OIS::KC_SPACE: //ejecutar
 			switch (cont)
@@ -148,13 +160,18 @@ public:
 			case 0:
 			case 1:
 			case 2:
-
-				std::cout << "mu bien!has pulsao el boton " << cont << std::endl;
+				if (show)
+					std::cout << "mu bien!has pulsao el boton " << cont << std::endl;
 				break;
 
 			default:
 				break;
 			}
+			break;
+
+		case OIS::KC_P:
+			show = !show;
+			Show(show);
 			break;
 
 		default:
@@ -164,17 +181,15 @@ public:
 		return true;
 	};
 	
-	
-
 	//le pasamos el index del boton que vamos a alterar
-	void Refrescar(int boton, std::string textoBoton, bool azul)
+	void Refrescar(int boton, bool azul)
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();
-		
+
 		overlayManager.destroyOverlayElement(nombres[boton]); //panel
-		overlayManager.destroyOverlayElement(nombres2[boton]); //textArea
-		
+		overlayManager.destroyOverlayElement(nombresText[boton]); //textArea
+
 		OverlayContainer* panel = static_cast<OverlayContainer*>(
 			overlayManager.createOverlayElement("Panel", nombres[boton])); //creamos elemento de nuevo
 
@@ -185,12 +200,12 @@ public:
 
 		//texto		
 		TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
-			overlayManager.createOverlayElement("TextArea", nombres2[boton]));
+			overlayManager.createOverlayElement("TextArea", nombresText[boton]));
 		textArea->setMetricsMode(Ogre::GMM_PIXELS);
 		textArea->setAlignment(Ogre::TextAreaOverlayElement::Center);
 		textArea->setPosition(70, 50);
 		textArea->setDimensions(100, 100);
-		textArea->setCaption(textoBoton);
+		textArea->setCaption(textoBoton[boton]);
 
 		textArea->setCharHeight(50);
 		textArea->setFontName("Trebuchet");
@@ -216,16 +231,39 @@ public:
 		overlay->show();
 	}
 
+	void Show(bool aux)
+	{
+		show = aux;
+		if (show)
+		{
+			for (int i = 0; i < botones.size(); i++)
+				overlay->add2D(botones[i]);
+
+			Refrescar(0, true);
+			Refrescar(1, false);
+			Refrescar(2, false);
+
+		}
+		else
+		{
+			for (int i = 0; i < botones.size(); i++)
+				overlay->remove2D(botones[i]);
+		}
+	}
+
 	int cont = 0;
 
 private:
 	std::vector<OverlayContainer*> botones;
 	std::vector<std::string> nombres;
-	std::vector<std::string> nombres2;
+	std::vector<std::string> nombresText;
+	std::vector<std::string> textoBoton;
 
-	std::vector<int> posiciones;	
+	std::vector<int> posiciones;
 
 	Overlay* overlay;
+
+	bool show = true;
 };
 
 #endif /* BOTON_H_ */

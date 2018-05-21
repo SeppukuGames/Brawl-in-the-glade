@@ -51,6 +51,7 @@ protected:
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
+	GameObject* boton;
 
 	virtual void createScene(void);
 	virtual void createLights(void);

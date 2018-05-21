@@ -16,7 +16,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 #endif
 
 	
-	EscenaMenu::getInstance()->go();
+	TutorialApplication::getInstance()->go();
 	return 0;
 }
 /*
