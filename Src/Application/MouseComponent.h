@@ -283,10 +283,8 @@ public:
 		if (id == OIS::MB_Left){
 			//Dispara una bala.
 
-			if (RaycastFromPoint(posMouseX, posMouseY,resultado))
-			{
-				std::cout << resultado;
-			}
+			RaycastFromPoint(posMouseX, posMouseY, resultado);
+	
 			//Ogre::Ray ray = Cam->getCameraToViewportRay(posMouseX, posMouseY);
 			//	raySceneQuery->setRay(ray);
 			//// coordenadas normalizadas en [0,1]

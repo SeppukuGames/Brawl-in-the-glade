@@ -8,6 +8,7 @@ RigidbodyComponent::RigidbodyComponent(btMotionState *motionState, btCollisionSh
 
 	//RIGIDBODY
 	btRigidBody::btRigidBodyConstructionInfo RBInfo(mass, motionState, collisionShape, localInertia);
+	RBInfo.
 	rigidBody = new btRigidBody(RBInfo);
 }
 

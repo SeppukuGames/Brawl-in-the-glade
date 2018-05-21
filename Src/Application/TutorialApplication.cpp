@@ -290,7 +290,6 @@ void TutorialApplication::createEntities(void)
 	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
 	ninja->addComponent(ninjaRbComponent);
 	ninjaRbComponent->getRigidbody()->setRestitution(1);
-	
 	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 	actors_.push_back(ninja);
 
@@ -299,21 +298,21 @@ void TutorialApplication::createEntities(void)
 	camMove->setUpPlayer(ninja);
 
 	//20 a 4
-	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 2; j++){
-			//GameComponent a GameObject
-			GameObject * enemigo = new GameObject(mSceneMgr);
-			enemigo->getNode()->setScale(0.5, 0.5, 0.5);
-			enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+	//for (int i = 0; i < 2; i++){
+	//	for (int j = 0; j < 2; j++){
+	//		//GameComponent a GameObject
+	//		GameObject * enemigo = new GameObject(mSceneMgr);
+	//		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+	//		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-			enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
-			enemigo->addComponent(new Enemigo());
-			//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
-			//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-			//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
-			actors_.push_back(enemigo);
-		}
-	}
+	//		enemigo->addComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
+	//		enemigo->addComponent(new Enemigo());
+	//		//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
+	//		//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
+	//		//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+	//		actors_.push_back(enemigo);
+	//	}
+	//}
 }
 
 //-------------------------------------------------------------------------------------
