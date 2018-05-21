@@ -9,10 +9,18 @@
 #include "MoveCameraComponent.h"
 #include "TestCollisionComponent2.h"
 
-GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
+GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name, std::string childName) :components(0){
 	control = new UserControl(this);
 	if (name != "")
 		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
+
+	else if (childName != ""){
+		node = mSceneMgr->getEntity("ninja")->getParentSceneNode()->createChildSceneNode("trigger");
+		//node = node->getParentSceneNode()->createChildSceneNode(childName);
+		////animEntity = dynamic_cast<EntityComponent*> (_gameObject->getComponent(ComponentName::ENTITY))->getEntity();
+		//EntityComponent * ent = dynamic_cast<EntityComponent*>(node->getAttachedObject(0));
+	}
+	 
 	else
 		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
 
@@ -35,6 +43,14 @@ GameObject::~GameObject() {
 	//node->detachObject(hola);
 	//delete pCtrl;
 }
+
+
+
+////Esto es nuevo y probablemente esté mal
+//void createChild(std::string entityName, std::string childName){
+//	node = scnMgr->getEntity("entSinbad")->getParentSceneNode()->createChildSceneNode("nKnot");
+//}
+
 
 void GameObject::setObjMan(Ogre::MovableObject* mObj) {
 	//comprobar que es primer objeto que se adjunta al nodo

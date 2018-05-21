@@ -75,6 +75,7 @@ void TutorialApplication::createCameras(void)
 	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
 	mCamera->lookAt(Ogre::Vector3(0, -80, -300));
 	mCamera->setNearClipDistance(5);
+	
 
 	//Creamos camara
 	cam = new GameObject(mSceneMgr);
@@ -148,7 +149,7 @@ void TutorialApplication::createEntities(void)
 	//---------------------ESFERA---------------------------------
 	*/
 	GameObject *esfera = new GameObject(mSceneMgr,"esfera");
-	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
+	esfera->addComponent(new EntityComponent("ogrehead.mesh",""));
 	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	
 
@@ -177,13 +178,18 @@ void TutorialApplication::createEntities(void)
 	esfera->addComponent(rbComponent);
 	rbComponent->getRigidbody()->setRestitution(1);
 
-	esfera->addComponent(new TestCollisionComponent1());
+	//esfera->addComponent(new TestCollisionComponent1());
 
 	actors_.push_back(esfera);
 
 
+	
+
+
+
+
 	GameObject *cabeza = new GameObject(mSceneMgr, "cabeza");
-	cabeza->addComponent(new EntityComponent("ogrehead.mesh"));
+	cabeza->addComponent(new EntityComponent("ogrehead.mesh",""));
 	cabeza->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
 
 	//Motion state
@@ -210,7 +216,7 @@ void TutorialApplication::createEntities(void)
 	cabeza->addComponent(rbComponentc);
 	rbComponentc->getRigidbody()->setRestitution(1);
 
-	cabeza->addComponent(new TestCollisionComponent2());
+	//cabeza->addComponent(new TestCollisionComponent2());
 
 	actors_.push_back(cabeza);
 
@@ -224,7 +230,7 @@ void TutorialApplication::createEntities(void)
 
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	ninja->addComponent(new EntityComponent("ninja.mesh", "ninja")); //Ninja.mesh
 	ninja->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
 	
 
@@ -258,6 +264,65 @@ void TutorialApplication::createEntities(void)
 	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
 
 	camMove->setUpPlayer(ninja);
+
+
+	////////////////////////////////////////////////////////////////////////
+
+	///Se crea un trigger para el personale objeto ///////////////////////////////////////////////
+	MeshPtr plane = MeshManager::getSingleton().createPlane("triggerPlano",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1,//->getViewport()->getActualWidth(), //SE CREA EN FUNCIÓN DE LA CÁMARA
+		1,
+		50, 50, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+
+	GameObject *planitoCollision = new GameObject(mSceneMgr,"","trigger");
+	planitoCollision->getNode()->setPosition(Ogre::Vector3(10, 10, -200));
+	planitoCollision->getNode()->setScale(Ogre::Vector3(300, 2, 300));
+	planitoCollision->getNode()->showBoundingBox(true);
+
+	EntityComponent * entComp = new EntityComponent("triggerPlano");
+
+	//Esto debería añadir al componente un material pero no
+	//entComp->getEntity()->setMaterialName("trigger", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	planitoCollision->addComponent(entComp);
+
+	//Le quito de momento la malla y que solo se vea el boxCollider
+	planitoCollision->getNode()->setVisible(false);
+	
+
+	//NO QUIERO UN RIGIDBODYYYYYYYYYYYYYYY D: SOLO DETECTAR COLISIONES
+	//Se añade el rigidBody
+	//btTransform planeTransform;
+	//planeTransform.setIdentity();
+	//planeTransform.setOrigin(ninjaInitialPosition);
+
+	//btDefaultMotionState *fallMotionStatePlane = new btDefaultMotionState(planeTransform);
+
+	////Colision shape
+	////Creamos el cubo
+	//btCollisionShape* fallShapePlane = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+	////btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
+
+	////set the mass of the object. a mass of "0" means that it is an immovable object
+	//btScalar massPlane(10.0f);
+	//btVector3 fallInertiaPlane(0, 0, 0);
+
+	//DynamicRigidbodyComponent* rbComponentPlane = new DynamicRigidbodyComponent(fallMotionStatePlane, fallShapePlane, massPlane, fallInertiaPlane);
+	//planitoCollision->addComponent(rbComponentPlane);
+	//rbComponentc->getRigidbody()->setRestitution(1);
+
+	planitoCollision->addComponent(new TestCollisionComponent1());
+
+
+
+
+	actors_.push_back(planitoCollision);
+	////////////////////////////////////////////////////////////////////////
+
+
 
 
 	srand((unsigned int)time(NULL));

@@ -35,6 +35,6 @@ void  TestCollisionComponent1::onCollision(GameObject *collision)
 		}
 
 	}
-	else
-		std::cout << "Colision con objeto estático" + '\n';
+	else{}
+		//std::cout << "Colision con objeto estático" + '\n';
 };

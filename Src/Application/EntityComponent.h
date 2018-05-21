@@ -11,12 +11,16 @@ class EntityComponent : public Component{
 private:
 	Ogre::Entity * _entity;
 	std::string _meshString;
+	std::string _entityName;//nombre de la entidad (en el caso en el que tenga)
 
 	//-----------------------------------ATRIBUTOS-------------------------
 
 	//-----------------------------------MÉTODOS----------------------------
 public:
+	EntityComponent(std::string meshString, std::string entityName);
+
 	EntityComponent(std::string meshString);
+
 
 	virtual ~EntityComponent();
 
