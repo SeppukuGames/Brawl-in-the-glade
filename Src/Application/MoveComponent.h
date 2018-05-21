@@ -68,76 +68,74 @@ public:
 		mouseComponent = dynamic_cast<MouseComponent*> (_gameObject->getComponent(ComponentName::MOUSE));
 		direction = { 0, 0, 0 };
 		mouseOldPos = mouseComponent->getMousePos();
-		oldDirection = direction;
 	};
 
 	virtual void tick(double elapsed){
 
-		if (oldDirection != direction) {
-			rb->getRigidbody()->setLinearVelocity(direction * 10 * Ogre::Real(elapsed));
-			oldDirection = direction;
-		}
+		rb->getRigidbody()->setLinearVelocity(direction * 10 * Ogre::Real(elapsed));
 		//btTransform transform;
 		//rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
 		//_gameObject->getNode()->translate(direction* Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 
 		//PARA ROTAR EL PERSONAJE
-
+		/*Quaternion q = Quaternion(0.7, 0.7, 0.7, 0);
+		_gameObject->getNode()->setOrientation(q);*/
 		Vector3 mousePos = mouseComponent->getMousePos();
+		_gameObject->getNode()->lookAt(Vector3(mousePos.x, _gameObject->getNode()->getPosition().y, mousePos.y), Ogre::Node::TransformSpace::TS_WORLD);
+		//std::cout << "Producto vectorial " << Vector3(mousePos.x, 0, mousePos.y) << std::endl;
 
 
 		Vector3 ninjaPos = _gameObject->getNode()->getPosition();
-
 
 		{
 			// Construir un vector de direccion apuntando desde el centro del personaje hacia la posicion donde queremos que mire.
 			//Vector3 vectorDirector = Vector3(1, 0, 0);
 			//Vector3 vectorDirector = Vector3(0, 1, 0);
 			Vector3 vectorDirector = Vector3(0, 0, -1);
-		
+
 			// Multiplicamos el vector por el quaternion para obtener el vector comienzo
 			Quaternion aux = _gameObject->getNode()->getOrientation();
 			Vector3 playerOrientation = aux * Vector3(1, 1, 1);
 			aux.y = 1;
 			Vector3 vectorComienzo = aux * vectorDirector;
-		
-		
+
+
 			// Restamos la posicion del raton en coordenadas globales desde el centro del personaje para obtener el vector final
 			btVector3 centroDeMasa = rb->getRigidbody()->getCenterOfMassPosition();
 			Vector3 centerOfMass = Vector3(centroDeMasa.m_floats[0], centroDeMasa.m_floats[1], centroDeMasa.m_floats[2]);
 			Vector3 vectorFinal = mousePos - centerOfMass;
-		
-		
+
+
 			// Obtenemos el producto vectorial de los dos anteriores (el orden importa, comienzo * final es lo que queremos) para obtener el eje de rotacion
 			vectorComienzo.normalise();
 			vectorFinal.normalise();
 			Vector3 crossProduct = vectorComienzo;
 			crossProduct.crossProduct(vectorFinal);
-		
-		
+
+
 			// Obtenemos el producto escalar del comienzo y el final (ambos deben estar normalizados) para obtener el coseno del angulo de rotacion.
 			// Usamos el arcocoseno en el para obtener el angulo ENTRE DOS.
 			Real dotProduct = vectorComienzo.dotProduct(vectorFinal);
 			dotProduct = asin(dotProduct) * 180.0 / PI;
-		
+
 			/*
 			Do: Aplicar la velocidad angular
 			While: Una línea recta dese la orientacion del ninja NO contenga al punto
 			*/
-			std::cout << "Producto vectorial " << crossProduct << std::endl;
-		
+			//std::cout << "Producto vectorial " << crossProduct << std::endl;
+
 			//if (!isOnLine(mousePos.x, mousePos.z, playerOrientation.x, playerOrientation.z, mouseOldPos.x, mouseOldPos.z)){
 			if (playerOrientation.x > mousePos.x) {
 				rb->getRigidbody()->applyTorque(btVector3(0, crossProduct.y * dotProduct * 2, 0));
 			}
-		
+
 			else if (playerOrientation.x < mousePos.x){
 				rb->getRigidbody()->applyTorque(btVector3(0, (-1) * crossProduct.y * dotProduct * 2, 0));
 			}
-		
+
 			//}
-		
-			rb->getRigidbody()->setAngularVelocity(btVector3(0, 0, 0)); 
+
+			rb->getRigidbody()->setAngularVelocity(btVector3(0, 0, 0));
 		}
 
 		// btQuaternion currentOrientation = rb->getRigidbody()->getOrientation();
@@ -159,12 +157,17 @@ public:
 	}
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg){
+		const Vector3 zero(Ogre::Real(0), Ogre::Real(0), Ogre::Real(0));
+		Quaternion q = zero.getRotationTo(Vector3(Ogre::Real(0), Ogre::Real(0), Ogre::Real(0)));
+
 		switch (arg.key)
 		{
 		case OIS::KC_UP:
 		case OIS::KC_W:
 			direction.setZ((-velocity));
 			//direction.z += -velocity;
+			//Vector3(0.0,0).
+			//_gameObject->getNode()->setOrientation(q);
 
 			break;
 
@@ -173,6 +176,7 @@ public:
 
 			direction.setZ((velocity));
 			//direction.z += velocity;
+			//_gameObject->getNode()->setOrientation(Vector3(0, 180, 0).getRotationTo(Vector3(0, 0, 0)));
 
 			break;
 
@@ -242,7 +246,7 @@ private:
 
 	//Ogre::Vector3 direction; 
 	float velocity;
-	btVector3 direction, oldDirection;
+	btVector3 direction;
 	DynamicRigidbodyComponent* rb;
 	MouseComponent * mouseComponent;
 	//Puntero a la animacion

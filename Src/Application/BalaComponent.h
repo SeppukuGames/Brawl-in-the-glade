@@ -24,7 +24,7 @@ public:
 	virtual void tick(double elapsed){
 		
 		if (vida > 0){
-			std::cout << vida << std::endl;
+			//std::cout << vida << std::endl;
 			posicion += direccion * Ogre::Vector3(0, 0, 1);
 			_gameObject->getNode()->translate(posicion);
 			vida--;
