@@ -220,8 +220,9 @@ void MainGame::createEntities(void)
 	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
 	ninja->addComponent(ninjaRbComponent);
 	ninjaRbComponent->getRigidbody()->setRestitution(1);
-	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 	ninja->addComponent(new MouseComponent(mCamera));
+	ninja->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
+
 
 	actors_.push_back(ninja);
 

@@ -33,6 +33,8 @@ public:
 	virtual void start(){
 		raySceneQuery = _gameObject->getNode()->getCreator()->createRayQuery(Ray());
 		resultado = Vector3(0, 0, 0);
+		btVector3 aux (0.0f, 1.0f, 0.0f);
+		newRotation = btQuaternion(aux, 0.0f);
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 
 	};
@@ -344,14 +346,14 @@ public:
 
 			// get the point where the intersection is
 			resultado = mouseRay.getPoint(result.second);
-			btTransform transform = rb->getRigidbody()->getWorldTransform();
+			transform = rb->getRigidbody()->getWorldTransform();
 
 			// assume that "forward" for the player in local-frame is +zAxis
 			// and that the player is constrained to rotate about yAxis (+yAxis is "up")
 			btVector3 localLook(0.0f, 0.0f, 1.0f); // zAxis
 			btVector3 rotationAxis(0.0f, 1.0f, 0.0f); // yAxis
 
-			btTransform identity = transform.getIdentity();
+			//btTransform identity = transform.getIdentity();
 			btQuaternion rotation = transform.getRotation();
 			btVector3 rotVector(rotation.getX(), rotation.getY(), rotation.getZ());
 			// compute currentLook and angle
@@ -370,13 +372,13 @@ public:
 			//std::cout << "Angulo rotacion: " << newLook.getX() << std::endl;
 			// compute new rotation
 			btQuaternion deltaRotation(rotationAxis, angle);
-			btQuaternion newRotation = deltaRotation * rotation;
+			newRotation = deltaRotation * rotation;
 
 			// apply new rotation
 			transform.setRotation(newRotation);
 			rb->getRigidbody()->setCenterOfMassTransform(transform);
 			rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-
+			//object->setWorldTransform(btTransform( newrotation, object->getWorldTransform().getOrigin()));
 		}
 
 
@@ -387,17 +389,26 @@ public:
 		return resultado;
 	}
 
+	btQuaternion getRotation(){
+		return newRotation;
+	}
+
+	btTransform getTransform(){
+		return transform;
+	}
 private:
 	RaySceneQuery *raySceneQuery;
 
 	Ogre::Real posMouseX, posMouseY;
 	Ogre::Quaternion dirBala;
+	btQuaternion newRotation;
 
-	Vector3 resultado ;
+	Vector3 resultado;
 	Ogre::Camera * Cam;
 	Ogre::AxisAlignedBox plano;
 
 	DynamicRigidbodyComponent *rb;
+	btTransform transform;
 };
 
 #endif /* MOVECAMERACOMPONENT_H_ */

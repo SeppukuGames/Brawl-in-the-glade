@@ -34,6 +34,7 @@ private:
 	AnimationComponent* animComp;
 
 	btTransform transform;
+	
 
 	bool resetCamPosition;
 	

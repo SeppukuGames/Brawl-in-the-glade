@@ -18,7 +18,6 @@ EnemyPrototype * EnemyType1::clone(){
 	//(Idealmente, solo el jugador va a tener el moveComponent asi que no debería haber problema, ¿no?)
 	enemy->addComponent(new EntityComponent("ninja.mesh")); //Se añade la entidad
 	enemy->addComponent(new AnimationComponent("Idle1"));//Se añade un componente
-	enemy->addComponent(new MoveComponent());//Se añade un componente
 
 
 	//Motion state

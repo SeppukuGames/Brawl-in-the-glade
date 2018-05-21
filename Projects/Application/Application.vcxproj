@@ -59,6 +59,9 @@
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />
     <ClInclude Include="..\..\Src\Application\UICanvas.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C077A3AD-5242-468F-AD96-581CEBFA7C1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
