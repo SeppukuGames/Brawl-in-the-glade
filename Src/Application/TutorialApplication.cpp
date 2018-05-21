@@ -282,6 +282,8 @@ void TutorialApplication::createEntities(void)
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
+	camMove->setUpCamera(mCamera);
+
 	//----------------------TORRE---------------------------------
 	GameObject *Torre = new GameObject(mSceneMgr);
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));

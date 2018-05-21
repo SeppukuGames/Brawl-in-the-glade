@@ -20,7 +20,8 @@ private:
 	btVector3 pos;
 	btTransform transform;
 	GameObject* _player;
-	
+	Ogre::Camera* _camera;
+
 	//ESCALAS MOVIMIENTO DE CÁMARA
 	const int mMoveScale = 30;
 	const int mZoomScale = 15;
@@ -47,6 +48,7 @@ public:
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);
 	void MoveCameraComponent::setUpPlayer(GameObject* player);
+	void MoveCameraComponent::setUpCamera(Ogre::Camera* camera);
 };
 
 #endif /* MOVECAMERACOMPONENT_H_ */

@@ -15,11 +15,12 @@ void MoveComponent::start() {
 void MoveComponent::tick(double elapsed) {
 
 	//rb->getRigidbody()->setLinearVelocity(direction *2);
-
+	rb->getRigidbody()->getCenterOfMassTransform();
 	transform.setOrigin(transform.getOrigin() + direction * elapsed);
-	rb->getRigidbody()->setWorldTransform(transform);
+	//rb->getRigidbody()->setWorldTransform(transform);
+	rb->getRigidbody()->setCenterOfMassTransform(transform);
 	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-	rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
+
 
 	//NO BORRAR, ÚTIL PARA DEBUG
 	//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;
