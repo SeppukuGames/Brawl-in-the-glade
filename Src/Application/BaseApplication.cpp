@@ -271,7 +271,7 @@ bool BaseApplication::configure(void)
 	*/
 
 	//Creamos la RenderWindow por defecto
-	mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
+	mWindow = mRoot->initialise(true, "MainGameRender Window");
 
 	//Podemos crear la ventana con win32 API, Ejemplo:
 	/*

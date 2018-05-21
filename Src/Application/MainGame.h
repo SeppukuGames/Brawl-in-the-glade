@@ -1,6 +1,6 @@
 /*
 -----------------------------------------------------------------------------
-Filename:    TutorialApplication.h
+Filename:    MainGame.h
 -----------------------------------------------------------------------------
 This source file is part of the
 ___                 __    __ _ _    _
@@ -13,8 +13,8 @@ Tutorial Framework
 http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#ifndef __TutorialApplication_h_
-#define __TutorialApplication_h_
+#ifndef __MAINGAME_h_
+#define __MAINGAME_h_
 
 #include "BaseApplication.h"
 #include "EnemyPrototype.h"
@@ -35,17 +35,17 @@ http://www.ogre3d.org/tikiwiki/
 
 using namespace Ogre;
 
-class TutorialApplication : public BaseApplication
+class MainGame : public BaseApplication
 {
 
-	static TutorialApplication * instance;
-	TutorialApplication(void);
-	//virtual ~TutorialApplication(void);
+	static MainGame * instance;
+	MainGame(void);
+	//virtual ~MainGame(void);
 
 
 public:
 
-	static TutorialApplication *getInstance();
+	static MainGame *getInstance();
 
 protected:
 
@@ -69,4 +69,4 @@ protected:
 };
 
 
-#endif // #ifndef __TutorialApplication_h_
+#endif // #ifndef __MainGame_h_

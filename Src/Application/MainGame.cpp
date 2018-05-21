@@ -1,6 +1,6 @@
 /*
 -----------------------------------------------------------------------------
-Filename:    TutorialApplication.cpp
+Filename:    MainGame.cpp
 -----------------------------------------------------------------------------
 This source file is part of the
    ___                 __    __ _ _    _
@@ -15,7 +15,7 @@ http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
 
-#include "TutorialApplication.h"
+#include "MainGame.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 #include "GameObject.h"
@@ -40,13 +40,13 @@ using namespace Ogre;
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
 //-------------------------------------------------------------------------------------
-TutorialApplication::TutorialApplication(void)
+MainGame::MainGame(void)
 {
 }
 //-------------------------------------------------------------------------------------
 
 //Borrar luz, cámara,
-//TutorialApplication::~TutorialApplication(void)
+//MainGame::~MainGame(void)
 //{
 //	
 //}
@@ -56,7 +56,7 @@ TutorialApplication::TutorialApplication(void)
 
 //-------------------------------------------------------------------------------------
 
-void TutorialApplication::createLights(void)
+void MainGame::createLights(void)
 {
 	//Creamos luz ambiental
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
@@ -72,7 +72,7 @@ void TutorialApplication::createLights(void)
 
 //-------------------------------------------------------------------------------------
 
-void TutorialApplication::createCameras(void)
+void MainGame::createCameras(void)
 {
 	//La inicializamos
 	mCamera->setPosition(Ogre::Vector3(0, 200, 100));
@@ -102,51 +102,18 @@ void TutorialApplication::createCameras(void)
 
 //-------------------------------------------------------------------------------------
 
-void TutorialApplication::createEntities(void)
+void MainGame::createEntities(void)
 {
 
 	//Crear el plano en Ogre
 	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
 	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-
+	*/
 	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
 
 	//Todos los rigidbody necesitan una referencia al collision shape.
 	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
 	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
-
-	//---------------------PLANO---------------------------------
-
-	//COMENTADO YA QUE SE HACE ABAJO CON TILES. LO HE DEJADO PARA PODER CONSULTAR LA ESTRUCTURA
-
-	//Crear el plano en Ogre
-	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-
-	GameObject *planito = new GameObject(mSceneMgr,"suelo");
-	planito->addComponent(new EntityComponent("ground"));
-
-	//PhysicsComponent
-
-	//MOTION STATE
-	btTransform groundTransform;
-	groundTransform.setIdentity();
-	groundTransform.setOrigin(btVector3(0, -1, 0));
-
-	btDefaultMotionState *groundMotionState = new btDefaultMotionState(groundTransform);
-
-	//COLLISION SHAPE
-	//Creamos un plano en el origen.
-	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);//Offset de 1
-	//Masa 0 -> Objeto estático. Masa infinita
-	btScalar groundMass(0.); //the mass is 0, because the ground is immovable (static)
-	btVector3 localGroundInertia(0, 0, 0);
-
-	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
-
-	actors_.push_back(planito);
-	*/
-	//---------------------PLANO---------------------------------
 
 	//---------------------ESFERA---------------------------------
 
@@ -258,6 +225,7 @@ void TutorialApplication::createEntities(void)
 
 	//----------------------NINJA---------------------------------
 
+	//----------------------SUELO---------------------------------
 	srand((unsigned int)time(NULL));
 	GameObject *planito = new GameObject(mSceneMgr);
 	planito->getNode()->setPosition(Ogre::Vector3(50 - 300, -20, 50 - 300));
@@ -283,6 +251,8 @@ void TutorialApplication::createEntities(void)
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
 
 	camMove->setUpCamera(mCamera);
+
+	//----------------------SUELO---------------------------------
 
 	//----------------------TORRE---------------------------------
 	GameObject *Torre = new GameObject(mSceneMgr);
@@ -312,7 +282,7 @@ void TutorialApplication::createEntities(void)
 
 	//----------------------TORRE---------------------------------
 
-	//Arboles
+	//----------------------ARBOLES-------------------------------
 	int random = 0;
 	for (int i = 0; i < 40; i++) {
 		for (int j = 0; j < 40; j++) {
@@ -352,7 +322,9 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 
-	//ENEMIGOS
+	//----------------------ARBOLES-------------------------------
+
+	//----------------------ENEMIGOS------------------------------
 	for (int i = 0; i < 8; i++) {
 
 		GameObject * enemigo = new GameObject(mSceneMgr);
@@ -393,15 +365,13 @@ void TutorialApplication::createEntities(void)
 		billboard->setPosition(Vector3(0, 40, 0));
 		enemigo->getNode()->attachObject(billboardSet);
 
-		//enemigo->addComponent(new CollisionComponent());		//Da un lag de la hostia cuando los enemigos colisionan contra el suelo.
-		//enemigo->addComponent(new AnimationComponent("Idle1")); //Le pasas una inicial, luego la cambias desde el input.
-		//enemigo->addComponent(new MoveComponent());			//Debajo del animation porque lo usa ->Asumo que el enemy prototype tiene MoveComponent
 		actors_.push_back(enemigo);
 	}
 
+	//----------------------ENEMIGOS------------------------------
 }
 
-void TutorialApplication::createGUI() {
+void MainGame::createGUI() {
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
 	//FontManager& fM = FontManager::getSingleton();
@@ -428,16 +398,13 @@ void TutorialApplication::createGUI() {
 	overlay->add2D(backLifeGUI);
 	overlay->add2D(lifeGUI);
 
-	//lifeCanvas = new GameObject(mSceneMgr);
 	ninja->addComponent(new UICanvas(lifeGUI, overlay));
 	dynamic_cast<PlayerComponent*> (ninja->getComponent(ComponentName::PLAYER))->setPlayerUI();
-	//dynamic_cast<UICanvas*> (ninja->getComponent(ComponentName::UI))->updateUI();
-	// Show the overlay*/
-	//overlay->show();
+
 }
 
 //-------------------------------------------------------------------------------------
-void TutorialApplication::createScene(void)
+void MainGame::createScene(void)
 {
 	// create your scene here :)
 
@@ -451,12 +418,12 @@ void TutorialApplication::createScene(void)
 
 }
 
-TutorialApplication *TutorialApplication::instance = 0;
+MainGame *MainGame::instance = 0;
 
-TutorialApplication *TutorialApplication::getInstance()
+MainGame *MainGame::getInstance()
 {
 	if (!instance)
-		instance = new TutorialApplication;
+		instance = new MainGame;
 	return instance;
 
 }

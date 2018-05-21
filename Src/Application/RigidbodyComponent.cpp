@@ -1,6 +1,6 @@
 #include "RigidbodyComponent.h"
 #include "BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h"
-#include "TutorialApplication.h"
+#include "MainGame.h"
 
 RigidbodyComponent::RigidbodyComponent(btMotionState *motionState, btCollisionShape *collisionShape, btScalar mass,btVector3& localInertia) : Component()
 {
@@ -21,6 +21,6 @@ RigidbodyComponent::~RigidbodyComponent()
 void RigidbodyComponent::start()
 {
 	//Añadimos al mundo
-	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
+	MainGame::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 }
 

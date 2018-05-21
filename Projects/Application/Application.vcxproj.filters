@@ -34,9 +34,6 @@
     <ClCompile Include="..\..\Src\Application\GameObject.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
@@ -48,6 +45,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
       <Filter>Source Files\Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\MainGame.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
       <Filter>Header Files\Component\Rigidbody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TutorialApplication.h">
-      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\BaseApplication.h">
       <Filter>Header Files\Scenes</Filter>
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\TowerComponent.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MainGame.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

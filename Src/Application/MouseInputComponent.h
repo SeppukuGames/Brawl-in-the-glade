@@ -3,7 +3,7 @@
 
 #include "Component.h"
 #include <OIS.h>
-#include "TutorialApplication.h"
+#include "MainGame.h"
 
 //Componente que escucha los eventos de ratón
 class MouseInputComponent : public OIS::MouseListener{
@@ -11,7 +11,7 @@ public:
 
 	MouseInputComponent()
 	{
-		TutorialApplication::getInstance()->registerMouseInputObserver(this);
+		MainGame::getInstance()->registerMouseInputObserver(this);
 	};
 	virtual ~MouseInputComponent(){};
 

@@ -3,15 +3,15 @@
 
 #include "Component.h"
 #include <OIS.h>
-#include "TutorialApplication.h"
+#include "MainGame.h"
 
 //Componente que escucha los eventos de teclado y de ratón
 class KeyMouseInputComponent : public Component, public OIS::KeyListener, public OIS::MouseListener{
 public:
 	KeyMouseInputComponent() : Component()
 	{
-		TutorialApplication::getInstance()->registerKeyInputObserver(this);
-		TutorialApplication::getInstance()->registerMouseInputObserver(this);
+		MainGame::getInstance()->registerKeyInputObserver(this);
+		MainGame::getInstance()->registerMouseInputObserver(this);
 
 	};
 

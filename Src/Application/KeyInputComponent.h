@@ -3,14 +3,14 @@
 
 #include "Component.h"
 #include <OIS.h>
-#include "TutorialApplication.h"
+#include "MainGame.h"
 
 //Componente que escucha los eventos de teclado
 class KeyInputComponent : public OIS::KeyListener{
 public:
 	KeyInputComponent()
 	{
-		TutorialApplication::getInstance()->registerKeyInputObserver(this);
+		MainGame::getInstance()->registerKeyInputObserver(this);
 	};
 
 	virtual ~KeyInputComponent(){};

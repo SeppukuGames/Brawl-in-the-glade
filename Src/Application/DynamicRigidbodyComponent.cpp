@@ -2,12 +2,12 @@
 #include "GameObject.h"
 
 #include "BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h"
-#include "TutorialApplication.h"
+#include "MainGame.h"
 
 DynamicRigidbodyComponent::DynamicRigidbodyComponent(btMotionState *motionState, btCollisionShape *collisionShape, btScalar mass, btVector3& localInertia) 
 	: RigidbodyComponent(motionState, collisionShape, mass, localInertia)
 {
-	TutorialApplication::getInstance()->getPhysicsEngine()->getCollisionShapes().push_back(collisionShape);
+	MainGame::getInstance()->getPhysicsEngine()->getCollisionShapes().push_back(collisionShape);
 
 }
 
@@ -21,8 +21,8 @@ void DynamicRigidbodyComponent::start()
 	//En UserPointer metemos información que queremos utilizar para resolver las colisiones (GameObject)
 	rigidBody->setUserPointer(_gameObject);
 
-	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
-	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
+	MainGame::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
+	MainGame::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
 }
 
 void DynamicRigidbodyComponent::tick(double elapsed){

@@ -25,7 +25,7 @@
     <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp" />
     <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp" />
     <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />
-    <ClCompile Include="..\..\Src\Application\TutorialApplication.cpp" />
+    <ClCompile Include="..\..\Src\Application\MainGame.cpp" />
     <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +51,7 @@
     <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h" />
     <ClInclude Include="..\..\Src\Application\TowerComponent.h" />
     <ClInclude Include="..\..\Src\Application\tutorial2.h" />
-    <ClInclude Include="..\..\Src\Application\TutorialApplication.h" />
+    <ClInclude Include="..\..\Src\Application\MainGame.h" />
     <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />
     <ClInclude Include="..\..\Src\Application\UICanvas.h" />
   </ItemGroup>
