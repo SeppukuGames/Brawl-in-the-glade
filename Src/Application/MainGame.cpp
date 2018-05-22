@@ -34,7 +34,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "DynamicRigidbodyComponent.h"
 #include "TestCollisionComponent1.h"
 #include "TestCollisionComponent2.h"
-
+#include "BalaComponent.h"
 
 using namespace Ogre;
 

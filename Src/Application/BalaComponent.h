@@ -1,12 +1,23 @@
-#ifndef _h_BalaComponent_h_
-#define _h_BalaComponent_h_
-
+#ifndef BALACOMPONENT_H_
+#define BALACOMPONENT_H_
 
 #include "DynamicRigidbodyComponent.h"
-
 #include <iostream>
+#include "Physics.h"
 
 class BalaComponent : public Component {
+
+private:
+	int vida; //Duracion de la bala en el aire.
+	int velocidad;
+
+	//FISICA
+	btVector3 posicion;
+	btQuaternion rotacion;
+
+	DynamicRigidbodyComponent *rb;
+	btTransform transform;
+
 
 public:
 
@@ -41,7 +52,7 @@ public:
 		
 		if (vida > 0){
 			
-			
+
 			vida--;
 		}
 	
@@ -50,19 +61,5 @@ public:
 	}
 
 	
-	
-private:
-	int vida; //Duracion de la bala en el aire.
-	int velocidad;
-
-	//FISICA
-	btVector3 posicion;
-	btQuaternion rotacion;
-
-	DynamicRigidbodyComponent *rb;
-	btTransform transform;
-
-
-
 };
 #endif
