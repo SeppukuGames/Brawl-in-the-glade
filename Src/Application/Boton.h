@@ -22,14 +22,18 @@ public:
 		FontManager& fM = FontManager::getSingleton();
 		
 		// Create a panel
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 4; i++){
 			OverlayContainer* panel = static_cast<OverlayContainer*>(
 				overlayManager.createOverlayElement("Panel", "menu" + std::to_string(i)));
 
 			nombres.push_back(panel->getName()); //Para acceder posteriormente			
 
 			panel->setMetricsMode(Ogre::GMM_PIXELS);
-			panel->setPosition(450, 450 + (50 * i));
+			if (i == 3)
+				panel->setPosition(450, 450 + (50 * 4));
+			else			
+				panel->setPosition(450, 450 + (50 * i));
+			
 			panel->setDimensions(0, 0);
 			panel->setMaterialName("panel"); // Optional background material 						
 
@@ -47,8 +51,8 @@ public:
 			switch (i)
 			{
 			case 0:
-				textArea->setCaption("Comenzar partida");
-				textoBoton.push_back("Comenzar partida");
+				textArea->setCaption("Reanudar partida");
+				textoBoton.push_back("Reanudar partida");
 				break;
 			case 1:
 				textArea->setCaption("Controles");
@@ -58,13 +62,23 @@ public:
 				textArea->setCaption("Salir");
 				textoBoton.push_back("Salir");
 				break;
+			case 3:
+				textArea->setCaption("WS para desplazarse y SPACE para aceptar");			
+				break;
 			default:
 				break;
 			}
+			if ( i == 3)
+				textArea->setCharHeight(30);
+			else
+				textArea->setCharHeight(50);
 
-			textArea->setCharHeight(50);
 			textArea->setFontName("Trebuchet");
-			textArea->setColourBottom(ColourValue(0.0, 0.0, 0.0));
+			if (i == 3)
+				textArea->setColourBottom(ColourValue(1.0, 1.0, 1.0));
+			else
+				textArea->setColourBottom(ColourValue(0.0, 0.0, 0.0));
+
 			textArea->setColourTop(ColourValue(1.0, 1.0, 1.0));
 
 			// Add the text area to the panel		
@@ -86,6 +100,19 @@ public:
 
 		botones.push_back(panel);		
 
+		//Panel de controles
+		OverlayContainer* controles = static_cast<OverlayContainer*>(
+			overlayManager.createOverlayElement("Panel", "controles"));
+
+		nombres.push_back(controles->getName()); //Para acceder posteriormente			
+
+		controles->setMetricsMode(Ogre::GMM_PIXELS);
+		controles->setPosition(70, 120);
+		controles->setDimensions(900, 470);
+		controles->setMaterialName("controles"); // Optional background material 						
+
+		botones.push_back(controles);
+
 		// Create an overlay, and add the panel*/
 		overlay = overlayManager.create("OverlayManager");
 		for (int i = 0; i < botones.size(); i++){
@@ -97,6 +124,7 @@ public:
 		Refrescar(0, true);		
 		Refrescar(1, false);
 		Refrescar(2, false);
+		Show(false);
 		cont = 0;
 	};
 
@@ -158,10 +186,13 @@ public:
 			switch (cont)
 			{
 			case 0:
+				Show(false);
+				//Juego::pause = !Juego::pause;
+				break;
 			case 1:
-			case 2:
-				if (show)
-					std::cout << "mu bien!has pulsao el boton " << cont << std::endl;
+				ShowControles();
+				break;
+			case 2:				
 				break;
 
 			default:
@@ -236,18 +267,40 @@ public:
 		show = aux;
 		if (show)
 		{
-			for (int i = 0; i < botones.size(); i++)
+			for (int i = 0; i < botones.size()-1; i++)
 				overlay->add2D(botones[i]);
 
 			Refrescar(0, true);
 			Refrescar(1, false);
 			Refrescar(2, false);
+			cont = 0;
 
 		}
 		else
 		{
 			for (int i = 0; i < botones.size(); i++)
 				overlay->remove2D(botones[i]);
+		}
+	}
+
+	void ShowControles()
+	{
+		showControl = !showControl;
+
+		if (showControl){
+			for (int i = 0; i < botones.size() - 1; i++)
+				overlay->remove2D(botones[i]);
+			overlay->add2D(botones[5]);		
+		}
+		else{
+			overlay->remove2D(botones[5]);
+			for (int i = 0; i < botones.size() - 1; i++)
+				overlay->add2D(botones[i]);
+
+			Refrescar(0, false);
+			Refrescar(1, true);
+			Refrescar(2, false);
+			cont = 1;
 		}
 	}
 
@@ -263,7 +316,8 @@ private:
 
 	Overlay* overlay;
 
-	bool show = true;
+	bool show = false;
+	bool showControl = false;
 };
 
 #endif /* BOTON_H_ */
