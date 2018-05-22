@@ -303,8 +303,8 @@ public:
 			//{
 			//	result.second
 			//}
-			dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion
-			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), _gameObject->getNode()->getPosition(), dirBala);
+			dirBala = transform.getRotation(); //Devuelve un btquaternion
+			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), dirBala);
 		}
 
 		return true;
@@ -401,7 +401,7 @@ private:
 	RaySceneQuery *raySceneQuery;
 
 	Ogre::Real posMouseX, posMouseY;
-	Ogre::Quaternion dirBala;
+	btQuaternion dirBala;
 	btQuaternion newRotation;
 
 	Vector3 resultado;
