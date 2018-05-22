@@ -2,6 +2,7 @@
 #include "MoveCameraComponent.h"
 #include "GameObject.h"
 #include <iostream>
+#include "MoveComponent.h"
 
 MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent(), Component()
 {
@@ -102,7 +103,7 @@ bool MoveCameraComponent::mouseMoved(const OIS::MouseEvent &arg)
 	_gameObject->getNode()->pitch(Ogre::Degree(-rotation * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
 	*/
 
-	Plane mPlane(Vector3::UNIT_Y, 0);
+	//Plane mPlane(Vector3::UNIT_Y, 0);
 
 	// get window height and width
 	Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
@@ -111,14 +112,16 @@ bool MoveCameraComponent::mouseMoved(const OIS::MouseEvent &arg)
 	// convert to 0-1 offset
 	Ogre::Real offsetX = arg.state.X.abs / screenWidth;
 	Ogre::Real offsetY = arg.state.Y.abs / screenHeight;
-
 	// set up the ray
 	Ray mouseRay = _camera->getCameraToViewportRay(offsetX, offsetY);
+	
+	MoveComponent* playerMove = dynamic_cast<MoveComponent*> (_player->getComponent(ComponentName::MOVE));
+	playerMove->setMouseRay(mouseRay);
 
 	// check if the ray intersects our plane
 	// intersects() will return whether it intersects or not (the bool value) and
 	// what distance (the Real value) along the ray the intersection is
-	std::pair<bool, Real> result = mouseRay.intersects(mPlane);
+	/*std::pair<bool, Real> result = mouseRay.intersects(mPlane);
 
 	if (result.first) {
 		// if the ray intersect the plane, we have a distance value
@@ -164,7 +167,7 @@ bool MoveCameraComponent::mouseMoved(const OIS::MouseEvent &arg)
 		
 		
 	}
-
+	*/
 
 	//X AXIS
 	if (arg.state.X.abs > (_mWindow->getWidth() - 20) && arg.state.X.abs < _mWindow->getWidth())

@@ -9,18 +9,68 @@ void MoveComponent::start() {
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 	player = dynamic_cast<PlayerComponent*> (_gameObject->getComponent(ComponentName::PLAYER));
 	direction = { 0, 0, 0 };
-	transform = rb->getRigidbody()->getWorldTransform();
+	//transform = rb->getRigidbody()->getWorldTransform();
+	
 };
 
 void MoveComponent::tick(double elapsed) {
 
-	//rb->getRigidbody()->setLinearVelocity(direction *2);
-	rb->getRigidbody()->getCenterOfMassTransform();
-	transform.setOrigin(transform.getOrigin() + direction * elapsed);
-	//rb->getRigidbody()->setWorldTransform(transform);
-	rb->getRigidbody()->setCenterOfMassTransform(transform);
-	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
+	Plane mPlane(Vector3::UNIT_Y, 0);
 
+	std::pair<bool, Real> result = rayCast.intersects(mPlane);
+
+	if (result.first) {
+		// if the ray intersect the plane, we have a distance value
+		// telling us how far from the ray origin the intersection occurred.
+		// the last thing we need is the point of the intersection.
+		// Ray provides us getPoint() function which returns a point
+		// along the ray, supplying it with a distance value.
+		//std::cout << "Entra!" << std::endl;
+		// get the point where the intersection is
+		Vector3 point = rayCast.getPoint(result.second);
+
+		// assume that "forward" for the player in local-frame is +zAxis
+		// and that the player is constrained to rotate about yAxis (+yAxis is "up")
+		btVector3 localLook(0.0f, 0.0f, 1.0f); // zAxis
+		btVector3 rotationAxis(0.0f, 1.0f, 0.0f); // yAxis
+
+		btTransform transform = rb->getRigidbody()->getWorldTransform();
+		btTransform identity = transform.getIdentity();
+		btQuaternion rotation = transform.getRotation();
+		btVector3 rotVector(rotation.getX(), rotation.getY(), rotation.getZ());
+		// compute currentLook and angle
+		btVector3 currentLook = localLook * rotVector * -rotation.getW();
+		btVector3 newLook(point.x, 1, point.z);
+		btScalar angle;
+
+		if (point.x >= 0) {
+			angle = currentLook.angle(newLook);
+			angle = -angle;
+		}
+		else {
+			angle = currentLook.angle(newLook);
+		}
+		
+		
+		// compute new rotation
+		btQuaternion deltaRotation(rotationAxis, angle);
+		btQuaternion newRotation = deltaRotation * rotation;
+
+		std::cout << "Angulo rotacion: " << point.z << std::endl;
+		// apply new rotation
+		transform.setRotation(deltaRotation);
+		transform.setOrigin(transform.getOrigin() + direction * elapsed);
+		rb->getRigidbody()->setCenterOfMassTransform(transform);
+		rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
+
+	}
+
+
+	/*btTransform tr = rb->getRigidbody()->getCenterOfMassTransform();
+	transform.setOrigin(transform.getOrigin() + direction * elapsed);
+	//rb->getRigidbody()->setCenterOfMassTransform(transform);
+	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
+	*/
 
 	//NO BORRAR, ÚTIL PARA DEBUG
 	//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;
@@ -151,3 +201,7 @@ bool MoveComponent::keyReleased(const OIS::KeyEvent &arg) {
 	animComp->blend("Idle2", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 	return true;
 };
+
+void MoveComponent::setMouseRay(Ray mouseRay) {
+	rayCast = mouseRay;
+}

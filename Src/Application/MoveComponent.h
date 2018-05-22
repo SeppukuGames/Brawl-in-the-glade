@@ -21,6 +21,8 @@ public:
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);
 
+	void setMouseRay(Ray mouseRay);
+
 	//btVector3 direction;
 	
 private:
@@ -31,11 +33,13 @@ private:
 	//Puntero a la animacion
 	AnimationComponent* animComp;
 
-	btTransform transform;
+	//btTransform transform;
 
 	bool resetCamPosition;
 	
 	PlayerComponent* player;
+
+	Ray rayCast;
 };
 
 #endif /* MOVECOMPONENT_H_ */
