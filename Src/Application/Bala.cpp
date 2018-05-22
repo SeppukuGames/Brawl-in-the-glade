@@ -1,23 +1,26 @@
 #include "Bala.h"
 #include "MainGame.h"
 
-Bala::Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 pos, Ogre::Quaternion dir) : GameObject(mSceneMgr) {
+Bala::Bala(Ogre::SceneManager* mSceneMgr, btVector3 pos, btQuaternion dir) : GameObject(mSceneMgr) {
 
 	posicion = pos;
 	direccion = dir;
+
 	_sceneMgr = mSceneMgr;
 
 
 	//Creamos un entity
 
 	this->addComponent(new EntityComponent("ogrehead.mesh"));		//Tenemos una bola con componente entidad.
-	this->addComponent(new BalaComponent());
+	this->addComponent(new BalaComponent(pos, dir));
 	//this->getNode()->setScale(0.2, 0.2, 0.2);
-	this->getNode()->translate(posicion);			//Situamos la bala en la posicion que queremos (la del objeto que la dispara).
+	//this->getNode()->translate(posicion);		//En principio no hace falta?	//Situamos la bala en la posicion que queremos (la del objeto que la dispara).
 
 	MainGame::getInstance()->añadeGameObject(this);
 
 }
+
+
 
 void Bala::iniciaFisica(){
 

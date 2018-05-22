@@ -11,7 +11,7 @@ void MoveComponent::start() {
 	mouseComponent = dynamic_cast<MouseComponent*> (_gameObject->getComponent(ComponentName::MOUSE));
 	direction = { 0, 0, 0 };
 	transform = rb->getRigidbody()->getWorldTransform();
-
+	lastRotation = transform.getRotation();
 	
 };
 
@@ -21,15 +21,13 @@ void MoveComponent::tick(double elapsed) {
 
 	transform.setOrigin(transform.getOrigin() + direction * elapsed);
 	//rb->getRigidbody()->setWorldTransform(transform);
-	
-	
-	btQuaternion mRot = mouseComponent->getRotation();
-	transform.setRotation(mRot);
-	
+
+	//transform.getRotation().getAngle();
+	//transform.setRotation(mouseComponent->getRotation());	
+	//
 	rb->getRigidbody()->setCenterOfMassTransform(transform);
 	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
 
-	std::cout << "Desde el MoveComponent " << transform.getRotation().getAngle() << std::endl;
 
 	//NO BORRAR, ÚTIL PARA DEBUG
 	//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;

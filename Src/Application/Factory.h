@@ -3,6 +3,7 @@
 
 #include "EnemyType1.h"
 #include "Bala.h"
+#include "DynamicRigidbodyComponent.h"
 
 //Factoría para la creación de enemigos
 static class ObjFactory{
@@ -25,7 +26,7 @@ public:
 
 	//No debería ser static porque entonces pa qué quieres una clase jaja
 	//Pero de momento se queda así.
-	static void creaBala(Ogre::SceneManager* mSceneManager, Ogre::Quaternion dir, Ogre::Vector3 pos){
+	static void creaBala(Ogre::SceneManager* mSceneManager, btVector3 pos, btQuaternion dir){
 
 		//Ogre::Quaternion testDir = Ogre::Quaternion(0, 0, 1,0); //180º
 		Bala* nuevaBala = new Bala(mSceneManager, pos, dir);

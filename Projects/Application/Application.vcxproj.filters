@@ -131,7 +131,9 @@
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Bala.h" />
-    <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
+    <ClInclude Include="..\..\Src\Application\BalaComponent.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

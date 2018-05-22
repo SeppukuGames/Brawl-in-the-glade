@@ -2,6 +2,7 @@
 #define _h_BalaComponent_h_
 
 #include "Component.h"
+#include "DynamicRigidbodyComponent.h"
 #include <iostream>
 
 //COSAS DE UN HIPOTETICO PHYSICS MANAGER
@@ -10,23 +11,33 @@
 #include <OgreBulletCollisionsBoxShape.h>
 
 */
-class BalaComponent : public Component{
+class BalaComponent : public DynamicRigidbodyComponent {
 
 public:
 
-	virtual void start(){
-		posicion = _gameObject->getNode()->getPosition();
-		direccion = _gameObject->getNode()->getOrientation();
+	//Constructora
+	BalaComponent(btVector3 pos, btQuaternion q) : DynamicRigidbodyComponent()
+	{
+		rotacion = q;
+		posicion = pos;
+	};
 
+	virtual void start(){
+		transform = rb->getRigidbody()->getWorldTransform();
 		vida = 1000;
+		velocidad = 2;
 	}
 	//Suma la posicion, y luego en caso de chocarse con algo mandará un mensaje
 	virtual void tick(double elapsed){
 		
 		if (vida > 0){
-			//std::cout << vida << std::endl;
-			posicion += direccion * Ogre::Vector3(0, 0, 1);
-			_gameObject->getNode()->translate(posicion);
+			
+			rb->getRigidbody()->setLinearVelocity(posicion *  velocidad);
+
+
+			rb->getRigidbody()->setCenterOfMassTransform(transform);
+			rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
+
 			vida--;
 		}
 	
@@ -34,15 +45,19 @@ public:
 		
 	}
 
-	int vida; //Duracion de la bala en el aire.
-	int daño; //Daño que inflinge
+	
 	
 private:
+	int vida; //Duracion de la bala en el aire.
+	int velocidad;
 
-	Ogre::Vector3 posicion;
+	btVector3 posicion;
+	btQuaternion rotacion;
+
+	DynamicRigidbodyComponent* rb;
 	
 	Ogre::SceneManager* _sceneMgr;
-	Ogre::Quaternion direccion;
+	btTransform transform;
 
 };
 #endif

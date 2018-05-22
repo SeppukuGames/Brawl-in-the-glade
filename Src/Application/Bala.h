@@ -10,17 +10,17 @@ class Bala : public GameObject{
 
 public:
 	//La posicion de la bala es local
-	Bala(Ogre::SceneManager* mSceneMgr, Ogre::Vector3 pos, Ogre::Quaternion dir); 
+	Bala(Ogre::SceneManager* mSceneMgr, btVector3 pos, btQuaternion dir); 
 
 	void iniciaFisica();
 
 private:
 
 	GameObject* _camera;	//Cámara
-	Ogre::Vector3 posicion;
+	btVector3 posicion;
 	
 	Ogre::SceneManager* _sceneMgr;
-	Ogre::Quaternion direccion;
+	btQuaternion direccion;
 
 	//Atributos fisicos
 	//btVector3 posFisica;

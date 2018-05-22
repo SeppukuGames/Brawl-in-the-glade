@@ -303,8 +303,8 @@ public:
 			//{
 			//	result.second
 			//}
-			//dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion
-			//BulletFactory::creaBala(_gameObject->getNode()->getCreator(), dirBala, _gameObject->getNode()->getPosition());
+			dirBala = _gameObject->getNode()->getOrientation(); //Devuelve un quaternion
+			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), _gameObject->getNode()->getPosition(), dirBala);
 		}
 
 		return true;
@@ -378,7 +378,8 @@ public:
 			transform.setRotation(newRotation);
 			rb->getRigidbody()->setCenterOfMassTransform(transform);
 			rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-			//object->setWorldTransform(btTransform( newrotation, object->getWorldTransform().getOrigin()));
+			rb->getRigidbody()->getMotionState()->setWorldTransform(btTransform(newRotation, transform.getOrigin()));
+
 		}
 
 
