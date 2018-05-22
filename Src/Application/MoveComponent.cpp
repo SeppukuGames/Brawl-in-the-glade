@@ -9,6 +9,8 @@ void MoveComponent::start() {
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 	direction = { 0, 0, 0 };
 	transform.setIdentity();
+	rb->getRigidbody()->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+	rb->getRigidbody()->setActivationState(DISABLE_DEACTIVATION);
 };
 
 void MoveComponent::tick(double elapsed) {
@@ -18,7 +20,7 @@ void MoveComponent::tick(double elapsed) {
 	transform.setOrigin(transform.getOrigin() + direction * elapsed);
 	rb->getRigidbody()->setWorldTransform(transform);
 	rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
-	rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
+	//rb->getRigidbody()->setLinearVelocity(btVector3(0, 0, 0));
 
 	//NO BORRAR, ÚTIL PARA DEBUG
 	//std::cout << "Direccion X: " << direction.getX() << "\n Direccion Z: " << direction.getZ() << std::endl;

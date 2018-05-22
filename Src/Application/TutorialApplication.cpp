@@ -155,7 +155,7 @@ void TutorialApplication::createEntities(void)
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 initialPosition(-20, 100, 0);
+	btVector3 initialPosition(-20, 40, 0);
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(initialPosition);
@@ -167,7 +167,7 @@ void TutorialApplication::createEntities(void)
 
 	//Colision shape
 	//Creamos la esfera de radio 1
-	btCollisionShape* fallShape = new btSphereShape(1);
+	btCollisionShape* fallShape = new btSphereShape(10);
 	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
@@ -202,10 +202,9 @@ void TutorialApplication::createEntities(void)
 	//actually contruvc the body and add it to the dynamics world
 	//Esfera a 50 metros de altura
 	btDefaultMotionState *fallMotionStatec = new btDefaultMotionState(startTransformc);
-
 	//Colision shape
 	//Creamos la esfera de radio 1
-	btCollisionShape* fallShapec = new btSphereShape(1);
+	btCollisionShape* fallShapec = new btSphereShape(10);
 	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
@@ -215,6 +214,9 @@ void TutorialApplication::createEntities(void)
 	DynamicRigidbodyComponent* rbComponentc = new DynamicRigidbodyComponent(fallMotionStatec, fallShapec, massc, fallInertiac);
 	cabeza->addComponent(rbComponentc);
 	rbComponentc->getRigidbody()->setRestitution(1);
+	rbComponentc->getRigidbody()->setLinearFactor(btVector3(0, 0, 0));
+	rbComponentc->getRigidbody()->setAngularFactor(btVector3(0, 0, 0));
+
 
 	cabeza->addComponent(new TestCollisionComponent2());
 
@@ -248,11 +250,11 @@ void TutorialApplication::createEntities(void)
 	btDefaultMotionState *ninjaMotionState = new btDefaultMotionState(ninjaTransform);
 
 	//Colision shape
-	btCollisionShape *newRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+	btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 30.0f, 5.0f));
 
 
 	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar ninjaMass(1.0f);
+	btScalar ninjaMass(10.0f);
 	btVector3 ninjaInertia(0, 0, 0);
 
 	DynamicRigidbodyComponent* ninjaRbComponent = new DynamicRigidbodyComponent(ninjaMotionState, newRigidShape, ninjaMass, ninjaInertia);
@@ -262,6 +264,9 @@ void TutorialApplication::createEntities(void)
 	actors_.push_back(ninja);
 
 	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
+
+	cabeza->addComponent(new TestCollisionComponent2());
+
 
 	camMove->setUpPlayer(ninja);
 
@@ -288,7 +293,6 @@ void TutorialApplication::createEntities(void)
 	btVector3 localGroundInertia(0, 0, 0);
 
 	planito->addComponent(new RigidbodyComponent(groundMotionState, groundShape, groundMass, localGroundInertia));
-
 	//Torre
 	GameObject *Torre = new GameObject(mSceneMgr);
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));

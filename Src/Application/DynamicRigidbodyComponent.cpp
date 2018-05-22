@@ -21,6 +21,10 @@ void DynamicRigidbodyComponent::start()
 	//En UserPointer metemos información que queremos utilizar para resolver las colisiones (GameObject)
 	rigidBody->setUserPointer(_gameObject);
 
+	//rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+	//rigidBody->setActivationState(DISABLE_DEACTIVATION);
+
+
 	TutorialApplication::getInstance()->getPhysicsEngine()->getDynamicsWorld()->addRigidBody(rigidBody);
 	TutorialApplication::getInstance()->getPhysicsEngine()->trackRigidBodyWithName(rigidBody, _gameObject->getNode()->getName());
 }
