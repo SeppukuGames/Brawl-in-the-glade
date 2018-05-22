@@ -49,7 +49,8 @@ BaseApplication::BaseApplication(void)
 
 	//mCursorWasVisible(false),
 	mShutDown(false),
-	mOverlaySystem(0)
+	mOverlaySystem(0),
+	pause(false)
 {
 }
 
@@ -104,8 +105,8 @@ bool BaseApplication::gameLoop()
 
 	if (!handleInput())
 		return false;
-
-	update(elapsed);
+	if(!pause)
+		update(elapsed);
 
 	if (!render())
 		return false;

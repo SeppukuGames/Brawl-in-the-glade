@@ -80,6 +80,8 @@ public:
 
 	virtual Physics * getPhysicsEngine();
 
+	//virtual void setPauseStatus(void) = 0;
+
 
 protected:
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
@@ -166,6 +168,8 @@ protected:
 	//Para el bucle principal
 	double lastTime;
 	Ogre::Timer *timer;
+
+	bool pause;
 
 };
 

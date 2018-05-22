@@ -323,6 +323,7 @@ void TutorialApplication::createEntities(void)
 	boton = new GameObject(mSceneMgr);
 	boton->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	boton->addComponent(new Boton());
+	dynamic_cast<Boton*> (boton->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
 
 	actors_.push_back(boton);	
 	
@@ -338,6 +339,14 @@ void TutorialApplication::createScene(void)
 	createCameras();
 
 	createEntities();
+}
+
+void TutorialApplication::setPauseStatus() {
+	pause = !pause;
+}
+
+void TutorialApplication::quitGame() {
+	mShutDown = true;
 }
 
 TutorialApplication *TutorialApplication::instance = 0;

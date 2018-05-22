@@ -13,6 +13,7 @@
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
 
+
 class Boton : public KeyInputComponent, public Component {
 public:
 
@@ -183,25 +184,29 @@ public:
 			break;
 
 		case OIS::KC_SPACE: //ejecutar
-			switch (cont)
-			{
-			case 0:
-				Show(false);
-				//Juego::pause = !Juego::pause;
-				break;
-			case 1:
-				ShowControles();
-				break;
-			case 2:				
-				break;
+			if (show) {
+				switch (cont)
+				{
+				case 0:
+					Show(false);
+					baseGame->setPauseStatus();
+					break;
+				case 1:
+					ShowControles();
+					break;
+				case 2:
+					baseGame->quitGame();
+					break;
 
-			default:
-				break;
+				default:
+					break;
+				}
 			}
 			break;
 
 		case OIS::KC_P:
 			show = !show;
+			baseGame->setPauseStatus();
 			Show(show);
 			break;
 
@@ -304,7 +309,10 @@ public:
 		}
 	}
 
-	int cont = 0;
+	void SetMainGameRef(TutorialApplication* game) {
+
+		baseGame = game;
+	}
 
 private:
 	std::vector<OverlayContainer*> botones;
@@ -315,7 +323,8 @@ private:
 	std::vector<int> posiciones;
 
 	Overlay* overlay;
-
+	TutorialApplication* baseGame;
+	int cont = 0;
 	bool show = false;
 	bool showControl = false;
 };

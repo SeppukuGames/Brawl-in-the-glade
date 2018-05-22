@@ -45,6 +45,10 @@ public:
 
 	static TutorialApplication *getInstance();
 
+	void setPauseStatus();
+
+	void quitGame();
+
 protected:
 
 

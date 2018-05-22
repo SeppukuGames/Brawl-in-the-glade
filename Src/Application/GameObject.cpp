@@ -7,6 +7,7 @@
 #include "AnimationComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "MoveCameraComponent.h"
+#include "Boton.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -132,6 +133,18 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			DynamicRigidbodyComponent* comp = dynamic_cast<DynamicRigidbodyComponent*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
+
+	case ComponentName::BUTTON:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			Boton* comp = dynamic_cast<Boton*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];
