@@ -2,11 +2,11 @@
 #define MOVECAMERACOMPONENT_H_
 
 #include "DynamicRigidbodyComponent.h"
-#include "KeyInputComponent.h"
-#include "MouseInputComponent.h"
+#include "KeyMouseInputComponent.h"
+
 using namespace Ogre;
 
-class MoveCameraComponent : public KeyInputComponent , public Component, public MouseInputComponent
+class MoveCameraComponent : public KeyMouseInputComponent
 {
 
 private:

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\AttackComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
+    <ClInclude Include="..\..\Src\Application\AttackComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />

@@ -5,10 +5,10 @@
 #include "AnimationComponent.h"
 #include "DynamicRigidbodyComponent.h"
 
-class MoveComponent : public KeyInputComponent, public Component {
+class MoveComponent : public KeyInputComponent {
 public:
 
-	MoveComponent() : KeyInputComponent(), Component()
+	MoveComponent() : KeyInputComponent()
 	{
 
 	};

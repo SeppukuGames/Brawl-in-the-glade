@@ -1,7 +1,6 @@
 #include "MoveCameraComponent.h"
 #include "GameObject.h"
-MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : MouseInputComponent(), KeyInputComponent(), Component()
-{
+MoveCameraComponent::MoveCameraComponent(RenderWindow* mWindow, SceneManager* mSceneMgr) : KeyMouseInputComponent(){
 	_mWindow = mWindow;
 }
 
