@@ -42,7 +42,7 @@ public:
 	};
 
 	virtual void tick(double elapsed){
-
+		currentCD +=  1 + elapsed;	//Sumo el cooldown hasta que llegue a Cooldown, entonces podré disparar
 	};
 
 	void GetMeshInformation(const Ogre::MeshPtr mesh,
@@ -306,9 +306,6 @@ public:
 			currentCD = 0;
 			
 		}
-		else { 
-			currentCD++;	//Sumo el cooldown hasta que llegue a Cooldown, entonces podré disparar
-		}
 
 		return true;
 	}
@@ -402,8 +399,8 @@ public:
 	}
 private:
 
-	const int Cooldown = 2;
-	int currentCD;
+	const double Cooldown = 7;
+	double currentCD;
 
 	RaySceneQuery *raySceneQuery;
 
