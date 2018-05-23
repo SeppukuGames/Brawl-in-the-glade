@@ -12,7 +12,7 @@ private:
 	int velocidad;
 
 	//FISICA
-	btVector3 posicion;
+	btVector3 Direccion;
 	btQuaternion rotacion;
 
 	DynamicRigidbodyComponent *rb;
@@ -22,10 +22,10 @@ private:
 public:
 
 	//Constructora
-	BalaComponent(const btVector3 & pos, const btQuaternion & q) : Component()
+	BalaComponent(const btVector3 & Dir) : Component()
 	{
-		rotacion = q;
-		posicion = pos;
+	
+		Direccion = Dir;
 	};
 
 	virtual void start(){
@@ -42,7 +42,7 @@ public:
 		//
 		////Aplicas la fuerza
 		//transform.setRotation(rotacion);
-		rb->getRigidbody()->setLinearVelocity(posicion *  velocidad);
+		rb->getRigidbody()->setLinearVelocity(Direccion *  velocidad);
 		//
 		//rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
 

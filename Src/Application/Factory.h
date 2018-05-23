@@ -26,9 +26,8 @@ public:
 
 	//No debería ser static porque entonces pa qué quieres una clase jaja
 	//Pero de momento se queda así.
-	static void creaBala(Ogre::SceneManager* mSceneManager, const btVector3 & pos, const btQuaternion & dir){
+	static void creaBala(Ogre::SceneManager* mSceneManager, const btVector3 & pos, const btVector3  & dir){
 
-		//Ogre::Quaternion testDir = Ogre::Quaternion(0, 0, 1,0); //180º
 		Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
 	}
 

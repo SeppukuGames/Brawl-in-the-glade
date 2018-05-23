@@ -8,7 +8,7 @@ class Bala : public GameObject{
 
 public:
 
-	Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btQuaternion & dir); 
+	Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3 & dir);
 
 	void iniciaFisica();
 
@@ -16,7 +16,7 @@ private:
 	Ogre::SceneManager* _sceneMgr;
 
 	btVector3 posicion;	
-	btQuaternion direccion;
+	btVector3  direccion;
 
 	//FISICA
 	btTransform balaTransform;					//Transform

@@ -4,7 +4,7 @@
 #include "MainGame.h"
 
 
-Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btQuaternion & dir) : GameObject(mSceneMgr) {
+Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3  & dir) : GameObject(mSceneMgr) {
 
 	posicion = pos;
 	direccion = dir;
@@ -14,7 +14,7 @@ Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btQuatern
 
 	//iniciaFisica();
 	//Motion state
-	btVector3 BalaInitialPosition(0, 0, 0);
+	btVector3 BalaInitialPosition(posicion);
 
 	
 	balaTransform.setIdentity();
@@ -32,9 +32,10 @@ Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btQuatern
 	balaMass = 1.0f;
 	balaInercia = btVector3(0, 0, 0);
 
-	this->addComponent(new EntityComponent("ogrehead.mesh"));		//Tenemos una bola con componente entidad.
+	this->addComponent(new EntityComponent("knot.mesh"));		//Tenemos una bola con componente entidad.
+	getNode()->setScale(0.2, 0.2, 0.2);
 	this->addComponent(new DynamicRigidbodyComponent(balaMotionState, balaShape, balaMass, balaInercia));
-	this->addComponent(new BalaComponent(posicion, direccion));
+	this->addComponent(new BalaComponent(direccion));
 	
 	//this->getNode()->setScale(0.2, 0.2, 0.2);
 	//this->getNode()->translate(posicion);		//En principio no hace falta?	//Situamos la bala en la posicion que queremos (la del objeto que la dispara).

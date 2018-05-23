@@ -303,8 +303,17 @@ public:
 			//{
 			//	result.second
 			//}
-			dirBala = transform.getRotation(); //Devuelve un btquaternion
-			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), dirBala);
+			//btQuaternion dirBala;
+			//dirBala = rb->getRigidbody()->getOrientation(); //Devuelve un btquaternion
+			btVector3 newLook(resultado.x, 0, resultado.z);
+			btVector3 posJugador = transform.getOrigin();
+			btScalar laX = newLook.getX() - posJugador.getX();
+			btScalar laZ = newLook.getZ() - posJugador.getZ();
+
+			btVector3 vectDir(laX, 0.0f, laZ);
+
+
+			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), vectDir);
 		}
 
 		return true;
