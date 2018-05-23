@@ -8,6 +8,7 @@
 #include "DynamicRigidbodyComponent.h"
 #include "MoveCameraComponent.h"
 #include "Boton.h"
+#include "MenuGameOver.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -149,6 +150,17 @@ Component* GameObject::getComponent(ComponentName component) {
 			if (comp != NULL)
 				return components[i];
 
+		}
+
+		break;
+
+	case ComponentName::MENUGAMEOVER:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			MenuGameOver* comp = dynamic_cast<MenuGameOver*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
 		}
 
 		break;

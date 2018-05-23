@@ -30,6 +30,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "Boton.h"
+#include "MenuGameOver.h"
 using namespace Ogre;
 
 //#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
@@ -320,12 +321,22 @@ void TutorialApplication::createEntities(void)
 		}
 	}
 	
+	/*
 	boton = new GameObject(mSceneMgr);
-	boton->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	boton->addComponent(new Boton());
 	dynamic_cast<Boton*> (boton->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
 
-	actors_.push_back(boton);	
+	actors_.push_back(boton);	*/
+
+
+	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
+	
+	botonGO = new GameObject(mSceneMgr);	
+	botonGO->addComponent(new MenuGameOver());
+	dynamic_cast<MenuGameOver*> (botonGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
+
+	actors_.push_back(botonGO);
+	
 	
 }
 

@@ -19,7 +19,6 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTimer.h>
 
 #include <OgreOverlayManager.h>
-#include "buttonGUI.h"
 
 #include <iostream>
 
@@ -142,21 +141,6 @@ bool BaseApplication::update(double elapsed)
 	return true;
 }
 
-//Deteccion de input de botones
-//do something with the event
-void BaseApplication::handleButtonEvent(buttonGUI::buttonEvent * e)
-{
-	std::string name;
-	if (e->actionButton)
-		name = *(e->actionButton->getName());  //store the name of the main button.
-
-	if ((e->action == buttonGUI::ONCLICK) && (name == "building"))
-	{
-		std::cout << "BOTON PULSADO" << std::endl;
-		//do stuff...
-	}
-}
-
 //Detecta input
 bool BaseApplication::render(void){
 
@@ -166,7 +150,6 @@ bool BaseApplication::render(void){
 	return true;
 }
 
-
 //-------------------------------------------------------------------------------------
 
 bool BaseApplication::setup(void)
@@ -174,10 +157,7 @@ bool BaseApplication::setup(void)
 	//Creamos la instancia del root object
 	//Tiene 3 parámetros (pluginFileName,configFileName,logFileName), los 2 ultimos tienen los valores por defecto correctos
 	mRoot = new Ogre::Root(mPluginsCfg);
-
-
-
-
+		
 	//Configuramos el renderSystem y creamos la ventana
 	bool carryOn = configure();
 	if (!carryOn) return false;
@@ -195,8 +175,6 @@ bool BaseApplication::setup(void)
 
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
-
-
 	createCamera();
 	createViewports();
 

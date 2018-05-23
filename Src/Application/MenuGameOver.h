@@ -1,5 +1,5 @@
-#ifndef BOTON_H_
-#define BOTON_H_
+#ifndef MENUGAMEOVER_H_
+#define MENUGAMEOVER_H_
 
 #include "Component.h"
 #include "KeyInputComponent.h"
@@ -13,27 +13,27 @@
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
 
-class Boton : public KeyInputComponent, public Component {
+class MenuGameOver : public KeyInputComponent, public Component {
 public:
 
-	Boton() : KeyInputComponent(), Component()
+	MenuGameOver() : KeyInputComponent(), Component()
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();
-		
+
 		// Create a panel
-		for (int i = 0; i < 4; i++){
+		for (int i = 0; i < 3; i++){
 			OverlayContainer* panel = static_cast<OverlayContainer*>(
-				overlayManager.createOverlayElement("Panel", "menu" + std::to_string(i)));
+				overlayManager.createOverlayElement("Panel", "menuGO" + std::to_string(i)));
 
 			nombres.push_back(panel->getName()); //Para acceder posteriormente			
 
 			panel->setMetricsMode(Ogre::GMM_PIXELS);
-			if (i == 3)
+			if (i == 2)
 				panel->setPosition(450, 450 + (50 * 4));
-			else			
-				panel->setPosition(450, 450 + (50 * i));
-			
+			else
+				panel->setPosition(450, 250 + (50 * i));
+
 			panel->setDimensions(0, 0);
 			panel->setMaterialName("panel"); // Optional background material 						
 
@@ -41,7 +41,7 @@ public:
 
 			//texto		
 			TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
-				overlayManager.createOverlayElement("TextArea", "TextAreaName" + std::to_string(i)));
+				overlayManager.createOverlayElement("TextArea", "TextAreaNameGO" + std::to_string(i)));
 			textArea->setMetricsMode(Ogre::GMM_PIXELS);
 			textArea->setAlignment(Ogre::TextAreaOverlayElement::Center);
 			textArea->setPosition(70, 50);
@@ -51,24 +51,20 @@ public:
 			switch (i)
 			{
 			case 0:
-				textArea->setCaption("Reanudar partida");
-				textoBoton.push_back("Reanudar partida");
+				textArea->setCaption("Reintentar");
+				textoBoton.push_back("Reintentar");
 				break;
 			case 1:
-				textArea->setCaption("Controles");
-				textoBoton.push_back("Controles");
-				break;
-			case 2:
 				textArea->setCaption("Salir");
 				textoBoton.push_back("Salir");
 				break;
-			case 3:
-				textArea->setCaption("WS para desplazarse y SPACE para aceptar");			
-				break;
+			case 2:
+				textArea->setCaption("WS para desplazarse y SPACE para aceptar");
+				break;			
 			default:
 				break;
 			}
-			if ( i == 3)
+			if (i == 3)
 				textArea->setCharHeight(30);
 			else
 				textArea->setCharHeight(50);
@@ -85,33 +81,33 @@ public:
 			panel->addChild(textArea);
 
 			botones.push_back(panel);
-		}		
+		}
 
 		//Fondo
 		OverlayContainer* panel = static_cast<OverlayContainer*>(
-			overlayManager.createOverlayElement("Panel", "fondito"));
+			overlayManager.createOverlayElement("Panel", "fonditoGO"));
 
 		nombres.push_back(panel->getName()); //Para acceder posteriormente			
 
 		panel->setMetricsMode(Ogre::GMM_PIXELS);
-		panel->setPosition(70, 470);
-		panel->setDimensions(900, 200);
+		panel->setPosition(0, 0);
+		panel->setDimensions(1030, 930);
 		panel->setMaterialName("panel2"); // Optional background material 						
 
 		botones.push_back(panel);		
 
-		//Panel de controles
-		OverlayContainer* controles = static_cast<OverlayContainer*>(
-			overlayManager.createOverlayElement("Panel", "controles"));
+		//Fondo
+		OverlayContainer* fondoGO = static_cast<OverlayContainer*>(
+			overlayManager.createOverlayElement("Panel", "fonditoDIED"));
 
-		nombres.push_back(controles->getName()); //Para acceder posteriormente			
+		nombres.push_back(fondoGO->getName()); //Para acceder posteriormente			
 
-		controles->setMetricsMode(Ogre::GMM_PIXELS);
-		controles->setPosition(70, 120);
-		controles->setDimensions(900, 470);
-		controles->setMaterialName("controles"); // Optional background material 						
+		fondoGO->setMetricsMode(Ogre::GMM_PIXELS);
+		fondoGO->setPosition(70, 100);
+		fondoGO->setDimensions(930, 470);
+		fondoGO->setMaterialName("game_over"); // Optional background material 						
 
-		botones.push_back(controles);
+		botones.push_back(fondoGO);
 
 		// Create an overlay, and add the panel*/
 		overlay = overlayManager.create("OverlayManager");
@@ -121,19 +117,17 @@ public:
 
 		// Show the overlay*/
 		overlay->show();
-		Refrescar(0, true);		
-		Refrescar(1, false);
-		Refrescar(2, false);
-		Show(false);
+		Refrescar(0, true);
+		Refrescar(1, false);		
 		cont = 0;
 	};
 
-	virtual ~Boton(){};
+	virtual ~MenuGameOver(){};
 
 	virtual void start(){
 
 	};
-
+	
 	virtual void tick(double elapsed){
 		if (cont > 2)
 			cont = 2;
@@ -155,15 +149,12 @@ public:
 		case OIS::KC_W:
 			switch (cont)
 			{
-			case 1:
-			case 2:
-				if (show){
-					Refrescar(cont, false);
-					Refrescar(cont-1, true);
-					cont--;
-				}
-				break;			
-			}			
+			case 1:					
+				Refrescar(cont, false);
+				Refrescar(cont - 1, true);
+				cont--;
+				break;
+			}
 			break;
 
 		case OIS::KC_DOWN:
@@ -171,43 +162,29 @@ public:
 
 			switch (cont)
 			{
-			case 0:
-			case 1:
-				if (show){
-					Refrescar(cont+1, true);
-					Refrescar(cont, false);
-					cont++;
-				}
-				break;				
-			}			
-			break;
-
-		case OIS::KC_SPACE: //ejecutar
-			if (show) {
-				switch (cont)
-				{
-				case 0:
-					Show(false);
-					baseGame->setPauseStatus();
-					break;
-				case 1:
-					ShowControles();
-					break;
-				case 2:
-					baseGame->quitGame();
-					break;
-
-				default:
-					break;
-				}
+			case 0:				
+				Refrescar(cont + 1, true);
+				Refrescar(cont, false);
+				cont++;				
+				break;
 			}
 			break;
 
-		case OIS::KC_P:
-			show = !show;
-			baseGame->setPauseStatus();
-			Show(show);
-			break;
+		case OIS::KC_SPACE: //ejecutar
+			switch (cont)
+			{
+			case 0:
+				//baseGame->NuevaPartida();
+				std::cout << "Boton " << cont << std::endl;
+				break;
+			case 1:
+				//Exit();
+				baseGame->quitGame();
+				break;
+			default:				
+				break;
+			}
+			break;		
 
 		default:
 			break;
@@ -215,7 +192,7 @@ public:
 
 		return true;
 	};
-	
+
 	//le pasamos el index del boton que vamos a alterar
 	void Refrescar(int boton, bool azul)
 	{
@@ -265,49 +242,7 @@ public:
 		// Show the overlay*/
 		overlay->show();
 	}
-
-	void Show(bool aux)
-	{
-		show = aux;
-		if (show)
-		{
-			for (int i = 0; i < botones.size()-1; i++)
-				overlay->add2D(botones[i]);
-
-			Refrescar(0, true);
-			Refrescar(1, false);
-			Refrescar(2, false);
-			cont = 0;
-
-		}
-		else
-		{
-			for (int i = 0; i < botones.size(); i++)
-				overlay->remove2D(botones[i]);
-		}
-	}
-
-	void ShowControles()
-	{
-		showControl = !showControl;
-
-		if (showControl){
-			for (int i = 0; i < botones.size() - 1; i++)
-				overlay->remove2D(botones[i]);
-			overlay->add2D(botones[5]);		
-		}
-		else{
-			overlay->remove2D(botones[5]);
-			for (int i = 0; i < botones.size() - 1; i++)
-				overlay->add2D(botones[i]);
-
-			Refrescar(0, false);
-			Refrescar(1, true);
-			Refrescar(2, false);
-			cont = 1;
-		}
-	}
-
+		
 	void SetMainGameRef(TutorialApplication* game) {
 
 		baseGame = game;
@@ -320,12 +255,10 @@ private:
 	std::vector<std::string> textoBoton;
 
 	std::vector<int> posiciones;
+	int cont = 0;
+	TutorialApplication* baseGame;
 
 	Overlay* overlay;
-	TutorialApplication* baseGame;
-	int cont = 0;
-	bool show = false;
-	bool showControl = false;
 };
 
-#endif /* BOTON_H_ */
+#endif /* MENUGAMEOVER_H_ */

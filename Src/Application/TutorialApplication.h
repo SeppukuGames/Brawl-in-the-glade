@@ -29,7 +29,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "OgreOverlayManager.h"
 #include "OgreOverlayContainer.h"
 #include "OgreBorderPanelOverlayElement.h"
-#include "buttonGUI.h"
 
 using namespace Ogre;
 
@@ -56,6 +55,7 @@ protected:
 	SceneNode* camNode;
 	GameObject* ninja;
 	GameObject* boton;
+	GameObject* botonGO;
 
 	virtual void createScene(void);
 	virtual void createLights(void);

@@ -38,7 +38,6 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreTextureManager.h>
 
 //Overlay
-#include "buttonGUI.h"
 #include <OgreOverlay.h>
 #include <OgreOverlaySystem.h>
 
@@ -107,8 +106,6 @@ protected:
 
 	//Overlay
 	virtual void initOverlay(void);	
-	virtual void handleButtonEvent(buttonGUI::buttonEvent * e);
-
 
 	//----------------Window Event Listener---------------
 	//Actualiza el estado del ratón a la nueva ventana
@@ -158,9 +155,7 @@ protected:
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
 	std::vector<OIS::MouseListener*> mouseInputObservers;
-
-	buttonGUI::buttonManager * buttonMgr;
-
+	
 	//Engines
 	Physics * physicsEngine;	
 	irrklang::ISoundEngine* soundEngine;
