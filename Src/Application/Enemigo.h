@@ -93,7 +93,7 @@ public:
 		pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
 		dist = obtenerDistancia();
 		
-		//If estas muerto -> live = YESn´t
+		//If estas muerto -> life = YESn´t
 		if (life <= 0){
 			isDead = true;
 			MainGame::getInstance()->DestroyGameObject(_gameObject);
