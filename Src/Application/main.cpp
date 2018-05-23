@@ -1,4 +1,5 @@
-#include "MainGame.h"
+//#include "MainGame.h"
+#include "Home.h"
 //#include "TutorialBuffered.h"
 //#include "tutorial2.h"
 
@@ -12,8 +13,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 
 #endif
 	//Inicializa Ogre y el juego
-	MainGame::getInstance()->go();
-
+	Home::getInstance()->go();
 	return 0;
 }
 

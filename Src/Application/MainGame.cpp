@@ -48,6 +48,7 @@ using namespace Ogre;
 MainGame::MainGame(void)
 {
 	partidaTerminada = false;
+	playIndex = 1;
 }
 //-------------------------------------------------------------------------------------
 
@@ -310,7 +311,7 @@ void MainGame::createEntities(void)
 	//----------------------MENUs------------------------	
 	menuPausa = new GameObject(mSceneMgr);
 	menuPausa->addComponent(new MenuPausa());
-	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
+	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::MENUPAUSA))->SetMainGameRef(this);
 
 	actors_.push_back(menuPausa);
 
@@ -371,7 +372,7 @@ void MainGame::GenerarArboles()
 }
 
 
-void MainGame::NuevaOleada()
+void MainGame::NuevaOleada(void)
 {
 	for (int i = 0; i < 8*oleadaActual; i++) {
 
@@ -431,6 +432,7 @@ void MainGame::NuevaOleada()
 		actors_.push_back(enemigo);
 		numEnemigos++;
 	}
+
 }
 
 void MainGame::createGUI() {
@@ -480,12 +482,21 @@ void MainGame::createScene(void)
 
 }
 
-void MainGame::setPauseStatus() {
-	pause = !pause;
+
+void MainGame::RestartGame()
+{
+	playIndex = 0;
+	mShutDown = true;
+	instance = NULL;
 }
 
 void MainGame::quitGame() {
+	playIndex = -1;
 	mShutDown = true;
+}
+
+void MainGame::setPauseStatus() {
+	pause = !pause;
 }
 
 bool MainGame::getGameOverStatus() {

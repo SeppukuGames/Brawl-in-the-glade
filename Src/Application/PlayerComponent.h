@@ -12,7 +12,7 @@ private:
 
 	//PLAYER STATS
 	float life;
-	const float maxLife = 1000.f;
+	const float maxLife = 1.f;
 	const float attackPower = 100.f;
 
 	UICanvas* playerUI;

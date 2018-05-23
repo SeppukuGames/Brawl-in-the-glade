@@ -76,20 +76,17 @@ protected:
 	OIS::InputManager* mInputManager;
 	OIS::Mouse*    mMouse;
 	OIS::Keyboard* mKeyboard;
-
-
 	//bool mCursorWasVisible;						// was cursor visible before dialog appeared
-	bool mShutDown;
+	
 	Ogre::OverlaySystem *mOverlaySystem;//No lo utilizamos?
 
 
-										//Todos los objetos de las escena
+	//Todos los objetos de las escena
 	std::vector<GameObject*> actors_;
 
 	std::vector<OIS::KeyListener*> keyInputObservers;
 
 	std::vector<OIS::MouseListener*> mouseInputObservers;
-
 
 	Physics * physicsEngine;
 
@@ -100,8 +97,14 @@ protected:
 	Ogre::Timer *timer;
 
 	bool pause;
+
 	int numEnemigos = 0;
 	int oleadaActual = 1;
+
+	bool gameOver;
+	bool mShutDown;
+	int playIndex;		//Contador de escenas: Menu principal = 0, MainGame = 1
+
 
 	//--------------------------------------ATRIBUTOS-----------------------------------------------
 
@@ -157,7 +160,7 @@ protected:
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
 
-	virtual void NuevaOleada() = 0;
+	virtual void NuevaOleada(void) = 0;
 
 	//Overlay
 	virtual void initOverlay(void);

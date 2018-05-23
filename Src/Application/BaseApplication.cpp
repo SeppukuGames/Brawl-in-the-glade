@@ -18,7 +18,8 @@ http://www.ogre3d.org/tikiwiki/
 #include <OgreException.h>
 #include <OgreTimer.h>
 #include <OgreOverlayManager.h>
-
+#include "MainGame.h"
+#include "Home.h"
 #if defined(WIN32)
 #include <conio.h>
 #else
@@ -46,7 +47,8 @@ BaseApplication::BaseApplication(void)
 	physicsEngine(0),
 	//mCursorWasVisible(false),
 	mShutDown(false),
-	pause(false)
+	pause(false),
+	gameOver(false)
 	//mOverlaySystem(0)
 {
 }
@@ -62,6 +64,12 @@ BaseApplication::~BaseApplication(void)
 
 	//Último en borrar,es el más importante
 	delete mRoot;
+
+	if(playIndex == 0)
+		Home::getInstance()->go();
+	else if (playIndex == 1)
+		MainGame::getInstance()->go();
+	
 }
 
 //-------------------------------------------------------------------------------------
@@ -112,6 +120,9 @@ bool BaseApplication::gameLoop()
 		update(elapsed);
 
 	if (!render())
+		return false;
+
+	if (gameOver)
 		return false;
 
 	lastTime = current;
@@ -333,6 +344,7 @@ void BaseApplication::chooseSceneManager(void)
 void BaseApplication::initOverlay(void)
 {
 	// Inicializa el OverlaySystem
+	
 	mOverlaySystem = new Ogre::OverlaySystem();
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 	Ogre::OverlayManager* overlayManager = Ogre::OverlayManager::getSingletonPtr();
@@ -484,17 +496,22 @@ void BaseApplication::destroyScene(void)
 	for (size_t i = 0; i < actors_.size(); i++)
 		delete(actors_[i]);
 
-	////Destruye todos los observadores (Mouse y Keyboard)
-	//for (size_t i = 0; i < keyInputObservers.size(); i++)
-	//	delete(keyInputObservers[i]);
+	mOverlaySystem->~OverlaySystem();
 
-	//for (size_t i = 0; i < mouseInputObservers.size(); i++)
-	//	delete(mouseInputObservers[i]);
+	delete(this);
+	//Destruye todos los observadores (Mouse y Keyboard)
+	/*for (size_t i = 0; i < keyInputObservers.size(); i++)
+		delete(keyInputObservers[i]);
 
+	for (size_t i = 0; i < mouseInputObservers.size(); i++)
+		delete(mouseInputObservers[i]);
+		*/
 }
 //-------------------------------------------------------------------------------------
 
+/*void BaseApplication::NuevaOleada(void) {
 
+}*/
 
 //-------------------------------------------------------------------------------------
 
@@ -506,6 +523,7 @@ bool BaseApplication::keyPressed(const OIS::KeyEvent &arg)
 {
 	if (arg.key == OIS::KC_ESCAPE)
 	{
+		playIndex = -1;
 		mShutDown = true;
 	}
 	else if (arg.key == OIS::KC_A)

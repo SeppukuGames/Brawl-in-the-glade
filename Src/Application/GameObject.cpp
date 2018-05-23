@@ -15,6 +15,7 @@
 #include "MouseComponent.h"
 #include "MenuGameOver.h"
 #include "MenuPausa.h"
+#include "MenuPrincipal.h"
 #include "MainGame.h"
 #include "PanelOleada.h"
 
@@ -227,7 +228,7 @@ Component* GameObject::getComponent(ComponentName component) {
 
 		break;
 
-	case ComponentName::BUTTON:
+	case ComponentName::MENUPAUSA:
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			MenuPausa* comp = dynamic_cast<MenuPausa*> (components[i]);
@@ -249,6 +250,17 @@ Component* GameObject::getComponent(ComponentName component) {
 
 		break;
 
+	case ComponentName::MENUPRINCIPAL:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			MenuPrincipal* comp = dynamic_cast<MenuPrincipal*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+
+		}
+
+		break;
 
 	case ComponentName::MAINGAME:
 		for (size_t i = 0; i < components.size(); i++)

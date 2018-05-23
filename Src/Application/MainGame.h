@@ -44,7 +44,6 @@ class MainGame : public BaseApplication
 
 public:
 
-	
 
 	static MainGame *getInstance();
 
@@ -60,9 +59,12 @@ public:
 
 	void reducirUnEnemigo(){ if(numEnemigos > 0) numEnemigos--; }
 
+	void RestartGame();
+
+
 protected:
 
-	virtual void NuevaOleada();
+	virtual void NuevaOleada(void);
 
 	void GenerarArboles();
 

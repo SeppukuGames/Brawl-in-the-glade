@@ -16,7 +16,7 @@
 class PanelOleada : public KeyInputComponent, public Component {
 public:
 
-	PanelOleada() : KeyInputComponent(), Component()
+	PanelOleada() : KeyInputComponent(1), Component()
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();

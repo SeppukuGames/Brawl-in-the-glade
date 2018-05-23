@@ -17,7 +17,7 @@
 class MenuPausa : public KeyInputComponent, public Component {
 public:
 
-	MenuPausa() : KeyInputComponent(), Component()
+	MenuPausa() : KeyInputComponent(1), Component()
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();

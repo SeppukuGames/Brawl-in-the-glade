@@ -50,6 +50,10 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Bala.cpp" />
+    <ClCompile Include="..\..\Src\Application\MenuPrincipal.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Home.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\Enemigo.h">
@@ -135,10 +139,13 @@
       <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MenuGameOver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\MenuPausa.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MenuPrincipal.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\PanelOleada.h">
       <Filter>Header Files\Component</Filter>
@@ -146,6 +153,7 @@
     <ClInclude Include="..\..\Src\Application\Enemigo2.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Home.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
