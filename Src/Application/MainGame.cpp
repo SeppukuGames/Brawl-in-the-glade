@@ -411,12 +411,14 @@ void MainGame::NuevaOleada(void)
 			Enemigo2* enemyRef = dynamic_cast<Enemigo2*> (enemigo->getComponent(ComponentName::ENEMY));
 			enemyRef->setUpPlayer(ninja);
 			enemyRef->setUpTower(Torre);
+			enemyRef->setEnemyUI(billboardSet);
 		}
 		else{
 			enemigo->addComponent(new Enemigo());
 			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
 			enemyRef->setUpPlayer(ninja);
 			enemyRef->setUpTower(Torre);
+			enemyRef->setEnemyUI(billboardSet);
 		}
 		
 
@@ -424,6 +426,8 @@ void MainGame::NuevaOleada(void)
 		billboardSet->setMaterialName("health");
 		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
 		billboardSet->setDefaultDimensions(100, 10);
+
+		
 
 		billboard = billboardSet->createBillboard(Vector3::ZERO);
 		billboard->setPosition(Vector3(0, 40, 0));
@@ -433,6 +437,22 @@ void MainGame::NuevaOleada(void)
 		numEnemigos++;
 	}
 
+}
+
+void MainGame::DestroyGameObject(GameObject * obj){
+
+	//Llamada para quitarlo de los actores
+	BaseApplication::quitaGameObject(obj);
+
+	//Ahora quitamos el entity
+
+	DynamicRigidbodyComponent * DRB = dynamic_cast <DynamicRigidbodyComponent *> (obj->getComponent(ComponentName::RIGIDBODY));
+
+	if (DRB != nullptr){
+		DRB->getRigidbody()->activate(false);
+	}
+
+	obj->getNode()->setVisible(false);	
 }
 
 void MainGame::createGUI() {

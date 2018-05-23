@@ -54,6 +54,9 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Home.cpp" />
+    <ClCompile Include="..\..\Src\Application\BalaComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\Enemigo.h">

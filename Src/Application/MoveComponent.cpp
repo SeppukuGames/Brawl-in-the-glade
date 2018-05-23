@@ -158,3 +158,10 @@ bool MoveComponent::keyReleased(const OIS::KeyEvent &arg) {
 	animComp->blend("Idle2", animComp->BlendWhileAnimating, Ogre::Real(0.2), true);
 	return true;
 };
+
+void MoveComponent::onCollision(GameObject *collision){
+	if (collision != nullptr)
+		std::cout << "Colisión con " + collision->getNode()->getName() + '\n';
+	else
+		std::cout << "Colisión con objeto estático" + '\n';
+};

@@ -19,6 +19,7 @@ public:
 
 	virtual void start();
 	virtual void tick(double elapsed);
+	virtual void onCollision(GameObject *);
 
 	virtual bool keyPressed(const OIS::KeyEvent &arg);
 	virtual bool keyReleased(const OIS::KeyEvent &arg);

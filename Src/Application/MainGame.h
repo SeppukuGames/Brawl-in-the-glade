@@ -57,9 +57,13 @@ public:
 
 	void ShowGameOver();
 
+
 	void reducirUnEnemigo(){ if(numEnemigos > 0) numEnemigos--; }
 
 	void RestartGame();
+
+
+	void DestroyGameObject(GameObject * objToDestroy);
 
 
 protected:

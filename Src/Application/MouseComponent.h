@@ -32,6 +32,7 @@ public:
 
 	virtual void start(){
 		raySceneQuery = _gameObject->getNode()->getCreator()->createRayQuery(Ray());
+		idBala = -1;
 		resultado = Vector3(0, 0, 0);
 		btVector3 aux (0.0f, 1.0f, 0.0f);
 		newRotation = btQuaternion(aux, 0.0f);
@@ -312,8 +313,10 @@ public:
 
 			btVector3 vectDir(laX, 0.0f, laZ);
 
-
-			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), vectDir);
+			idBala++;	//Empieza en 0
+			std::string nombreBala = std::to_string(idBala);
+			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), vectDir, nombreBala);
+			
 		}
 
 		return true;
@@ -411,6 +414,7 @@ private:
 
 	Ogre::Real posMouseX, posMouseY;
 	btQuaternion dirBala;
+	int idBala;
 	btQuaternion newRotation;
 
 	Vector3 resultado;

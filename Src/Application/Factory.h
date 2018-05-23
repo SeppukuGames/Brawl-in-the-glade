@@ -26,9 +26,9 @@ public:
 
 	//No debería ser static porque entonces pa qué quieres una clase jaja
 	//Pero de momento se queda así.
-	static void creaBala(Ogre::SceneManager* mSceneManager, const btVector3 & pos, const btVector3  & dir){
+	static void creaBala(Ogre::SceneManager* mSceneManager, const btVector3 & pos, const btVector3  & dir, std::string id){
 
-		Bala* nuevaBala = new Bala(mSceneManager, pos, dir);
+		Bala* nuevaBala = new Bala(mSceneManager, pos, dir, id);
 	}
 
 
