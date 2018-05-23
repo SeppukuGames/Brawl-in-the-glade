@@ -306,6 +306,7 @@ void MainGame::GenerarArboles()
 
 void MainGame::NuevaOleada(void)
 {
+	oleadaActual++;
 	for (int i = 0; i < 3*oleadaActual; i++) {
 
 		GameObject * enemigo = new GameObject(mSceneMgr);
