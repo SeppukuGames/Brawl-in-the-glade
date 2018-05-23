@@ -35,7 +35,7 @@ Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3
 	balaMass = 1.0f;
 	balaInercia = btVector3(0, 0, 0);
 
-	this->addComponent(new EntityComponent("knot.mesh"));		//Tenemos una bola con componente entidad.
+	this->addComponent(new EntityComponent("bala.mesh"));		//Tenemos una bola con componente entidad.
 	getNode()->setScale(0.2, 0.2, 0.2);
 	this->addComponent(new DynamicRigidbodyComponent(balaMotionState, balaShape, balaMass, balaInercia));
 	this->addComponent(new BalaComponent(direccion));

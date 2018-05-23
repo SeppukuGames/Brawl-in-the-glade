@@ -138,8 +138,6 @@ public:
 
 	void quitaGameObject(GameObject * nuevo);
 
-
-
 	virtual int getOleada(){ return oleadaActual; }
 	virtual int getNumEnemigos() { return numEnemigos; }
 
