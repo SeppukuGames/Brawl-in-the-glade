@@ -88,19 +88,7 @@ void MainGame::createCameras(void)
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
-	actors_.push_back(cam);
-
-	/*
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	// create the camera
-	Camera* cam = mSceneMgr->createCamera("myCam");
-	cam->setNearClipDistance(5); // specific to this sample
-	cam->setAutoAspectRatio(true);
-	camNode->attachObject(cam);
-	camNode->setPosition(0, 0, 140);
-	// and tell it to render into the main window
-	getRenderWindow()->addViewport(cam);
-	*/
+	actors_.push_back(cam);	
 }
 
 //-------------------------------------------------------------------------------------
@@ -191,7 +179,6 @@ void MainGame::createEntities(void)
 
 	//----------------------NINJA---------------------------------
 
-
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
@@ -264,7 +251,7 @@ void MainGame::createEntities(void)
 	//----------------------SUELO---------------------------------
 
 	//----------------------TORRE---------------------------------
-	GameObject *Torre = new GameObject(mSceneMgr);
+	Torre = new GameObject(mSceneMgr);
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
 	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 	Torre->addComponent(new EntityComponent("Torre.mesh"));
@@ -292,6 +279,34 @@ void MainGame::createEntities(void)
 	//----------------------TORRE---------------------------------
 
 	//----------------------ARBOLES-------------------------------
+	GenerarArboles();
+
+	//----------------------ARBOLES-------------------------------
+
+	//----------------------ENEMIGOS------------------------------
+	NuevaOleada();
+
+	//----------------------ENEMIGOS------------------------------
+
+	//----------------------MENUs------------------------	
+	menuPausa = new GameObject(mSceneMgr);
+	menuPausa->addComponent(new MenuPausa());
+	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
+
+	actors_.push_back(menuPausa);
+
+	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
+	//----------------------MENU GAMEOVER------------------------	
+	menuGO = new GameObject(mSceneMgr);
+	menuGO->addComponent(new MenuGameOver());
+	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
+
+	actors_.push_back(menuGO);
+	//----------------------MENUs------------------------
+}
+
+void MainGame::GenerarArboles()
+{
 	int random = 0;
 	for (int i = 0; i < 40; i++) {
 		for (int j = 0; j < 40; j++) {
@@ -300,8 +315,7 @@ void MainGame::createEntities(void)
 
 			if (random % 6 == 0) {
 				GameObject *arbol_ = new GameObject(mSceneMgr);
-				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));
-				//Falta rotacion
+				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));				
 				arbol_->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 				random = rand() % 6;
 				switch (random)
@@ -324,76 +338,58 @@ void MainGame::createEntities(void)
 					break;
 
 				}
-
 				actors_.push_back(arbol_);
 
 			}
 		}
 	}
+}
 
-	//----------------------ARBOLES-------------------------------
+void MainGame::NuevaOleada()
+{
+	for (int i = 0; i < 8*oleadaActual; i++) {
 
-	//----------------------ENEMIGOS------------------------------
-	//for (int i = 0; i < 8; i++) {
+		GameObject * enemigo = new GameObject(mSceneMgr);
+		enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
+		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-	//	GameObject * enemigo = new GameObject(mSceneMgr);
-	//	enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
-	//	enemigo->getNode()->setScale(0.5, 0.5, 0.5);
-	//	enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-	//	btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+		btTransform enemyTransform;
+		enemyTransform.setIdentity();
+		enemyTransform.setOrigin(enemyInitialPosition);
 
-	//	btTransform enemyTransform;
-	//	enemyTransform.setIdentity();
-	//	enemyTransform.setOrigin(enemyInitialPosition);
+		btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
 
-	//	btDefaultMotionState *enemyMotionState = new btDefaultMotionState(enemyTransform);
+		//Colision shape
+		btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
-	//	//Colision shape
-	//	btCollisionShape *EnemyRigidShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+		//set the mass of the object. a mass of "0" means that it is an immovable object
+		btScalar enemyMass(1.0f);
+		btVector3 enemyInertia(0, 0, 0);
 
-	//	//set the mass of the object. a mass of "0" means that it is an immovable object
-	//	btScalar enemyMass(1.0f);
-	//	btVector3 enemyInertia(0, 0, 0);
+		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
+		enemigo->addComponent(enemyRbComponent);
+		enemyRbComponent->getRigidbody()->setRestitution(1);
+		enemigo->addComponent(new Enemigo());
 
-	//	DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
-	//	enemigo->addComponent(enemyRbComponent);
-	//	enemyRbComponent->getRigidbody()->setRestitution(1);
-	//	enemigo->addComponent(new Enemigo());
+		Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+		enemyRef->setUpPlayer(ninja);
+		enemyRef->setUpTower(Torre);
 
-	//	Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-	//	enemyRef->setUpPlayer(ninja);
-	//	enemyRef->setUpTower(Torre);
+		billboardSet = mSceneMgr->createBillboardSet();
+		billboardSet->setMaterialName("health");
+		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+		billboardSet->setDefaultDimensions(100, 10);
 
-	//	billboardSet = mSceneMgr->createBillboardSet();
-	//	billboardSet->setMaterialName("health");
-	//	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
-	//	billboardSet->setDefaultDimensions(100, 10);
+		billboard = billboardSet->createBillboard(Vector3::ZERO);
+		billboard->setPosition(Vector3(0, 40, 0));
+		enemigo->getNode()->attachObject(billboardSet);
 
-	//	billboard = billboardSet->createBillboard(Vector3::ZERO);
-	//	billboard->setPosition(Vector3(0, 40, 0));
-	//	enemigo->getNode()->attachObject(billboardSet);
-
-	//	actors_.push_back(enemigo);
-	//}
-
-	//----------------------ENEMIGOS------------------------------
-
-	//----------------------MENUs------------------------	
-	menuPausa = new GameObject(mSceneMgr);
-	menuPausa->addComponent(new MenuPausa());
-	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
-
-	actors_.push_back(menuPausa);
-
-	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
-	//----------------------MENU GAMEOVER------------------------	
-	menuGO = new GameObject(mSceneMgr);
-	menuGO->addComponent(new MenuGameOver());
-	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
-
-	actors_.push_back(menuGO);
-	//----------------------MENUs------------------------
+		actors_.push_back(enemigo);
+		numEnemigos++;
+	}
 }
 
 void MainGame::createGUI() {

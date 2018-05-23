@@ -105,6 +105,9 @@ bool BaseApplication::gameLoop()
 	if (!handleInput())
 		return false;
 
+	if (numEnemigos > 0 && numEnemigos < 2)
+		NuevaOleada();
+
 	if (!pause)
 		update(elapsed);
 

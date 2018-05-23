@@ -54,16 +54,25 @@ public:
 
 	void ShowGameOver();
 
+	void reducirUnEnemigo(){ if(numEnemigos > 0) numEnemigos--; }
+
 protected:
+
+	virtual void NuevaOleada();
+
+	void GenerarArboles();
 
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
+	GameObject *Torre;
 	BillboardSet* billboardSet;
 	Billboard* billboard;
 
 	GameObject* menuPausa;
 	GameObject* menuGO;
+	
+	int oleadaActual = 1;
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;
 	//GameObject* lifeCanvas;
