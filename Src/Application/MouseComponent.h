@@ -33,6 +33,7 @@ public:
 	virtual void start(){
 		raySceneQuery = _gameObject->getNode()->getCreator()->createRayQuery(Ray());
 		idBala = -1;
+		currentCD = 0;
 		resultado = Vector3(0, 0, 0);
 		btVector3 aux (0.0f, 1.0f, 0.0f);
 		newRotation = btQuaternion(aux, 0.0f);
@@ -284,28 +285,12 @@ public:
 		posMouseY = arg.state.Y.abs / Real(vp->getActualHeight());;
 		std::cout << "x: " << posMouseX << " y: " << posMouseY << std::endl;
 
-		if (id == OIS::MB_Left){
+		if (id == OIS::MB_Left && currentCD >= Cooldown){
 			//Dispara una bala.
-
+			
 			RaycastFromPoint(posMouseX, posMouseY, resultado);
 	
-			//Ogre::Ray ray = Cam->getCameraToViewportRay(posMouseX, posMouseY);
-			//	raySceneQuery->setRay(ray);
-			//// coordenadas normalizadas en [0,1]
-
-			////Soy una lista, cada elemento con tres datos: distancia, movable o worldFragment
-			//RaySceneQueryResult& qryResult = raySceneQuery->execute();
-			//RaySceneQueryResult::iterator it = qryResult.begin();
-
-			//
-			//Ray mouseRay = Cam->getCameraToViewportRay(posMouseX, posMouseY);
-			//std::pair<bool, Real> result = mouseRay.intersects(plano);
-			//if (result.first)
-			//{
-			//	result.second
-			//}
-			//btQuaternion dirBala;
-			//dirBala = rb->getRigidbody()->getOrientation(); //Devuelve un btquaternion
+			
 			btVector3 newLook(resultado.x, 0, resultado.z);
 			btVector3 posJugador = transform.getOrigin();
 			btScalar laX = newLook.getX() - posJugador.getX();
@@ -316,7 +301,13 @@ public:
 			idBala++;	//Empieza en 0
 			std::string nombreBala = std::to_string(idBala);
 			BulletFactory::creaBala(_gameObject->getNode()->getCreator(), transform.getOrigin(), vectDir, nombreBala);
+
+			//Reiniciamos cooldown
+			currentCD = 0;
 			
+		}
+		else { 
+			currentCD++;	//Sumo el cooldown hasta que llegue a Cooldown, entonces podré disparar
 		}
 
 		return true;
@@ -410,12 +401,17 @@ public:
 		return transform;
 	}
 private:
+
+	const int Cooldown = 2;
+	int currentCD;
+
 	RaySceneQuery *raySceneQuery;
 
 	Ogre::Real posMouseX, posMouseY;
 	btQuaternion dirBala;
 	int idBala;
 	btQuaternion newRotation;
+
 
 	Vector3 resultado;
 	Ogre::Camera * Cam;

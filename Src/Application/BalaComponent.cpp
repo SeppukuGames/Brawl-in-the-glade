@@ -5,22 +5,14 @@
 
 
 void BalaComponent::start(){
-	vida = 1000;
-	velocidad = 20;
+	vida = 15;
+	velocidad = 2000;
 
 	//Mete el impulso inicial
 	rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
-	////Las colisiones hulio
-	//std::cout << rb->getRigidbody()->getActivationState() << std::endl;
 
-	//transform = rb->getRigidbody()->getWorldTransform();
-	//
-	////Aplicas la fuerza
-	//transform.setRotation(rotacion);
-	//rb->getRigidbody()->setLinearVelocity(Direccion *  velocidad);
-	if (Direccion.length() < 5) {
-		velocidad *= 10;
-	}
+
+	Direccion.normalize();
 	std::cout << "Direccion X:" << Direccion.getX() << "Direccion Y:" << Direccion.getZ() << std::endl;
 	rb->getRigidbody()->applyCentralImpulse(Direccion * velocidad);
 	//
@@ -31,11 +23,12 @@ void BalaComponent::start(){
 void BalaComponent::tick(double elapsed){
 	if (vida > 0){
 
-
 		vida--;
 	}
 
-	//Si vida = 0, se para.
+	else{
+		DestruyeBala();
+	}
 }
 
 void BalaComponent::onCollision(GameObject *collision)
