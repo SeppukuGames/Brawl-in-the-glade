@@ -138,11 +138,41 @@ bool BaseApplication::update(double elapsed)
 	if (this->physicsEngine != NULL)
 		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
 
-																				   //Actualiza todos los objetos
+	//Actualiza todos los objetos
 
 	for (size_t i = 0; i < actors_.size(); i++)
 		actors_[i]->tick(elapsed);
 
+	int numManifolds = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++)
+		{
+		btPersistentManifold* contactManifold = getPhysicsEngine()->getDynamicsWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+		
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+		
+		GameObject *gameObjectA = (GameObject*)obA->getUserPointer();
+		GameObject *gameObjectB = (GameObject*)obB->getUserPointer();
+		
+			//Si no ha devuelto nada el User Pointer, no es un Dynamic Rigidbody
+		if (gameObjectA == nullptr && gameObjectB == nullptr){}
+		else if (gameObjectA == nullptr)
+			{
+			gameObjectB->onCollision(nullptr);
+			}
+		else if (gameObjectB == nullptr)
+			{
+			gameObjectA->onCollision(nullptr);
+			}
+		else
+			{
+			//Informa a todos los componentes del gameobject de la colision
+			gameObjectA->onCollision(gameObjectB);
+			gameObjectB->onCollision(gameObjectA);
+			}
+		
+		}
+	
 	return true;
 }
 
@@ -564,11 +594,14 @@ void BaseApplication::añadeGameObject(GameObject * nuevo){
 
 void BaseApplication::quitaGameObject(GameObject * borrar){
 	int i = 0;
-	std::vector<GameObject*>::iterator it;
+	std::vector<GameObject*>::iterator it = actors_.begin();
 	while (it < actors_.end() && (*it)->getNode()->getName() != borrar->getNode()->getName())
 		it++;
 
-	actors_.erase(it);
+	if (it < actors_.end()){
+		actors_.erase(it);
+	}
+	
 
 }
 

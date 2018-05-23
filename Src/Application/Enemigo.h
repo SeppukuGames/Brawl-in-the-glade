@@ -20,6 +20,7 @@ private:
 	float velocity;
 	float timeCheck;
 	bool canMove;
+	bool isDead;
 
 	//UI
 	BillboardSet* enemyUI;
@@ -64,6 +65,7 @@ public:
 		timeCheck = 0;
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
 		canMove = true;
+		isDead = false;
 		objType = _NULL;
 	};
 
@@ -74,7 +76,13 @@ public:
 		pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
 		dist = obtenerDistancia();
 		
-		if (dist < maxPlayerDistance) {
+		//If estas muerto -> live = YESn´t
+		if (life <= 0){
+			isDead = true;
+			MainGame::getInstance()->DestroyGameObject(_gameObject);
+		}
+
+		if (dist < maxPlayerDistance && !isDead) {
 			
 			//std::cout << "Reaching tower! Distance: " << dist << std::endl;
 			objetivo = _player_rb->getRigidbody()->getWorldTransform().getOrigin();

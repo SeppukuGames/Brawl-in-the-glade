@@ -373,6 +373,8 @@ void MainGame::createEntities(void)
 		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
 		billboardSet->setDefaultDimensions(100, 10);
 
+		enemyRef->setEnemyUI(billboardSet);
+
 		billboard = billboardSet->createBillboard(Vector3::ZERO);
 		billboard->setPosition(Vector3(0, 40, 0));
 		enemigo->getNode()->attachObject(billboardSet);

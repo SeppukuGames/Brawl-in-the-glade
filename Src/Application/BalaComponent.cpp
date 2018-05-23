@@ -38,7 +38,7 @@ void BalaComponent::tick(double elapsed){
 	//Si vida = 0, se para.
 }
 
-void  BalaComponent::onCollision(GameObject *collision)
+void BalaComponent::onCollision(GameObject *collision)
 {
 	if (collision != nullptr)
 	{
@@ -49,7 +49,7 @@ void  BalaComponent::onCollision(GameObject *collision)
 		Enemigo* Ogro = dynamic_cast<Enemigo*> (collision->getComponent(ComponentName::ENEMY));
 		if (Ogro != nullptr)
 		{
-			Ogro->hitEmemy(200);
+			Ogro->hitEmemy(10);
 			DestruyeBala();
 		}
 

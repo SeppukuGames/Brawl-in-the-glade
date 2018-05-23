@@ -36,7 +36,7 @@ GameObject::~GameObject() {
 		components[i] = nullptr;
 	}
 
-	//PUEH BUENO PPUEH AHI ETAH :)
+	
 	//UserControl* pCtrl = Ogre::any_cast<UserControl*>(
 	//	node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
 	//	getUserObjectBindings().getUserAny());
