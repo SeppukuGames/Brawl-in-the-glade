@@ -58,6 +58,8 @@ public:
 
 	void ShowGameOver();
 
+	void DestroyGameObject(GameObject * objToDestroy);
+
 protected:
 
 	GameObject * cam;

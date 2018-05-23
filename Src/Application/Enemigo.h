@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "DynamicRigidbodyComponent.h"
 #include "TowerComponent.h"
+#include "PlayerComponent.h"
 #include <cmath> 
 #include <iostream>
 

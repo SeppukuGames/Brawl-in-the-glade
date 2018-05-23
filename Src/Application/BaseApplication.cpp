@@ -562,6 +562,16 @@ void BaseApplication::añadeGameObject(GameObject * nuevo){
 	actors_.push_back(nuevo);
 }
 
+void BaseApplication::quitaGameObject(GameObject * borrar){
+	int i = 0;
+	std::vector<GameObject*>::iterator it;
+	while (it < actors_.end() && (*it)->getNode()->getName() != borrar->getNode()->getName())
+		it++;
+
+	actors_.erase(it);
+
+}
+
 Physics * BaseApplication::getPhysicsEngine()
 {
 	return physicsEngine;

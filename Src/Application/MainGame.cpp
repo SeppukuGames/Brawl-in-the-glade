@@ -399,6 +399,22 @@ void MainGame::createEntities(void)
 	//----------------------MENUs------------------------
 }
 
+void MainGame::DestroyGameObject(GameObject * obj){
+
+	//Llamada para quitarlo de los actores
+	BaseApplication::quitaGameObject(obj);
+
+	//Ahora quitamos el entity
+
+	DynamicRigidbodyComponent * DRB = dynamic_cast <DynamicRigidbodyComponent *> (obj->getComponent(ComponentName::RIGIDBODY));
+
+	if (DRB != nullptr){
+		DRB->getRigidbody()->activate(false);
+	}
+
+	obj->getNode()->setVisible(false);	
+}
+
 void MainGame::createGUI() {
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();

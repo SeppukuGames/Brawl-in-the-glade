@@ -3,14 +3,17 @@
 #include "BalaComponent.h"
 #include "MainGame.h"
 
+#include <string>
 
-Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3  & dir) : GameObject(mSceneMgr) {
+Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3  & dir, std::string idBala) : GameObject(mSceneMgr, "Bala" + idBala) {
 
 	posicion = pos;
 	direccion = dir;
 
 	_sceneMgr = mSceneMgr;
 
+	
+	std::cout << "Bala" + idBala << std::endl;
 
 	//iniciaFisica();
 	//Motion state
@@ -44,8 +47,3 @@ Bala::Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3
 
 }
 
-
-//INICIA EL RIGID BODY DE LA BALA
-void Bala::iniciaFisica(){
-
-}

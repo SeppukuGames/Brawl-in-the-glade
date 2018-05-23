@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Bala.cpp" />
+    <ClCompile Include="..\..\Src\Application\BalaComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
     <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />

@@ -8,9 +8,8 @@ class Bala : public GameObject{
 
 public:
 
-	Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3 & dir);
+	Bala(Ogre::SceneManager* mSceneMgr, const btVector3 & pos, const btVector3 & dir, std::string id);
 
-	void iniciaFisica();
 
 private:
 	Ogre::SceneManager* _sceneMgr;

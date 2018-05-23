@@ -129,7 +129,11 @@ public:
 
 	virtual Physics * getPhysicsEngine();
 
-	virtual void añadeGameObject(GameObject * nuevo);
+	void añadeGameObject(GameObject * nuevo);
+
+	void quitaGameObject(GameObject * nuevo);
+
+
 
 
 protected:
