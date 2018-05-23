@@ -62,6 +62,8 @@ public:
 
 	void RestartGame();
 
+	void GoMainMenu();
+
 
 	void DestroyGameObject(GameObject * objToDestroy);
 
@@ -84,7 +86,7 @@ protected:
 
 	bool partidaTerminada; //para que no podamos dar a pausa durante el menu GameOver
 
-	GameObject* panelOleadas;
+	GameObject* panelOleadas, *panelEnemigos;
 
 	
 	//Overlay* overlay;

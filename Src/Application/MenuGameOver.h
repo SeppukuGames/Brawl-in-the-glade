@@ -22,14 +22,14 @@ public:
 		FontManager& fM = FontManager::getSingleton();
 
 		// Create a panel
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 3; i++) {
 			OverlayContainer* panel = static_cast<OverlayContainer*>(
 				overlayManager.createOverlayElement("Panel", "menuGO" + std::to_string(i)));
 
 			nombres.push_back(panel->getName()); //Para acceder posteriormente			
 
 			panel->setMetricsMode(Ogre::GMM_PIXELS);
-			if (i == 2)
+			if (i == 3)
 				panel->setPosition(450, 450 + (50 * 4));
 			else
 				panel->setPosition(450, 250 + (50 * i));
@@ -51,16 +51,20 @@ public:
 			switch (i)
 			{
 			case 0:
+				textArea->setCaption("Reintentar");
+				textoBoton.push_back("Reintentar");
+				break;
+			case 1:
 				textArea->setCaption("Menu Principal");
 				textoBoton.push_back("Menu Principal");
 				break;
-			case 1:
+			case 2:
 				textArea->setCaption("Salir");
 				textoBoton.push_back("Salir");
 				break;
-			case 2:
+			case 3:
 				textArea->setCaption("WS para desplazarse y SPACE para aceptar");
-				break;			
+				break;
 			default:
 				break;
 			}
@@ -94,7 +98,7 @@ public:
 		panel->setDimensions(1030, 930);
 		panel->setMaterialName("panel2"); // Optional background material 						
 
-		botones.push_back(panel);		
+		botones.push_back(panel);
 
 		//Fondo
 		OverlayContainer* fondoGO = static_cast<OverlayContainer*>(
@@ -111,26 +115,27 @@ public:
 
 		// Create an overlay, and add the panel*/
 		overlay = overlayManager.create("OverlayManagerGO");
-		for (int i = 0; i < botones.size(); i++){
+		for (int i = 0; i < botones.size(); i++) {
 			overlay->add2D(botones[i]);
 		}
 
 		// Show the overlay*/
 		//overlay->show();
 		Refrescar(0, true);
-		Refrescar(1, false);			
+		Refrescar(1, false);
+		Refrescar(2, false);
 		cont = 0;
 	};
 
-	virtual ~MenuGameOver(){};
+	virtual ~MenuGameOver() {};
 
-	virtual void start(){
+	virtual void start() {
 
 	};
-	
-	virtual void tick(double elapsed){
-		if (cont > 1)
-			cont = 1;
+
+	virtual void tick(double elapsed) {
+		if (cont > 2)
+			cont = 2;
 
 		if (cont < 0)
 			cont = 0;
@@ -141,11 +146,11 @@ public:
 			overlay->hide();
 	};
 
-	virtual bool keyPressed(const OIS::KeyEvent &arg){
+	virtual bool keyPressed(const OIS::KeyEvent &arg) {
 		return true;
 	};
 
-	virtual bool keyReleased(const OIS::KeyEvent &arg){
+	virtual bool keyReleased(const OIS::KeyEvent &arg) {
 
 		switch (arg.key)
 		{
@@ -154,8 +159,15 @@ public:
 		case OIS::KC_W:
 			switch (cont)
 			{
-			case 1:		
-				if (show){
+			case 2:
+				if (show) {
+					Refrescar(cont, false);
+					Refrescar(cont - 1, true);
+					cont--;
+				}
+				break;
+			case 1:
+				if (show) {
 					Refrescar(cont, false);
 					Refrescar(cont - 1, true);
 					cont--;
@@ -169,8 +181,15 @@ public:
 
 			switch (cont)
 			{
-			case 0:		
-				if (show){
+			case 0:
+				if (show) {
+					Refrescar(cont + 1, true);
+					Refrescar(cont, false);
+					cont++;
+				}
+				break;
+			case 1:
+				if (show) {
 					Refrescar(cont + 1, true);
 					Refrescar(cont, false);
 					cont++;
@@ -188,14 +207,18 @@ public:
 					//std::cout << "Boton " << cont << std::endl;
 					baseGame->RestartGame();
 				break;
-			case 1:	
+			case 1:
+				if (show)
+					baseGame->GoMainMenu();
+				break;
+			case 2:
 				if (show)
 					baseGame->quitGame();
 				break;
-			default:				
+			default:
 				break;
 			}
-			break;		
+			break;
 
 		default:
 			break;
@@ -253,12 +276,12 @@ public:
 		// Show the overlay*/
 		overlay->show();
 	}
-		
-	void ShowMenu()	{	
-		show = true;			
+
+	void ShowMenu() {
+		show = true;
 	}
 
-	void HideMenu(){ 
+	void HideMenu() {
 		show = false;
 	}
 
@@ -275,7 +298,7 @@ private:
 
 	std::vector<int> posiciones;
 	int cont = 0;
-	MainGame* baseGame;		
+	MainGame* baseGame;
 
 	bool show = false;
 

@@ -141,6 +141,7 @@ public:
 
 
 	virtual int getOleada(){ return oleadaActual; }
+	virtual int getNumEnemigos() { return numEnemigos; }
 
 protected:	
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame

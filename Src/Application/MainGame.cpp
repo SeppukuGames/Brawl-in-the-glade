@@ -114,86 +114,11 @@ void MainGame::createCameras(void)
 void MainGame::createEntities(void)
 {
 
-	//Crear el plano en Ogre
-	/*Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshPtr planePtr = Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-	*/
-	//Creamos un plano de terreno (Rigidbody estático) y una Esfera que cae al plano (dynamic rigidbody)
 
 	//Todos los rigidbody necesitan una referencia al collision shape.
 	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
 	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
 
-	//---------------------ESFERA---------------------------------
-
-	GameObject *esfera = new GameObject(mSceneMgr, "esfera");
-	esfera->addComponent(new EntityComponent("ogrehead.mesh"));
-	esfera->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
-
-
-	//Motion state
-	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 initialPosition(-20, 100, 0);
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setOrigin(initialPosition);
-
-
-	//actually contruvc the body and add it to the dynamics world
-	//Esfera a 50 metros de altura
-	btDefaultMotionState *fallMotionState = new btDefaultMotionState(startTransform);
-
-	//Colision shape
-	//Creamos la esfera de radio 1
-	btCollisionShape* fallShape = new btSphereShape(1);
-	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
-
-	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar mass(10.0f);
-	btVector3 fallInertia(0, 0, 0);
-
-	DynamicRigidbodyComponent* rbComponent = new DynamicRigidbodyComponent(fallMotionState, fallShape, mass, fallInertia);
-	esfera->addComponent(rbComponent);
-	rbComponent->getRigidbody()->setRestitution(1);
-
-	esfera->addComponent(new TestCollisionComponent1());
-
-	actors_.push_back(esfera);
-
-
-	GameObject *cabeza = new GameObject(mSceneMgr, "cabeza");
-	cabeza->addComponent(new EntityComponent("ogrehead.mesh"));
-	cabeza->getNode()->setScale(Ogre::Real(0.1), Ogre::Real(0.1), Ogre::Real(0.1));
-
-	//Motion state
-	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 initialPositionc(-20, 20, 0);
-	btTransform startTransformc;
-	startTransformc.setIdentity();
-	startTransformc.setOrigin(initialPositionc);
-
-	//actually contruvc the body and add it to the dynamics world
-	//Esfera a 50 metros de altura
-	btDefaultMotionState *fallMotionStatec = new btDefaultMotionState(startTransformc);
-
-	//Colision shape
-	//Creamos la esfera de radio 1
-	btCollisionShape* fallShapec = new btSphereShape(1);
-	//btCollisionShape *newRigidShape = new btBoxShape(btVector3(5.0f, 1.0f, 5.0f));
-
-	//set the mass of the object. a mass of "0" means that it is an immovable object
-	btScalar massc(10.0f);
-	btVector3 fallInertiac(0, 0, 0);
-
-	DynamicRigidbodyComponent* rbComponentc = new DynamicRigidbodyComponent(fallMotionStatec, fallShapec, massc, fallInertiac);
-	cabeza->addComponent(rbComponentc);
-	rbComponentc->getRigidbody()->setRestitution(1);
-
-	cabeza->addComponent(new TestCollisionComponent2());
-
-	actors_.push_back(cabeza);
-
-	//---------------------ESFERA---------------------------------
 
 	//----------------------NINJA---------------------------------
 
@@ -206,7 +131,7 @@ void MainGame::createEntities(void)
 
 	//Motion state
 	//set the initial position and transform. For this demo, we set the tranform to be none
-	btVector3 ninjaInitialPosition(0, 0, 0);
+	btVector3 ninjaInitialPosition(600, 0, 700);
 
 	btTransform ninjaTransform;
 	ninjaTransform.setIdentity();
@@ -236,6 +161,7 @@ void MainGame::createEntities(void)
 	MoveCameraComponent* camMove = dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA));
 
 	camMove->setUpPlayer(ninja);
+	cam->getNode()->setPosition(ninjaTransform.getOrigin().getX(), 147, ninjaTransform.getOrigin().getZ() + 300 + cam->getNode()->getPosition().z);
 
 	//----------------------NINJA---------------------------------
 
@@ -323,10 +249,17 @@ void MainGame::createEntities(void)
 	actors_.push_back(menuGO);
 
 	panelOleadas = new GameObject(mSceneMgr);
-	panelOleadas->addComponent(new PanelOleada());
+	panelOleadas->addComponent(new PanelOleada(OLEADA));
 	dynamic_cast<PanelOleada*> (panelOleadas->getComponent(ComponentName::PANELOLEADA))->SetMainGameRef(this);
 
 	actors_.push_back(panelOleadas);
+
+	panelEnemigos = new GameObject(mSceneMgr);
+	panelEnemigos->addComponent(new PanelOleada(NUM_ENEMIGOS));
+	dynamic_cast<PanelOleada*> (panelEnemigos->getComponent(ComponentName::PANELOLEADA))->SetMainGameRef(this);
+
+	actors_.push_back(panelEnemigos);
+
 	//----------------------MENUs------------------------
 }
 
@@ -439,11 +372,13 @@ void MainGame::NuevaOleada(void)
 
 void MainGame::DestroyGameObject(GameObject * obj){
 
+	if (obj->getComponent(ComponentName::ENEMY) != NULL) {
+		numEnemigos--;
+	}
 	//Llamada para quitarlo de los actores
 	BaseApplication::quitaGameObject(obj);
 
 	//Ahora quitamos el entity
-
 	DynamicRigidbodyComponent * DRB = dynamic_cast <DynamicRigidbodyComponent *> (obj->getComponent(ComponentName::RIGIDBODY));
 
 	if (DRB != nullptr){
@@ -502,6 +437,13 @@ void MainGame::createScene(void)
 
 
 void MainGame::RestartGame()
+{
+	playIndex = 1;
+	mShutDown = true;
+	instance = NULL;
+}
+
+void MainGame::GoMainMenu()
 {
 	playIndex = 0;
 	mShutDown = true;
