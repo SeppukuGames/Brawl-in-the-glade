@@ -49,19 +49,20 @@
     <ClCompile Include="..\..\Src\Application\MainGame.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Bala.cpp" />
     <ClCompile Include="..\..\Src\Application\MenuPrincipal.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Home.cpp" />
     <ClCompile Include="..\..\Src\Application\BalaComponent.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Home.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Bala.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Application\Enemigo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\EnemyPrototype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -137,7 +138,6 @@
     <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
       <Filter>Header Files\Component\Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Bala.h" />
     <ClInclude Include="..\..\Src\Application\BalaComponent.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
@@ -153,10 +153,15 @@
     <ClInclude Include="..\..\Src\Application\PanelOleada.h">
       <Filter>Header Files\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Enemigo2.h">
-      <Filter>Header Files\Component</Filter>
+    <ClInclude Include="..\..\Src\Application\Home.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Home.h" />
+    <ClInclude Include="..\..\Src\Application\Bala.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Enemigo.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

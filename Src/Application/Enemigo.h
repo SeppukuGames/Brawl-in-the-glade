@@ -10,6 +10,7 @@
 #include <iostream>
 
 enum objetiveType { _PLAYER, _TOWER, _NULL };
+enum enemyType { ENEMY1, ENEMY2 };
 
 class Enemigo : public Component {
 
@@ -32,9 +33,10 @@ protected:
 
 	//Atributos del enemigo
 	float life;								//La vida del enemigo en cada momento
-	const float maxLife = 100;				//La vida máxima del enemigo como atributo
-	const float attackPower = 50;			//El poder de ataque del enemigo
+	float maxLife;							//La vida máxima del enemigo como atributo
+	float attackPower;						//El poder de ataque del enemigo
 	objetiveType objType;					//Tipo de entidad a la que está atacando (player/torre)
+	enemyType	enmType;					//Tipo de enemigo a construir
 
 	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
 	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
@@ -51,14 +53,29 @@ protected:
 
 public:
 
-	Enemigo() : Component()	{};
+	Enemigo(enemyType type) : Component(){
+		enmType = type;
+	};
 
 	virtual ~Enemigo(){};
 
 	virtual void start(){
 		
-		velocity = 0.15f;
-		life = maxLife;
+		switch (enmType) {
+		case ENEMY1:
+			velocity = 0.15f;
+			life = maxLife = 100.f;
+			attackPower = 50.f;
+			break;
+		case ENEMY2:
+			velocity = 0.08f;
+			life = maxLife = 200.f;
+			attackPower = 80.f;
+			break;
+		default:
+			break;
+		}
+		
 		direction = { 0, 0, 0 };
 		Torre = { 700, 0, 700 };
 		objetivo = Torre;
