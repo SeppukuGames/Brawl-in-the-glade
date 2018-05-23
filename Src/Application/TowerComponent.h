@@ -19,6 +19,7 @@ private:
 
 	BillboardSet* towerUI;
 	float maxWidth, maxHeight;
+	MainGame* game;
 
 
 public:
@@ -35,7 +36,9 @@ public:
 
 
 	virtual void tick(double elapsed) {
-
+		if (life <= 0) {
+			game->ShowGameOver();
+		}
 	};
 
 	void setTowerUI(BillboardSet* newBillboard) {
@@ -50,6 +53,9 @@ public:
 		towerUI->setDefaultDimensions((maxWidth * life) / maxLife, maxHeight);
 	}
 
+	void setMainGameRef(MainGame* mainGame) {
+		game = mainGame;
+	}
 
 
 };

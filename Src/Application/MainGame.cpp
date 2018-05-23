@@ -287,6 +287,7 @@ void MainGame::createEntities(void)
 
 	TowerComponent* newTower = new TowerComponent();
 	newTower->setTowerUI(billboardSet);
+	newTower->setMainGameRef(this);
 	Torre->addComponent(newTower);
 
 	actors_.push_back(Torre);
