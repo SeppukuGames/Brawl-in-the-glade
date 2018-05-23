@@ -31,7 +31,7 @@ public:
 	virtual void start(){
 
 		vida = 1000;
-		velocidad = 2;
+		velocidad = 20;
 
 		//Mete el impulso inicial
 		rb = dynamic_cast<DynamicRigidbodyComponent*> (_gameObject->getComponent(ComponentName::RIGIDBODY));
@@ -42,7 +42,12 @@ public:
 		//
 		////Aplicas la fuerza
 		//transform.setRotation(rotacion);
-		rb->getRigidbody()->setLinearVelocity(Direccion *  velocidad);
+		//rb->getRigidbody()->setLinearVelocity(Direccion *  velocidad);
+		if (Direccion.length() < 5) {
+			velocidad *= 10;
+		}
+		std::cout << "Direccion X:" << Direccion.getX() << "Direccion Y:" << Direccion.getZ() << std::endl;
+		rb->getRigidbody()->applyCentralImpulse(Direccion * velocidad);
 		//
 		//rb->getRigidbody()->getMotionState()->setWorldTransform(transform);
 
