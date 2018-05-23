@@ -3,6 +3,7 @@
 
 //#include "GameComponent.h"
 #include "Component.h"
+#include <iostream>
 
 class PlayerComponent : public Component
 {
@@ -15,6 +16,7 @@ private:
 	const float attackPower = 100.f;
 
 	UICanvas* playerUI;
+	MainGame* game;
 	float maxWidth, maxHeight;
 
 public:
@@ -28,18 +30,15 @@ public:
 	{
 	}
 
-	void setPlayerUI() {
-		playerUI = dynamic_cast<UICanvas*> (_gameObject->getComponent(ComponentName::UI));
-		maxWidth = playerUI->getUIWidth();
-		maxHeight = playerUI->getUIHeight();
-		updateUI();
-	}
-
 	virtual void start() {
 
 	};
 
 	virtual void tick(double elapsed) {
+		//std::cout << "Tick player!" << std::endl;
+		if (life <= 0) {
+			game->ShowGameOver();
+		}
 	};
 
 	float getCurrentLife() {
@@ -75,6 +74,18 @@ public:
 	}
 	void updateUI() {
 		playerUI->updateUI();
+	}
+
+	//SETTERS
+	void setPlayerUI() {
+		playerUI = dynamic_cast<UICanvas*> (_gameObject->getComponent(ComponentName::UI));
+		maxWidth = playerUI->getUIWidth();
+		maxHeight = playerUI->getUIHeight();
+		updateUI();
+	}
+
+	void setMainGameRef(MainGame* mainGame) {
+		game = mainGame;
 	}
 };
 

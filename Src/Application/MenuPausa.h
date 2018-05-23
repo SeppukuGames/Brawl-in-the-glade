@@ -189,13 +189,13 @@ public:
 				{
 				case 0:
 					Show(false);
-					baseGame->setPauseStatus();
+					game->setPauseStatus();
 					break;
 				case 1:
 					ShowControles();
 					break;
 				case 2:
-					baseGame->quitGame();
+					game->quitGame();
 					break;
 
 				default:
@@ -205,12 +205,12 @@ public:
 			break;
 
 		case OIS::KC_P:
-			if (!baseGame->partidaTerminada){
-			show = !show;
-			baseGame->setPauseStatus();
-			Show(show);
+			if (!game->getGameOverStatus()){
+				show = !show;
+				game->setPauseStatus();
+				Show(show);
+			}
 			break;
-		}
 
 		default:
 			break;
@@ -311,9 +311,9 @@ public:
 		}
 	}
 
-	void SetMainGameRef(MainGame* game) {
+	void SetMainGameRef(MainGame* mainGame) {
 
-		baseGame = game;
+		game = mainGame;
 	}
 
 private:
@@ -325,7 +325,7 @@ private:
 	std::vector<int> posiciones;
 
 	Overlay* overlay;
-	MainGame* baseGame;
+	MainGame* game;
 	int cont = 0;
 	bool show = false;
 	bool showControl = false;

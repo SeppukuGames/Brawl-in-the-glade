@@ -44,13 +44,17 @@ class MainGame : public BaseApplication
 
 public:
 
+	
+
 	static MainGame *getInstance();
 
 	void setPauseStatus();
 
 	void quitGame();
 
-	bool partidaTerminada = false; //para que no podamos dar a pausa durante el menu GameOver
+	bool getGameOverStatus();
+
+	bool getPauseStatus();
 
 	void ShowGameOver();
 
@@ -64,6 +68,9 @@ protected:
 
 	GameObject* menuPausa;
 	GameObject* menuGO;
+
+	bool partidaTerminada; //para que no podamos dar a pausa durante el menu GameOver
+	
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;
 	//GameObject* lifeCanvas;

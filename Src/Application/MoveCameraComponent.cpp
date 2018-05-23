@@ -159,11 +159,13 @@ bool MoveCameraComponent::keyPressed(const OIS::KeyEvent &arg) {
 	{
 	case OIS::KC_SPACE:
 
-		_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
-		//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
-		_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() + 222);
-		//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
-		aumento = 0;
+		if (!game->getPauseStatus()) {
+			_rb->getRigidbody()->getMotionState()->getWorldTransform(transform);
+			//std::cout << "Transform X: " << transform.getOrigin().getX() << "\n Transform Z: " << transform.getOrigin().getZ() << std::endl;
+			_gameObject->getNode()->setPosition(transform.getOrigin().getX(), 147, transform.getOrigin().getZ() + 300 + _camera->getPosition().z);
+			//std::cout << "Camera X: " << _gameObject->getNode()->getPosition().x << "\n Camera Z: " << _gameObject->getNode()->getPosition().z << std::endl;
+			aumento = 0;
+		}
 		break;
 
 	default:
@@ -194,4 +196,8 @@ void MoveCameraComponent::setUpPlayer(GameObject* player) {
 
 void MoveCameraComponent::setUpCamera(Ogre::Camera* camera) {
 	_camera = camera;
+}
+
+void MoveCameraComponent::setMainGameRef(MainGame* mainGame) {
+	game = mainGame;
 }
