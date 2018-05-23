@@ -100,6 +100,8 @@ protected:
 	Ogre::Timer *timer;
 
 	bool pause;
+	int numEnemigos = 0;
+	int oleadaActual = 1;
 
 	//--------------------------------------ATRIBUTOS-----------------------------------------------
 
@@ -131,8 +133,9 @@ public:
 
 	virtual void añadeGameObject(GameObject * nuevo);
 
+	virtual int getOleada(){ return oleadaActual; }
 
-protected:
+protected:	
 	virtual bool gameLoop(void);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
 	virtual bool handleInput(void);//Detecta input
@@ -153,6 +156,8 @@ protected:
 
 	virtual void createScene(void) = 0; // Override me!
 	virtual void destroyScene(void);
+
+	virtual void NuevaOleada() = 0;
 
 	//Overlay
 	virtual void initOverlay(void);

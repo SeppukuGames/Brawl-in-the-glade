@@ -58,11 +58,18 @@ public:
 
 	void ShowGameOver();
 
+	void reducirUnEnemigo(){ if(numEnemigos > 0) numEnemigos--; }
+
 protected:
+
+	virtual void NuevaOleada();
+
+	void GenerarArboles();
 
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
+	GameObject *Torre;
 	BillboardSet* billboardSet;
 	Billboard* billboard;
 
@@ -70,6 +77,9 @@ protected:
 	GameObject* menuGO;
 
 	bool partidaTerminada; //para que no podamos dar a pausa durante el menu GameOver
+
+	GameObject* panelOleadas;
+
 	
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;

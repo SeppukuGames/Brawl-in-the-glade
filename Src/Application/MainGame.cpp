@@ -30,6 +30,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
+#include "Enemigo2.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "TestCollisionComponent1.h"
@@ -37,6 +38,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "BalaComponent.h"
 #include "MenuPausa.h"
 #include "MenuGameOver.h"
+#include "PanelOleada.h"
 
 using namespace Ogre;
 
@@ -89,6 +91,7 @@ void MainGame::createCameras(void)
 	camNode->attachObject(mCamera);
 	camNode->setPosition(0, 47, 222);
 	cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
+
 	dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA))->setMainGameRef(this);
 	actors_.push_back(cam);
 
@@ -103,6 +106,7 @@ void MainGame::createCameras(void)
 	// and tell it to render into the main window
 	getRenderWindow()->addViewport(cam);
 	*/
+
 }
 
 //-------------------------------------------------------------------------------------
@@ -193,7 +197,6 @@ void MainGame::createEntities(void)
 
 	//----------------------NINJA---------------------------------
 
-
 	ninja = new GameObject(mSceneMgr);
 	ninja->getNode()->setScale(Ogre::Real(0.2), Ogre::Real(0.2), Ogre::Real(0.2));
 	ninja->addComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
@@ -266,7 +269,7 @@ void MainGame::createEntities(void)
 	//----------------------SUELO---------------------------------
 
 	//----------------------TORRE---------------------------------
-	GameObject *Torre = new GameObject(mSceneMgr);
+	Torre = new GameObject(mSceneMgr);
 	Torre->getNode()->setPosition(Ogre::Vector3((20 * 50) - 300, -20, (20 * 50) - 300));
 	Torre->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 	Torre->addComponent(new EntityComponent("Torre.mesh"));
@@ -295,6 +298,40 @@ void MainGame::createEntities(void)
 	//----------------------TORRE---------------------------------
 
 	//----------------------ARBOLES-------------------------------
+	GenerarArboles();
+
+	//----------------------ARBOLES-------------------------------
+
+	//----------------------ENEMIGOS------------------------------
+	NuevaOleada();
+
+	//----------------------ENEMIGOS------------------------------
+
+	//----------------------MENUs------------------------	
+	menuPausa = new GameObject(mSceneMgr);
+	menuPausa->addComponent(new MenuPausa());
+	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
+
+	actors_.push_back(menuPausa);
+
+	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
+	//----------------------MENU GAMEOVER------------------------	
+	menuGO = new GameObject(mSceneMgr);
+	menuGO->addComponent(new MenuGameOver());
+	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
+
+	actors_.push_back(menuGO);
+
+	panelOleadas = new GameObject(mSceneMgr);
+	panelOleadas->addComponent(new PanelOleada());
+	dynamic_cast<PanelOleada*> (panelOleadas->getComponent(ComponentName::PANELOLEADA))->SetMainGameRef(this);
+
+	actors_.push_back(panelOleadas);
+	//----------------------MENUs------------------------
+}
+
+void MainGame::GenerarArboles()
+{
 	int random = 0;
 	for (int i = 0; i < 40; i++) {
 		for (int j = 0; j < 40; j++) {
@@ -303,8 +340,7 @@ void MainGame::createEntities(void)
 
 			if (random % 6 == 0) {
 				GameObject *arbol_ = new GameObject(mSceneMgr);
-				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));
-				//Falta rotacion
+				arbol_->getNode()->setPosition(Ogre::Vector3((i * 50) - (150 + (rand() % 50)), -20, (j * 50) - (150 + (rand() % 50))));				
 				arbol_->getNode()->setScale(Ogre::Vector3(5, 5, 5));
 				random = rand() % 6;
 				switch (random)
@@ -327,21 +363,28 @@ void MainGame::createEntities(void)
 					break;
 
 				}
-
 				actors_.push_back(arbol_);
 
 			}
 		}
 	}
+}
 
-	//----------------------ARBOLES-------------------------------
 
-	//----------------------ENEMIGOS------------------------------
-	for (int i = 0; i < 8; i++) {
+void MainGame::NuevaOleada()
+{
+	for (int i = 0; i < 8*oleadaActual; i++) {
 
 		GameObject * enemigo = new GameObject(mSceneMgr);
-		enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
-		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+		if (i % 3 == 0){
+			enemigo->addComponent(new EntityComponent("bot2.mesh")); 
+			enemigo->getNode()->setScale(1.8, 1.8, 1.8);
+		}
+		else{
+			enemigo->addComponent(new EntityComponent("bot1.mesh"));
+			enemigo->getNode()->setScale(0.8, 0.8, 0.8);
+		}
+		
 		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
 		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
@@ -362,11 +405,19 @@ void MainGame::createEntities(void)
 		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
 		enemigo->addComponent(enemyRbComponent);
 		enemyRbComponent->getRigidbody()->setRestitution(1);
-		enemigo->addComponent(new Enemigo());
-
-		Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-		enemyRef->setUpPlayer(ninja);
-		enemyRef->setUpTower(Torre);
+		if (i % 3 == 0){
+			enemigo->addComponent(new Enemigo2());
+			Enemigo2* enemyRef = dynamic_cast<Enemigo2*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+		}
+		else{
+			enemigo->addComponent(new Enemigo());
+			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+		}
+		
 
 		billboardSet = mSceneMgr->createBillboardSet();
 		billboardSet->setMaterialName("health");
@@ -378,25 +429,8 @@ void MainGame::createEntities(void)
 		enemigo->getNode()->attachObject(billboardSet);
 
 		actors_.push_back(enemigo);
+		numEnemigos++;
 	}
-
-	//----------------------ENEMIGOS------------------------------
-
-	//----------------------MENUs------------------------	
-	menuPausa = new GameObject(mSceneMgr);
-	menuPausa->addComponent(new MenuPausa());
-	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
-
-	actors_.push_back(menuPausa);
-
-	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
-	//----------------------MENU GAMEOVER------------------------	
-	menuGO = new GameObject(mSceneMgr);
-	menuGO->addComponent(new MenuGameOver());
-	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
-
-	actors_.push_back(menuGO);
-	//----------------------MENUs------------------------
 }
 
 void MainGame::createGUI() {
