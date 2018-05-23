@@ -30,7 +30,6 @@ http://www.ogre3d.org/tikiwiki/
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
-#include "Enemigo2.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "TestCollisionComponent1.h"
@@ -388,7 +387,7 @@ void MainGame::NuevaOleada(void)
 		
 		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
-		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
+		btVector3 enemyInitialPosition(btVector3(enemigo->getNode()->getPosition().x, 0, enemigo->getNode()->getPosition().z));
 
 		btTransform enemyTransform;
 		enemyTransform.setIdentity();
@@ -406,27 +405,26 @@ void MainGame::NuevaOleada(void)
 		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
 		enemigo->addComponent(enemyRbComponent);
 		enemyRbComponent->getRigidbody()->setRestitution(1);
-		if (i % 3 == 0){
-			enemigo->addComponent(new Enemigo2());
-			Enemigo2* enemyRef = dynamic_cast<Enemigo2*> (enemigo->getComponent(ComponentName::ENEMY));
-			enemyRef->setUpPlayer(ninja);
-			enemyRef->setUpTower(Torre);
-			enemyRef->setEnemyUI(billboardSet);
-		}
-		else{
-			enemigo->addComponent(new Enemigo());
-			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-			enemyRef->setUpPlayer(ninja);
-			enemyRef->setUpTower(Torre);
-			enemyRef->setEnemyUI(billboardSet);
-		}
 		
-
 		billboardSet = mSceneMgr->createBillboardSet();
 		billboardSet->setMaterialName("health");
 		billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
 		billboardSet->setDefaultDimensions(100, 10);
 
+		if (i % 3 == 0){
+			enemigo->addComponent(new Enemigo(ENEMY2));
+			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+			enemyRef->setEnemyUI(billboardSet);
+		}
+		else{
+			enemigo->addComponent(new Enemigo(ENEMY1));
+			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+			enemyRef->setEnemyUI(billboardSet);
+		}
 		
 
 		billboard = billboardSet->createBillboard(Vector3::ZERO);
