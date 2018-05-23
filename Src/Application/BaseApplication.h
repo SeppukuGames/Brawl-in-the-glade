@@ -99,6 +99,8 @@ protected:
 	double lastTime;
 	Ogre::Timer *timer;
 
+	bool pause;
+
 	//--------------------------------------ATRIBUTOS-----------------------------------------------
 
 public:

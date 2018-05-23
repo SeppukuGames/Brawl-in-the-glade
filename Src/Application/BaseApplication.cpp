@@ -45,7 +45,8 @@ BaseApplication::BaseApplication(void)
 	soundEngine(0),
 	physicsEngine(0),
 	//mCursorWasVisible(false),
-	mShutDown(false)
+	mShutDown(false),
+	pause(false)
 	//mOverlaySystem(0)
 {
 }
@@ -104,7 +105,8 @@ bool BaseApplication::gameLoop()
 	if (!handleInput())
 		return false;
 
-	update(elapsed);
+	if (!pause)
+		update(elapsed);
 
 	if (!render())
 		return false;

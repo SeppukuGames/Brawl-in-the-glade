@@ -42,19 +42,28 @@ class MainGame : public BaseApplication
 	MainGame(void);
 	//virtual ~MainGame(void);
 
-
 public:
 
 	static MainGame *getInstance();
 
-protected:
+	void setPauseStatus();
 
+	void quitGame();
+
+	bool partidaTerminada = false; //para que no podamos dar a pausa durante el menu GameOver
+
+	void ShowGameOver();
+
+protected:
 
 	GameObject * cam;
 	SceneNode* camNode;
 	GameObject* ninja;
 	BillboardSet* billboardSet;
 	Billboard* billboard;
+
+	GameObject* menuPausa;
+	GameObject* menuGO;
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;
 	//GameObject* lifeCanvas;
@@ -64,8 +73,6 @@ protected:
 	virtual void createCameras(void);
 	virtual void createEntities(void);
 	virtual void createGUI(void);
-
-
 };
 
 

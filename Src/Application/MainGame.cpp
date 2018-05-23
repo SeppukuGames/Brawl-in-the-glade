@@ -35,6 +35,8 @@ http://www.ogre3d.org/tikiwiki/
 #include "TestCollisionComponent1.h"
 #include "TestCollisionComponent2.h"
 #include "BalaComponent.h"
+#include "MenuPausa.h"
+#include "MenuGameOver.h"
 
 using namespace Ogre;
 
@@ -376,6 +378,22 @@ void MainGame::createEntities(void)
 	//}
 
 	//----------------------ENEMIGOS------------------------------
+
+	//----------------------MENUs------------------------	
+	menuPausa = new GameObject(mSceneMgr);
+	menuPausa->addComponent(new MenuPausa());
+	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
+
+	actors_.push_back(menuPausa);
+
+	/*Este objeto solo ha de crearse cuando el jugador haya muerto*/
+	//----------------------MENU GAMEOVER------------------------	
+	menuGO = new GameObject(mSceneMgr);
+	menuGO->addComponent(new MenuGameOver());
+	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
+
+	actors_.push_back(menuGO);
+	//----------------------MENUs------------------------
 }
 
 void MainGame::createGUI() {
@@ -425,6 +443,14 @@ void MainGame::createScene(void)
 
 }
 
+void MainGame::setPauseStatus() {
+	pause = !pause;
+}
+
+void MainGame::quitGame() {
+	mShutDown = true;
+}
+
 MainGame *MainGame::instance = 0;
 
 MainGame *MainGame::getInstance()
@@ -435,3 +461,7 @@ MainGame *MainGame::getInstance()
 
 }
 
+void MainGame::ShowGameOver()
+{ 
+	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->ShowMenu();
+}

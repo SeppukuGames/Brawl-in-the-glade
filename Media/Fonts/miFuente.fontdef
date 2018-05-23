@@ -1,0 +1,15 @@
+//
+// «FILENAME»
+// «PROJECTNAME»
+//
+// Created by «FULLUSERNAME» on «DATE».
+// Copyright «YEAR» «ORGANIZATIONNAME». All rights reserved.
+//
+
+Trebuchet
+{
+	type 		truetype
+	source 		TrebuchetMS.otf
+	size 		16
+	resolution 	96
+}
