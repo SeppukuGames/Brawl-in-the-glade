@@ -16,7 +16,7 @@
 class MenuGameOver : public KeyInputComponent, public Component {
 public:
 
-	MenuGameOver() : KeyInputComponent(), Component()
+	MenuGameOver() : KeyInputComponent(1), Component()
 	{
 		OverlayManager& overlayManager = OverlayManager::getSingleton();
 		FontManager& fM = FontManager::getSingleton();
@@ -51,8 +51,8 @@ public:
 			switch (i)
 			{
 			case 0:
-				textArea->setCaption("Reintentar");
-				textoBoton.push_back("Reintentar");
+				textArea->setCaption("Menu Principal");
+				textoBoton.push_back("Menu Principal");
 				break;
 			case 1:
 				textArea->setCaption("Salir");
@@ -185,7 +185,8 @@ public:
 			case 0:
 				//baseGame->NuevaPartida();
 				if (show)
-					std::cout << "Boton " << cont << std::endl;
+					//std::cout << "Boton " << cont << std::endl;
+					baseGame->RestartGame();
 				break;
 			case 1:	
 				if (show)

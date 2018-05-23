@@ -11,7 +11,7 @@
 class MoveComponent : public KeyInputComponent {
 public:
 
-	MoveComponent() : KeyInputComponent()
+	MoveComponent() : KeyInputComponent(1)
 	{
 
 	};

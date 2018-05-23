@@ -18,7 +18,9 @@
     <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
+    <ClCompile Include="..\..\Src\Application\Home.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
+    <ClCompile Include="..\..\Src\Application\MenuPrincipal.cpp" />
     <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\MoveComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Physics.cpp" />
@@ -34,6 +36,7 @@
     <ClInclude Include="..\..\Src\Application\Bala.h" />
     <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
+    <ClInclude Include="..\..\Src\Application\Home.h" />
     <ClInclude Include="..\..\Src\Application\MenuPausa.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
@@ -44,6 +47,7 @@
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h" />
     <ClInclude Include="..\..\Src\Application\MenuGameOver.h" />
+    <ClInclude Include="..\..\Src\Application\MenuPrincipal.h" />
     <ClInclude Include="..\..\Src\Application\MouseComponent.h" />
     <ClInclude Include="..\..\Src\Application\Physics.h" />
     <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />

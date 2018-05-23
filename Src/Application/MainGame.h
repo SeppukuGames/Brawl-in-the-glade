@@ -44,7 +44,6 @@ class MainGame : public BaseApplication
 
 public:
 
-	
 
 	static MainGame *getInstance();
 
@@ -57,6 +56,8 @@ public:
 	bool getPauseStatus();
 
 	void ShowGameOver();
+
+	void RestartGame();
 
 protected:
 

@@ -46,6 +46,7 @@ using namespace Ogre;
 MainGame::MainGame(void)
 {
 	partidaTerminada = false;
+	playIndex = 1;
 }
 //-------------------------------------------------------------------------------------
 
@@ -385,7 +386,7 @@ void MainGame::createEntities(void)
 	//----------------------MENUs------------------------	
 	menuPausa = new GameObject(mSceneMgr);
 	menuPausa->addComponent(new MenuPausa());
-	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::BUTTON))->SetMainGameRef(this);
+	dynamic_cast<MenuPausa*> (menuPausa->getComponent(ComponentName::MENUPAUSA))->SetMainGameRef(this);
 
 	actors_.push_back(menuPausa);
 
@@ -446,12 +447,21 @@ void MainGame::createScene(void)
 
 }
 
-void MainGame::setPauseStatus() {
-	pause = !pause;
+
+void MainGame::RestartGame()
+{
+	playIndex = 0;
+	mShutDown = true;
+	instance = NULL;
 }
 
 void MainGame::quitGame() {
+	playIndex = -1;
 	mShutDown = true;
+}
+
+void MainGame::setPauseStatus() {
+	pause = !pause;
 }
 
 bool MainGame::getGameOverStatus() {
