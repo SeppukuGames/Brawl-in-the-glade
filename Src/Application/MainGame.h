@@ -71,8 +71,8 @@ protected:
 
 	GameObject* menuPausa;
 	GameObject* menuGO;
+	GameObject* panelOleadas;
 	
-	int oleadaActual = 1;
 	//Overlay* overlay;
 	//OverlayContainer* lifeGUI;
 	//GameObject* lifeCanvas;

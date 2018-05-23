@@ -15,6 +15,7 @@
 #include "MouseComponent.h"
 #include "MenuGameOver.h"
 #include "MenuPausa.h"
+#include "PanelOleada.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
@@ -240,6 +241,17 @@ Component* GameObject::getComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			MenuGameOver* comp = dynamic_cast<MenuGameOver*> (components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	
+	case ComponentName::PANELOLEADA:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			PanelOleada* comp = dynamic_cast<PanelOleada*> (components[i]);
 
 			if (comp != NULL)
 				return components[i];

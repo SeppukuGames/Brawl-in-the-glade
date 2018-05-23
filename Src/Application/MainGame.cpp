@@ -30,6 +30,7 @@ http://www.ogre3d.org/tikiwiki/
 #include <time.h>
 #include <iostream>
 #include "Enemigo.h"
+#include "Enemigo2.h"
 #include "RigidbodyComponent.h"
 #include "DynamicRigidbodyComponent.h"
 #include "TestCollisionComponent1.h"
@@ -37,6 +38,7 @@ http://www.ogre3d.org/tikiwiki/
 #include "BalaComponent.h"
 #include "MenuPausa.h"
 #include "MenuGameOver.h"
+#include "PanelOleada.h"
 
 using namespace Ogre;
 
@@ -302,6 +304,12 @@ void MainGame::createEntities(void)
 	dynamic_cast<MenuGameOver*> (menuGO->getComponent(ComponentName::MENUGAMEOVER))->SetMainGameRef(this);
 
 	actors_.push_back(menuGO);
+
+	panelOleadas = new GameObject(mSceneMgr);
+	panelOleadas->addComponent(new PanelOleada());
+	dynamic_cast<PanelOleada*> (panelOleadas->getComponent(ComponentName::PANELOLEADA))->SetMainGameRef(this);
+
+	actors_.push_back(panelOleadas);
 	//----------------------MENUs------------------------
 }
 
@@ -350,8 +358,15 @@ void MainGame::NuevaOleada()
 	for (int i = 0; i < 8*oleadaActual; i++) {
 
 		GameObject * enemigo = new GameObject(mSceneMgr);
-		enemigo->addComponent(new EntityComponent("ogrehead.mesh"));
-		enemigo->getNode()->setScale(0.5, 0.5, 0.5);
+		if (i % 3 == 0){
+			enemigo->addComponent(new EntityComponent("bot2.mesh")); 
+			enemigo->getNode()->setScale(1.8, 1.8, 1.8);
+		}
+		else{
+			enemigo->addComponent(new EntityComponent("bot1.mesh"));
+			enemigo->getNode()->setScale(0.8, 0.8, 0.8);
+		}
+		
 		enemigo->getNode()->setPosition(Ogre::Vector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
 
 		btVector3 enemyInitialPosition(btVector3((rand() % 40 * 50) - 300, 0, (rand() % 40 * 50) - 300));
@@ -372,11 +387,19 @@ void MainGame::NuevaOleada()
 		DynamicRigidbodyComponent* enemyRbComponent = new DynamicRigidbodyComponent(enemyMotionState, EnemyRigidShape, enemyMass, enemyInertia);
 		enemigo->addComponent(enemyRbComponent);
 		enemyRbComponent->getRigidbody()->setRestitution(1);
-		enemigo->addComponent(new Enemigo());
-
-		Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
-		enemyRef->setUpPlayer(ninja);
-		enemyRef->setUpTower(Torre);
+		if (i % 3 == 0){
+			enemigo->addComponent(new Enemigo2());
+			Enemigo2* enemyRef = dynamic_cast<Enemigo2*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+		}
+		else{
+			enemigo->addComponent(new Enemigo());
+			Enemigo* enemyRef = dynamic_cast<Enemigo*> (enemigo->getComponent(ComponentName::ENEMY));
+			enemyRef->setUpPlayer(ninja);
+			enemyRef->setUpTower(Torre);
+		}
+		
 
 		billboardSet = mSceneMgr->createBillboardSet();
 		billboardSet->setMaterialName("health");

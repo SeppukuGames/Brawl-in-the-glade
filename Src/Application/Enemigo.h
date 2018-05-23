@@ -12,7 +12,7 @@ enum objetiveType { _PLAYER, _TOWER, _NULL };
 
 class Enemigo : public Component {
 
-private:
+protected:
 
 	btVector3 direction, Torre, objetivo;
 
