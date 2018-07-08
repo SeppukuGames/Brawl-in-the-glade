@@ -1,5 +1,5 @@
-#ifndef ENTITYCOMPONENT_H_
-#define ENTITYCOMPONENT_H_
+#ifndef __EntityComponent_h_
+#define __EntityComponent_h_
 
 #include "Component.h"
 #include "GameObject.h"
@@ -7,25 +7,25 @@
 
 class EntityComponent : public Component{
 
-	//-----------------------------------ATRIBUTOS-------------------------
+#pragma region Attributes  
 private:
-	Ogre::Entity * _entity;
-	std::string _meshString;
+	Ogre::Entity * entity;
+	std::string meshString;
 
-	//-----------------------------------ATRIBUTOS-------------------------
+#pragma endregion Attributes
 
-	//-----------------------------------MÉTODOS----------------------------
+#pragma region Methods  
 public:
 	EntityComponent(std::string meshString);
 
 	virtual ~EntityComponent();
 
-	virtual void start();
+	virtual void Start();
 
-	inline Ogre::Entity* getEntity(){ return _entity; }
+	inline Ogre::Entity* GetEntity(){ return entity; }
 
-	//-----------------------------------MÉTODOS----------------------------
+#pragma endregion Methods
 
 };
 
-#endif /* ENTITYCOMPONENT_H_ */
+#endif /* __EntityComponent_h_ */

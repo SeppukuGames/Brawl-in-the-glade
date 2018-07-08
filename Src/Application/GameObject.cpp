@@ -1,44 +1,21 @@
 #include "GameObject.h"
-#include <OgreMovableObject.h>
-
-#include "EntityComponent.h"
-#include "KeyInputComponent.h"
-#include "MoveComponent.h"
-#include "AnimationComponent.h"
-#include "DynamicRigidbodyComponent.h"
-#include "MoveCameraComponent.h"
-#include "TestCollisionComponent2.h"
-#include "Enemigo.h"
-#include "UICanvas.h"
-#include "PlayerComponent.h"
-#include "TowerComponent.h"
-#include "MouseComponent.h"
-#include "MenuGameOver.h"
-#include "MenuPausa.h"
-#include "MenuPrincipal.h"
-#include "MainGame.h"
-#include "PanelOleada.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
-	if (name != ""){
-		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
-		std::cout << name << std::endl;
-	}
-	else
-		node = mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
-
+	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 }
 
 
-GameObject::~GameObject() {
+GameObject::~GameObject() 
+{
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		delete components[i];
 		components[i] = nullptr;
 	}
 
-	
+	//TODO: HIJOS
+
 	//UserControl* pCtrl = Ogre::any_cast<UserControl*>(
 	//	node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
 	//	getUserObjectBindings().getUserAny());
@@ -48,7 +25,7 @@ GameObject::~GameObject() {
 	//delete pCtrl;
 }
 
-void GameObject::setObjMan(Ogre::MovableObject* mObj) {
+void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
 	//comprobar que es primer objeto que se adjunta al nodo
 	if (node->numAttachedObjects() == 0)
 	{
@@ -65,236 +42,41 @@ void GameObject::setObjMan(Ogre::MovableObject* mObj) {
 }
 
 
-
-
-void GameObject::tick(double elapsed) {
+void GameObject::Tick(double elapsed) {
 	for (size_t i = 0; i < components.size(); i++)
-		components[i]->tick(elapsed);
+		components[i]->Update(elapsed);
 
 }
 
 
-void GameObject::addComponent(Component* comp) {
-	comp->setGameObject(this);
-	comp->start();
+void GameObject::AddComponent(Component* comp) {
 	components.push_back(comp);
+	comp->SetGameObject(this);
+	comp->Start();
 }
 
-Component* GameObject::getComponent(ComponentName component) {
+Component* GameObject::GetComponent(ComponentName component) {
 
-	switch (component)
-	{
+	//switch (component)
+	//{
+	//case ComponentName::ENTITY:
+	//	for (size_t i = 0; i < components.size(); i++)
+	//	{
+	//		EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
 
-	case ComponentName::ENTITY:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
+	//		if (comp != NULL)
+	//			return components[i];
 
-			if (comp != NULL)
-				return components[i];
+	//	}
 
-		}
-
-		break;
-
-	case ComponentName::KEYINPUT:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			KeyInputComponent* comp = dynamic_cast<KeyInputComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::MOVE:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MoveComponent* comp = dynamic_cast<MoveComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::MOVE_CAMERA:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MoveCameraComponent* comp = dynamic_cast<MoveCameraComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::ANIMATION:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			AnimationComponent* comp = dynamic_cast<AnimationComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::RIGIDBODY:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			DynamicRigidbodyComponent* comp = dynamic_cast<DynamicRigidbodyComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-	
-
-	case ComponentName::TESTCOLLISIONCOMPONENT2:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			TestCollisionComponent2* comp = dynamic_cast<TestCollisionComponent2*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::ENEMY:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			Enemigo* comp = dynamic_cast<Enemigo*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::UI:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			UICanvas* comp = dynamic_cast<UICanvas*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::PLAYER:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			PlayerComponent* comp = dynamic_cast<PlayerComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::TOWER:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			TowerComponent* comp = dynamic_cast<TowerComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::MOUSE:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MouseComponent* comp = dynamic_cast<MouseComponent*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::MENUPAUSA:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MenuPausa* comp = dynamic_cast<MenuPausa*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-		}
-
-		break;
-
-	case ComponentName::MENUGAMEOVER:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MenuGameOver* comp = dynamic_cast<MenuGameOver*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-		}
-
-		break;
-
-	case ComponentName::MENUPRINCIPAL:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MenuPrincipal* comp = dynamic_cast<MenuPrincipal*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-
-	case ComponentName::MAINGAME:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			MainGame* comp = dynamic_cast<MainGame*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-		}
-		break;
-	
-	case ComponentName::PANELOLEADA:
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			PanelOleada* comp = dynamic_cast<PanelOleada*> (components[i]);
-
-			if (comp != NULL)
-				return components[i];
-
-		}
-
-		break;
-	}
-
-	
+	//	break;
+	//}
 
 	return NULL;
-
 }
 
-void GameObject::onCollision(GameObject *collision){
-
-	for (size_t i = 0; i < components.size(); i++)
-		components[i]->onCollision(collision);
-}
+//void GameObject::onCollision(GameObject *collision){
+//
+//	for (size_t i = 0; i < components.size(); i++)
+//		components[i]->onCollision(collision);
+//}

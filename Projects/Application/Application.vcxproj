@@ -11,65 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\Bala.cpp" />
-    <ClCompile Include="..\..\Src\Application\BalaComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\BaseApplication.cpp" />
-    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp" />
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
-    <ClCompile Include="..\..\Src\Application\Home.cpp" />
+    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
-    <ClCompile Include="..\..\Src\Application\MenuPrincipal.cpp" />
-    <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\MoveComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\Physics.cpp" />
-    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp" />
-    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp" />
-    <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp" />
-    <ClCompile Include="..\..\Src\Application\tutorial2.cpp" />
-    <ClCompile Include="..\..\Src\Application\MainGame.cpp" />
-    <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp" />
+    <ClCompile Include="..\..\Src\Application\Scene.cpp" />
+    <ClCompile Include="..\..\Src\Application\Scene1.cpp" />
+    <ClCompile Include="..\..\Src\Application\Scene2.cpp" />
+    <ClCompile Include="..\..\Src\Application\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
-    <ClInclude Include="..\..\Src\Application\Bala.h" />
-    <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
-    <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
-    <ClInclude Include="..\..\Src\Application\Home.h" />
-    <ClInclude Include="..\..\Src\Application\MenuPausa.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
-    <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h" />
-    <ClInclude Include="..\..\Src\Application\Enemigo.h" />
-    <ClInclude Include="..\..\Src\Application\EnemyPrototype.h" />
-    <ClInclude Include="..\..\Src\Application\EnemyType1.h" />
-    <ClInclude Include="..\..\Src\Application\Factory.h" />
-    <ClInclude Include="..\..\Src\Application\GameObject.h" />
-    <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h" />
-    <ClInclude Include="..\..\Src\Application\MenuGameOver.h" />
-    <ClInclude Include="..\..\Src\Application\MenuPrincipal.h" />
-    <ClInclude Include="..\..\Src\Application\MouseComponent.h" />
-    <ClInclude Include="..\..\Src\Application\PanelOleada.h" />
-    <ClInclude Include="..\..\Src\Application\Physics.h" />
-    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h" />
-    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h" />
-    <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h" />
-    <ClInclude Include="..\..\Src\Application\MoveComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
-    <ClInclude Include="..\..\Src\Application\PlayerComponent.h" />
-    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
-    <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h" />
-    <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h" />
-    <ClInclude Include="..\..\Src\Application\TowerComponent.h" />
-    <ClInclude Include="..\..\Src\Application\tutorial2.h" />
-    <ClInclude Include="..\..\Src\Application\MainGame.h" />
-    <ClInclude Include="..\..\Src\Application\TutorialBuffered.h" />
-    <ClInclude Include="..\..\Src\Application\UICanvas.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
+    <ClInclude Include="..\..\Src\Application\GameObject.h" />
+    <ClInclude Include="..\..\Src\Application\GraphicManager.h" />
+    <ClInclude Include="..\..\Src\Application\Scene.h" />
+    <ClInclude Include="..\..\Src\Application\Scene1.h" />
+    <ClInclude Include="..\..\Src\Application\Scene2.h" />
+    <ClInclude Include="..\..\Src\Application\SceneManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C077A3AD-5242-468F-AD96-581CEBFA7C1C}</ProjectGuid>

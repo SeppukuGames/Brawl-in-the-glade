@@ -1,214 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Application\EnemyType1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Physics.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
-      <Filter>Source Files\Component</Filter>
+    <ClCompile Include="..\..\Src\Application\SceneManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\MoveCameraComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\MoveComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TestCollisionComponent2.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TestCollisionComponent1.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
-      <Filter>Source Files\Component\Rigidbody</Filter>
+    <ClCompile Include="..\..\Src\Application\Scene.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\GameObject.cpp">
-      <Filter>Source Files\GameObject</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BaseApplication.cpp">
+    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Scene1.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TutorialBuffered.cpp">
-      <Filter>Source Files\Scenes\Tutorials</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\tutorial2.cpp">
-      <Filter>Source Files\Scenes\Tutorials</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\DynamicRigidbodyComponent.cpp">
-      <Filter>Source Files\Component\Rigidbody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\MainGame.cpp">
+    <ClCompile Include="..\..\Src\Application\Scene2.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\MenuPrincipal.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BalaComponent.cpp">
-      <Filter>Source Files\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Home.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Bala.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Src\Application\EnemyPrototype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EnemyType1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Physics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
-      <Filter>Header Files\Component\Rigidbody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\DynamicRigidbodyComponent.h">
-      <Filter>Header Files\Component\Rigidbody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BaseApplication.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\tutorial2.h">
-      <Filter>Header Files\Scenes\Tutorials</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TutorialBuffered.h">
-      <Filter>Header Files\Scenes\Tutorials</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\GameObject.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Component.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MoveCameraComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MoveComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TestCollisionComponent1.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TestCollisionComponent2.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\KeyInputComponent.h">
-      <Filter>Header Files\Component\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\KeyMouseInputComponent.h">
-      <Filter>Header Files\Component\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\UICanvas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TowerComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MainGame.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MouseComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MouseInputComponent.h">
-      <Filter>Header Files\Component\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BalaComponent.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MenuGameOver.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MenuPausa.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\MenuPrincipal.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PanelOleada.h">
-      <Filter>Header Files\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Home.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Bala.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Enemigo.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{65811be4-7bc1-4f7d-926e-33ba4787fdd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Component">
-      <UniqueIdentifier>{69e0500b-d723-42b5-8312-a00726698648}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Input">
-      <UniqueIdentifier>{cc98bb35-0d4d-40c1-b7fd-ad003cb84ee4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Component\Rigidbody">
-      <UniqueIdentifier>{0117af31-5c8b-44a3-bc1b-f7531a257d52}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{354a067a-4bc8-43aa-a161-7c9dcedb1e05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Component">
-      <UniqueIdentifier>{60662341-d0e1-4d10-b2cd-0ce9cbc5d965}</UniqueIdentifier>
+    <Filter Include="Header Files\Singletons">
+      <UniqueIdentifier>{2045ca3b-7c21-42fd-98c2-573a4a11998b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Singletons">
+      <UniqueIdentifier>{d5108995-dc89-4f66-8d7e-cd30bd11dd55}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Scenes">
-      <UniqueIdentifier>{86fe19d2-15e3-4feb-aac4-04edd62ec822}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scenes\Tutorials">
-      <UniqueIdentifier>{cb23eb01-a996-42e4-8c7b-9e85a881f0a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObject">
-      <UniqueIdentifier>{0c6c19a0-2103-478e-b180-6b65fdd0f78d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Observers">
-      <UniqueIdentifier>{485e63c0-ee0b-44f4-8e43-f043e5597791}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Component\Rigidbody">
-      <UniqueIdentifier>{f437c49d-368e-4690-b49b-9b69c17fb297}</UniqueIdentifier>
+      <UniqueIdentifier>{6b260b3d-11c9-401e-83f9-e2479123c989}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Scenes">
-      <UniqueIdentifier>{28b61d84-aa21-410e-b7d9-36f6c68fbdf0}</UniqueIdentifier>
+      <UniqueIdentifier>{ee085be3-1c8a-4df0-9e67-27bdb16a76d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scenes\Tutorials">
-      <UniqueIdentifier>{45132655-ab3b-45a0-ac89-6698e110962f}</UniqueIdentifier>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{2e1113e4-fda3-46b8-8919-44ba7eb45beb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameObject">
-      <UniqueIdentifier>{e0a06e28-1c21-4307-89d3-1538c74564a6}</UniqueIdentifier>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{2df987ef-5e7a-4846-9fa4-7242eda327b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{4ce35471-e21e-4c70-9d24-68e605bf5c6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{cf2d8a82-86ee-4dea-ac03-089943edc2c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
+    <ClInclude Include="..\..\Src\Application\GraphicManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\SceneManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Component.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\GameObject.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene1.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene2.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,17 +1,16 @@
 #include "EntityComponent.h"
 
 EntityComponent::EntityComponent(std::string meshString) : Component(){
-	_meshString = meshString;
-
+	this->meshString = meshString;
 }
 
 EntityComponent::~EntityComponent()
 {
-	delete _entity;
+	delete entity;
 }
 
-void EntityComponent::start(){
- 	_entity = _gameObject->getNode()->getCreator()->createEntity(_meshString);
-	_gameObject->getNode()->attachObject(_entity);
+void EntityComponent::Start(){
+	entity = gameObject->GetNode()->getCreator()->createEntity(meshString);
+	gameObject->SetObjMan(entity);
 }
 

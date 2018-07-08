@@ -1,41 +1,25 @@
-//#include "MainGame.h"
-#include "Home.h"
-//#include "TutorialBuffered.h"
-//#include "tutorial2.h"
+#include <iostream>
+#include "GraphicManager.h"
+#include "SceneManager.h"
 
-
-#ifdef _DEBUG || !_WIN32
+#ifdef _DEBUG 
 int main(){
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Detector de basura
 	printf("Hola, Mundo!\n");
 #else
 #include <Windows.h>
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
-
 #endif
 	//Inicializa Ogre y el juego
-	Home::getInstance()->go();
+
+	GraphicManager * graphicManager = GraphicManager::GetInstance();	//Inicializa Ogre
+	graphicManager->InitGraphics();
+
+	SceneManager * sceneManager = SceneManager::GetInstance();			//Inicializa Gestor de escenas
+	sceneManager->Go();
+
+	sceneManager->ResetInstance();										//Destruye Gestor de escenas
+	graphicManager->ResetInstance();									//Destruye Ogre
+
 	return 0;
 }
-
-/*TODO: Para que no salga la consola en modo release, tocar esto
-#ifdef _DEBUG || !_WIN32
-
-int main(){
-
-
-#else //_RELEASE
-
-#include <Windows.h> //Hay que incluir la API de windows
-
-int CALLBACK WinMain(
-_In_ HINSTANCE hInstance,
-_In_ HINSTANCE hPrevInstance,
-_In_ LPSTR lpCmdLine,
-_In_ int nCmdShow) {
-
-#endif
-
-ProyectoBasico * pb = new ProyectoBasico();
-pb->go();
-return 0;
-}*/

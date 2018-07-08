@@ -1,30 +1,28 @@
-#ifndef _COMPONENT_H_
-#define _COMPONENT_H_
+#ifndef __Component_h_
+#define __Component_h_
 
 //Declaración adelantada para evitar ciclo de inclusiones
 class GameObject;
 
-
-enum ComponentName{ COLLISION, ENTITY, MOVE, KEYINPUT, STATICCOLLISION, ANIMATION, 
-	RIGIDBODY, MOVE_CAMERA, TESTCOLLISIONCOMPONENT2, ENEMY, UI, PLAYER, TOWER, MOUSE,
-	MENUPAUSA, MENUGAMEOVER, MAINGAME, PANELOLEADA, MENUPRINCIPAL
+//TODO: Meter los que se usen
+enum ComponentName{
+	ENTITY
 };
 
-
-class Component {
+class Component
+{
 public:
-	Component() : _gameObject(nullptr)
-	{};
+	Component() : gameObject(nullptr){};
 	virtual ~Component(){};
 
-	virtual void start() {};
-	virtual void tick(double elapsed) {};
-	virtual void onCollision(GameObject *collision){};
+	virtual void Start() {};
+	virtual void Update(double elapsed) {};
+	//virtual void OnCollision(GameObject *collision){};
 
-	inline void setGameObject(GameObject * gameObject){ _gameObject = gameObject; };
+	inline void SetGameObject(GameObject * gameObject){ this->gameObject = gameObject; };
 
 protected:
-	GameObject * _gameObject;
+	GameObject * gameObject;
 };
+#endif // #ifndef __Component_h_
 
-#endif /* _COMPONENT_H_*/
