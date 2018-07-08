@@ -11,16 +11,11 @@ private:
 	/* Here will be the instance stored. */
 	static GraphicManager *instance;
 
-	/* Private constructor to prevent instancing. */
-	GraphicManager();
-
-	GraphicManager::~GraphicManager();
-
 public:
 	/* Static access method. */
 	static GraphicManager * GetInstance();
-
 	static void ResetInstance();
+
 #pragma endregion Singleton
 
 private:
@@ -34,9 +29,10 @@ private:
 	//RenderSystem
 	Ogre::RenderWindow* window;
 
-	Ogre::SceneManager* sceneMgr;//Inicializa recursos y rutinas de renderizado
-	Ogre::Camera* camera;
+	//Inicializa recursos y rutinas de renderizado
+	Ogre::SceneManager* sceneMgr;
 
+	//GUI
 	Ogre::OverlaySystem *overlaySystem;
 
 public:
@@ -61,9 +57,13 @@ public:
 	inline Ogre::SceneManager* GetSceneManager(){ return sceneMgr; };
 
 private:
+	/* Private constructor to prevent instancing. */
+	GraphicManager();
+	~GraphicManager();
+
 	bool Setup();
-	void SetupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 	bool Configure(void);//Configura el RenderSystem y crea la ventana
+	void SetupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 	void LoadResources(void);//Carga todos los recursos
 
 	void InitOverlay(void);

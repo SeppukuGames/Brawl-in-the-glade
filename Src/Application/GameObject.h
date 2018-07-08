@@ -23,10 +23,10 @@ public:
 	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
 	virtual ~GameObject();
 
+	virtual void Tick(double elapsed);
+
 	virtual void AddComponent(Component* comp);
 	virtual Component* GetComponent(ComponentName component);
-
-	virtual void Tick(double elapsed);
 
 	virtual void SetObjMan(Ogre::MovableObject* mObj);
 	inline Ogre::SceneNode* GetNode(){ return node; };

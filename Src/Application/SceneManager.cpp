@@ -34,6 +34,14 @@ lastTime(0)
 
 SceneManager::~SceneManager()
 {
+	delete timer;
+	
+	while (!scenes.empty())
+	{
+		Scene * scene = scenes.top();
+		scenes.pop();
+		delete scene;
+	}
 }
 
 void SceneManager::Go()
@@ -47,8 +55,6 @@ void SceneManager::Go()
 	//PushScene(new Scene2());
 
 	while (GameLoop());
-	//Le cedemos el control a Ogre
-	//mRoot->startRendering();
 }
 
 // Bucle principal.Acaba cuando se cierra la ventana o un error en renderOneFrame

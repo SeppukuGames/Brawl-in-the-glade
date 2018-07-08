@@ -1,8 +1,9 @@
 #include "GraphicManager.h"
 #include <OgreConfigFile.h> //Para parsear los .cfg
 #include <OgreTextureManager.h>
-
+#include <OgreRenderWindow.h>
 #pragma region Singleton  
+
 /* Null, because instance will be initialized on demand. */
 GraphicManager* GraphicManager::instance = 0;
 
@@ -27,7 +28,6 @@ GraphicManager::GraphicManager():
 	pluginsCfg(Ogre::BLANKSTRING),
 	window(0),
 	sceneMgr(0),
-	camera(0),
 	overlaySystem(0)
 {
 }
@@ -75,9 +75,6 @@ bool GraphicManager::Setup(void)
 
 	sceneMgr = root->createSceneManager();
 
-	//Inicializamos Overlay
-	InitOverlay();
-
 	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
 	//No los inicializa, solo establece donde buscar los potenciales recursos
 	SetupResources();
@@ -85,13 +82,66 @@ bool GraphicManager::Setup(void)
 	//Carga todos los recursos
 	LoadResources();
 
+	//Inicializamos Overlay
+	InitOverlay();
+
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
 
 	return true;
 };
 
-//TODO: HAY QUE ELIMINAR LOS WARNINGS DE AQUI
+//Configura el RenderSystem y crea la ventana
+bool GraphicManager::Configure(void)
+{
+	//El config Dialog permite hacer ajustes e inicializa el sistema
+	//Podemos hacer que el configDialog solo salga si no hay un ogre.cfg
+	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
+	if (!(root->restoreConfig() || root->showConfigDialog(NULL)))
+		return false;
+	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
+	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
+
+	//Se pueden ajustar los valores manualmente
+	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
+	//Ejemplo de inicializar Direct3D9 Render System
+	/*
+	//Do not add this to your project
+	RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
+
+	mRoot->setRenderSystem(rs);
+	rs->setConfigOption("Full Screen", "No");
+	rs->setConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
+
+	//Root::getAvailableRenderers permite saber qué renderers están disponibles en nuestro sistema
+
+	//RenderSystem::getConfigOptions permite ver las opciones que ofrece un RenderSystem
+	*/
+
+	//Creamos la RenderWindow por defecto
+	window = root->initialise(true, "Brawl in the glade");
+
+	//Podemos crear la ventana con win32 API, Ejemplo:
+	/*
+	// Do not add this to your project
+	mRoot->initialise(false);
+
+	HWND hWnd = 0;
+
+	// Retrieve the HWND for the window we want to render in.
+	// This step depends entirely on the windowing system you are using.
+
+	NameValuePairList misc;
+	misc["externalWindowHandle"] = StringConverter::toString((int)hWnd);
+
+	//Aplicamos a mroot los cambios que hemos hecho
+	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
+	*/
+
+	return true;
+}
+
+//TODO: Warning de OGRE
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void GraphicManager::SetupResources(void)
 {
@@ -100,6 +150,7 @@ void GraphicManager::SetupResources(void)
 	cf.load(resourcesCfg);
 
 	//Tenemos que recorrer todas las secciones del archivo [Essential] y añadir las localizaciones al ResourceGroupManager
+	
 	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
 	//String auxiliares para guardar información del archivo de configuracion parseado
@@ -132,63 +183,6 @@ void GraphicManager::SetupResources(void)
 	}
 }
 
-void GraphicManager::InitOverlay(void)
-{
-	// Inicializa el OverlaySystem
-	overlaySystem = new Ogre::OverlaySystem();
-	sceneMgr->addRenderQueueListener(overlaySystem);
-}
-
-//Configura el RenderSystem y crea la ventana
-bool GraphicManager::Configure(void)
-{
-	//El config Dialog permite hacer ajustes e inicializa el sistema
-	//Podemos hacer que el configDialog solo salga si no hay un ogre.cfg
-	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
-	if (!(root->restoreConfig() || root->showConfigDialog(NULL)))
-		return false;
-	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
-	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
-
-	//Se pueden ajustar los valores manualmente
-	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
-	//Ejemplo de inicializar Direct3D9 Render System
-	/*
-	//Do not add this to your project
-	RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
-
-	mRoot->setRenderSystem(rs);
-	rs->setConfigOption("Full Screen", "No");
-	rs->setConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
-
-	//Root::getAvailableRenderers permite saber qué renderers están disponibles en nuestro sistema
-
-	//RenderSystem::getConfigOptions permite ver las opciones que ofrece un RenderSystem
-	*/
-
-	//Creamos la RenderWindow por defecto
-	window = root->initialise(true, "MainGameRender Window");
-
-	//Podemos crear la ventana con win32 API, Ejemplo:
-	/*
-	// Do not add this to your project
-	mRoot->initialise(false);
-
-	HWND hWnd = 0;
-
-	// Retrieve the HWND for the window we want to render in.
-	// This step depends entirely on the windowing system you are using.
-
-	NameValuePairList misc;
-	misc["externalWindowHandle"] = StringConverter::toString((int)hWnd);
-
-	//Aplicamos a mroot los cambios que hemos hecho
-	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
-	*/
-
-	return true;
-}
-
 //Carga todos los recursos
 void GraphicManager::LoadResources(void)
 {
@@ -198,5 +192,11 @@ void GraphicManager::LoadResources(void)
 
 	//Inicializa todos los recursos encontrados por Ogre
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+}
 
+// Inicializa el OverlaySystem
+void GraphicManager::InitOverlay(void)
+{
+	overlaySystem = new Ogre::OverlaySystem();
+	sceneMgr->addRenderQueueListener(overlaySystem);
 }
