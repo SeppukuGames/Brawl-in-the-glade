@@ -10,12 +10,13 @@ int main(){
 #include <Windows.h>
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
 #endif
-	//Inicializa Ogre y el juego
 
 	GraphicManager * graphicManager = GraphicManager::GetInstance();	//Inicializa Ogre
 	graphicManager->InitGraphics();
 
 	SceneManager * sceneManager = SceneManager::GetInstance();			//Inicializa Gestor de escenas
+	
+	//Empieza el juego
 	sceneManager->Go();
 
 	sceneManager->ResetInstance();										//Destruye Gestor de escenas

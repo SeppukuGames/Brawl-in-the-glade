@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include <OgreRoot.h>
+#include <list>
 
 class Scene
 {
@@ -11,7 +12,7 @@ protected:
 	Ogre::Camera* camera;
 
 	//Todos los objetos de las escena
-	std::vector<GameObject*> actors;
+	std::list<GameObject*> actors;
 
 	Ogre::SceneManager* sceneMgr;
 
@@ -34,7 +35,6 @@ protected:
 	virtual bool Update(double elapsed);
 	virtual bool Render(void);
 
-	//TODO: QUE SEA ABSTRACTA LA CLASE
 	virtual void CreateScene(void) = 0; // Override me!
 
 #pragma endregion Methods

@@ -33,13 +33,14 @@ private:
 
 	std::stack<Scene*> scenes;
 
+public:
+	void Go();
+
+private:
 	bool GameLoop();
 
 	void PushScene(Scene * scene);
 	void PopScene();
-
-public:
-	void Go();
 };
 #endif // #ifndef __SceneManager_h_
 

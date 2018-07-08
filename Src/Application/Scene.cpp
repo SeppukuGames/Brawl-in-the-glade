@@ -15,26 +15,17 @@ Scene::~Scene()
 	//TODO: Revisar cosas a destruir
 
 	//Destruye todos los actores
-	for (size_t i = 0; i < actors.size(); i++)
-		delete(actors[i]);
+	std::list <GameObject*> ::iterator it;
+	for (it = actors.begin(); it != actors.end(); ++it)
+		delete (*it);
 }
 
 void Scene::AddGameObject(GameObject * gameObject){
 	actors.push_back(gameObject);
 }
 
-//TODO: Transformar en lista
 void Scene::RemoveGameObject(GameObject * gameObject){
-
-	int i = 0;
-	std::vector<GameObject*>::iterator it = actors.begin();
-	while (it < actors.end() && (*it)->GetNode()->getName() != gameObject->GetNode()->getName())
-		it++;
-
-	if (it < actors.end()){
-		actors.erase(it);
-	}
-
+	actors.remove(gameObject);
 }
 
 bool Scene::Tick(double elapsed)
@@ -47,7 +38,17 @@ bool Scene::Tick(double elapsed)
 	if (!Render())
 		return false;
 
-	return true;	//Return true puesto.
+	return true;
+}
+
+void Scene::SetViewport(void)
+{
+	//Creamos un viewport, toda la ventana
+	Ogre::Viewport* vp = GraphicManager::GetInstance()->GetWindow()->addViewport(camera);
+	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+
+	// Alter the camera aspect ratio to match the viewport
+	camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 }
 
 //Detecta input
@@ -66,26 +67,16 @@ bool Scene::HandleInput(void) {
 //Detecta input
 bool Scene::Update(double elapsed)
 {
-	//Actualiza todos los objetos
-	for (size_t i = 0; i < actors.size(); i++)
-		actors[i]->Tick(elapsed);
+	std::list <GameObject*> ::iterator it;
+	for (it = actors.begin(); it != actors.end(); ++it)
+		(*it)->Tick(elapsed);
 
 	//TODO: FISICA
 
 	return true;
 }
 
-//Detecta input
 bool Scene::Render(void) {
 	return GraphicManager::GetInstance()->Render();
 }
 
-void Scene::SetViewport(void)
-{
-	//Creamos un viewport, toda la ventana
-	Ogre::Viewport* vp = GraphicManager::GetInstance()->GetWindow()->addViewport(camera);
-	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
-
-	// Alter the camera aspect ratio to match the viewport
-	camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-}

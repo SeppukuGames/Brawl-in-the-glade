@@ -80,7 +80,7 @@ void Scene2::CreateEntities(void)
 {
 	GameObject* ogrito = new GameObject(sceneMgr,"Ogrito");
 	ogrito->AddComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
+
 	actors.push_back(ogrito);
-	ogrito->GetNode()->setScale(1, 1, 1);
 }
 

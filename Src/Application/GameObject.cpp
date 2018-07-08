@@ -1,10 +1,10 @@
 #include "GameObject.h"
+#include "EntityComponent.h"
 
 GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
 	control = new UserControl(this);
 	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 }
-
 
 GameObject::~GameObject() 
 {
@@ -32,7 +32,6 @@ void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
 		node->attachObject(mObj);
 		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
 	}
-	//else a lo mejor hay que hacer algo (DESCONOZCO SI ESTA BIEN)
 	else
 	{
 		node->detachAllObjects();
@@ -41,13 +40,10 @@ void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
 	}
 }
 
-
 void GameObject::Tick(double elapsed) {
 	for (size_t i = 0; i < components.size(); i++)
 		components[i]->Update(elapsed);
-
 }
-
 
 void GameObject::AddComponent(Component* comp) {
 	components.push_back(comp);
@@ -57,20 +53,19 @@ void GameObject::AddComponent(Component* comp) {
 
 Component* GameObject::GetComponent(ComponentName component) {
 
-	//switch (component)
-	//{
-	//case ComponentName::ENTITY:
-	//	for (size_t i = 0; i < components.size(); i++)
-	//	{
-	//		EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
+	switch (component)
+	{
+	case ComponentName::ENTITY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
 
-	//		if (comp != NULL)
-	//			return components[i];
+			if (comp != NULL)
+				return components[i];
+		}
 
-	//	}
-
-	//	break;
-	//}
+		break;
+	}
 
 	return NULL;
 }
