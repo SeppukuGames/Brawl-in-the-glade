@@ -3,10 +3,13 @@
 
 #include "Scene.h"
 
+
 class Scene1 : public Scene
 {
+	
 public:
 	Scene1();
+
 protected:
 	virtual void CreateScene(void); 
 	virtual void CreateLights(void);

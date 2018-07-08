@@ -44,7 +44,7 @@ void SceneManager::Go()
 	lastTime = timer->getMilliseconds();
 
 	PushScene(new Scene1());
-	PushScene(new Scene2());
+	//PushScene(new Scene2());
 
 	while (GameLoop());
 	//Le cedemos el control a Ogre

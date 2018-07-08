@@ -25,6 +25,9 @@
     <ClCompile Include="..\..\Src\Application\Scene2.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Scene2.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PrefabManager.h">
+      <Filter>Header Files\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

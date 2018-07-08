@@ -7,6 +7,7 @@
 
 #include "GraphicManager.h"
 #include "EntityComponent.h"
+#include "PrefabManager.h"
 
 using namespace Ogre;
 
@@ -75,9 +76,7 @@ void Scene1::CreateCameras(void)
 
 void Scene1::CreateEntities(void)
 {
-	GameObject* ogrito = new GameObject(sceneMgr,"Ninjita");
-	ogrito->AddComponent(new EntityComponent("ninja.mesh")); //Ninja.mesh
+	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(1);
 	actors.push_back(ogrito);
-	ogrito->GetNode()->setScale(1, 1, 1);
 }
 
