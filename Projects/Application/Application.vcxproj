@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameManager.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
     <ClCompile Include="..\..\Src\Application\GraphicManager.cpp" />
+    <ClCompile Include="..\..\Src\Application\InputManager.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
     <ClCompile Include="..\..\Src\Application\PrefabManager.cpp" />
     <ClCompile Include="..\..\Src\Application\Scene.cpp" />
@@ -24,8 +26,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
+    <ClInclude Include="..\..\Src\Application\GameManager.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\GraphicManager.h" />
+    <ClInclude Include="..\..\Src\Application\InputManager.h" />
     <ClInclude Include="..\..\Src\Application\PrefabManager.h" />
     <ClInclude Include="..\..\Src\Application\Scene.h" />
     <ClInclude Include="..\..\Src\Application\Scene1.h" />

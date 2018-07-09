@@ -3,6 +3,7 @@
 #include <OgreViewport.h>
 #include <OgreRenderWindow.h>
 #include <OgreCamera.h>
+#include "InputManager.h"
 
 Scene::Scene() :
 camera(0)
@@ -54,9 +55,7 @@ void Scene::SetViewport(void)
 //Detecta input
 bool Scene::HandleInput(void) {
 
-	////Need to capture/update each device
-	//mKeyboard->capture();
-	//mMouse->capture();
+	Input::GetInstance()->handleInput();
 
 	//if (mShutDown)
 	//	return false;

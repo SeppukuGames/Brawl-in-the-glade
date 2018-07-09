@@ -3,12 +3,13 @@
 
 #include "GameObject.h"
 
-enum ENEMYTYPE{ OGRO, NINJA };
+enum PREFABTYPE{ OGRO, NINJA, GAMEMANAGER };
 
 class PrefabManager {
 #pragma region Singleton  
 
 private:
+
 
 	static PrefabManager  *instance;
 
@@ -25,7 +26,7 @@ private:
 public:
 
 	//Método para crear un GameObject u otro dependiendo del id recibido (0 si ogro, 1 si ninja) Este id se cambiará por un enum seguramente
-	GameObject * CreateObject(int id);
+	GameObject * CreateObject(PREFABTYPE prefabType);
 
 
 };

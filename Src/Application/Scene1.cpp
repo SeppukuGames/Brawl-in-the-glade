@@ -76,7 +76,10 @@ void Scene1::CreateCameras(void)
 
 void Scene1::CreateEntities(void)
 {
-	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(1);
+	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJA);
 	actors.push_back(ogrito);
+
+	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGER);
+	actors.push_back(gm);
 }
 

@@ -28,6 +28,12 @@
     <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
       <Filter>Source Files\Singletons</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\InputManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\GameManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -87,6 +93,12 @@
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\PrefabManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\InputManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\GameManager.h">
       <Filter>Header Files\Singletons</Filter>
     </ClInclude>
   </ItemGroup>

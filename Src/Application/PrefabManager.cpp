@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "EntityComponent.h"
 #include "GraphicManager.h"
-
+#include "GameManager.h"
 
 PrefabManager* PrefabManager::instance = 0;
 
@@ -19,12 +19,12 @@ void PrefabManager::ResetInstance(){
 	instance = nullptr;
 }
 
-GameObject* PrefabManager::CreateObject(int id){
+GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	GameObject *gameObject = nullptr;
 
 	//Distinguimos entre el tipo de enemigo
-	switch (id){
+	switch (prefabType){
 
 	case OGRO:
 		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Ogrito");
@@ -36,7 +36,11 @@ GameObject* PrefabManager::CreateObject(int id){
 		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Ninjita");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setPosition(0, 100, 0);
+		break;
 
+	case GAMEMANAGER:
+		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Game_Manager");
+		gameObject->AddComponent(new GameManager());
 		break;
 	}
 

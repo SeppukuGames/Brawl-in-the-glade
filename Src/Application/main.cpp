@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GraphicManager.h"
 #include "SceneManager.h"
+#include "InputManager.h"
 
 #ifdef _DEBUG 
 int main(){
@@ -14,8 +15,13 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 	GraphicManager * graphicManager = GraphicManager::GetInstance();	//Inicializa Ogre
 	graphicManager->InitGraphics();
 
+
+	Input * input = Input::GetInstance();								//Inicializa el input (OIS)
+	input->initInput();
+
 	SceneManager * sceneManager = SceneManager::GetInstance();			//Inicializa Gestor de escenas
 	
+
 	//Empieza el juego
 	sceneManager->Go();
 

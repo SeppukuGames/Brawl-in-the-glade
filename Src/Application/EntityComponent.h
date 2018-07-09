@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include <OgreEntity.h>
 
+
 class EntityComponent : public Component{
 
 #pragma region Attributes  
@@ -21,6 +22,7 @@ public:
 	virtual ~EntityComponent();
 
 	virtual void Start();
+
 
 	inline Ogre::Entity* GetEntity(){ return entity; }
 
