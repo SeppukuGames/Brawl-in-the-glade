@@ -1,0 +1,13 @@
+prefix=C:/hlocal/Proyecto3/Dependencies/Ogre/build/Dependencies
+exec_prefix=C:/hlocal/Proyecto3/Dependencies/Ogre/build/Dependencies
+libdir=C:/hlocal/Proyecto3/Dependencies/Ogre/build/Dependencies/lib
+sharedlibdir=C:/hlocal/Proyecto3/Dependencies/Ogre/build/Dependencies/lib
+includedir=C:/hlocal/Proyecto3/Dependencies/Ogre/build/Dependencies/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.11
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
