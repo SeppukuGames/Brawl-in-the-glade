@@ -1,5 +1,6 @@
 #include "RigidbodyComponent.h"
 #include "GameObject.h"
+#include "Error.h"
 
 #include <Ogre.h>
 
@@ -13,8 +14,13 @@ RigidbodyComponent::~RigidbodyComponent(){
 }
 
 void RigidbodyComponent::Start(){
-	//TODO: LANZAR EXCEPCION
+
 	collider = (ColliderComponent*) (gameObject->GetComponent(COLLIDER));
+
+	if (collider == nullptr){
+		Error errorE("\n\n\n\n\nError al crear el Rigidbody. Necesita un Collider ");
+		throw errorE;
+	}
 
 	if (!kinematic)
 		collider->GetBody()->SetType(b2BodyType::b2_dynamicBody);

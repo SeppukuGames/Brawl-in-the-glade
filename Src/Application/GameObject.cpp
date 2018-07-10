@@ -61,7 +61,7 @@ Component* GameObject::GetComponent(ComponentName component) {
 	case ComponentName::ENTITY:
 		for (size_t i = 0; i < components.size(); i++)
 		{
-			EntityComponent* comp = dynamic_cast<EntityComponent*> (components[i]);
+			EntityComponent* comp = (EntityComponent*)(components[i]);
 
 			if (comp != NULL)
 				return components[i];
@@ -71,7 +71,7 @@ Component* GameObject::GetComponent(ComponentName component) {
 	case ComponentName::COLLIDER:
 		for (size_t i = 0; i < components.size(); i++)
 		{
-			ColliderComponent* comp = dynamic_cast<ColliderComponent*> (components[i]);
+			ColliderComponent* comp = (ColliderComponent*)(components[i]);
 
 			if (comp != NULL)
 				return components[i];
@@ -81,7 +81,7 @@ Component* GameObject::GetComponent(ComponentName component) {
 	case ComponentName::BOXCOLLIDER:
 		for (size_t i = 0; i < components.size(); i++)
 		{
-			BoxColliderComponent* comp = dynamic_cast<BoxColliderComponent*> (components[i]);
+			BoxColliderComponent* comp = (BoxColliderComponent*)(components[i]);
 
 			if (comp != NULL)
 				return components[i];
@@ -91,7 +91,7 @@ Component* GameObject::GetComponent(ComponentName component) {
 	case ComponentName::RIGIDBODY:
 		for (size_t i = 0; i < components.size(); i++)
 		{
-			RigidbodyComponent* comp = dynamic_cast<RigidbodyComponent*> (components[i]);
+			RigidbodyComponent* comp = (RigidbodyComponent*)(components[i]);
 
 			if (comp != NULL)
 				return components[i];

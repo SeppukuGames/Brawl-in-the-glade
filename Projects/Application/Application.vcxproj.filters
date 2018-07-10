@@ -78,6 +78,12 @@
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{cf2d8a82-86ee-4dea-ac03-089943edc2c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Error">
+      <UniqueIdentifier>{f674f625-54a2-47e6-91d1-e2f6d806250a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Error">
+      <UniqueIdentifier>{d54a2784-9b3e-4f33-bd71-55c8e2d681d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GraphicManager.h">
@@ -124,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\checkML.h">
+      <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Error.h">
+      <Filter>Header Files\Error</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

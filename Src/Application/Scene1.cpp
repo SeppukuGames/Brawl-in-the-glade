@@ -88,7 +88,7 @@ void Scene1::CreateEntities(void)
 
 	GameObject * box = new GameObject(sceneMgr, "box");
 	box->AddComponent(new EntityComponent("ogrehead.mesh"));
-	box->AddComponent(new BoxColliderComponent(b2Vec2(0, 200), 50, 50));
+	//box->AddComponent(new BoxColliderComponent(b2Vec2(0, 200), 50, 50));
 	box->AddComponent(new RigidbodyComponent());
 	actors.push_back(box);
 
