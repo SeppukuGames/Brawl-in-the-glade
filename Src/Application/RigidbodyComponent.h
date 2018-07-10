@@ -10,7 +10,7 @@ class RigidbodyComponent : public Component{
 private:
 	float density, friction,restitution;
 	bool kinematic;
-	ColliderComponent *collider;
+	b2Body *body;	//Referencia al body de CollisionComponent
 
 #pragma endregion Attributes
 
@@ -22,6 +22,8 @@ public:
 
 	virtual void Start();
 	virtual void Update(double elapsed);
+
+	inline b2Body * GetBody(){ return body; };
 
 private:
 #pragma endregion Methods

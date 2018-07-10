@@ -15,7 +15,6 @@ private:
 
 public:
 	GameManager(){};
-
 	virtual ~GameManager(){};
 
 	virtual void Update(double elapsed);

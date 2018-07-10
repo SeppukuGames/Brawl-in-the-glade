@@ -53,7 +53,6 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 		std::cout << e.mensaje().c_str();
 		cin.ignore();
 		system("PAUSE");
-
 	}
 
 	

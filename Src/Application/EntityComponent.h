@@ -23,7 +23,6 @@ public:
 
 	virtual void Start();
 
-
 	inline Ogre::Entity* GetEntity(){ return entity; }
 
 #pragma endregion Methods

@@ -20,6 +20,7 @@
     <ClCompile Include="..\..\Src\Application\InputManager.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
     <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp" />
+    <ClCompile Include="..\..\Src\Application\PlayerComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\PrefabManager.cpp" />
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Scene.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="..\..\Src\Application\GraphicManager.h" />
     <ClInclude Include="..\..\Src\Application\InputManager.h" />
     <ClInclude Include="..\..\Src\Application\PhysicsManager.h" />
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h" />
     <ClInclude Include="..\..\Src\Application\PrefabManager.h" />
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
     <ClInclude Include="..\..\Src\Application\Scene.h" />

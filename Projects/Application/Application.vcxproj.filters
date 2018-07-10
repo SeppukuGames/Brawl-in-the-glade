@@ -46,6 +46,9 @@
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PlayerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -80,9 +83,6 @@
     </Filter>
     <Filter Include="Header Files\Error">
       <UniqueIdentifier>{f674f625-54a2-47e6-91d1-e2f6d806250a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Error">
-      <UniqueIdentifier>{d54a2784-9b3e-4f33-bd71-55c8e2d681d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Error.h">
       <Filter>Header Files\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,20 +15,23 @@ RigidbodyComponent::~RigidbodyComponent(){
 
 void RigidbodyComponent::Start(){
 
-	collider = (ColliderComponent*) (gameObject->GetComponent(COLLIDER));
+	ColliderComponent * collider = (ColliderComponent*)(gameObject->GetComponent(COLLIDER));
 
 	if (collider == nullptr){
+
 		Error errorE("\n\n\n\n\nError al crear el Rigidbody. Necesita un Collider ");
 		throw errorE;
 	}
 
+	body = collider->GetBody();
+
 	if (!kinematic)
-		collider->GetBody()->SetType(b2BodyType::b2_dynamicBody);
+		body->SetType(b2BodyType::b2_dynamicBody);
 	else
-		collider->GetBody()->SetType(b2BodyType::b2_kinematicBody);
+		body->SetType(b2BodyType::b2_kinematicBody);
 
 	//TODO: meter más fixtures al body
-	b2Fixture fixture = collider->GetBody()->GetFixtureList()[0];
+	b2Fixture fixture = body->GetFixtureList()[0];
 	fixture.SetDensity(density);
 	fixture.SetFriction(friction);
 	fixture.SetRestitution(restitution);
@@ -37,8 +40,8 @@ void RigidbodyComponent::Start(){
 void RigidbodyComponent::Update(double elapsed){
 
 	Ogre::SceneNode * node = gameObject->GetNode();
-	b2Vec2 pos = collider->GetBody()->GetPosition();
-	float angle = collider->GetBody()->GetAngle();
+	b2Vec2 pos = body->GetPosition();
+	float angle = body->GetAngle();
 
 	Ogre::Radian angleRadians(angle / (2 * 3.14));
 	Ogre::Quaternion quat;
