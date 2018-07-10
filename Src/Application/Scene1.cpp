@@ -4,10 +4,13 @@
 #include <OgreLight.h>
 #include <OgreCamera.h>
 #include <OgreRenderWindow.h>
+#include <Box2D.h>
 
 #include "GraphicManager.h"
 #include "EntityComponent.h"
 #include "PrefabManager.h"
+#include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 
 using namespace Ogre;
 
@@ -39,7 +42,7 @@ void Scene1::CreateLights(void)
 	lightNode->setPosition(20, 80, 50);
 }
 
-void Scene1::CreateCameras(void) 
+void Scene1::CreateCameras(void)
 {
 	//Creamos la cámara
 	camera = sceneMgr->createCamera("CamScene1");
@@ -55,7 +58,7 @@ void Scene1::CreateCameras(void)
 	//TODO: Camara GameObject
 	//Creamos camara
 	//cam = new GameObject(mSceneMgr);
-	
+
 	//cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
 
 	//dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA))->setMainGameRef(this);
@@ -81,5 +84,17 @@ void Scene1::CreateEntities(void)
 
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGER);
 	actors.push_back(gm);
+
+
+	GameObject * box = new GameObject(sceneMgr, "box");
+	box->AddComponent(new EntityComponent("ogrehead.mesh"));
+	box->AddComponent(new BoxColliderComponent(b2Vec2(0, 200), 50, 50));
+	box->AddComponent(new RigidbodyComponent());
+	actors.push_back(box);
+
+	GameObject * boxStatic = new GameObject(sceneMgr, "muro" );
+	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
+	boxStatic->AddComponent(new BoxColliderComponent(b2Vec2(0, 0), 50, 50));
+	actors.push_back(boxStatic);
 }
 

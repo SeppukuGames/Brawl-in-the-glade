@@ -1,9 +1,10 @@
 #include "Scene.h"
-#include "GraphicManager.h"
 #include <OgreViewport.h>
 #include <OgreRenderWindow.h>
 #include <OgreCamera.h>
+#include "GraphicManager.h"
 #include "InputManager.h"
+#include "PhysicsManager.h"
 
 Scene::Scene() :
 camera(0)
@@ -31,6 +32,8 @@ void Scene::RemoveGameObject(GameObject * gameObject){
 
 bool Scene::Tick(double elapsed)
 {
+	PhysicsManager::GetInstance()->Tick();
+
 	if (!HandleInput())
 		return false;
 

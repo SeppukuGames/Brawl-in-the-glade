@@ -15,7 +15,7 @@ private:
 	/* Private constructor to prevent instancing. */
 	SceneManager();
 
-	SceneManager::~SceneManager();
+	~SceneManager();
 
 public:
 	/* Static access method. */

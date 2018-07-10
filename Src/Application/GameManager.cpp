@@ -1,5 +1,5 @@
 #include "GameManager.h"
-
+#include "InputManager.h"
 
 void GameManager::Update(double elapsed){
 

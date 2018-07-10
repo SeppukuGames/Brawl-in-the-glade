@@ -6,7 +6,7 @@ class GameObject;
 
 //TODO: Meter los que se usen
 enum ComponentName{
-	ENTITY
+	ENTITY, COLLIDER, BOXCOLLIDER, RIGIDBODY
 };
 
 class Component

@@ -2,10 +2,6 @@
 #define __GameManager_h_
 
 #include "Component.h"
-#include "GameObject.h"
-#include <OgreEntity.h>
-#include "InputManager.h"
-#include <iostream>
 
 class GameManager : public Component{
 
