@@ -5,7 +5,7 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "PhysicsManager.h"
-
+#include "AudioManager.h"
 
 #ifdef _DEBUG 
 int main(){
@@ -20,6 +20,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 	Input * input;
 	PhysicsManager * physicsManager;
 	SceneManager * sceneManager;
+	AudioManager * audioManager;
 
 
 	try{
@@ -29,8 +30,11 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 		input = Input::GetInstance();								//Inicializa el input (OIS)
 		input->initInput();
 
-		physicsManager = PhysicsManager::GetInstance();
+		physicsManager = PhysicsManager::GetInstance();				//Inicializa el motor de física
 		physicsManager->InitPhysics();
+
+		audioManager = AudioManager::GetInstance();					//Inicializa el motor de audio
+		audioManager->InitSoundEngine();
 
 		sceneManager = SceneManager::GetInstance();					//Inicializa Gestor de escenas
 
@@ -38,6 +42,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 		sceneManager->Go();
 
 		sceneManager->ResetInstance();									//Destruye Gestor de escenas
+		audioManager->ResetInstance();									//Destruye el motor de audio
 		physicsManager->ResetInstance();
 		input->ResetInstance();
 		graphicManager->ResetInstance();								//Destruye Ogre

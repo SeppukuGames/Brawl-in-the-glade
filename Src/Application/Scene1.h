@@ -6,6 +6,7 @@
 
 class Scene1 : public Scene
 {
+private:
 	
 public:
 	Scene1();
