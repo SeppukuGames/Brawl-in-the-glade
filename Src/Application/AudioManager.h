@@ -22,7 +22,6 @@ private:
 	irrklang::ISoundEngine* soundEngine;
 
 
-
 public:
 	void InitSoundEngine(void);
 	inline irrklang::ISoundEngine* GetSoundEngine(){ return soundEngine; };

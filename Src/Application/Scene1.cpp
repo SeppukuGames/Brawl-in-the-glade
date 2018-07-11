@@ -13,7 +13,7 @@
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
-//#include "AudioManager.h"
+#include "InputManager.h"
 
 using namespace Ogre;
 
@@ -104,3 +104,4 @@ void Scene1::CreateEntities(void)
 	boxStatic->AddComponent(new BoxColliderComponent(500, 50));
 	actors.push_back(boxStatic);
 }
+

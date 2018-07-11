@@ -1,9 +1,10 @@
 #include "GameManager.h"
 #include "InputManager.h"
+#include "SceneManager.h"
 
 void GameManager::Update(double elapsed){
 
-	if (Input::GetInstance()->getMouseButton(OIS::MB_Left))
-		int a = 0;
+	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_P))
+		SceneManager::GetInstance()->LoadPauseScene();
 
 }

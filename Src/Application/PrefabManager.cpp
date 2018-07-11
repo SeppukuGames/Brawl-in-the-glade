@@ -46,6 +46,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
 
 		break;
+	
 	}
 
 	return gameObject;

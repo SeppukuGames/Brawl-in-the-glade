@@ -73,8 +73,6 @@ bool Scene::Update(double elapsed)
 	for (it = actors.begin(); it != actors.end(); ++it)
 		(*it)->Tick(elapsed);
 
-	//TODO: FISICA
-
 	return true;
 }
 

@@ -4,20 +4,35 @@
     <ClCompile Include="..\..\Src\Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\SceneManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Scene.cpp">
-      <Filter>Source Files\Scenes</Filter>
+    <ClCompile Include="..\..\Src\Application\AudioManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\GameObject.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
+    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\InputManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PlayerComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\GameManager.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PauseScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Scene.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Scene1.cpp">
       <Filter>Source Files\Scenes</Filter>
@@ -25,93 +40,64 @@
     <ClCompile Include="..\..\Src\Application\Scene2.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\InputManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GameManager.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PlayerComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\AudioManager.cpp">
-      <Filter>Source Files\Singletons</Filter>
+    <ClCompile Include="..\..\Src\Application\SceneManager.cpp">
+      <Filter>Source Files\Core\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{65811be4-7bc1-4f7d-926e-33ba4787fdd7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{354a067a-4bc8-43aa-a161-7c9dcedb1e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Singletons">
-      <UniqueIdentifier>{2045ca3b-7c21-42fd-98c2-573a4a11998b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Singletons">
-      <UniqueIdentifier>{d5108995-dc89-4f66-8d7e-cd30bd11dd55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scenes">
-      <UniqueIdentifier>{6b260b3d-11c9-401e-83f9-e2479123c989}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scenes">
-      <UniqueIdentifier>{ee085be3-1c8a-4df0-9e67-27bdb16a76d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{2e1113e4-fda3-46b8-8919-44ba7eb45beb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{2df987ef-5e7a-4846-9fa4-7242eda327b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{4ce35471-e21e-4c70-9d24-68e605bf5c6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{cf2d8a82-86ee-4dea-ac03-089943edc2c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Error">
-      <UniqueIdentifier>{f674f625-54a2-47e6-91d1-e2f6d806250a}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Src\Application\GraphicManager.h">
-      <Filter>Header Files\Singletons</Filter>
+    <ClInclude Include="..\..\Src\Application\AudioManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\SceneManager.h">
-      <Filter>Header Files\Singletons</Filter>
+    <ClInclude Include="..\..\Src\Application\checkML.h">
+      <Filter>Header Files\Core\Error</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Scene.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="..\..\Src\Application\Error.h">
+      <Filter>Header Files\Core\Error</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Component.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="..\..\Src\Application\GameManager.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\GameObject.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+    <ClInclude Include="..\..\Src\Application\GraphicManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\InputManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PauseScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PhysicsManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PrefabManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Scene1.h">
       <Filter>Header Files\Scenes</Filter>
@@ -119,44 +105,70 @@
     <ClInclude Include="..\..\Src\Application\Scene2.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PrefabManager.h">
-      <Filter>Header Files\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\InputManager.h">
-      <Filter>Header Files\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PhysicsManager.h">
-      <Filter>Header Files\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\GameManager.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\ColliderComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\checkML.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Error.h">
-      <Filter>Header Files\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\AudioManager.h">
-      <Filter>Header Files\Singletons</Filter>
+    <ClInclude Include="..\..\Src\Application\SceneManager.h">
+      <Filter>Header Files\Core\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\AudioComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\ColliderComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EntityComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Component.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{929e9f1c-a0d4-4b6e-9df1-af859c877391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{9edec618-d528-4f48-befa-23105f0dc604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{7a66fa78-110c-448c-976e-4c9765540ede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{f0e06c0c-d5c7-420c-afa5-758b9152f6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a4cd0935-92d9-4aec-acba-ca677ae58daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{5d30b44f-619f-4ebb-b817-8741d327ad0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{f96717d7-e3fc-4539-a0e6-c3b53cb47116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{30f9fbb0-19a4-4324-97e7-826319794de5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Components">
+      <UniqueIdentifier>{aeb6b4d2-3be0-4cb8-aea9-5a07d83bc35a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Singletons">
+      <UniqueIdentifier>{cfb239b4-ab1f-4d59-9d19-f48ae50b99d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Error">
+      <UniqueIdentifier>{1194df29-c4a6-41d5-a7e5-40bca414bf82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Components">
+      <UniqueIdentifier>{447603b0-4009-433c-8f90-722438f57d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Singletons">
+      <UniqueIdentifier>{a52bfec0-aa63-4db9-9ab4-91d6e4cb8537}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
