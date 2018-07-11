@@ -3,6 +3,7 @@
 
 //Declaración adelantada para evitar ciclo de inclusiones
 class GameObject;
+class ColliderComponent;
 
 //TODO: Meter los que se usen
 enum ComponentName{
@@ -17,8 +18,11 @@ public:
 
 	virtual void Start() {};
 	virtual void Update(double elapsed) {};
-	//virtual void OnCollision(GameObject *collision){};
 
+	virtual void OnCollisionEnter(ColliderComponent* collider){};		//Es llamado cuando dos gameObject colisionan.
+	virtual void OnCollisionExit(ColliderComponent* collider){};		//Es llamado cuando dos gameObject dejan de colisionar. 
+
+	inline GameObject * GetGameObject(){ return gameObject; };
 	inline void SetGameObject(GameObject * gameObject){ this->gameObject = gameObject; };
 
 protected:

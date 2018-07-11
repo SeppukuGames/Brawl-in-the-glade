@@ -21,6 +21,9 @@ public:
 	virtual void Start();
 	virtual void Update(double elapsed);
 
+	virtual void OnCollisionEnter(ColliderComponent* collider);		//Es llamado cuando dos gameObject colisionan.
+	virtual void OnCollisionExit(ColliderComponent* collider);		//Es llamado cuando dos gameObject dejan de colisionar. 
+
 #pragma endregion Methods
 
 };

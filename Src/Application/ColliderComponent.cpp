@@ -17,4 +17,7 @@ void ColliderComponent::CreateBody(){
 
 	//2. Crear body
 	body = PhysicsManager::GetInstance()->GetWorld()->CreateBody(bd);
+
+	//Guardamos el GameObject para poder detectar con quién colisiona
+	body->SetUserData(gameObject);
 }

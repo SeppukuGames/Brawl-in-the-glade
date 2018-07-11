@@ -4,7 +4,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 
-GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0){
+GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0), name(name){
 	control = new UserControl(this);
 	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 }
@@ -26,21 +26,6 @@ GameObject::~GameObject()
 	//unsigned int  = 0;
 	//node->detachObject(hola);
 	//delete pCtrl;
-}
-
-void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
-	//comprobar que es primer objeto que se adjunta al nodo
-	if (node->numAttachedObjects() == 0)
-	{
-		node->attachObject(mObj);
-		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
-	}
-	else
-	{
-		node->detachAllObjects();
-		node->attachObject(mObj);
-		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
-	}
 }
 
 void GameObject::Tick(double elapsed) {
@@ -103,8 +88,30 @@ Component* GameObject::GetComponent(ComponentName component) {
 	return NULL;
 }
 
-//void GameObject::onCollision(GameObject *collision){
-//
-//	for (size_t i = 0; i < components.size(); i++)
-//		components[i]->onCollision(collision);
-//}
+//Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
+void GameObject::OnCollisionEnter(ColliderComponent* collider){
+	for (size_t i = 0; i < components.size(); i++)
+		components[i]->OnCollisionEnter(collider);
+}
+
+//Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
+void GameObject::OnCollisionExit(ColliderComponent* collider){
+	for (size_t i = 0; i < components.size(); i++)
+		components[i]->OnCollisionExit(collider);
+}
+
+
+void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
+	//comprobar que es primer objeto que se adjunta al nodo
+	if (node->numAttachedObjects() == 0)
+	{
+		node->attachObject(mObj);
+		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
+	}
+	else
+	{
+		node->detachAllObjects();
+		node->attachObject(mObj);
+		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
+	}
+}

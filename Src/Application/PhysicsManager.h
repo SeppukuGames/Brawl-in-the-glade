@@ -8,7 +8,7 @@
 #define POSITIONITERATIONS 2
 #define GRAVITY 0
 
-class PhysicsManager
+class PhysicsManager: public b2ContactListener
 {
 #pragma region Singleton  
 private:
@@ -33,6 +33,10 @@ private:
 public:
 	void InitPhysics();
 	void Tick();
+
+	virtual void BeginContact(b2Contact* contact);	//Llamado cuando dos cuerpos colisionan
+	virtual void EndContact(b2Contact* contact);	//Llamado cuando dos cuerpos dejan de colisionar
+	//TODO: IMPLEMENTANDO DE B2CONTACTLISTENER SE PODRÍA HACER UN ONCOLLISIONSTAY()
 
 	inline b2World * GetWorld(){ return world; };
 

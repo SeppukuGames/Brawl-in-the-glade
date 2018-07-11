@@ -35,6 +35,7 @@ void RigidbodyComponent::Start(){
 	fixture.SetDensity(density);
 	fixture.SetFriction(friction);
 	fixture.SetRestitution(restitution);
+
 }
 
 void RigidbodyComponent::Update(double elapsed){

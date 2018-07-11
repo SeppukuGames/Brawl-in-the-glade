@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Error.h"
 #include <Box2D.h>
+#include <iostream>
 
 PlayerComponent::PlayerComponent() : rigidbody(nullptr)
 {
@@ -22,6 +23,7 @@ void PlayerComponent::Start(){
 	}
 
 }
+
 void PlayerComponent::Update(double elapsed){
 	b2Vec2 velocity(0, 0);
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_A))
@@ -32,4 +34,12 @@ void PlayerComponent::Update(double elapsed){
 
 	rigidbody->GetBody()->SetLinearVelocity(velocity);
 	//rigidbody->GetBody()->ApplyForce(velocity,rigidbody->GetBody()->GetWorldCenter(),true);
+}
+
+void PlayerComponent::OnCollisionEnter(ColliderComponent* collider){
+	std::cout << "Entra en con Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
+}
+
+void PlayerComponent::OnCollisionExit(ColliderComponent* collider){
+	std::cout << "Sale de la Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
 }

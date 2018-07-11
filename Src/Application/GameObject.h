@@ -4,6 +4,7 @@
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include "Component.h"
+#include "ColliderComponent.h"
 
 class GameObject; // declaración adelantada
 
@@ -21,20 +22,24 @@ class GameObject
 {
 public:
 	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
-	virtual ~GameObject();
+	~GameObject();
 
-	virtual void Tick(double elapsed);
+	void Tick(double elapsed);
 
-	virtual void AddComponent(Component* comp);
-	virtual Component* GetComponent(ComponentName component);
+	void AddComponent(Component* comp);
+	Component* GetComponent(ComponentName component);
 
-	virtual void SetObjMan(Ogre::MovableObject* mObj);
+	void OnCollisionEnter(ColliderComponent* collider);		//Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
+	void OnCollisionExit(ColliderComponent* collider);		//Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
+
+	void SetObjMan(Ogre::MovableObject* mObj);
 	inline Ogre::SceneNode* GetNode(){ return node; };
+	inline std::string GetName(){ return name; };
 
 protected:
-
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
+	std::string name;
 
 	std::vector<Component*> components;
 };
