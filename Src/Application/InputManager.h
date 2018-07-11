@@ -4,15 +4,13 @@
 #include <OIS.h>
 #include <OgreWindowEventUtilities.h>
 
-#define NUMKEYS 145
-#define NUMKEYMOUSE 3
+#define NUMKEYS 256
+#define NUMKEYMOUSE 8
 
 //Estructura que contiene las coordenadas del ratón
 struct MousePosition{
-
 	OIS::Axis X, Y, Z;
 };
-
 
 class Input : public OIS::MouseListener, public OIS::KeyListener, public Ogre::WindowEventListener
 {
@@ -29,24 +27,25 @@ public:
 #pragma endregion Singleton
 
 private:
-
-	//Vectores para guardar las teclas del teclado y los botones del ratón
-	std::vector<bool> keys;
-	std::vector<bool> keysMouse;
-
 	OIS::InputManager* inputManager;
-	OIS::Mouse*    mouse;
-	OIS::Keyboard* keyboard;
-
-	MousePosition mousePosition;
-
 
 public:
 	void initInput(void);
 	bool handleInput(void);
 
-#pragma region Keyboard 
+private:
+	Input();
+	~Input();
 
+	virtual void windowResized(Ogre::RenderWindow* rw);	//Se le llama cada vez que se escala la ventana
+	virtual void windowClosed(Ogre::RenderWindow* rw);	//Destruye OIS antes de que se cierre la ventana
+
+#pragma region Keyboard 
+private:
+	std::vector<bool> keys;		//Vector para guardar las teclas del teclado
+	OIS::Keyboard* keyboard;
+
+public:
 	//Guarda las teclas recibidas por OIS en la estructura
 	bool keyPressed(const OIS::KeyEvent &arg);
 	bool keyReleased(const OIS::KeyEvent &arg);
@@ -57,7 +56,12 @@ public:
 #pragma endregion Keyboard
 
 #pragma region Mouse  
+private:
+	std::vector<bool> keysMouse;	//Vector para guardar las teclas del ratón
+	OIS::Mouse* mouse;
+	MousePosition mousePosition;
 
+public:
 	//Devuelve la posición del ratón en la ventana
 	MousePosition getMousePosition();
 
@@ -69,19 +73,7 @@ public:
 	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-
 #pragma endregion Mouse
-
-private:
-
-	//Se le llama cada vez que se escala la ventana
-	virtual void windowResized(Ogre::RenderWindow* rw);
-
-	//Destruye OIS antes de que se cierre la ventana
-	virtual void windowClosed(Ogre::RenderWindow* rw);
-
-	Input();
-	~Input();
 
 
 };

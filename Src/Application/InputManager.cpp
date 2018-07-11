@@ -85,6 +85,14 @@ void Input::initInput(void){
 
 }
 
+bool Input::handleInput(void){
+
+	//Captura el input del teclado y ratón
+	keyboard->capture();
+	mouse->capture();
+
+	return true;
+}
 
 #pragma region Keyboard  
 
@@ -141,16 +149,6 @@ bool Input::getMouseButton(OIS::MouseButtonID id){
 }
 
 #pragma endregion Mouse
-
-bool Input::handleInput(void){
-
-	//Captura el input del teclado y ratón
-	keyboard->capture();
-	mouse->capture();
-
-	return true;
-
-}
 
 #pragma region Window Event Listener  
 

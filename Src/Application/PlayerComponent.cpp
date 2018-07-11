@@ -37,9 +37,9 @@ void PlayerComponent::Update(double elapsed){
 }
 
 void PlayerComponent::OnCollisionEnter(ColliderComponent* collider){
-	std::cout << "Entra en con Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
+	std::cout << "Entra en con Colisión con" + collider->GetGameObject()->GetName() + '\n';
 }
 
 void PlayerComponent::OnCollisionExit(ColliderComponent* collider){
-	std::cout << "Sale de la Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
+	std::cout << "Sale de la Colisión con" + collider->GetGameObject()->GetName() + '\n';
 }
