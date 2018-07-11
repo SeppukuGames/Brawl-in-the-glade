@@ -12,6 +12,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
+//#include "AudioManager.h"
 
 using namespace Ogre;
 
@@ -97,4 +98,6 @@ void Scene1::CreateEntities(void)
 	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
 	boxStatic->AddComponent(new BoxColliderComponent(b2Vec2(0, 0), 50, 50));
 	actors.push_back(boxStatic);
+
+
 }

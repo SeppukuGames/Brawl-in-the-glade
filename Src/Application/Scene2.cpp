@@ -9,6 +9,7 @@
 #include "GraphicManager.h"
 #include "EntityComponent.h"
 
+
 using namespace Ogre;
 
 Scene2::Scene2() : Scene()
