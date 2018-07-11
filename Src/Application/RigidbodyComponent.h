@@ -8,7 +8,7 @@ class RigidbodyComponent : public Component{
 
 #pragma region Attributes  
 private:
-	float density, friction,restitution;
+	float density;
 	bool kinematic;
 	b2Body *body;	//Referencia al body de CollisionComponent
 
@@ -17,7 +17,7 @@ private:
 #pragma region Methods  
 
 public:
-	RigidbodyComponent(bool kinematic = false, float density = DEFAULTDENSITY, float friction = DEFAULTFRICTION, float restitution = DEFAULTRESTITUTION);
+	RigidbodyComponent(bool kinematic = false, float density = DEFAULTDENSITY);
 	virtual ~RigidbodyComponent();
 
 	virtual void Start();

@@ -14,6 +14,7 @@
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
 #include "InputManager.h"
+#include "LightComponent.h"
 
 using namespace Ogre;
 
@@ -92,7 +93,7 @@ void Scene1::CreateEntities(void)
 	player->GetNode()->setPosition(0, 100, 0);
 	player->AddComponent(new EntityComponent("ogrehead.mesh"));
 	player->AddComponent(new CircleColliderComponent(50));
-	player->AddComponent(new RigidbodyComponent(false,1000.0f,0.0f,0.0f));
+	player->AddComponent(new RigidbodyComponent(false,100.0f));
 	player->AddComponent(new PlayerComponent());
 	actors.push_back(player);
 

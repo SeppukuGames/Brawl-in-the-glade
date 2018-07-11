@@ -33,14 +33,19 @@ public:
 	void OnCollisionExit(ColliderComponent* collider);		//Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
 
 	void SetObjMan(Ogre::MovableObject* mObj);
+
 	inline Ogre::SceneNode* GetNode(){ return node; };
 	inline std::string GetName(){ return name; };
+
+	inline std::string GetTag(){ return name; };
+	inline std::string SetTag(std::string tag){ this->tag = tag; };
 
 protected:
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
 	std::string name;
-
+	std::string tag = "default";
+	//TODO: TRANSFORM
 	std::vector<Component*> components;
 };
 #endif

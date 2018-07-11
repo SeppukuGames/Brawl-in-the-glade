@@ -15,13 +15,11 @@ private:
 #pragma region Methods  
 
 public:
-	BoxColliderComponent(float w, float h);
+	BoxColliderComponent(float w, float h, PhysicsMaterial material = PhysicsMaterial());
 	virtual ~BoxColliderComponent();
 
-	virtual void Start();
-
 private:
-	virtual void CreateCollider();
+	virtual b2Shape* CreateShape();
 
 #pragma endregion Methods
 	

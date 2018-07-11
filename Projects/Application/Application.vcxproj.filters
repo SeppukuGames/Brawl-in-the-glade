@@ -46,19 +46,22 @@
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp">
+      <Filter>Source Files\Core\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp">
+      <Filter>Source Files\Core\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp">
+      <Filter>Source Files\Core\Components\PhysicsComponent</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
+      <Filter>Source Files\Core\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\LightComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,23 +114,26 @@
     <ClInclude Include="..\..\Src\Application\AudioComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\ColliderComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Component.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
+      <Filter>Header Files\Core\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h">
+      <Filter>Header Files\Core\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
+      <Filter>Header Files\Core\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\ColliderComponent.h">
+      <Filter>Header Files\Core\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\LightComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,12 @@
     </Filter>
     <Filter Include="Source Files\Core\Singletons">
       <UniqueIdentifier>{a52bfec0-aa63-4db9-9ab4-91d6e4cb8537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Components\Physics">
+      <UniqueIdentifier>{d36c0d9c-763d-49c8-a1cc-c289e9bc79e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Components\PhysicsComponent">
+      <UniqueIdentifier>{4630e232-1cbf-4bb1-987d-186cd58fe9fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

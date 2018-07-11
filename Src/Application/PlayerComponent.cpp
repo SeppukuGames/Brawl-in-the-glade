@@ -22,6 +22,7 @@ void PlayerComponent::Start(){
 		throw errorE;
 	}
 
+	//rigidbody->GetBody()->SetAngularVelocity(-10.0f);
 }
 
 void PlayerComponent::Update(double elapsed){

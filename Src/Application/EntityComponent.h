@@ -3,7 +3,7 @@
 
 #include "Component.h"
 #include "GameObject.h"
-#include <OgreEntity.h>
+#include <Ogre.h>
 
 
 class EntityComponent : public Component{

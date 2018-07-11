@@ -4,10 +4,15 @@
 #include "Component.h"
 #include "Box2D.h"
 
-#define DEFAULTDENSITY 1000000
-#define DEFAULTFRICTION 1.0f
-#define DEFAULTRESTITUTION 1.0f
+#define DEFAULTDENSITY 1
+#define DEFAULTFRICTION 0.5f
+#define DEFAULTRESTITUTION 0.3f
 #define OFFSET 90.0f
+
+struct PhysicsMaterial{
+	float friction = DEFAULTFRICTION;
+	float restitution = DEFAULTRESTITUTION;
+};
 
 class ColliderComponent : public Component{
 
@@ -16,6 +21,7 @@ class ColliderComponent : public Component{
 protected:
 	b2Vec2 pos;
 	float angle;
+	PhysicsMaterial material;
 
 	b2Body* body;
 
@@ -24,7 +30,7 @@ protected:
 #pragma region Methods
 
 public:
-	ColliderComponent();
+	ColliderComponent(PhysicsMaterial material = PhysicsMaterial());
 	virtual ~ColliderComponent();
 
 	virtual void Start();
@@ -33,7 +39,8 @@ public:
 
 protected:
 	virtual void CreateBody();
-	virtual void CreateCollider() = 0;
+	virtual b2Shape* CreateShape() = 0;
+	virtual void CreateFixture(b2Shape* shape);
 
 #pragma endregion Methods
 

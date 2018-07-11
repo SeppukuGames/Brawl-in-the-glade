@@ -3,8 +3,8 @@
 #include "Error.h"
 #include <Ogre.h>
 
-RigidbodyComponent::RigidbodyComponent(bool kinematic, float density, float friction, float restitution) :
-kinematic(kinematic), density(density), friction(friction), restitution(restitution)
+RigidbodyComponent::RigidbodyComponent(bool kinematic, float density) :
+kinematic(kinematic), density(density)
 {
 	
 }
@@ -32,8 +32,7 @@ void RigidbodyComponent::Start(){
 	//TODO: meter más fixtures al body
 	b2Fixture* fixture = body->GetFixtureList();
 	fixture->SetDensity(density);
-	fixture->SetFriction(friction);
-	fixture->SetRestitution(restitution);
+
 }
 
 void RigidbodyComponent::Update(double elapsed){

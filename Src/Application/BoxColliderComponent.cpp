@@ -1,35 +1,20 @@
 #include "BoxColliderComponent.h"
 #include "PhysicsManager.h"
 
-BoxColliderComponent::BoxColliderComponent(float w, float h) :
-ColliderComponent(), w(w), h(h)
+BoxColliderComponent::BoxColliderComponent(float w, float h, PhysicsMaterial material) :
+ColliderComponent(material), w(w), h(h)
 {
 }
 
 BoxColliderComponent::~BoxColliderComponent(){
 }
 
-void BoxColliderComponent::Start(){
-	ColliderComponent::Start();
-
-	CreateCollider();
-}
-
-void BoxColliderComponent::CreateCollider()
+b2Shape* BoxColliderComponent::CreateShape()
 {
 	//3. Crear Shape
 	b2PolygonShape *ps = new b2PolygonShape();
 	ps->SetAsBox(w / 2, h / 2);
 
-	//4. Crear Fixture
-	b2FixtureDef *fd = new b2FixtureDef();
-	fd->shape = ps;
-
-	fd->density = DEFAULTDENSITY;
-	fd->friction = DEFAULTFRICTION;
-	fd->restitution = DEFAULTRESTITUTION;
-
-	//5. Adjuntar Shape al cuerpo con Fixture
-	body->CreateFixture(fd);
+	return ps;
 }
 

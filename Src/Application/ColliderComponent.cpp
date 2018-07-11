@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include <Ogre.h>
 
-ColliderComponent::ColliderComponent() : body(nullptr), pos(0, 0), angle(0)
+ColliderComponent::ColliderComponent(PhysicsMaterial material) : body(nullptr), pos(0, 0), angle(0), material(material)
 {
 }
 
@@ -11,11 +11,16 @@ ColliderComponent::~ColliderComponent(){
 }
 
 void ColliderComponent::Start(){
+	//Obtenemos posición y rotación del nodo en el mundo para crear el cuerpo físico
 	pos.Set(gameObject->GetNode()->getPosition().x, gameObject->GetNode()->getPosition().y);
 	Ogre::Vector3 rotation = gameObject->GetNode()->getOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
-	angle = rotation.z -OFFSET;
+	angle = rotation.z - OFFSET;
 
 	CreateBody();
+
+	b2Shape * shape = CreateShape();
+
+	CreateFixture(shape);
 }
 
 void ColliderComponent::CreateBody(){
@@ -30,4 +35,18 @@ void ColliderComponent::CreateBody(){
 
 	//Guardamos el GameObject para poder detectar con quién colisiona
 	body->SetUserData(gameObject);
+}
+
+void ColliderComponent::CreateFixture(b2Shape* shape){
+
+	//4. Crear Fixture
+	b2FixtureDef *fd = new b2FixtureDef();
+	fd->shape = shape;
+
+	fd->density = DEFAULTDENSITY;
+	fd->friction = material.friction;
+	fd->restitution = material.restitution;
+
+	//5. Adjuntar Shape al cuerpo con Fixture
+	body->CreateFixture(fd);
 }

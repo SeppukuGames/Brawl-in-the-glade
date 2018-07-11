@@ -15,13 +15,11 @@ private:
 #pragma region Methods  
 
 public:
-	CircleColliderComponent(float radius);
+	CircleColliderComponent(float radius, PhysicsMaterial material = PhysicsMaterial());
 	virtual ~CircleColliderComponent();
 
-	virtual void Start();
-
 private:
-	virtual void CreateCollider();
+	virtual b2Shape* CreateShape();
 
 #pragma endregion Methods
 

@@ -33,7 +33,6 @@ lastTime(0)
 
 }
 
-
 SceneManager::~SceneManager()
 {
 	delete timer;

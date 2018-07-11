@@ -36,7 +36,6 @@ private:
 	std::stack<Scene*> scenes;
 	SceneType sceneType;
 	
-
 public:
 	void Go();
 
@@ -45,6 +44,8 @@ public:
 
 	void LoadPauseScene();
 	void UnloadPauseScene();
+
+	inline Scene* GetCurrentScene(){ return scenes.top(); };
 
 private:
 	bool GameLoop();
