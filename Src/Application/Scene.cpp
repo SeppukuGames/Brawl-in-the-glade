@@ -17,10 +17,14 @@ Scene::~Scene()
 	//TODO: Revisar cosas a destruir
 
 	//Destruye todos los actores
-	std::list <GameObject*> ::iterator it;
-	for (it = actors.begin(); it != actors.end(); ++it)
+	std::list <GameObject*> ::iterator it = actors.begin();
+	while (!actors.empty() &&  it != actors.end()){
 		delete (*it);
+		actors.erase(it);
+
+	}
 }
+
 
 void Scene::AddGameObject(GameObject * gameObject){
 	actors.push_back(gameObject);
@@ -69,9 +73,12 @@ bool Scene::HandleInput(void) {
 //Detecta input
 bool Scene::Update(double elapsed)
 {
-	std::list <GameObject*> ::iterator it;
-	for (it = actors.begin(); it != actors.end(); ++it)
+	std::list <GameObject*> ::iterator it = actors.begin();
+	while (!actors.empty() && it != actors.end()){
 		(*it)->Tick(elapsed);
+		++it;
+
+	}
 
 	return true;
 }

@@ -28,9 +28,10 @@ void SceneManager::ResetInstance(){
 
 SceneManager::SceneManager() :
 timer(0),
-lastTime(0)
+lastTime(0),
+deleteScene(false),
+sceneType(NULLSCENE)
 {
-
 }
 
 
@@ -48,13 +49,13 @@ SceneManager::~SceneManager()
 
 void SceneManager::Go()
 {
-	sceneType = SCENE1;
+
 	window = GraphicManager::GetInstance()->GetWindow();
 
 	timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
-
-	LoadScene(sceneType);
+	sceneType = SCENE1; //TODO: cambiar a MENUSCENE cuando haya menú
+	SetScene(sceneType);
 
 	while (GameLoop());
 }
@@ -63,9 +64,9 @@ void SceneManager::Go()
 
 
 //Método encargado de crear las distintas escenas. Es llamado desde el resto de escenas (Callback de botones, teclas, ect)
-void SceneManager::LoadScene(SceneType sceneType){
+void SceneManager::SetScene(SceneType sceneType){
 	Scene * scene;
-
+	isPaused = false;
 	switch (sceneType){
 
 	case SCENE1:
@@ -76,6 +77,11 @@ void SceneManager::LoadScene(SceneType sceneType){
 		scene = new Scene2();
 		break;
 
+	case PAUSESCENE:
+		scene = new PauseScene();
+		isPaused = true;
+		break;
+
 	case MENUSCENE:
 		//scene = new MenuScene();
 		break;
@@ -84,16 +90,26 @@ void SceneManager::LoadScene(SceneType sceneType){
 		//scene = new GameOverScene();
 		break;
 
+	//Se accede aquí cuando se sale del Estado pausa
+	case NULLSCENE:
+		UnloadPauseScene();
 	}
 
-	ChangeScene(scene);
+	//Si el estado es pausa, no se cambia de escena, solo se elimina y se sigue con Scene1
+	if (sceneType != NULLSCENE){
+		if (!isPaused)
+			ChangeScene(scene);
+		else
+			LoadPauseScene(scene);
+
+	}
+	deleteScene = false;
+	sceneType = NULLSCENE;
 }
 
 //Carga la escena de pausa sin eliminar la escena anterior
-void SceneManager::LoadPauseScene(){
-	Scene * scn;
-	scn = new PauseScene();
-	PushScene(scn);
+void SceneManager::LoadPauseScene(Scene * scene){
+	PushScene(scene);
 }
 
 //Elimina la escena de pausa y se seguirá ejecutando la escena de juego
@@ -104,6 +120,9 @@ void SceneManager::UnloadPauseScene(){
 // Bucle principal.Acaba cuando se cierra la ventana u ocurre un error en renderOneFrame
 bool SceneManager::GameLoop()
 {
+	if (deleteScene)
+		SetScene(sceneType);
+
 	//Actualiza el RenderWindow
 	Ogre::WindowEventUtilities::messagePump();
 
@@ -117,6 +136,7 @@ bool SceneManager::GameLoop()
 		return false;
 
 	lastTime = current;
+
 
 	return true;
 }

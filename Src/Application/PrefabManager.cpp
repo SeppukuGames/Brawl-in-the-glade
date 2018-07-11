@@ -1,5 +1,6 @@
 #include "PrefabManager.h"
 #include "GraphicManager.h"
+#include "PauseManager.h"
 #include "GameManager.h"
 
 #include "GameObject.h"
@@ -40,11 +41,14 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->GetNode()->setPosition(0, 100, 0);
 		break;
 
-	case GAMEMANAGER:
+	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Game_Manager");
 		gameObject->AddComponent(new GameManager());
-		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
-
+		break;
+	
+	case PAUSEMANAGERPREFAB:
+		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Pause_Manager");
+		gameObject->AddComponent(new PauseManager());
 		break;
 	
 	}

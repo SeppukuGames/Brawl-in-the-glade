@@ -4,7 +4,9 @@
 
 void GameManager::Update(double elapsed){
 
-	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_P))
-		SceneManager::GetInstance()->LoadPauseScene();
+	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_P)){
+		SceneManager::GetInstance()->LoadScene(PAUSESCENE);
+
+	}
 
 }

@@ -5,7 +5,7 @@
 #include <stack>
 #include "Scene.h"
 
-enum SceneType {MENUSCENE,SCENE1, SCENE2, GAMEOVERSCENE};
+enum SceneType {NULLSCENE, MENUSCENE, PAUSESCENE, SCENE1, SCENE2, GAMEOVERSCENE};
 
 class SceneManager
 {
@@ -20,9 +20,7 @@ private:
 	~SceneManager();
 
 public:
-	/* Static access method. */
 	static SceneManager * GetInstance();
-
 	static void ResetInstance();
 #pragma endregion Singleton
 
@@ -35,19 +33,33 @@ private:
 
 	std::stack<Scene*> scenes;
 	SceneType sceneType;
+
+	bool deleteScene;
+	bool isPaused;
 	
 
 public:
 	void Go();
 
-	//Carga la escena correspondiente
-	void LoadScene(SceneType sceneType);
+	void LoadScene(SceneType sceneType){
+		deleteScene = true;
+		this->sceneType = sceneType;
+	};
 
-	void LoadPauseScene();
 	void UnloadPauseScene();
+
+	
+	/* Static access method. */
+	inline Ogre::Timer* GetTimer(){ return timer; };
+	inline double GetLastTime(){ return lastTime; };
+
+	
 
 private:
 	bool GameLoop();
+
+	void LoadPauseScene(Scene * scene);
+	void SetScene(SceneType sceneType);
 
 	//Métodos para el cambio de escenas
 	void ChangeScene(Scene * scene);

@@ -85,7 +85,7 @@ void Scene1::CreateEntities(void)
 	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJA);
 	actors.push_back(ogrito);
 
-	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGER);
+	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);
 	actors.push_back(gm);
 
 	GameObject * player = new GameObject(sceneMgr, "player");

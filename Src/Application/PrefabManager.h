@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-enum PREFABTYPE{ OGRO, NINJA, GAMEMANAGER };
+enum PREFABTYPE{ OGRO, NINJA, GAMEMANAGERPREFAB, PAUSEMANAGERPREFAB };
 
 class PrefabManager {
 #pragma region Singleton  

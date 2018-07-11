@@ -29,8 +29,11 @@ GameObject::~GameObject()
 }
 
 void GameObject::Tick(double elapsed) {
-	for (size_t i = 0; i < components.size(); i++)
+	size_t i = 0;
+	while (!components.empty() && i < components.size()){
 		components[i]->Update(elapsed);
+		i++;
+	}
 }
 
 void GameObject::AddComponent(Component* comp) {

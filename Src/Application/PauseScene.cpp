@@ -101,11 +101,15 @@ void PauseScene::CreateLights(void)
 void PauseScene::CreateEntities(void)
 {
 	//TODO: Panel con botones
-	GameObject * player = new GameObject(sceneMgr, "playerPausa");
-	player->AddComponent(new EntityComponent("ogrehead.mesh"));
-	player->AddComponent(new BoxColliderComponent(50, 50));
-	player->AddComponent(new RigidbodyComponent());
-	player->AddComponent(new PlayerComponent());
-	actors.push_back(player);
+	GameObject * pm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PAUSEMANAGERPREFAB);
+	actors.push_back(pm);
+
+
+	//GameObject * player = new GameObject(sceneMgr, "playerPausa");
+	//player->AddComponent(new EntityComponent("ogrehead.mesh"));
+	//player->AddComponent(new BoxColliderComponent(50, 50));
+	//player->AddComponent(new RigidbodyComponent());
+	//player->AddComponent(new PlayerComponent());
+	//actors.push_back(player);
 
 }

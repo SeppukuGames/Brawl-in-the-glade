@@ -16,6 +16,8 @@ protected:
 
 	Ogre::SceneManager* sceneMgr;
 
+
+
 #pragma endregion Attributes
 
 #pragma region Methods  
@@ -29,6 +31,7 @@ public:
 	virtual bool Tick(double elapsed);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
 	void SetViewport(void);
+
 
 protected:
 	virtual bool HandleInput(void);//Detecta input

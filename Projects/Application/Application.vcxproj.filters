@@ -61,6 +61,9 @@
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PauseManager.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AudioManager.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Component.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\PauseManager.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
