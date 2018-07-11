@@ -12,7 +12,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
-//#include "AudioManager.h"
+#include "InputManager.h"
 
 using namespace Ogre;
 
@@ -87,17 +87,17 @@ void Scene1::CreateEntities(void)
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGER);
 	actors.push_back(gm);
 
-	GameObject * player = new GameObject(sceneMgr, "player");
-	player->AddComponent(new EntityComponent("ogrehead.mesh"));
-	player->AddComponent(new BoxColliderComponent(b2Vec2(0, 100), 50, 50));
-	player->AddComponent(new RigidbodyComponent());
-	player->AddComponent(new PlayerComponent());
-	actors.push_back(player);
+	//GameObject * player = new GameObject(sceneMgr, "player");
+	//player->AddComponent(new EntityComponent("ogrehead.mesh"));
+	//player->AddComponent(new BoxColliderComponent(b2Vec2(0, 100), 50, 50));
+	//player->AddComponent(new RigidbodyComponent());
+	//player->AddComponent(new PlayerComponent());
+	//actors.push_back(player);
 
-	GameObject * boxStatic = new GameObject(sceneMgr, "muro" );
-	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
-	boxStatic->AddComponent(new BoxColliderComponent(b2Vec2(0, 0), 50, 50));
-	actors.push_back(boxStatic);
+	//GameObject * boxStatic = new GameObject(sceneMgr, "muro" );
+	//boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
+	//boxStatic->AddComponent(new BoxColliderComponent(b2Vec2(0, 0), 50, 50));
+	//actors.push_back(boxStatic);
 
 
 }

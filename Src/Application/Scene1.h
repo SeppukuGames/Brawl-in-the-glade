@@ -10,6 +10,7 @@ private:
 	
 public:
 	Scene1();
+	
 
 protected:
 	virtual void CreateScene(void); 

@@ -5,6 +5,7 @@
 #include "GraphicManager.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "PauseScene.h"
 
 #pragma region Singleton  
 /* Null, because instance will be initialized on demand. */
@@ -29,13 +30,14 @@ SceneManager::SceneManager() :
 timer(0),
 lastTime(0)
 {
+
 }
 
 
 SceneManager::~SceneManager()
 {
 	delete timer;
-	
+
 	while (!scenes.empty())
 	{
 		Scene * scene = scenes.top();
@@ -46,18 +48,60 @@ SceneManager::~SceneManager()
 
 void SceneManager::Go()
 {
+	sceneType = SCENE1;
 	window = GraphicManager::GetInstance()->GetWindow();
 
 	timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
 
-	PushScene(new Scene1());
-	//PushScene(new Scene2());
+	LoadScene(sceneType);
 
 	while (GameLoop());
 }
 
-// Bucle principal.Acaba cuando se cierra la ventana o un error en renderOneFrame
+#pragma region Carga y descarga de escenas  
+
+
+//Método encargado de crear las distintas escenas. Es llamado desde el resto de escenas (Callback de botones, teclas, ect)
+void SceneManager::LoadScene(SceneType sceneType){
+	Scene * scene;
+
+	switch (sceneType){
+
+	case SCENE1:
+		scene = new Scene1();
+		break;
+
+	case SCENE2:
+		scene = new Scene2();
+		break;
+
+	case MENUSCENE:
+		//scene = new MenuScene();
+		break;
+
+	case GAMEOVERSCENE:
+		//scene = new GameOverScene();
+		break;
+
+	}
+
+	ChangeScene(scene);
+}
+
+//Carga la escena de pausa sin eliminar la escena anterior
+void SceneManager::LoadPauseScene(){
+	Scene * scn;
+	scn = new PauseScene();
+	PushScene(scn);
+}
+
+//Elimina la escena de pausa y se seguirá ejecutando la escena de juego
+void SceneManager::UnloadPauseScene(){
+	PopScene();
+}
+
+// Bucle principal.Acaba cuando se cierra la ventana u ocurre un error en renderOneFrame
 bool SceneManager::GameLoop()
 {
 	//Actualiza el RenderWindow
@@ -77,6 +121,13 @@ bool SceneManager::GameLoop()
 	return true;
 }
 
+//Método que elimina la escena anterior y carga la nueva
+void SceneManager::ChangeScene(Scene * scene){
+	PopScene();
+	PushScene(scene);
+}
+
+//Método que carga una escena
 void SceneManager::PushScene(Scene * scene)
 {
 	if (scenes.size() > 0)
@@ -86,6 +137,7 @@ void SceneManager::PushScene(Scene * scene)
 	scene->SetViewport();
 }
 
+//Método que elimina la escena anterior
 void SceneManager::PopScene()
 {
 	if (scenes.size() > 0)
@@ -99,3 +151,5 @@ void SceneManager::PopScene()
 			scenes.top()->SetViewport();
 	}
 }
+
+#pragma endregion Carga y descarga de escenas
