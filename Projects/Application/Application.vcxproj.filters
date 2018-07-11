@@ -55,6 +55,9 @@
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -150,6 +153,9 @@
       <Filter>Header Files\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\AudioComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

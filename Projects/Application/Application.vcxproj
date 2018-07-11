@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp" />
     <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameManager.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="..\..\Src\Application\AudioManager.h" />
     <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\checkML.h" />
+    <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\ColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />

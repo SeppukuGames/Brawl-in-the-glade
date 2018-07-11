@@ -6,7 +6,7 @@
 #define TIMESTEP 1.0f/60.0f
 #define VELOCITYITERATIONS 6
 #define POSITIONITERATIONS 2
-#define GRAVITY 0
+#define GRAVITY -10
 
 class PhysicsManager: public b2ContactListener
 {

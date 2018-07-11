@@ -15,7 +15,7 @@ private:
 #pragma region Methods  
 
 public:
-	BoxColliderComponent(b2Vec2 pos, float w, float h);
+	BoxColliderComponent(float w, float h);
 	virtual ~BoxColliderComponent();
 
 	virtual void Start();

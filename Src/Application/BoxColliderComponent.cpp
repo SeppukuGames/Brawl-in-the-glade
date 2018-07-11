@@ -1,8 +1,8 @@
 #include "BoxColliderComponent.h"
 #include "PhysicsManager.h"
 
-BoxColliderComponent::BoxColliderComponent(b2Vec2 pos, float w, float h) :
-ColliderComponent(pos), w(w), h(h)
+BoxColliderComponent::BoxColliderComponent(float w, float h) :
+ColliderComponent(), w(w), h(h)
 {
 }
 
@@ -10,8 +10,7 @@ BoxColliderComponent::~BoxColliderComponent(){
 }
 
 void BoxColliderComponent::Start(){
-
-	CreateBody();
+	ColliderComponent::Start();
 
 	CreateCollider();
 }

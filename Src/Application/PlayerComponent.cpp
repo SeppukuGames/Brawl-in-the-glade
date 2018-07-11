@@ -27,12 +27,14 @@ void PlayerComponent::Start(){
 void PlayerComponent::Update(double elapsed){
 	b2Vec2 velocity(0, 0);
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_A))
-		velocity.y += 10;
+		velocity.x += 10;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Z))
-		velocity.y += -10;
+		velocity.x += -10;
 
-	rigidbody->GetBody()->SetLinearVelocity(velocity);
+	if (velocity.x != 0 || velocity.y != 0)
+		rigidbody->GetBody()->SetLinearVelocity(velocity);
+
 	//rigidbody->GetBody()->ApplyForce(velocity,rigidbody->GetBody()->GetWorldCenter(),true);
 }
 

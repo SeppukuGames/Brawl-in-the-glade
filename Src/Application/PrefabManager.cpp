@@ -43,7 +43,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGER:
 		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Game_Manager");
 		gameObject->AddComponent(new GameManager());
-		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
+		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
 
 		break;
 	}

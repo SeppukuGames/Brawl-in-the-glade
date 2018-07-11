@@ -10,6 +10,7 @@
 #include "EntityComponent.h"
 #include "PrefabManager.h"
 #include "BoxColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
 //#include "AudioManager.h"
@@ -49,13 +50,13 @@ void Scene1::CreateCameras(void)
 	//Creamos la cámara
 	camera = sceneMgr->createCamera("CamScene1");
 	//La inicializamos
-	camera->setPosition(Ogre::Vector3(0, 200, 100));
-	camera->lookAt(Ogre::Vector3(0, -80, -300));
+	camera->setPosition(Ogre::Vector3(0, 0, 0));
+	camera->lookAt(Ogre::Vector3(0, 0, 0 ));
 	camera->setNearClipDistance(5);
 
 	SceneNode* camNode = sceneMgr->createSceneNode("NodoCamaraScene1");
 	camNode->attachObject(camera);
-	camNode->setPosition(0, 47, 222);
+	camNode->setPosition(0, 0, 500);
 
 	//TODO: Camara GameObject
 	//Creamos camara
@@ -88,16 +89,18 @@ void Scene1::CreateEntities(void)
 	actors.push_back(gm);
 
 	GameObject * player = new GameObject(sceneMgr, "player");
+	player->GetNode()->setPosition(0, 100, 0);
 	player->AddComponent(new EntityComponent("ogrehead.mesh"));
-	player->AddComponent(new BoxColliderComponent(b2Vec2(0, 100), 50, 50));
-	player->AddComponent(new RigidbodyComponent());
+	player->AddComponent(new CircleColliderComponent(50));
+	player->AddComponent(new RigidbodyComponent(false,1000.0f,0.0f,0.0f));
 	player->AddComponent(new PlayerComponent());
 	actors.push_back(player);
 
-	GameObject * boxStatic = new GameObject(sceneMgr, "muro" );
+	GameObject * boxStatic = new GameObject(sceneMgr, "muro");
+	Ogre::Quaternion quat;
+	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
+	boxStatic->GetNode()->setOrientation(quat);
 	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
-	boxStatic->AddComponent(new BoxColliderComponent(b2Vec2(0, 0), 50, 50));
+	boxStatic->AddComponent(new BoxColliderComponent(500, 50));
 	actors.push_back(boxStatic);
-
-
 }

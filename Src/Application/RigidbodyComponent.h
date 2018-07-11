@@ -1,8 +1,8 @@
 #ifndef __RigidbodyComponent_h_
 #define __RigidbodyComponent_h_
 
-#include "ColliderComponent.h"
 #include "Box2D.h"
+#include "ColliderComponent.h"
 
 class RigidbodyComponent : public Component{
 
