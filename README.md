@@ -1,9 +1,6 @@
 ### TRABAJAR CON EL PROYECTO
 
 * Git clone de este repositorio
-* Bajarse de Drive: Ogre.zip
-* Crear carpeta Proyecto3: Dependencies
-* Extraer Ogre.zip en Dependencies
 * Ya puedes trabajar
 
 ### CARGAR RECURSOS PARA EL PROYECTO
