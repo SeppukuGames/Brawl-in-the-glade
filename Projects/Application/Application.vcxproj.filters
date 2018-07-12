@@ -31,14 +31,14 @@
     <Filter Include="Header Files\Core\Error">
       <UniqueIdentifier>{b8233917-a797-4e5a-bf34-e29bab0c1aba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Core\Managers">
-      <UniqueIdentifier>{6df8a63d-9f8d-46e1-9556-d5ff65468333}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Core\Components">
       <UniqueIdentifier>{d1b99fce-c3e0-417a-986d-448e0acec0eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Core\Managers">
       <UniqueIdentifier>{0b26aebf-6915-4be7-8d9f-55a73ee39bda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Managers">
+      <UniqueIdentifier>{6df8a63d-9f8d-46e1-9556-d5ff65468333}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\GameObject.cpp">
       <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Scene.cpp">
-      <Filter>Header Files\Core\Error</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp">
       <Filter>Source Files\Core\Managers</Filter>
@@ -108,6 +105,9 @@
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Scene.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -134,13 +134,7 @@
     <ClInclude Include="..\..\Src\Application\GameObject.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Scene.h">
-      <Filter>Source Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\Error.h">
-      <Filter>Header Files\Core\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\checkML.h">
       <Filter>Header Files\Core\Error</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\AudioManager.h">
@@ -181,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
       <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\checkML.h">
+      <Filter>Header Files\Core\Error</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
