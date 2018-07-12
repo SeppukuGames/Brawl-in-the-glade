@@ -50,8 +50,8 @@ void GraphicManager::InitGraphics(void)
 	resourcesCfg = "resources_d.cfg";
 	pluginsCfg = "plugins_d.cfg";
 #else
-	mResourcesCfg = "resources.cfg";
-	mPluginsCfg = "plugins.cfg";
+	resourcesCfg = "resources.cfg";
+	pluginsCfg = "plugins.cfg";
 #endif
 
 	if (!Setup())
