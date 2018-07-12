@@ -8,6 +8,7 @@ ColliderComponent::ColliderComponent(PhysicsMaterial material) : body(nullptr), 
 }
 
 ColliderComponent::~ColliderComponent(){
+	body->GetWorld()->DestroyBody(body);
 }
 
 void ColliderComponent::Start(){
@@ -21,6 +22,8 @@ void ColliderComponent::Start(){
 	b2Shape * shape = CreateShape();
 
 	CreateFixture(shape);
+
+	delete shape;
 }
 
 void ColliderComponent::CreateBody(){
@@ -32,6 +35,8 @@ void ColliderComponent::CreateBody(){
 
 	//2. Crear body
 	body = PhysicsManager::GetInstance()->GetWorld()->CreateBody(bd);
+
+	delete bd;
 
 	//Guardamos el GameObject para poder detectar con quién colisiona
 	body->SetUserData(gameObject);
@@ -49,4 +54,6 @@ void ColliderComponent::CreateFixture(b2Shape* shape){
 
 	//5. Adjuntar Shape al cuerpo con Fixture
 	body->CreateFixture(fd);
+
+	delete fd;
 }

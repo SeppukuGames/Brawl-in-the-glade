@@ -7,20 +7,37 @@
 #include "PhysicsManager.h"
 
 Scene::Scene() :
-camera(0)
+camera(0), sceneMgr(0)
 {
-	sceneMgr = GraphicManager::GetInstance()->GetSceneManager();
+	CreateSceneMgr();
+	//Inicializamos Overlay
+	InitOverlay();
 }
 
 Scene::~Scene()
 {
-	//TODO: Revisar cosas a destruir
-
 	//Destruye todos los actores
 	std::list <GameObject*> ::iterator it;
 	for (it = actors.begin(); it != actors.end(); ++it)
 		delete (*it);
+
+	sceneMgr->clearScene();
+
+	//delete sceneMgr;
+	//TODO: Revisar cosas a destruir
 }
+
+void Scene::CreateSceneMgr(void){
+
+	sceneMgr = GraphicManager::GetInstance()->GetRoot()->createSceneManager();
+}
+
+// Inicializa el OverlaySystem
+void Scene::InitOverlay(void)
+{	
+	sceneMgr->addRenderQueueListener(GraphicManager::GetInstance()->GetOverlaySystem());
+}
+
 
 void Scene::AddGameObject(GameObject * gameObject){
 	actors.push_back(gameObject);

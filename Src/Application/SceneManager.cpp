@@ -133,6 +133,7 @@ void SceneManager::PushScene(Scene * scene)
 		GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
 
 	scenes.push(scene);
+	scene->CreateScene();
 	scene->SetViewport();
 }
 

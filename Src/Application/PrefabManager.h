@@ -9,8 +9,6 @@ class PrefabManager {
 #pragma region Singleton  
 
 private:
-
-
 	static PrefabManager  *instance;
 
 public:
@@ -24,11 +22,8 @@ private:
 	PrefabManager::~PrefabManager(){};
 
 public:
-
 	//Método para crear un GameObject u otro dependiendo del id recibido (0 si ogro, 1 si ninja) Este id se cambiará por un enum seguramente
 	GameObject * CreateObject(PREFABTYPE prefabType);
-
-
 };
 
 #endif /* _PREFAB_H_ */

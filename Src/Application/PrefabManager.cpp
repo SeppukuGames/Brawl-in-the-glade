@@ -1,11 +1,12 @@
 #include "PrefabManager.h"
-#include "GraphicManager.h"
-#include "GameManager.h"
-
+#include "SceneManager.h"
 #include "GameObject.h"
+
+#include "GameManager.h"
 #include "EntityComponent.h"
 #include "AudioComponent.h"
 
+#pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
 
 PrefabManager* PrefabManager::GetInstance()
@@ -20,6 +21,7 @@ void PrefabManager::ResetInstance(){
 	delete instance;
 	instance = nullptr;
 }
+#pragma endregion Singleton
 
 GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
@@ -29,26 +31,24 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	switch (prefabType){
 
 	case OGRO:
-		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Ogrito");
+		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ogrito");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;
 
 	case NINJA:
-		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Ninjita");
+		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ninjita");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setPosition(0, 100, 0);
 		break;
 
 	case GAMEMANAGER:
-		gameObject = new GameObject(GraphicManager::GetInstance()->GetSceneManager(), "Game_Manager");
+		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Game_Manager");
 		gameObject->AddComponent(new GameManager());
 		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
 
-		break;
-	
+		break;	
 	}
 
 	return gameObject;
-
 }

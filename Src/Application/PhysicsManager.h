@@ -29,7 +29,6 @@ public:
 
 private:
 	b2World *world;
-
 public:
 	void InitPhysics();
 	void Tick();

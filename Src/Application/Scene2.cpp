@@ -14,7 +14,6 @@ using namespace Ogre;
 
 Scene2::Scene2() : Scene()
 {
-	CreateScene();
 }
 
 void Scene2::CreateScene()

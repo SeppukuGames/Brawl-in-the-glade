@@ -7,8 +7,9 @@ class Scene2 : public Scene
 {
 public:
 	Scene2();
+	virtual void CreateScene(void);
+
 protected:
-	virtual void CreateScene(void); 
 	virtual void CreateLights(void);
 	virtual void CreateCameras(void);
 	virtual void CreateEntities(void);

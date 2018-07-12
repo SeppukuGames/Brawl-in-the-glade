@@ -20,7 +20,6 @@ using namespace Ogre;
 
 Scene1::Scene1() : Scene()
 {
-	CreateScene();
 }
 
 void Scene1::CreateScene()
@@ -104,5 +103,8 @@ void Scene1::CreateEntities(void)
 	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
 	boxStatic->AddComponent(new BoxColliderComponent(500, 50));
 	actors.push_back(boxStatic);
+
+
+
 }
 

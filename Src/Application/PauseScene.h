@@ -11,9 +11,9 @@ private:
 public:
 	PauseScene();
 	bool Tick(double elapsed);
+	virtual void CreateScene(void);
 
 protected:
-	virtual void CreateScene(void);
 	virtual void CreateCameras(void);
 	virtual void CreateEntities(void);
 	virtual void CreateLights(void);

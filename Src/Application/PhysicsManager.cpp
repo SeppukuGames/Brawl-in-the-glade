@@ -65,6 +65,8 @@ void PhysicsManager::EndContact(b2Contact* contact)
 	GameObject * g1 = (GameObject*)f1->GetBody()->GetUserData();
 	GameObject * g2 = (GameObject*)f2->GetBody()->GetUserData();
 
-	g1->OnCollisionExit((ColliderComponent*)g2->GetComponent(COLLIDER));
-	g2->OnCollisionExit((ColliderComponent*)g1->GetComponent(COLLIDER));
+	if (g1 != nullptr)
+		g1->OnCollisionExit((ColliderComponent*)g2->GetComponent(COLLIDER));
+	if (g2 != nullptr)
+		g2->OnCollisionExit((ColliderComponent*)g1->GetComponent(COLLIDER));
 }

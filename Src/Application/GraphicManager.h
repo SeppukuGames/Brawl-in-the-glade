@@ -29,11 +29,8 @@ private:
 	//RenderSystem
 	Ogre::RenderWindow* window;
 
-	//Inicializa recursos y rutinas de renderizado
-	Ogre::SceneManager* sceneMgr;
-
 	//GUI
-	Ogre::OverlaySystem *overlaySystem;
+	Ogre::OverlaySystem *overlaySystem;	
 
 public:
 	/*
@@ -53,8 +50,9 @@ public:
 	void InitGraphics(void);
 	bool Render(void);
 
+	inline Ogre::Root* GetRoot(){ return root; };
 	inline Ogre::RenderWindow* GetWindow(){ return window; };
-	inline Ogre::SceneManager* GetSceneManager(){ return sceneMgr; };
+	inline Ogre::OverlaySystem* GetOverlaySystem(){ return overlaySystem; };
 
 private:
 	/* Private constructor to prevent instancing. */
@@ -66,6 +64,5 @@ private:
 	void SetupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 	void LoadResources(void);//Carga todos los recursos
 
-	void InitOverlay(void);
 };
 #endif // #ifndef __GraphicManager_h_

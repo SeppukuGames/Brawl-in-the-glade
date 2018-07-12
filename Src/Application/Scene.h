@@ -28,6 +28,9 @@ public:
 
 	virtual bool Tick(double elapsed);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
+	virtual void CreateScene(void) = 0; // Override me!
+
+	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };
 	void SetViewport(void);
 
 protected:
@@ -35,7 +38,8 @@ protected:
 	virtual bool Update(double elapsed);
 	virtual bool Render(void);
 
-	virtual void CreateScene(void) = 0; // Override me!
+	virtual void CreateSceneMgr(void); 
+	virtual void InitOverlay(void);
 
 #pragma endregion Methods
 

@@ -27,20 +27,20 @@ GraphicManager::GraphicManager():
 	resourcesCfg(Ogre::BLANKSTRING),
 	pluginsCfg(Ogre::BLANKSTRING),
 	window(0),
-	sceneMgr(0),
 	overlaySystem(0)
 {
 }
 
 GraphicManager::~GraphicManager()
 {
-	if (overlaySystem) 
+	if (overlaySystem)
 		delete overlaySystem;
-
+	overlaySystem = nullptr;
 	//TODO: COSAS QUE BORRAR???
 
 	//Último en borrar,es el más importante
 	delete root;
+	root = nullptr;
 }
 
 void GraphicManager::InitGraphics(void)
@@ -73,7 +73,7 @@ bool GraphicManager::Setup(void)
 	if (!Configure()) 
 		return false;
 
-	sceneMgr = root->createSceneManager();
+	overlaySystem = new Ogre::OverlaySystem();
 
 	//Establecemos los recursos: Para incluir nuevos recursos, tocar resources.cfg
 	//No los inicializa, solo establece donde buscar los potenciales recursos
@@ -81,9 +81,6 @@ bool GraphicManager::Setup(void)
 
 	//Carga todos los recursos
 	LoadResources();
-
-	//Inicializamos Overlay
-	InitOverlay();
 
 	// Create any resource listeners (for loading screens)
 	//createResourceListener();
@@ -194,9 +191,3 @@ void GraphicManager::LoadResources(void)
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
-// Inicializa el OverlaySystem
-void GraphicManager::InitOverlay(void)
-{
-	overlaySystem = new Ogre::OverlaySystem();
-	sceneMgr->addRenderQueueListener(overlaySystem);
-}

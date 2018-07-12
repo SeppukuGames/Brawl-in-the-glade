@@ -9,7 +9,7 @@ GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :compon
 	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 }
 
-GameObject::~GameObject() 
+GameObject::~GameObject()
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
@@ -17,15 +17,17 @@ GameObject::~GameObject()
 		components[i] = nullptr;
 	}
 
-	//TODO: HIJOS
+	//TODO: revisar para más de 1 attached object
 
-	//UserControl* pCtrl = Ogre::any_cast<UserControl*>(
-	//	node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
-	//	getUserObjectBindings().getUserAny());
+	if (node->numAttachedObjects() > 0)
+	{
+		UserControl* pCtrl = Ogre::any_cast<UserControl*>(
+			node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
+			getUserObjectBindings().getUserAny());
+		delete pCtrl;
+	}
 
-	//unsigned int  = 0;
-	//node->detachObject(hola);
-	//delete pCtrl;
+	delete control;
 }
 
 void GameObject::Tick(double elapsed) {
@@ -97,7 +99,10 @@ void GameObject::OnCollisionEnter(ColliderComponent* collider){
 //Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
 void GameObject::OnCollisionExit(ColliderComponent* collider){
 	for (size_t i = 0; i < components.size(); i++)
-		components[i]->OnCollisionExit(collider);
+	{
+		if (components[i] != nullptr)
+			components[i]->OnCollisionExit(collider);
+	}
 }
 
 

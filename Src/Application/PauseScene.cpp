@@ -19,7 +19,6 @@ using namespace Ogre;
 
 PauseScene::PauseScene() : Scene()
 {
-	CreateScene();
 	PauseAudio();
 }
 
