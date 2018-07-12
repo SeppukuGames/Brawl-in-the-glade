@@ -2,12 +2,13 @@
 #define __GameManager_h_
 
 #include "Component.h"
+#include "Ogre.h"
 
 class GameManager : public Component{
 
 #pragma region Attributes  
 private:
-
+	Ogre::Timer* timer;
 
 #pragma endregion Attributes
 
@@ -17,6 +18,7 @@ public:
 	GameManager(){};
 	virtual ~GameManager(){};
 
+	virtual void Start();
 	virtual void Update(double elapsed);
 
 

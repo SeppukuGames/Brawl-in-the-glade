@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 #include "GameManager.h"
+#include "PauseManager.h"
 #include "EntityComponent.h"
 #include "AudioComponent.h"
 
@@ -30,24 +31,30 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){
 
-	case OGRO:
+	case OGROPREFAB:
 		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ogrito");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;
 
-	case NINJA:
+	case NINJAPREFAB:
 		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ninjita");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setPosition(0, 100, 0);
 		break;
 
-	case GAMEMANAGER:
+	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Game_Manager");
 		gameObject->AddComponent(new GameManager());
 		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
 
 		break;	
+
+	case PAUSEMANAGERPREFAB:
+		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Pause_Manager");
+		gameObject->AddComponent(new PauseManager());
+		break;
+
 	}
 
 	return gameObject;

@@ -5,7 +5,10 @@
 #include <stack>
 #include "Scene.h"
 
-enum SceneType {MENUSCENE,SCENE1, SCENE2, GAMEOVERSCENE};
+#define SCENEWAIT 2000
+
+enum SceneType {NULLSCENE, MENUSCENE,SCENE1, SCENE2, GAMEOVERSCENE};
+enum PauseSceneType {NULLPAUSESCENE, PAUSESCENE };
 
 class SceneManager
 {
@@ -35,20 +38,31 @@ private:
 
 	std::stack<Scene*> scenes;
 	SceneType sceneType;
-	
+
+	bool deleteScene;
+	bool isPaused;
+
+	//Segundo en el que se permite cambiar de escena
+	double nextSceneChange;
 public:
 	void Go();
 
 	//Carga la escena correspondiente
 	void LoadScene(SceneType sceneType);
-
-	void LoadPauseScene();
+	void LoadPauseScene(PauseSceneType pauseSceneType);
 	void UnloadPauseScene();
 
 	inline Scene* GetCurrentScene(){ return scenes.top(); };
+	inline Ogre::Timer* GetTimer(){ return timer; };
+	inline double GetLastTime(){ return lastTime; };
+
+	inline double GetNextSceneChange(){ return nextSceneChange; };
+	inline double SetNextSceneChange(double next){ nextSceneChange = next; };
 
 private:
 	bool GameLoop();
+
+	void SetScene(SceneType sceneType);
 
 	//Métodos para el cambio de escenas
 	void ChangeScene(Scene * scene);

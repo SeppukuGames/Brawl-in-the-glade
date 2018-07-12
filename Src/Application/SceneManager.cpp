@@ -28,7 +28,10 @@ void SceneManager::ResetInstance(){
 
 SceneManager::SceneManager() :
 timer(0),
-lastTime(0)
+lastTime(0),
+deleteScene(false),
+sceneType(NULLSCENE),
+isPaused(false)
 {
 
 }
@@ -47,13 +50,14 @@ SceneManager::~SceneManager()
 
 void SceneManager::Go()
 {
-	sceneType = SCENE1;
 	window = GraphicManager::GetInstance()->GetWindow();
 
 	timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
+	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
-	LoadScene(sceneType);
+	sceneType = SCENE1;
+	SetScene(sceneType);
 
 	while (GameLoop());
 }
@@ -62,7 +66,7 @@ void SceneManager::Go()
 
 
 //Método encargado de crear las distintas escenas. Es llamado desde el resto de escenas (Callback de botones, teclas, ect)
-void SceneManager::LoadScene(SceneType sceneType){
+void SceneManager::SetScene(SceneType sceneType){
 	Scene * scene;
 
 	switch (sceneType){
@@ -86,23 +90,58 @@ void SceneManager::LoadScene(SceneType sceneType){
 	}
 
 	ChangeScene(scene);
+	sceneType = NULLSCENE;
 }
 
 //Carga la escena de pausa sin eliminar la escena anterior
-void SceneManager::LoadPauseScene(){
+void SceneManager::LoadScene(SceneType sceneType){
+	deleteScene = true;
+	this->sceneType = sceneType;
+}
+
+
+//Carga la escena de pausa sin eliminar la escena anterior
+void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
 	Scene * scn;
-	scn = new PauseScene();
+
+	switch (pauseSceneType)
+	{
+	case PAUSESCENE:
+		scn = new PauseScene();
+		break;
+
+	default:
+		break;
+	}
+
 	PushScene(scn);
+	isPaused = true;
+
+	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 }
 
 //Elimina la escena de pausa y se seguirá ejecutando la escena de juego
 void SceneManager::UnloadPauseScene(){
-	PopScene();
+	deleteScene = true;
+	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 }
 
 // Bucle principal.Acaba cuando se cierra la ventana u ocurre un error en renderOneFrame
 bool SceneManager::GameLoop()
 {
+	if (deleteScene)
+	{
+		if (isPaused)
+		{
+			PopScene();
+			isPaused = false;
+		}
+		else
+			SetScene(sceneType);
+
+		deleteScene = false;
+	}
+
 	//Actualiza el RenderWindow
 	Ogre::WindowEventUtilities::messagePump();
 

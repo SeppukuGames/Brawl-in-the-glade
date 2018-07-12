@@ -7,8 +7,8 @@
 #include <OgreRenderWindow.h>
 
 #include "GraphicManager.h"
+#include "PrefabManager.h"
 #include "EntityComponent.h"
-
 
 using namespace Ogre;
 

@@ -12,18 +12,18 @@ class AudioComponent : public Component{
 private:
 	char * audioName;
 	bool isLooped;
+	bool playOnAwake;
 
 #pragma endregion Attributes
 
 #pragma region Methods  
 
 public:
-	AudioComponent(char * audioName, bool isLooped);
+	AudioComponent(char * audioName, bool isLooped, bool playOnAwake);
 	~AudioComponent();
 
 	void Start();
-
-
+	void Play();
 
 #pragma endregion Methods
 

@@ -1,6 +1,6 @@
 
 # Exes
-#*.exe
+*.exe
 *.pdb
 *.ilk
 

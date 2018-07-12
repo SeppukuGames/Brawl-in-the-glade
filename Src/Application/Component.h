@@ -1,13 +1,14 @@
 #ifndef __Component_h_
 #define __Component_h_
 
+
 //Declaración adelantada para evitar ciclo de inclusiones
 class GameObject;
 class ColliderComponent;
 
 //TODO: Meter los que se usen
 enum ComponentName{
-	ENTITY, COLLIDER, BOXCOLLIDER, RIGIDBODY
+	ENTITY, COLLIDER, BOXCOLLIDER, RIGIDBODY,GAMEMANAGER,PAUSEMANAGER
 };
 
 class Component

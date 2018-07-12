@@ -4,16 +4,20 @@
 #include <iostream>
 using namespace std;
 
-AudioComponent::AudioComponent(char * audioName, bool isLooped)
+AudioComponent::AudioComponent(char * audioName, bool isLooped, bool playOnAwake) :
+audioName(audioName), isLooped(isLooped), playOnAwake(playOnAwake)
 {
-	this->audioName = audioName;
-	this->isLooped = isLooped;
 }
 
 AudioComponent::~AudioComponent(){
 }
 
 void AudioComponent::Start(){
+	if (playOnAwake)
+		Play();
+}
+
+void AudioComponent::Play(){
 	AudioManager::GetInstance()->GetSoundEngine()->play2D(audioName, isLooped);
 }
 
