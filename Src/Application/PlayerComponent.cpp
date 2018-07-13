@@ -4,6 +4,7 @@
 #include "Error.h"
 #include <Box2D.h>
 #include <iostream>
+#include "GameManager.h"
 
 PlayerComponent::PlayerComponent() : rigidbody(nullptr)
 {
@@ -40,6 +41,9 @@ void PlayerComponent::Update(double elapsed){
 
 	rigidbody->GetBody()->SetLinearVelocity(velocity);
 	rigidbody->GetBody()->SetAngularVelocity(angle);
+
+	//Acceso a la instancia de GameManager
+	GameManager::GetInstance()->GetGameObject()->GetNode()->getName();
 
 	//rigidbody->GetBody()->ApplyForce(velocity,rigidbody->GetBody()->GetWorldCenter(),true);
 }

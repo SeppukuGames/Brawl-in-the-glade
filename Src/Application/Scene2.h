@@ -7,6 +7,7 @@ class Scene2 : public Scene
 {
 public:
 	Scene2();
+
 	virtual void CreateScene(void);					//Método encargado de crear la escena
 
 protected:

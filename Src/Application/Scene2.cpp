@@ -16,11 +16,15 @@
 #include "InputManager.h"
 #include "LightComponent.h"
 #include "CameraComponent.h"
+#include "GameManager.h"
+
 using namespace Ogre;
 
 Scene2::Scene2() : Scene()
 {
 }
+
+
 
 //Método encargado de crear la escena
 void Scene2::CreateScene()

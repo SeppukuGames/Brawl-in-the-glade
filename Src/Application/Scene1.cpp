@@ -16,6 +16,7 @@
 #include "InputManager.h"
 #include "LightComponent.h"
 #include "CameraComponent.h"
+#include "GameManager.h"
 
 using namespace Ogre;
 
@@ -23,11 +24,12 @@ Scene1::Scene1() : Scene()
 {
 }
 
+
 //Método encargado de crear la escena
 void Scene1::CreateScene()
 {
 	//Creamos luz ambiental
-	//sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	CreateGameObjects();
 }

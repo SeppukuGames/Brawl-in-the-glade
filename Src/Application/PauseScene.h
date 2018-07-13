@@ -9,7 +9,7 @@ class PauseScene : public Scene
 private:
 
 public:		
-	PauseScene();								
+	PauseScene();
 	bool Tick(double elapsed);
 	virtual void CreateScene(void);				//Método encargado de crear la escena
 

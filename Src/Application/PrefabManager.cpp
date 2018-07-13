@@ -39,18 +39,16 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 		//Se añaden los componentes correspondientes
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
-		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;
 
 	case NINJAPREFAB:
 		gameObject = new GameObject("Ninjita");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
-		gameObject->GetNode()->setPosition(0, 100, 0);
 		break;
 
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
-		gameObject->AddComponent(new GameManager());
+		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 

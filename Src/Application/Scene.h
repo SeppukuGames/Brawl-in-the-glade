@@ -18,7 +18,7 @@ protected:
 #pragma region Methods  
 public:
 	Scene();
-	~Scene();
+	virtual ~Scene();
 
 	void AddGameObject(GameObject * gameObject);				//Método encargado de añadir un GameObject
 	void RemoveGameObject(GameObject * gameObject);				//Método encargado de eliminar un GameObject
