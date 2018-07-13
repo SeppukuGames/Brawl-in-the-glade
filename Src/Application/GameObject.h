@@ -2,7 +2,6 @@
 #define __GameObject_H__
 
 #include <OgreSceneNode.h>
-#include <OgreSceneManager.h>
 #include "Component.h"
 #include "ColliderComponent.h"
 
@@ -21,7 +20,7 @@ protected:
 class GameObject
 {
 public:
-	GameObject(Ogre::SceneManager * mSceneMgr, std::string name = "");
+	GameObject(std::string name);
 	~GameObject();
 
 	void Tick(double elapsed);
@@ -35,17 +34,14 @@ public:
 	void SetObjMan(Ogre::MovableObject* mObj);
 
 	inline Ogre::SceneNode* GetNode(){ return node; };
-	inline std::string GetName(){ return name; };
 
-	inline std::string GetTag(){ return name; };
+	inline std::string GetTag(){ return tag; };
 	inline std::string SetTag(std::string tag){ this->tag = tag; };
 
 protected:
 	Ogre::SceneNode* node = nullptr;
 	UserControl* control = nullptr;
-	std::string name;
 	std::string tag = "default";
-	//TODO: TRANSFORM
 	std::vector<Component*> components;
 };
 #endif

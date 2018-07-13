@@ -32,27 +32,27 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	switch (prefabType){
 
 	case OGROPREFAB:
-		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ogrito");
+		gameObject = new GameObject("Ogrito");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;
 
 	case NINJAPREFAB:
-		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ninjita");
+		gameObject = new GameObject("Ninjita");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setPosition(0, 100, 0);
 		break;
 
 	case GAMEMANAGERPREFAB:
-		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Game_Manager");
+		gameObject = new GameObject("Game_Manager");
 		gameObject->AddComponent(new GameManager());
-		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
+		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 
 		break;	
 
 	case PAUSEMANAGERPREFAB:
-		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Pause_Manager");
+		gameObject = new GameObject("Pause_Manager");
 		gameObject->AddComponent(new PauseManager());
 		break;
 

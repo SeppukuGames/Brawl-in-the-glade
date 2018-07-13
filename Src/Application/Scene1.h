@@ -13,8 +13,6 @@ public:
 	virtual void CreateScene(void);
 
 protected:
-	virtual void CreateLights(void);
-	virtual void CreateCameras(void);
 	virtual void CreateEntities(void);
 };
 #endif // #ifndef __Scene1_h_

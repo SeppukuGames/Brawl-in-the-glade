@@ -78,7 +78,7 @@ void Scene2::CreateCameras(void)
 
 void Scene2::CreateEntities(void)
 {
-	GameObject* ogrito = new GameObject(sceneMgr,"Ogrito");
+	GameObject* ogrito = new GameObject("Ogrito");
 	ogrito->AddComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
 
 	actors.push_back(ogrito);

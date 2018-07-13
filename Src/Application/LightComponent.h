@@ -2,8 +2,7 @@
 #define __LightComponent_h_
 
 #include "Component.h"
-#include "GameObject.h"
-#include <OgreEntity.h>
+#include <Ogre.h>
 
 class LightComponent : public Component{
 

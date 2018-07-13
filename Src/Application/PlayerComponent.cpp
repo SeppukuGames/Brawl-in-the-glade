@@ -27,22 +27,27 @@ void PlayerComponent::Start(){
 
 void PlayerComponent::Update(double elapsed){
 	b2Vec2 velocity(0, 0);
+	float angle = 0.0f;
+
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_A))
-		velocity.x += 10;
+		velocity.y += 10;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Z))
-		velocity.x += -10;
+		velocity.y += -10;
 
-	if (velocity.x != 0 || velocity.y != 0)
-		rigidbody->GetBody()->SetLinearVelocity(velocity);
+	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Q))
+		angle = -100.0f;
+
+	rigidbody->GetBody()->SetLinearVelocity(velocity);
+	rigidbody->GetBody()->SetAngularVelocity(angle);
 
 	//rigidbody->GetBody()->ApplyForce(velocity,rigidbody->GetBody()->GetWorldCenter(),true);
 }
 
 void PlayerComponent::OnCollisionEnter(ColliderComponent* collider){
-	std::cout << "Entra en con Colisión con" + collider->GetGameObject()->GetName() + '\n';
+	std::cout << "Entra en con Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
 }
 
 void PlayerComponent::OnCollisionExit(ColliderComponent* collider){
-	std::cout << "Sale de la Colisión con" + collider->GetGameObject()->GetName() + '\n';
+	std::cout << "Sale de la Colisión con" + collider->GetGameObject()->GetNode()->getName() + '\n';
 }

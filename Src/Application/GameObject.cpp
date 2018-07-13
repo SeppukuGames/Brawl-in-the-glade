@@ -1,12 +1,19 @@
 #include "GameObject.h"
+#include "SceneManager.h"
+
 #include "EntityComponent.h"
 #include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "LightComponent.h"
+#include "CameraComponent.h"
+#include "AudioComponent.h"
+#include "Error.h"
 
-GameObject::GameObject(Ogre::SceneManager * mSceneMgr, std::string name) :components(0), name(name){
+GameObject::GameObject(std::string name) :components(0){
 	control = new UserControl(this);
-	node = mSceneMgr->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
+	node = SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr()->getRootSceneNode()->createChildSceneNode(name, Ogre::Vector3(0, 0, 0));
 }
 
 GameObject::~GameObject()
@@ -15,16 +22,6 @@ GameObject::~GameObject()
 	{
 		delete components[i];
 		components[i] = nullptr;
-	}
-
-	//TODO: revisar para más de 1 attached object
-
-	if (node->numAttachedObjects() > 0)
-	{
-		UserControl* pCtrl = Ogre::any_cast<UserControl*>(
-			node->getAttachedObject(0)->//Suponemos que solo puede tener controlador el primer objeto adjunto a un nodo
-			getUserObjectBindings().getUserAny());
-		delete pCtrl;
 	}
 
 	delete control;
@@ -75,6 +72,16 @@ Component* GameObject::GetComponent(ComponentName component) {
 		}
 
 		break;
+	case ComponentName::CIRCLECOLLIDER:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			CircleColliderComponent* comp = dynamic_cast<CircleColliderComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
 	case ComponentName::RIGIDBODY:
 		for (size_t i = 0; i < components.size(); i++)
 		{
@@ -85,6 +92,40 @@ Component* GameObject::GetComponent(ComponentName component) {
 		}
 
 		break;
+
+	case ComponentName::LIGHT:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			LightComponent * comp = dynamic_cast<LightComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::CAMERA:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			CameraComponent * comp = dynamic_cast<CameraComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::AUDIO:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			AudioComponent * comp = dynamic_cast<AudioComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+
+	default:
+		throw(Error("Construye el GetComponent del nuevo Componente"));
 	}
 
 	return NULL;
@@ -107,16 +148,6 @@ void GameObject::OnCollisionExit(ColliderComponent* collider){
 
 
 void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
-	//comprobar que es primer objeto que se adjunta al nodo
-	if (node->numAttachedObjects() == 0)
-	{
-		node->attachObject(mObj);
-		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
-	}
-	else
-	{
-		node->detachAllObjects();
-		node->attachObject(mObj);
-		node->getAttachedObject(0)->getUserObjectBindings().setUserAny(Ogre::Any(control));
-	}
+	node->attachObject(mObj);
+	node->getAttachedObject(node->numAttachedObjects() - 1)->getUserObjectBindings().setUserAny(Ogre::Any(control));
 }

@@ -5,6 +5,7 @@
 #include "GraphicManager.h"
 #include "InputManager.h"
 #include "PhysicsManager.h"
+#include "Error.h"
 
 Scene::Scene() :
 camera(0), sceneMgr(0)
@@ -64,6 +65,8 @@ bool Scene::Tick(double elapsed)
 
 void Scene::SetViewport(void)
 {
+	if (camera == nullptr)
+		throw Error("No hay ningun GameObject con camara en la escena");
 	//Creamos un viewport, toda la ventana
 	Ogre::Viewport* vp = GraphicManager::GetInstance()->GetWindow()->addViewport(camera);
 	vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
@@ -74,13 +77,7 @@ void Scene::SetViewport(void)
 
 //Detecta input
 bool Scene::HandleInput(void) {
-
-	Input::GetInstance()->handleInput();
-
-	//if (mShutDown)
-	//	return false;
-
-	return true;
+	return 	Input::GetInstance()->handleInput();
 }
 
 //Detecta input

@@ -1,4 +1,5 @@
 #include "EntityComponent.h"
+#include "GameObject.h"
 
 EntityComponent::EntityComponent(std::string meshString) : Component(){
 	this->meshString = meshString;

@@ -1,4 +1,5 @@
 #include "LightComponent.h"
+#include "GameObject.h"
 
 LightComponent::LightComponent() : Component(){
 }

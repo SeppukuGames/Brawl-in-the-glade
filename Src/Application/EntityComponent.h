@@ -2,7 +2,6 @@
 #define __EntityComponent_h_
 
 #include "Component.h"
-#include "GameObject.h"
 #include <Ogre.h>
 
 

@@ -108,6 +108,9 @@
     <ClCompile Include="..\..\Src\Application\Scene.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\checkML.h">
       <Filter>Header Files\Core\Error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CameraComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
