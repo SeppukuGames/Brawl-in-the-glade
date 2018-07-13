@@ -88,6 +88,8 @@ En este apartado vamos a mencionar algunas cosas para que entendais como manejar
 
 	- Crear la escena MENÚ y GAMEOVER. La escena de PAUSA está creada, pero sin botones ni nada, está vacía.
 
+SERIA MUY INTERESANTE. Cuando se entregue o antes. Hacer un proyecto por cada Manager y generar sus propias librerias.
+
 -------------------------------------- 4. Comentarios de posibles tareas---------------------------------------------------
 
 
