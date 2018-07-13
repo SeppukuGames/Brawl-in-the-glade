@@ -47,6 +47,7 @@ using namespace Ogre;
 MainGame::MainGame(void)
 {
 	partidaTerminada = false;
+	
 	playIndex = 1;
 }
 //-------------------------------------------------------------------------------------
@@ -113,8 +114,6 @@ void MainGame::createCameras(void)
 
 void MainGame::createEntities(void)
 {
-
-
 	//Todos los rigidbody necesitan una referencia al collision shape.
 	//Collision shape es UNICAMENTE	para colisiones. No tiene masa, inercia,etc.
 	//Si hay muchos rigidbodies con la misma colision, es bueno utilizar el mismo collision shape.
@@ -229,7 +228,7 @@ void MainGame::createEntities(void)
 	//----------------------ARBOLES-------------------------------
 
 	//----------------------ENEMIGOS------------------------------
-	NuevaOleada();
+	NuevaOleada();	
 
 	//----------------------ENEMIGOS------------------------------
 

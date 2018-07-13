@@ -26,7 +26,6 @@ http://www.ogre3d.org/tikiwiki/
 #include "../common/conio.h"
 #endif
 
-
 using namespace irrklang;
 
 //-------------------------------------------------------------------------------------
@@ -50,7 +49,7 @@ BaseApplication::BaseApplication(void)
 	pause(false),
 	gameOver(false)
 	//mOverlaySystem(0)
-{
+{	
 }
 
 //-------------------------------------------------------------------------------------
@@ -71,7 +70,46 @@ BaseApplication::~BaseApplication(void)
 		MainGame::getInstance()->go();
 	
 }
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
+#include "rapidxml_iterators.hpp"
+#include "rapidxml_utils.hpp"
 
+#include <iostream>
+
+using namespace rapidxml;
+//xml_document<> doc;    // character type defaults to char
+
+int initXML()
+{
+	xml_document<> doc;
+	xml_node<>* decl = doc.allocate_node(node_declaration);
+	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+	decl->append_attribute(doc.allocate_attribute("encoding", "UTF-8"));
+	doc.append_node(decl);
+
+	xml_node<> *files = doc.allocate_node(node_element, "Files");
+	doc.append_node(files);
+	xml_attribute<> *attr = doc.allocate_attribute("dummy", "google.com");
+	files->append_attribute(attr);
+
+	for (int i = 0; i<10; ++i)
+	{
+		xml_node<> *file = doc.allocate_node(node_element, "File");
+		files->append_node(file);
+
+		xml_node<> *path = doc.allocate_node(node_element, "Path", "File_path");
+		file->append_node(path);
+		xml_node<> *name = doc.allocate_node(node_element, "Name""File_name");
+		file->append_node(name);
+	}
+
+	std::ofstream myfile;
+	myfile.open("example.xml");
+	myfile << doc;
+	print(std::cout, doc, 0);
+	return 0;
+}
 //-------------------------------------------------------------------------------------
 
 void BaseApplication::go(void)
@@ -88,14 +126,17 @@ void BaseApplication::go(void)
 	if (!setup())
 		return;
 
-	timer = new Ogre::Timer();
+	initXML(); //Aqui esta lo nuevo
+	Sleep(3000);
+
+	/*timer = new Ogre::Timer();
 	lastTime = timer->getMilliseconds();
 	while (gameLoop());
 	//Le cedemos el control a Ogre
 	//mRoot->startRendering();
 
 	// clean up
-	destroyScene();
+	destroyScene();*/
 }
 //-------------------------------------------------------------------------------------
 
@@ -148,7 +189,6 @@ bool BaseApplication::handleInput(void) {
 //Detecta input
 bool BaseApplication::update(double elapsed)
 {
-
 	if (this->physicsEngine != NULL)
 		physicsEngine->getDynamicsWorld()->stepSimulation(btScalar(1.0f / 60.0f)); //suppose you have 60 frames per second
 

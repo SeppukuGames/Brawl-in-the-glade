@@ -3,7 +3,6 @@
 //#include "TutorialBuffered.h"
 //#include "tutorial2.h"
 
-
 #ifdef _DEBUG || !_WIN32
 int main(){
 	printf("Hola, Mundo!\n");
@@ -13,7 +12,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 
 #endif
 	//Inicializa Ogre y el juego
-	Home::getInstance()->go();
+	Home::getInstance()->go();	
 	return 0;
 }
 
