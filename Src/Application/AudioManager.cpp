@@ -1,9 +1,7 @@
 #include "AudioManager.h"
-#include <conio.h>
 #include "Error.h"
 
 using namespace irrklang;
-
 
 #pragma region Singleton  
 
@@ -38,7 +36,7 @@ AudioManager::~AudioManager()
 	// (an exception is the play2D()- or play3D()-method, see the documentation or the
 	// next example for an explanation)
 	// The object is deleted simply by calling ->drop().
-	soundEngine->drop(); 
+	soundEngine->drop();
 }
 
 void AudioManager::InitSoundEngine(void){
@@ -53,3 +51,30 @@ void AudioManager::InitSoundEngine(void){
 
 	}
 }
+
+//Reanuda todos los sonidos
+void AudioManager::Resume(){
+	while (!soundsPaused.empty()){
+		soundsPaused.back()->Play();
+		soundsPaused.pop();
+	}
+}
+
+//Pausa todos los sonidos
+void AudioManager::Pause(){
+	
+	for (size_t i = 0; i < sounds.size(); i++){
+		//Caso en el que la canción esta pausada, para no reanudarla al quitar la pausa
+		if (!sounds[i]->GetIsPaused())
+		{
+			soundsPaused.push(sounds[i]);
+			sounds[i]->Pause();
+		}
+	}
+}
+
+//Establece el volumen global
+void AudioManager::SetGlobalVolume(irrklang::ik_f32 volume){
+	soundEngine->setSoundVolume(volume);
+}
+

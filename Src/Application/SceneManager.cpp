@@ -3,9 +3,12 @@
 #include <OgreRenderWindow.h>
 
 #include "GraphicManager.h"
+#include "AudioManager.h"
 #include "Scene1.h"
 #include "Scene2.h"
 #include "PauseScene.h"
+#include "AudioComponent.h"
+#include "Error.h"
 
 #pragma region Singleton  
 /* Null, because instance will be initialized on demand. */
@@ -27,8 +30,8 @@ void SceneManager::ResetInstance(){
 #pragma endregion Singleton
 
 SceneManager::SceneManager() :
+lastTime(0), 
 timer(0),
-lastTime(0),
 deleteScene(false),
 sceneType(NULLSCENE),
 isPaused(false)
@@ -48,6 +51,7 @@ SceneManager::~SceneManager()
 	}
 }
 
+//Inicializa el SceneManager
 void SceneManager::Go()
 {
 	window = GraphicManager::GetInstance()->GetWindow();
@@ -57,16 +61,93 @@ void SceneManager::Go()
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
 	sceneType = SCENE1;
-	SetScene(sceneType);
+	SetScene();
 
 	while (GameLoop());
 }
 
 #pragma region Carga y descarga de escenas  
 
+//Establece que hay que cambiar de escena en la siguiente vuelta de bucle
+void SceneManager::LoadScene(SceneType sceneType){
+	deleteScene = true;
+	this->sceneType = sceneType;
+}
 
-//Método encargado de crear las distintas escenas. Es llamado desde el resto de escenas (Callback de botones, teclas, ect)
-void SceneManager::SetScene(SceneType sceneType){
+//Carga la escena de pausa sin eliminar la escena anterior
+void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
+	Scene * scn;
+
+	switch (pauseSceneType)
+	{
+	case PAUSESCENE:
+		scn = new PauseScene();
+		break;
+
+	default:
+		Error errorE("Escena de pausa no existente");
+		throw errorE;
+		break;
+	}
+
+	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
+	AudioManager::GetInstance()->Pause();			//Paramos todos los sonidos de la escena
+
+	PushScene(scn);
+	isPaused = true;
+
+	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
+}
+
+//Establece que se tiene que borrar la escena de Pausa en la siguiete vuelta de bucle
+void SceneManager::UnloadPauseScene(){
+	deleteScene = true;
+	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
+}
+
+// Bucle principal. Conprueba en cada vuelta si hay que cambiar de escena
+bool SceneManager::GameLoop()
+{
+	//Comprueba si hay que cambiar de escena y la cambia
+	CheckChangeScene();
+
+	//Actualiza el RenderWindow
+	Ogre::WindowEventUtilities::messagePump();
+
+	if (window->isClosed())
+		return false;
+
+	double current = timer->getMilliseconds();
+	double elapsed = (current - lastTime) / 1000;
+
+	if (!(scenes.top())->Tick(elapsed))
+		return false;
+
+	lastTime = current;
+
+	return true;
+}
+//Comprueba si se tiene que cambiar de escena y ejecuta en caso de tener que hacerlo
+void SceneManager::CheckChangeScene(){
+
+	if (deleteScene)
+	{
+		if (isPaused)
+		{
+			PopScene();
+			scenes.top()->SetViewport();
+			isPaused = false;
+			AudioManager::GetInstance()->Resume();		//Volvemos a reanudar los sonidos al salir de la escena de Pausa
+		}
+		else
+			SetScene();
+
+		deleteScene = false;
+	}
+}
+
+//Método encargado de crear las distintas escenas
+void SceneManager::SetScene(){
 	Scene * scene;
 
 	switch (sceneType){
@@ -87,90 +168,28 @@ void SceneManager::SetScene(SceneType sceneType){
 		//scene = new GameOverScene();
 		break;
 
+	default:
+		Error errorE("Escena no existente");
+		throw errorE;
+		break;
+
 	}
 
 	ChangeScene(scene);
 	sceneType = NULLSCENE;
 }
 
-//Carga la escena de pausa sin eliminar la escena anterior
-void SceneManager::LoadScene(SceneType sceneType){
-	deleteScene = true;
-	this->sceneType = sceneType;
-}
-
-
-//Carga la escena de pausa sin eliminar la escena anterior
-void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
-	Scene * scn;
-
-	switch (pauseSceneType)
-	{
-	case PAUSESCENE:
-		scn = new PauseScene();
-		break;
-
-	default:
-		break;
-	}
-
-	PushScene(scn);
-	isPaused = true;
-
-	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
-}
-
-//Elimina la escena de pausa y se seguirá ejecutando la escena de juego
-void SceneManager::UnloadPauseScene(){
-	deleteScene = true;
-	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
-}
-
-// Bucle principal.Acaba cuando se cierra la ventana u ocurre un error en renderOneFrame
-bool SceneManager::GameLoop()
-{
-	if (deleteScene)
-	{
-		if (isPaused)
-		{
-			PopScene();
-			isPaused = false;
-		}
-		else
-			SetScene(sceneType);
-
-		deleteScene = false;
-	}
-
-	//Actualiza el RenderWindow
-	Ogre::WindowEventUtilities::messagePump();
-
-	if (window->isClosed())
-		return false;
-
-	double current = timer->getMilliseconds();
-	double elapsed = (current - lastTime) / 1000;
-
-	if (!(scenes.top())->Tick(elapsed))
-		return false;
-
-	lastTime = current;
-
-	return true;
-}
-
-//Método que elimina la escena anterior y carga la nueva
+//Método que elimina las escenas actuales y carga una nueva
 void SceneManager::ChangeScene(Scene * scene){
-	PopScene();
+	while (!scenes.empty())
+		PopScene();
+
 	PushScene(scene);
 }
 
 //Método que carga una escena
 void SceneManager::PushScene(Scene * scene)
 {
-	if (scenes.size() > 0)
-		GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
-
 	scenes.push(scene);
 	scene->CreateScene();
 	scene->SetViewport();
@@ -179,16 +198,10 @@ void SceneManager::PushScene(Scene * scene)
 //Método que elimina la escena anterior
 void SceneManager::PopScene()
 {
-	if (scenes.size() > 0)
-	{
-		Scene * scene = scenes.top();
-		scenes.pop();
-		delete (scene);
-		GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
-
-		if (scenes.size() > 0)
-			scenes.top()->SetViewport();
-	}
+	Scene * scene = scenes.top();
+	scenes.pop();
+	delete (scene);
+	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
 }
 
 #pragma endregion Carga y descarga de escenas

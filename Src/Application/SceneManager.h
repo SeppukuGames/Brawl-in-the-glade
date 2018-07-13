@@ -5,7 +5,7 @@
 #include <stack>
 #include "Scene.h"
 
-#define SCENEWAIT 2000
+#define SCENEWAIT 1000
 
 enum SceneType {NULLSCENE, MENUSCENE,SCENE1, SCENE2, GAMEOVERSCENE};
 enum PauseSceneType {NULLPAUSESCENE, PAUSESCENE };
@@ -32,26 +32,28 @@ public:
 private:
 	//Para el bucle principal
 	double lastTime;
-	Ogre::Timer *timer;
+	Ogre::Timer *timer;		//Contandor principal del juego
 
-	Ogre::RenderWindow* window;
+	Ogre::RenderWindow* window;		//Referencia a la ventana
 
 	std::stack<Scene*> scenes;
-	SceneType sceneType;
+	SceneType sceneType;	//Escena nueva que se va a insertar en la siguiente vuelta de bucle
 
-	bool deleteScene;
-	bool isPaused;
+	bool deleteScene;	//Guarda si se tiene que cambiar de escena en la siguiente vuelta de bucle
+	bool isPaused;		//Guarda si la escena que se cambia es Pausa
 
-	//Segundo en el que se permite cambiar de escena
-	double nextSceneChange;
+	double nextSceneChange;	//Segundo en el que se permite cambiar de escena
+
 public:
-	void Go();
+	void Go();	//Inicializa el SceneManager
 
-	//Carga la escena correspondiente
-	void LoadScene(SceneType sceneType);
-	void LoadPauseScene(PauseSceneType pauseSceneType);
-	void UnloadPauseScene();
+	void LoadScene(SceneType sceneType);	//Establece que hay que cambiar de escena en la siguiente vuelta de bucle			
 
+	//Pausa
+	void LoadPauseScene(PauseSceneType pauseSceneType);		//Carga la escena de pausa sin eliminar la escena anterior
+	void UnloadPauseScene();								//Establece que se tiene que borrar la escena de Pausa en la siguiete vuelta de bucle
+
+	//Getters
 	inline Scene* GetCurrentScene(){ return scenes.top(); };
 	inline Ogre::Timer* GetTimer(){ return timer; };
 	inline double GetLastTime(){ return lastTime; };
@@ -60,14 +62,15 @@ public:
 	inline double SetNextSceneChange(double next){ nextSceneChange = next; };
 
 private:
-	bool GameLoop();
-
-	void SetScene(SceneType sceneType);
+	bool GameLoop();					// Bucle principal. Conprueba en cada vuelta si hay que cambiar de escena
 
 	//Métodos para el cambio de escenas
-	void ChangeScene(Scene * scene);
-	void PushScene(Scene * scene);
-	void PopScene();
+	void CheckChangeScene();			//Comprueba si se tiene que cambiar de escena y ejecuta en caso de tener que hacerlo
+	void SetScene();					//Método encargado de crear las distintas escenas
+
+	void ChangeScene(Scene * scene);	//Método que elimina las escenas actuales y carga una nueva
+	void PushScene(Scene * scene);		//Método que carga una escena
+	void PopScene();					//Método que elimina la escena anterior
 };
 #endif // #ifndef __SceneManager_h_
 

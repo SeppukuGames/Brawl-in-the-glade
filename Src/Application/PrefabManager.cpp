@@ -46,7 +46,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Game_Manager");
 		gameObject->AddComponent(new GameManager());
-		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true));
+		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
+		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 
 		break;	
 

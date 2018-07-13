@@ -19,20 +19,13 @@ using namespace Ogre;
 
 PauseScene::PauseScene() : Scene()
 {
-	PauseAudio();
 }
 
 void PauseScene::CreateScene()
 {
-
 	CreateCameras();
 	CreateLights();
 	CreateEntities();
-}
-
-//Pausa el audio de la escena anterior
-void PauseScene::PauseAudio(){
-	AudioManager::GetInstance()->GetSoundEngine()->stopAllSounds();
 }
 
 bool PauseScene::Tick(double elapsed){

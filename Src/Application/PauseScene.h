@@ -18,9 +18,6 @@ protected:
 	virtual void CreateEntities(void);
 	virtual void CreateLights(void);
 
-
-private:
-	void PauseAudio();
 };
 #endif // #ifndef __Scene1_h_
 
