@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 
+//Enumerado pra los tipos de objetos que se pueden crear
 enum PREFABTYPE{ OGROPREFAB, NINJAPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB };
 
 class PrefabManager {
@@ -18,11 +19,12 @@ public:
 #pragma endregion Singleton
 
 private:
+	//Constructora privada para prevenir instanciación 
 	PrefabManager(){};
 	PrefabManager::~PrefabManager(){};
 
 public:
-	//Método para crear un GameObject u otro dependiendo del id recibido (0 si ogro, 1 si ninja) Este id se cambiará por un enum seguramente
+	//Método para crear un GameObject u otro dependiendo del tipo de prefab recibido
 	GameObject * CreateObject(PREFABTYPE prefabType);
 };
 

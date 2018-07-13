@@ -23,29 +23,23 @@ Scene1::Scene1() : Scene()
 {
 }
 
+//Método encargado de crear la escena
 void Scene1::CreateScene()
 {
 	//Creamos luz ambiental
 	//sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
-	CreateEntities();
+	CreateGameObjects();
 }
 
-void Scene1::CreateEntities(void)
+void Scene1::CreateGameObjects(void)
 {
+	//Objetos de prueba
 	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
 	actors.push_back(ogrito);
 
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);
 	actors.push_back(gm);
-
-	/*GameObject * player = new GameObject("player");
-	player->GetNode()->setPosition(0, 100, 0);
-	player->AddComponent(new EntityComponent("ogrehead.mesh"));
-	player->AddComponent(new CircleColliderComponent(50));
-	player->AddComponent(new RigidbodyComponent(false,100.0f));
-	player->AddComponent(new PlayerComponent());
-	actors.push_back(player);*/
 
 	GameObject * boxStatic = new GameObject("muro");
 	Ogre::Quaternion quat;
@@ -65,13 +59,10 @@ void Scene1::CreateEntities(void)
 	Lightobject->AddComponent(new EntityComponent("ogrehead.mesh"));
 	actors.push_back(Lightobject);
 
-	//((LightComponent*)Lightobject->GetComponent(LIGHT))->GetLight()->
-
 	GameObject * cameraObject = new GameObject("camera");
 	cameraObject->GetNode()->setPosition(0, 0, 500);
 	cameraObject->AddComponent(new CameraComponent(camera));
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
 	actors.push_back(cameraObject);
-
 }
 

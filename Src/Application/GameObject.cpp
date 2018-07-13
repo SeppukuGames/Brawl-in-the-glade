@@ -32,12 +32,14 @@ void GameObject::Tick(double elapsed) {
 		components[i]->Update(elapsed);
 }
 
+//Método encargado de añadir un componente
 void GameObject::AddComponent(Component* comp) {
 	components.push_back(comp);
 	comp->SetGameObject(this);
 	comp->Start();
 }
 
+//Método que devuelve un componente específico
 Component* GameObject::GetComponent(ComponentName component) {
 
 	switch (component)
@@ -146,7 +148,7 @@ void GameObject::OnCollisionExit(ColliderComponent* collider){
 	}
 }
 
-
+//Método que añade al vector de Movable Objects un nuevo elemento
 void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
 	node->attachObject(mObj);
 	node->getAttachedObject(node->numAttachedObjects() - 1)->getUserObjectBindings().setUserAny(Ogre::Any(control));

@@ -20,7 +20,7 @@ public:
 #pragma endregion Singleton
 
 private:
-	irrklang::ISoundEngine* soundEngine;	//Manager de irrklang
+	irrklang::ISoundEngine* soundEngine;		//Manager de irrklang
 	queue<AudioComponent*> soundsPaused;		//Sonidos que se estaban reproduciendo y hay que reanudar
 	std::vector<AudioComponent*> sounds;		//Sonidos cargados
 
@@ -32,12 +32,12 @@ public:
 	void SetGlobalVolume(irrklang::ik_f32 volume);	//Establece el volumen global
 
 	//Getters
-	inline irrklang::ISoundEngine* GetSoundEngine(){ return soundEngine; };
-	inline std::vector<AudioComponent*>GetSounds(){ return sounds; }; //Devuelve el vector de canciones de la escena
-	inline void AddSound(AudioComponent* audioComponent){ sounds.push_back(audioComponent); };
+	inline irrklang::ISoundEngine* GetSoundEngine(){ return soundEngine; };						//Devuelve el motor de sonido
+	inline std::vector<AudioComponent*>GetSounds(){ return sounds; };							//Devuelve el vector de canciones de la escena
+	inline void AddSound(AudioComponent* audioComponent){ sounds.push_back(audioComponent); };	//Añade al vector un nuevo sonido
 
 private:
-	/* Private constructor to prevent instancing. */
+	//Constructora privada para prevenir instanciación 
 	AudioManager();
 	~AudioManager();
 

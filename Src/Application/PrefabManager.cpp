@@ -31,8 +31,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){
 
+	//Ejemplos de prefab
+		
 	case OGROPREFAB:
+		//Se crea el GameObject
 		gameObject = new GameObject("Ogrito");
+
+		//Se añaden los componentes correspondientes
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;
@@ -46,7 +51,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
 		gameObject->AddComponent(new GameManager());
-		//gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
+		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 
 		break;	

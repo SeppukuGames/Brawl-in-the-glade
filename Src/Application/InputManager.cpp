@@ -38,6 +38,7 @@ Input::~Input(){
 	windowClosed(GraphicManager::GetInstance()->GetWindow());
 }
 
+//Método encargado de inicializar el input
 void Input::initInput(void){
 
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
@@ -85,6 +86,7 @@ void Input::initInput(void){
 
 }
 
+//Método encargado de detectar el input
 bool Input::handleInput(void){
 
 	//Captura el input del teclado y ratón
@@ -96,6 +98,7 @@ bool Input::handleInput(void){
 
 #pragma region Keyboard  
 
+//Método que devuelve true si se ha pulsado una tecla
 bool Input::keyPressed(const OIS::KeyEvent &arg){
 
 	keys[arg.key] = true;
@@ -103,6 +106,7 @@ bool Input::keyPressed(const OIS::KeyEvent &arg){
 	return true;
 }
 
+//Método que devuelve true si se ha soltado una tecla
 bool Input::keyReleased(const OIS::KeyEvent &arg){
 
 	keys[arg.key] = false;
@@ -110,6 +114,7 @@ bool Input::keyReleased(const OIS::KeyEvent &arg){
 	return true;
 }
 
+//Comprueba si la tecla que está en la estructura coincide con la consultada
 bool Input::getKey(OIS::KeyCode kc){
 	return keys[kc];
 }
@@ -118,12 +123,13 @@ bool Input::getKey(OIS::KeyCode kc){
 
 #pragma region Mouse  
 
-
+//Devuelve la posición del ratón en la ventana
 MousePosition Input::getMousePosition(){
 	return mousePosition;
 }
 
-bool Input::mouseMoved(const OIS::MouseEvent &arg){ //Mirar cómo va
+//Método que comprueba si se ha movido el ratón y guarda la posición
+bool Input::mouseMoved(const OIS::MouseEvent &arg){ 
 
 	mousePosition.X = arg.state.X;
 	mousePosition.Y = arg.state.Y;
@@ -132,18 +138,21 @@ bool Input::mouseMoved(const OIS::MouseEvent &arg){ //Mirar cómo va
 	return true;
 }
 
+//Método que devuelve true si se ha pulsado el botón del ratón recibido como parámetro
 bool Input::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
 	keysMouse[id] = true;
 	return true;
 
 }
 
+//Método que devuelve true si se ha soltado el botón del ratón recibido como parámetro
 bool Input::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
 	keysMouse[id] = false;
 
 	return true;
 }
 
+//Comprueba si el botón del ratón que está en la estructura coincide con la consultada
 bool Input::getMouseButton(OIS::MouseButtonID id){
 	return keysMouse[id];
 }
@@ -167,7 +176,7 @@ void Input::windowResized(Ogre::RenderWindow* rw)
 //Destruye OIS antes de que se cierre la ventana
 void Input::windowClosed(Ogre::RenderWindow* rw)
 {
-	//Only close for window that created OIS (the main window in these demos)
+	//Solo cierra la ventana que ha creado OIS 
 	if (rw == GraphicManager::GetInstance()->GetWindow())
 	{
 		if (inputManager)

@@ -10,10 +10,10 @@ private:
 	
 public:
 	Scene1();
-	virtual void CreateScene(void);
+	virtual void CreateScene(void);					//Método encargado de crear la escena
 
 protected:
-	virtual void CreateEntities(void);
+	virtual void CreateGameObjects(void);			//Método encargado de crear las entidades (luz, cámara, personaje, etc..)
 };
 #endif // #ifndef __Scene1_h_
 

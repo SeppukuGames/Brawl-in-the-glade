@@ -2,6 +2,8 @@
 #include <OgreConfigFile.h> //Para parsear los .cfg
 #include <OgreTextureManager.h>
 #include <OgreRenderWindow.h>
+
+
 #pragma region Singleton  
 
 /* Null, because instance will be initialized on demand. */
@@ -22,12 +24,12 @@ void GraphicManager::ResetInstance(){
 
 #pragma endregion Singleton
 
-GraphicManager::GraphicManager():
-	root(0),
-	resourcesCfg(Ogre::BLANKSTRING),
-	pluginsCfg(Ogre::BLANKSTRING),
-	window(0),
-	overlaySystem(0)
+GraphicManager::GraphicManager() :
+root(0),
+resourcesCfg(Ogre::BLANKSTRING),
+pluginsCfg(Ogre::BLANKSTRING),
+window(0),
+overlaySystem(0)
 {
 }
 
@@ -36,13 +38,13 @@ GraphicManager::~GraphicManager()
 	if (overlaySystem)
 		delete overlaySystem;
 	overlaySystem = nullptr;
-	//TODO: COSAS QUE BORRAR???
 
 	//Último en borrar,es el más importante
 	delete root;
 	root = nullptr;
 }
 
+//Método que inicializa los recursos y los plugings
 void GraphicManager::InitGraphics(void)
 {
 	//Strings que identifican los archivos de recursos y de plugins
@@ -58,7 +60,7 @@ void GraphicManager::InitGraphics(void)
 		return;
 }
 
-//Devuelve falso si da error
+//Método utilizado para poder renderizar.Devuelve falso si da error
 bool GraphicManager::Render(void) {
 	return root->renderOneFrame();
 }
@@ -70,7 +72,7 @@ bool GraphicManager::Setup(void)
 	root = new Ogre::Root(pluginsCfg);
 
 	//Configuramos el renderSystem y creamos la ventana
-	if (!Configure()) 
+	if (!Configure())
 		return false;
 
 	overlaySystem = new Ogre::OverlaySystem();
@@ -81,9 +83,6 @@ bool GraphicManager::Setup(void)
 
 	//Carga todos los recursos
 	LoadResources();
-
-	// Create any resource listeners (for loading screens)
-	//createResourceListener();
 
 	return true;
 };
@@ -96,13 +95,15 @@ bool GraphicManager::Configure(void)
 	//Primero trata de recuperar el cfg y si no lo encuentra, crea el configDialog
 	if (!(root->restoreConfig() || root->showConfigDialog(NULL)))
 		return false;
+
+
 	/*Tal vez deberíamos lanzar una excepción en vez de salir de la aplicación
-	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores */
+	, borrando ogre.cfg del bloque de cache, porque puede desencadenar errores 
 
 	//Se pueden ajustar los valores manualmente
 	//Podemos utilizarlo para crear dentro del juego nuestro propia menu de ajustes, que puede manejar el renderSYstem y los atajos de teclado
 	//Ejemplo de inicializar Direct3D9 Render System
-	/*
+	
 	//Do not add this to your project
 	RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
 
@@ -113,13 +114,9 @@ bool GraphicManager::Configure(void)
 	//Root::getAvailableRenderers permite saber qué renderers están disponibles en nuestro sistema
 
 	//RenderSystem::getConfigOptions permite ver las opciones que ofrece un RenderSystem
-	*/
-
-	//Creamos la RenderWindow por defecto
-	window = root->initialise(true, "Brawl in the glade");
-
+	
 	//Podemos crear la ventana con win32 API, Ejemplo:
-	/*
+	
 	// Do not add this to your project
 	mRoot->initialise(false);
 
@@ -135,10 +132,12 @@ bool GraphicManager::Configure(void)
 	RenderWindow* win = mRoot->createRenderWindow("Main RenderWindow", 800, 600, false, &misc);
 	*/
 
+	//Creamos la RenderWindow por defecto
+	window = root->initialise(true, "Brawl in the glade");
+
 	return true;
 }
 
-//TODO: Warning de OGRE
 //Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
 void GraphicManager::SetupResources(void)
 {
@@ -147,7 +146,7 @@ void GraphicManager::SetupResources(void)
 	cf.load(resourcesCfg);
 
 	//Tenemos que recorrer todas las secciones del archivo [Essential] y añadir las localizaciones al ResourceGroupManager
-	
+
 	Ogre::ConfigFile::SectionIterator secIt = cf.getSectionIterator();
 
 	//String auxiliares para guardar información del archivo de configuracion parseado

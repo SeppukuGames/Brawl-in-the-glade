@@ -30,14 +30,13 @@ public:
 private:
 	b2World *world;
 public:
-	void InitPhysics();
-	void Tick();
+	void InitPhysics();			//Método encargado de inicializar la física
+	void Tick();				//Método que actualiza el estado de la física cada frame
 
-	virtual void BeginContact(b2Contact* contact);	//Llamado cuando dos cuerpos colisionan
-	virtual void EndContact(b2Contact* contact);	//Llamado cuando dos cuerpos dejan de colisionar
-	//TODO: IMPLEMENTANDO DE B2CONTACTLISTENER SE PODRÍA HACER UN ONCOLLISIONSTAY()
+	virtual void BeginContact(b2Contact* contact);	//Método llamado cuando dos cuerpos colisionan
+	virtual void EndContact(b2Contact* contact);	//Método llamado cuando dos cuerpos dejan de colisionar
 
-	inline b2World * GetWorld(){ return world; };
+	inline b2World * GetWorld(){ return world; };	//Método que devuelve la referencia del mundo
 
 };
 #endif // #ifndef __PhysicsManager_h_

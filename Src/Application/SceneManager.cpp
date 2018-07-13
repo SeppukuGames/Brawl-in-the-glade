@@ -85,12 +85,13 @@ void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
 		break;
 
 	default:
+		//En caso de insertar un nombre de escena de pausa no existente, lanzamos un error
 		Error errorE("Escena de pausa no existente");
 		throw errorE;
 		break;
 	}
 
-	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
+	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();	//Eliminamos todos los viewports
 	AudioManager::GetInstance()->Pause();			//Paramos todos los sonidos de la escena
 
 	PushScene(scn);
@@ -105,7 +106,7 @@ void SceneManager::UnloadPauseScene(){
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 }
 
-// Bucle principal. Conprueba en cada vuelta si hay que cambiar de escena
+// Bucle principal. Comprueba en cada vuelta si hay que cambiar de escena
 bool SceneManager::GameLoop()
 {
 	//Comprueba si hay que cambiar de escena y la cambia
@@ -132,6 +133,7 @@ void SceneManager::CheckChangeScene(){
 
 	if (deleteScene)
 	{
+		//Caso en el que la escena de pausa está activa
 		if (isPaused)
 		{
 			PopScene();

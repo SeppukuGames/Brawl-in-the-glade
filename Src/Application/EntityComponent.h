@@ -9,7 +9,8 @@ class EntityComponent : public Component{
 
 #pragma region Attributes  
 private:
-	Ogre::Entity * entity;
+	Ogre::Entity * entity;				//Atributos para establecer la entidad a crear y el nombre del mesh del GameObject
+
 	std::string meshString;
 
 #pragma endregion Attributes
@@ -22,7 +23,7 @@ public:
 
 	virtual void Start();
 
-	inline Ogre::Entity* GetEntity(){ return entity; }
+	inline Ogre::Entity* GetEntity(){ return entity; }		//Método utilizado para obtener la entidad
 
 #pragma endregion Methods
 

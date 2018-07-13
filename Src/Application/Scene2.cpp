@@ -2,85 +2,65 @@
 
 #include <OgreSceneNode.h>
 #include <OgreLight.h>
-#include <OgreViewport.h>
 #include <OgreCamera.h>
 #include <OgreRenderWindow.h>
+#include <Box2D.h>
 
 #include "GraphicManager.h"
-#include "PrefabManager.h"
 #include "EntityComponent.h"
-
+#include "PrefabManager.h"
+#include "BoxColliderComponent.h"
+#include "CircleColliderComponent.h"
+#include "RigidbodyComponent.h"
+#include "PlayerComponent.h"
+#include "InputManager.h"
+#include "LightComponent.h"
+#include "CameraComponent.h"
 using namespace Ogre;
 
 Scene2::Scene2() : Scene()
 {
 }
 
+//Método encargado de crear la escena
 void Scene2::CreateScene()
 {
-	CreateLights();
-
-	CreateCameras();
-
-	CreateEntities();
-}
-
-void Scene2::CreateLights(void)
-{
 	//Creamos luz ambiental
-	sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	//sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
-	//Creamos una luz
-	Light* light = sceneMgr->createLight("MainLightScene2");
-	SceneNode* lightNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
-	lightNode->attachObject(light);
-
-	//Damos posición al nodo de la luz
-	lightNode->setPosition(20, 80, 50);
+	CreateGameObjects();
 }
 
-void Scene2::CreateCameras(void) 
+void Scene2::CreateGameObjects(void)
 {
-	//Creamos la cámara
-	camera = sceneMgr->createCamera("CamScene2");
-	//La inicializamos
-	camera->setPosition(Ogre::Vector3(0, 200, 100));
-	camera->lookAt(Ogre::Vector3(0, -80, -300));
-	camera->setNearClipDistance(5);
-
-	SceneNode* camNode = sceneMgr->createSceneNode("NodoCamaraScene2");
-	camNode->attachObject(camera);
-	camNode->setPosition(0, 47, 222);
-
-	//TODO: Camara GameObject
-	//Creamos camara
-	//cam = new GameObject(mSceneMgr);
-	
-	//cam->addComponent(new MoveCameraComponent(BaseApplication::mWindow, mSceneMgr));
-
-	//dynamic_cast<MoveCameraComponent*> (cam->getComponent(ComponentName::MOVE_CAMERA))->setMainGameRef(this);
-	//actors_.push_back(cam);
-
-	/*
-	SceneNode* camNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	// create the camera
-	Camera* cam = mSceneMgr->createCamera("myCam");
-	cam->setNearClipDistance(5); // specific to this sample
-	cam->setAutoAspectRatio(true);
-	camNode->attachObject(cam);
-	camNode->setPosition(0, 0, 140);
-	// and tell it to render into the main window
-	getRenderWindow()->addViewport(cam);
-	*/
-}
-
-
-
-void Scene2::CreateEntities(void)
-{
-	GameObject* ogrito = new GameObject("Ogrito");
-	ogrito->AddComponent(new EntityComponent("ogrehead.mesh")); //Ninja.mesh
-
+	//Objetos de prueba
+	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
 	actors.push_back(ogrito);
-}
 
+	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);
+	actors.push_back(gm);
+
+	GameObject * boxStatic = new GameObject("muro");
+	Ogre::Quaternion quat;
+	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
+	boxStatic->GetNode()->setOrientation(quat);
+	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
+	boxStatic->AddComponent(new BoxColliderComponent(500, 50));
+	actors.push_back(boxStatic);
+
+	GameObject * Lightobject = new GameObject("light");
+	Lightobject->GetNode()->setPosition(0, 100, 0);
+
+	Lightobject->AddComponent(new LightComponent());
+	Lightobject->AddComponent(new CircleColliderComponent(50));
+	Lightobject->AddComponent(new RigidbodyComponent(false, 10.0f));
+	Lightobject->AddComponent(new PlayerComponent());
+	Lightobject->AddComponent(new EntityComponent("ogrehead.mesh"));
+	actors.push_back(Lightobject);
+
+	GameObject * cameraObject = new GameObject("camera");
+	cameraObject->GetNode()->setPosition(0, 0, 500);
+	cameraObject->AddComponent(new CameraComponent(camera));
+	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
+	actors.push_back(cameraObject);
+}

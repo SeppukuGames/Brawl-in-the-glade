@@ -23,27 +23,26 @@ Scene::~Scene()
 		delete (*it);
 
 	sceneMgr->clearScene();
-
-	//delete sceneMgr;
-	//TODO: Revisar cosas a destruir
 }
 
+//Método que crea el sceneManager
 void Scene::CreateSceneMgr(void){
 
 	sceneMgr = GraphicManager::GetInstance()->GetRoot()->createSceneManager();
 }
 
-// Inicializa el OverlaySystem
+// Método que inicializa el OverlaySystem
 void Scene::InitOverlay(void)
 {	
 	sceneMgr->addRenderQueueListener(GraphicManager::GetInstance()->GetOverlaySystem());
 }
 
-
+//Método encargado de añadir un GameObject
 void Scene::AddGameObject(GameObject * gameObject){
 	actors.push_back(gameObject);
 }
 
+//Método encargado de eliminar un GameObject
 void Scene::RemoveGameObject(GameObject * gameObject){
 	actors.remove(gameObject);
 }
@@ -63,6 +62,7 @@ bool Scene::Tick(double elapsed)
 	return true;
 }
 
+//Método encargado de establecer el viewport
 void Scene::SetViewport(void)
 {
 	if (camera == nullptr)
@@ -75,12 +75,12 @@ void Scene::SetViewport(void)
 	camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 }
 
-//Detecta input
+//Método encargado de detectar input
 bool Scene::HandleInput(void) {
 	return 	Input::GetInstance()->handleInput();
 }
 
-//Detecta input
+
 bool Scene::Update(double elapsed)
 {
 	std::list <GameObject*> ::iterator it;

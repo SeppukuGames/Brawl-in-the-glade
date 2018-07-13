@@ -26,6 +26,7 @@ void ColliderComponent::Start(){
 	delete shape;
 }
 
+//Método encargado de crear un body del objeto
 void ColliderComponent::CreateBody(){
 	//1. Definir body
 	b2BodyDef *bd = new b2BodyDef();
@@ -42,6 +43,7 @@ void ColliderComponent::CreateBody(){
 	body->SetUserData(gameObject);
 }
 
+//Método encargado de crear el fixture del objeto para asociarla al body
 void ColliderComponent::CreateFixture(b2Shape* shape){
 
 	//4. Crear Fixture

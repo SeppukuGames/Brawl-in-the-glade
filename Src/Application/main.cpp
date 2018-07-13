@@ -44,23 +44,23 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In
 		//Empieza el juego
 		sceneManager->Go();
 
-		sceneManager->ResetInstance();									//Destruye Gestor de escenas
-		prefabManager->ResetInstance();
-		physicsManager->ResetInstance();
-		audioManager->ResetInstance();									//Destruye el motor de audio
-		input->ResetInstance();
-		graphicManager->ResetInstance();								//Destruye Ogre
+		sceneManager->ResetInstance();								//Destruye Gestor de escenas
+		prefabManager->ResetInstance();								//Destruye el PrefabManager
+		physicsManager->ResetInstance();							//Destruye el motor de física
+		audioManager->ResetInstance();								//Destruye el motor de audio
+		input->ResetInstance();										//Destruye el input
+		graphicManager->ResetInstance();							//Destruye Ogre
 
 	}
 	catch (Error &e){
-		sceneManager->ResetInstance();									//Destruye Gestor de escenas
-		prefabManager->ResetInstance();
-		physicsManager->ResetInstance();
-		audioManager->ResetInstance();									//Destruye el motor de audio
-		input->ResetInstance();
-		graphicManager->ResetInstance();								//Destruye Ogre
+		sceneManager->ResetInstance();								//Destruye Gestor de escenas
+		prefabManager->ResetInstance();								//Destruye el PrefabManager
+		physicsManager->ResetInstance();							//Destruye el motor de física
+		audioManager->ResetInstance();								//Destruye el motor de audio
+		input->ResetInstance();										//Destruye el input
+		graphicManager->ResetInstance();							//Destruye Ogre
 
-		//Mostrar mensaje
+		//Mostrar mensaje de error
 		std::cout << e.mensaje().c_str();
 		cin.ignore();
 		system("PAUSE");

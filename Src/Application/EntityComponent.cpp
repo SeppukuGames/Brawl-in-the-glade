@@ -11,7 +11,7 @@ EntityComponent::~EntityComponent()
 }
 
 void EntityComponent::Start(){
-	entity = gameObject->GetNode()->getCreator()->createEntity(meshString);
-	gameObject->SetObjMan(entity);
+	entity = gameObject->GetNode()->getCreator()->createEntity(meshString);		//Creamos la nueva entidad
+	gameObject->SetObjMan(entity);												//Añadimos el gameObject al vector de Movable Objects
 }
 

@@ -8,9 +8,9 @@ class RigidbodyComponent : public Component{
 
 #pragma region Attributes  
 private:
-	float density;
-	bool kinematic;
-	b2Body *body;	//Referencia al body de CollisionComponent
+	float density;			//Atributo para establecer la densidad del objeto
+	bool kinematic;			//Booleana para establecer si el objeto es kinemático o no
+	b2Body *body;			//Referencia al body de CollisionComponent
 
 #pragma endregion Attributes
 
@@ -21,9 +21,10 @@ public:
 	virtual ~RigidbodyComponent();
 
 	virtual void Start();
-	virtual void Update(double elapsed);
 
-	inline b2Body * GetBody(){ return body; };
+	virtual void Update(double elapsed);			//Método que controla la posición y orientación del objeto en cada frame
+	
+	inline b2Body * GetBody(){ return body; };		//Método para obtener el body del objeto
 
 private:
 #pragma endregion Methods

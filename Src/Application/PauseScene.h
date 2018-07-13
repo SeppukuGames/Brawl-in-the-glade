@@ -8,15 +8,15 @@ class PauseScene : public Scene
 {
 private:
 
-public:
-	PauseScene();
+public:		
+	PauseScene();								
 	bool Tick(double elapsed);
-	virtual void CreateScene(void);
+	virtual void CreateScene(void);				//Método encargado de crear la escena
 
 protected:
-	virtual void CreateCameras(void);
-	virtual void CreateEntities(void);
-	virtual void CreateLights(void);
+
+	virtual void CreateGameObjects(void);			//Método encargado de crear las entidades (luz, cámara, personaje, etc..)
+
 
 };
 #endif // #ifndef __Scene1_h_

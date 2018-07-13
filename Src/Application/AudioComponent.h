@@ -29,7 +29,7 @@ public:
 
 	//Métodos públicos para poder modificar parámetros del audio
 	void Play();	//Empieza a reproducir el sonido
-	void Pause();	//Pausa el sonido(TODO: FUNCIONAR)
+	void Pause();	//Pausa el sonido
 	void Stop();	//Para el sonido
 
 	void SetVolume(irrklang::ik_f32 volume);	//Establece el volumen propio del sonido

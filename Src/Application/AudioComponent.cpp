@@ -31,7 +31,7 @@ void AudioComponent::Play(){
 	sound->setIsPaused(false);
 }
 
-//Pausa el sonido(TODO: FUNCIONAR)
+//Pausa el sonido
 void AudioComponent::Pause(){
 	sound->setIsPaused(true);
 }
