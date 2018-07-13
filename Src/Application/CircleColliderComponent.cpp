@@ -9,9 +9,9 @@ ColliderComponent(material), radius(radius)
 CircleColliderComponent::~CircleColliderComponent(){
 }
 
+//3. Método que construye la forma del objeto (Círculo en este caso)
 b2Shape* CircleColliderComponent::CreateShape()
 {
-	//3. Crear Shape
 	b2CircleShape * cs = new b2CircleShape();
 	cs->m_radius = radius/2;
 

@@ -31,8 +31,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){
 
+	//Ejemplos de prefab
+		
 	case OGROPREFAB:
+		//Se crea el GameObject
 		gameObject = new GameObject(SceneManager::GetInstance()->GetCurrentScene()->GetSceneMgr(), "Ogrito");
+
+		//Se añaden los componentes correspondientes
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		gameObject->GetNode()->setPosition(100, 5, 0);
 		break;

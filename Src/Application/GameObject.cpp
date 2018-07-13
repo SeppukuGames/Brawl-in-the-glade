@@ -17,8 +17,6 @@ GameObject::~GameObject()
 		components[i] = nullptr;
 	}
 
-	//TODO: revisar para más de 1 attached object
-
 	if (node->numAttachedObjects() > 0)
 	{
 		UserControl* pCtrl = Ogre::any_cast<UserControl*>(
@@ -35,12 +33,14 @@ void GameObject::Tick(double elapsed) {
 		components[i]->Update(elapsed);
 }
 
+//Método encargado de añadir un componente
 void GameObject::AddComponent(Component* comp) {
 	components.push_back(comp);
 	comp->SetGameObject(this);
 	comp->Start();
 }
 
+//Método que devuelve un componente específico
 Component* GameObject::GetComponent(ComponentName component) {
 
 	switch (component)
@@ -105,7 +105,7 @@ void GameObject::OnCollisionExit(ColliderComponent* collider){
 	}
 }
 
-
+//Método que añade al vector de Movable Objects un nuevo elemento
 void GameObject::SetObjMan(Ogre::MovableObject* mObj) {
 	//comprobar que es primer objeto que se adjunta al nodo
 	if (node->numAttachedObjects() == 0)

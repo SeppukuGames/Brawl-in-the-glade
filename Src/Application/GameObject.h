@@ -26,26 +26,25 @@ public:
 
 	void Tick(double elapsed);
 
-	void AddComponent(Component* comp);
-	Component* GetComponent(ComponentName component);
+	void AddComponent(Component* comp);									//Método encargado de añadir un componente
+	Component* GetComponent(ComponentName component);					//Método que devuelve un componente específico
 
-	void OnCollisionEnter(ColliderComponent* collider);		//Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
-	void OnCollisionExit(ColliderComponent* collider);		//Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
+	void OnCollisionEnter(ColliderComponent* collider);					//Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
+	void OnCollisionExit(ColliderComponent* collider);					//Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
 
-	void SetObjMan(Ogre::MovableObject* mObj);
+	void SetObjMan(Ogre::MovableObject* mObj);							//Método que añade al vector de Movable Objects un nuevo elemento
 
-	inline Ogre::SceneNode* GetNode(){ return node; };
-	inline std::string GetName(){ return name; };
-
-	inline std::string GetTag(){ return name; };
-	inline std::string SetTag(std::string tag){ this->tag = tag; };
+	inline Ogre::SceneNode* GetNode(){ return node; };					//Método que devuelve el nodo
+	inline std::string GetName(){ return name; };						//Método que devuelve el nombre del nodo
+		
+	inline std::string GetTag(){ return name; };						//Método que devuelve el tag del nodo
+	inline std::string SetTag(std::string tag){ this->tag = tag; };		//Método que establece el tag del nodo
 
 protected:
-	Ogre::SceneNode* node = nullptr;
-	UserControl* control = nullptr;
-	std::string name;
-	std::string tag = "default";
-	//TODO: TRANSFORM
-	std::vector<Component*> components;
+	Ogre::SceneNode* node = nullptr;									//Atributo para la referencia al nodo
+	UserControl* control = nullptr;										//Atributo para la referencia al UserControl
+	std::string name;													//Atributo para establecer el nombre del nodo
+	std::string tag = "default";										//Atributo para establecer el tag del nodo
+	std::vector<Component*> components;									//Vector de componentes
 };
 #endif

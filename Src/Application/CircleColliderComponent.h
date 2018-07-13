@@ -8,7 +8,7 @@ class CircleColliderComponent : public ColliderComponent{
 
 #pragma region Attributes  
 private:
-	float radius;
+	float radius; //Atributo para guardar el radio del círculo
 
 #pragma endregion Attributes
 
@@ -19,7 +19,9 @@ public:
 	virtual ~CircleColliderComponent();
 
 private:
-	virtual b2Shape* CreateShape();
+
+	virtual b2Shape* CreateShape();				//3. Método que construye la forma del objeto (Círculo en este caso)
+
 
 #pragma endregion Methods
 

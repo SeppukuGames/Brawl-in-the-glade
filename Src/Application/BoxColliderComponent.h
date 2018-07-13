@@ -8,7 +8,7 @@ class BoxColliderComponent : public ColliderComponent{
 
 #pragma region Attributes  
 private:
-	float w, h;
+	float w, h; //Atributos para la altura y la anchura del collider
 
 #pragma endregion Attributes
 
@@ -19,10 +19,12 @@ public:
 	virtual ~BoxColliderComponent();
 
 private:
-	virtual b2Shape* CreateShape();
+
+	virtual b2Shape* CreateShape();				//3. Método que construye la forma del objeto (Cubo en este caso)
+
 
 #pragma endregion Methods
-	
+
 };
 
 #endif /* __BoxColliderComponent_h_ */

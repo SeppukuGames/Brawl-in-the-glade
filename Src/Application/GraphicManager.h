@@ -33,36 +33,23 @@ private:
 	Ogre::OverlaySystem *overlaySystem;	
 
 public:
-	/*
-	Ciclo básico de Ogre:
 
-	Create the Ogre::Root object
-	Define the resources that Ogre will use
-	Choose and set up the RenderSystem (DirectX, OpenGL, etc)
-	Create the RenderWindow
-	Set up any third party libraries and plugins.
-	Initialise resources
-	Register listener classes
-	Build a scene
-	Start the render loop
-	*/
+	void InitGraphics(void);			//Método que inicializa los recursos y los plugings
+	bool Render(void);					//Método utilizado para poder renderizar.Devuelve falso si da error
 
-	void InitGraphics(void);
-	bool Render(void);
-
-	inline Ogre::Root* GetRoot(){ return root; };
-	inline Ogre::RenderWindow* GetWindow(){ return window; };
-	inline Ogre::OverlaySystem* GetOverlaySystem(){ return overlaySystem; };
+	inline Ogre::Root* GetRoot(){ return root; };								//Método que devuelve el root 
+	inline Ogre::RenderWindow* GetWindow(){ return window; };					//Método que devuelve la ventana
+	inline Ogre::OverlaySystem* GetOverlaySystem(){ return overlaySystem; };	//Método que devuelve el sistema de overlay
 
 private:
-	/* Private constructor to prevent instancing. */
+	//Constructora privada para prevenir instanciación 
 	GraphicManager();
 	~GraphicManager();
 
 	bool Setup();
-	bool Configure(void);//Configura el RenderSystem y crea la ventana
-	void SetupResources(void);//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
-	void LoadResources(void);//Carga todos los recursos
+	bool Configure(void);				//Configura el RenderSystem y crea la ventana
+	void SetupResources(void);			//Establece los recursos potencialmente utilizables. Para añadir nuevos recursos : resources.cfg
+	void LoadResources(void);			//Carga todos los recursos
 
 };
 #endif // #ifndef __GraphicManager_h_

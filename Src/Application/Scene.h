@@ -9,12 +9,9 @@ class Scene
 {
 #pragma region Attributes  
 protected:
-	Ogre::Camera* camera;
-
-	//Todos los objetos de las escena
-	std::list<GameObject*> actors;
-
-	Ogre::SceneManager* sceneMgr;
+	Ogre::Camera* camera;				//Atributo para la referencia a la cámara
+	std::list<GameObject*> actors;		//Vector que guarda todos los objetos de las escena
+	Ogre::SceneManager* sceneMgr;		//Atributo para la referencia del sceneManager
 
 #pragma endregion Attributes
 
@@ -23,23 +20,24 @@ public:
 	Scene();
 	~Scene();
 
-	void AddGameObject(GameObject * gameObject);
-	void RemoveGameObject(GameObject * gameObject);
+	void AddGameObject(GameObject * gameObject);				//Método encargado de añadir un GameObject
+	void RemoveGameObject(GameObject * gameObject);				//Método encargado de eliminar un GameObject
 
-	virtual bool Tick(double elapsed);//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
+	virtual bool Tick(double elapsed);							//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
-	virtual void CreateScene(void) = 0; // Override me!
+	virtual void CreateScene(void) = 0;							//Método abstracto para crear una escena
 
-	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };
-	void SetViewport(void);
+	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };		//Método que devuelve la referencia al sceneManager
+	void SetViewport(void);										//Método encargado de establecer el viewport
 
 protected:
-	virtual bool HandleInput(void);//Detecta input
-	virtual bool Update(double elapsed);
+	virtual bool HandleInput(void);								//Método encargado de detectar input
+	virtual bool Update(double elapsed);						
 	virtual bool Render(void);
+		
+	virtual void CreateSceneMgr(void);							//Método que crea el sceneManager
+	virtual void InitOverlay(void);								//Método que inicializa el OverlaySystem
 
-	virtual void CreateSceneMgr(void); 
-	virtual void InitOverlay(void);
 
 #pragma endregion Methods
 

@@ -8,7 +8,7 @@ class PauseManager : public Component{
 
 #pragma region Attributes
 private:
-	Ogre::Timer* timer;
+	Ogre::Timer* timer; //Variable para controlar tiempo que ha transcurrido
 
 #pragma endregion Attributes
 
@@ -17,6 +17,7 @@ private:
 public:
 	PauseManager();
 	virtual ~PauseManager(){};
+
 	virtual void Start();
 	virtual void Update(double elapsed);
 

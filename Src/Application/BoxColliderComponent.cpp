@@ -9,11 +9,11 @@ ColliderComponent(material), w(w), h(h)
 BoxColliderComponent::~BoxColliderComponent(){
 }
 
+//3. Método que construye la forma del objeto (Cubo en este caso)
 b2Shape* BoxColliderComponent::CreateShape()
 {
-	//3. Crear Shape
 	b2PolygonShape *ps = new b2PolygonShape();
-	ps->SetAsBox(w / 2, h / 2);
+	ps->SetAsBox(w / 2, h / 2); 
 
 	return ps;
 }
