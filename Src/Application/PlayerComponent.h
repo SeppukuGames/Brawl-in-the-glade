@@ -9,6 +9,8 @@ class PlayerComponent : public Component{
 #pragma region Attributes  
 private:
 	RigidbodyComponent * rigidbody;
+	b2Vec2 velocity;
+	float angle;
 
 #pragma endregion Attributes
 

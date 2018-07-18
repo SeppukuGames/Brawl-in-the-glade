@@ -62,6 +62,10 @@ bool Scene::Tick(double elapsed)
 	return true;
 }
 
+void Scene::SetCamera(Ogre::Camera* cam) {
+	camera = cam;
+}
+
 //Método encargado de establecer el viewport
 void Scene::SetViewport(void)
 {

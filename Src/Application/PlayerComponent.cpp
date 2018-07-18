@@ -17,6 +17,8 @@ PlayerComponent::~PlayerComponent()
 void PlayerComponent::Start(){
 
 	rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
+	velocity.Set(0, 0);
+	angle = 0.0f;
 
 	if (rigidbody == nullptr){
 		Error errorE("\n\n\n\n\nError al crear el PlayerComponent. Necesita un Rigidbody ");
@@ -27,9 +29,7 @@ void PlayerComponent::Start(){
 }
 
 void PlayerComponent::Update(double elapsed){
-	b2Vec2 velocity(0, 0);
-	float angle = 0.0f;
-
+	
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_A))
 		velocity.y += 10;
 

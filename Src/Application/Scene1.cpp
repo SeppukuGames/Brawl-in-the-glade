@@ -1,10 +1,6 @@
 #include "Scene1.h"
 
-#include <OgreSceneNode.h>
-#include <OgreLight.h>
-#include <OgreCamera.h>
-#include <OgreRenderWindow.h>
-#include <Box2D.h>
+
 
 #include "GraphicManager.h"
 #include "EntityComponent.h"
@@ -43,13 +39,7 @@ void Scene1::CreateGameObjects(void)
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);
 	actors.push_back(gm);
 
-	GameObject * boxStatic = new GameObject("muro");
-	Ogre::Quaternion quat;
-	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
-	boxStatic->GetNode()->setOrientation(quat);
-	boxStatic->AddComponent(new EntityComponent("ogrehead.mesh"));
-	boxStatic->AddComponent(new BoxColliderComponent(500, 50));
-	actors.push_back(boxStatic);
+	GameObject * boxStatic = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MUROPREFAB);	
 
 	GameObject * Lightobject = new GameObject("light");
 	Lightobject->GetNode()->setPosition(0, 100, 0);
@@ -61,10 +51,14 @@ void Scene1::CreateGameObjects(void)
 	Lightobject->AddComponent(new EntityComponent("ogrehead.mesh"));
 	actors.push_back(Lightobject);
 
-	GameObject * cameraObject = new GameObject("camera");
+	/*GameObject * cameraObject = new GameObject("camera");
 	cameraObject->GetNode()->setPosition(0, 0, 500);
 	cameraObject->AddComponent(new CameraComponent(camera));
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
+	actors.push_back(cameraObject);*/
+	
+	GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
+	SetCamera(((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera());
 	actors.push_back(cameraObject);
 }
 

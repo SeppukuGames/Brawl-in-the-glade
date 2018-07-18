@@ -4,7 +4,7 @@
 #include "GameObject.h"
 
 //Enumerado pra los tipos de objetos que se pueden crear
-enum PREFABTYPE{ OGROPREFAB, NINJAPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB };
+enum PREFABTYPE{ OGROPREFAB, NINJAPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA };
 
 class PrefabManager {
 #pragma region Singleton  

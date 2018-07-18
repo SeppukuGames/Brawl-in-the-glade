@@ -1,12 +1,16 @@
----------------------------------- GUÍA PARA EL MANEJO DE LA ARQUITECTURA-------------------------------------------
+﻿---------------------------------- GUÍA PARA EL MANEJO DE LA ARQUITECTURA-------------------------------------------
 
 ARQUITECTURA. Todo lo referente a la arquitectura del motor está incluido en la carpeta Core. Esta carpeta incluye todo
 los managers (Physic,Graphic,audio,etc), la clase base de Scene,GameObject,Component y una lista de componentes CORE, 
 como pueden ser el EntityComponent o RigidBodyComponent.
 
-Tal y como lo hemos montado, Adriana y Raul, NUNCA DEBERÍA SER NECESARIO TOCAR ALGO DEL CORE. TODO EL JUEGO SE PUEDE CONSTRUIR CREANDO NUEVOS COMPONENTES/ESCENAS Y UTILIZANDO LOS DEL CORE. En el caso en que creais necesario introducir algo en algún archivo del core, comentádnoslo previamente antes de realizar cualquier cambio. Es posible que en algún caso se nos haya pasado alguna cosa necesaria. 
+Tal y como lo hemos montado, Adriana y Raul, NUNCA DEBERÍA SER NECESARIO TOCAR ALGO DEL CORE. 
+TODO EL JUEGO SE PUEDE CONSTRUIR CREANDO NUEVOS COMPONENTES/ESCENAS Y UTILIZANDO LOS DEL CORE. 
+En el caso en que creais necesario introducir algo en algún archivo del core, comentádnoslo previamente antes de realizar cualquier cambio. 
+Es posible que en algún caso se nos haya pasado alguna cosa necesaria. 
 
-Hay excepciones, hay algunas clases del Core que vais a tener que estar modificando continuamente, cada vez que creais nuevos componentes o nuevas escenas, para lo cual os dejamos una guía de que hay que tocar exactamente.
+Hay excepciones, hay algunas clases del Core que vais a tener que estar modificando continuamente, 
+cada vez que creais nuevos componentes o nuevas escenas, para lo cual os dejamos una guía de que hay que tocar exactamente.
 
 ÍNDICE:
 
@@ -65,16 +69,24 @@ En este apartado vamos a mencionar algunas cosas para que entendais como manejar
 	Con las Scene1,Scene2, etc, pasaría lo mismo. Toda esa clase debería venir dada por el XML.
 
 -Memory Leaks.
-	Hemos incluido una función que nos dieron en TPV que nos permite revisar los MemoryLeaks. Toda nuestra arquitectura no genera MemoryLeaks, sin embargo, hay algunos memoryLeaks que genera Windows, no sabemos si porque algo de las propiedades del proyecto están mal o por qué será. Sería interesante revisarlo.
+	Hemos incluido una función que nos dieron en TPV que nos permite revisar los MemoryLeaks. Toda nuestra arquitectura no genera MemoryLeaks, 
+	sin embargo, hay algunos memoryLeaks que genera Windows, no sabemos si porque algo de las propiedades del proyecto están mal o por qué será.
+	Sería interesante revisarlo.
 
 -DLLs.
-	CREO QUE PedroPablo dijo que no debería haber ningún DLL en el repositorio. Actualmente están, nosotros no sabemos cómo se podrían eliminar y que todo funcionase.
+	CREO QUE PedroPablo dijo que no debería haber ningún DLL en el repositorio.
+	Actualmente están, nosotros no sabemos cómo se podrían eliminar y que todo funcionase.
 
--Gestión de Escenas. La escena de Pausa es una escena aparte y se gestiona de forma diferente al resto.
+-Gestión de Escenas. 
+	La escena de Pausa es una escena aparte y se gestiona de forma diferente al resto.
 
--Game Manager: tiene que ser un Singleton además de componente. Actualmente, solo detecta que si se pulsa la P se va al estado de Pausa. Hay UN GameManager por CADA ESCENA (Si hubiera 3 escenas, habría tres GameManager). En cada escena, tener cuidado de borrar el Game Manager. Ejemplo: Scene1
+-Game Manager. 
+	Tiene que ser un Singleton además de componente. Actualmente, solo detecta que si se pulsa la P se va al estado de Pausa. 
+	Hay UN GameManager por CADA ESCENA (Si hubiera 3 escenas, habría tres GameManager). 
+	En cada escena, tener cuidado de borrar el Game Manager. Ejemplo: Scene1
 
--No está creado el mapa. Se añadirían como GameObject al igual que el resto de objetos de la escena.
+-No está creado el mapa. 
+	Se añadirían como GameObject al igual que el resto de objetos de la escena.
 
 -Echad un vistazo a la carpeta Components para ver algunos ejemplos de uso y la Scene1
 

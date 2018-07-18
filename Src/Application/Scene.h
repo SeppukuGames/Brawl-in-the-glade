@@ -28,12 +28,14 @@ public:
 	virtual void CreateScene(void) = 0;							//Método abstracto para crear una escena
 
 	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };		//Método que devuelve la referencia al sceneManager
+	Ogre::Camera * GetCamera() { return camera; };
+	void SetCamera(Ogre::Camera* cam);
 	void SetViewport(void);										//Método encargado de establecer el viewport
 
 protected:
 	virtual bool HandleInput(void);								//Método encargado de detectar input
-	virtual bool Update(double elapsed);						
-	virtual bool Render(void);
+	virtual bool Update(double elapsed);						//Loop principal
+	virtual bool Render(void);									//Renderizado
 		
 	virtual void CreateSceneMgr(void);							//Método que crea el sceneManager
 	virtual void InitOverlay(void);								//Método que inicializa el OverlaySystem

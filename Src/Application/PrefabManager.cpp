@@ -1,3 +1,10 @@
+#include <OgreSceneNode.h>
+#include <OgreLight.h>
+#include <OgreCamera.h>
+#include <OgreRenderWindow.h>
+#include <Box2D.h>
+#include "BoxColliderComponent.h"
+
 #include "PrefabManager.h"
 #include "SceneManager.h"
 #include "GameObject.h"
@@ -6,6 +13,7 @@
 #include "PauseManager.h"
 #include "EntityComponent.h"
 #include "AudioComponent.h"
+#include "CameraComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -59,6 +67,22 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new PauseManager());
 		break;
 
+	case MUROPREFAB:
+		gameObject = new GameObject("Muro");
+		//Ogre::Quaternion quat;
+		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
+		//gameObject->GetNode()->setOrientation(quat);
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
+		gameObject->AddComponent(new BoxColliderComponent(500, 50));
+		break;
+
+	case MAINCAMERA:
+		gameObject = new GameObject("Main_Camera");
+		Ogre::Camera* camera = SceneManager::GetInstance()->GetCurrentScene()->GetCamera();
+		gameObject->AddComponent(new BoxColliderComponent(1, 1));
+		gameObject->AddComponent(new RigidbodyComponent(false));
+		gameObject->AddComponent(new CameraComponent(camera));
+		break;
 	}
 
 	return gameObject;
