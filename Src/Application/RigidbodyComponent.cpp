@@ -1,7 +1,7 @@
 #include "RigidbodyComponent.h"
 #include "GameObject.h"
 #include "Error.h"
-#include <Ogre.h>
+
 
 RigidbodyComponent::RigidbodyComponent(bool kinematic, float density) :
 kinematic(kinematic), density(density)
@@ -15,6 +15,8 @@ RigidbodyComponent::~RigidbodyComponent(){
 void RigidbodyComponent::Start(){
 
 	ColliderComponent * collider = (ColliderComponent*)(gameObject->GetComponent(COLLIDER));
+
+	initialOrientation = gameObject->GetNode()->getOrientation();
 
 	//Se lanza una excepcion en caso de intentar crear un rigidbody sin haber creado antes un collider
 	if (collider == nullptr){
@@ -48,9 +50,9 @@ void RigidbodyComponent::Update(double elapsed){
 
 	//Convertimos el ángulo en un quaternion para poder establecer la orientación
 	Ogre::Quaternion quat;
-	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(angle)), Ogre::Vector3(0, 0, 1));
+	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(angle)), Ogre::Vector3(0, 1, 0));
 
 	//Establecemos la posición y orientación correspondientes
-	node->setPosition(Ogre::Vector3(pos.x, pos.y, 0));
-	node->setOrientation(quat);
+	node->setPosition(Ogre::Vector3(pos.x, 0, pos.y));
+	node->setOrientation(initialOrientation + quat);
 }

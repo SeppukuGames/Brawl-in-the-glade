@@ -57,7 +57,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
 		gameObject->AddComponent(GameManager::GetInstance());
-		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,true));
+		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 
 		break;	
@@ -79,8 +79,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
 		Ogre::Camera* camera = SceneManager::GetInstance()->GetCurrentScene()->GetCamera();
-		gameObject->AddComponent(new BoxColliderComponent(1, 1));
-		gameObject->AddComponent(new RigidbodyComponent(false));
+		//gameObject->AddComponent(new BoxColliderComponent(1, 1));
+		//gameObject->AddComponent(new RigidbodyComponent(false));
 		gameObject->AddComponent(new CameraComponent(camera));
 		break;
 	}

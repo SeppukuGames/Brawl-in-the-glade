@@ -3,6 +3,7 @@
 
 #include "Box2D.h"
 #include "ColliderComponent.h"
+#include <Ogre.h>
 
 class RigidbodyComponent : public Component{
 
@@ -11,7 +12,7 @@ private:
 	float density;			//Atributo para establecer la densidad del objeto
 	bool kinematic;			//Booleana para establecer si el objeto es kinemático o no
 	b2Body *body;			//Referencia al body de CollisionComponent
-
+	Ogre::Quaternion initialOrientation;
 #pragma endregion Attributes
 
 #pragma region Methods  

@@ -12,7 +12,9 @@ class CameraComponent : public Component{
 private:
 	Ogre::Camera * camera;				//Referencia a la cámara
 	RigidbodyComponent * rigidbody;
-	b2Vec2 velocity;
+	float velocity;
+	Ogre::Vector3 dir;
+
 #pragma endregion Attributes
 
 #pragma region Methods  

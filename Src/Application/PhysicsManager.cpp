@@ -35,7 +35,6 @@ void PhysicsManager::InitPhysics()
 {
 	b2Vec2 gravity(0, GRAVITY);
 	world = new b2World(gravity); 	//Inicializar el mundo
-
 	//Nos suscribimos a las funciones de beginContact
 	world->SetContactListener(this);
 }

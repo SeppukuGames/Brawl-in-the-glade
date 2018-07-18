@@ -13,7 +13,7 @@ ColliderComponent::~ColliderComponent(){
 
 void ColliderComponent::Start(){
 	//Obtenemos posición y rotación del nodo en el mundo para crear el cuerpo físico
-	pos.Set(gameObject->GetNode()->getPosition().x, gameObject->GetNode()->getPosition().y);
+	pos.Set(gameObject->GetNode()->getPosition().x, gameObject->GetNode()->getPosition().z);
 	Ogre::Vector3 rotation = gameObject->GetNode()->getOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
 	angle = rotation.z - OFFSET;
 
