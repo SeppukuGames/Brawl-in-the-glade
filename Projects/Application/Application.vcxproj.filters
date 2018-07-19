@@ -162,6 +162,9 @@
     <ClInclude Include="..\..\Src\Application\Enemigo.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\ComponentCreator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

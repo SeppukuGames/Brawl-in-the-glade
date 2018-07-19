@@ -37,6 +37,7 @@
     <ClInclude Include="..\..\Src\Application\Bala.h" />
     <ClInclude Include="..\..\Src\Application\BalaComponent.h" />
     <ClInclude Include="..\..\Src\Application\BaseApplication.h" />
+    <ClInclude Include="..\..\Src\Application\ComponentCreator.h" />
     <ClInclude Include="..\..\Src\Application\Home.h" />
     <ClInclude Include="..\..\Src\Application\MenuPausa.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
