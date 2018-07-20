@@ -6,7 +6,9 @@
 #include <iostream>
 #include "GameManager.h"
 
-#define _VELOCITY = 100.f;
+const float _LINEARVELOCITY = 500.f;
+const float _ANGULARVELOCITY = 150.f;
+//const float _VELOCITY = 50.f;
 
 PlayerComponent::PlayerComponent() : rigidbody(nullptr)
 {
@@ -34,19 +36,19 @@ void PlayerComponent::Start(){
 void PlayerComponent::Update(double elapsed){
 	
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_S))
-		velocity.y += 50;
+		velocity.y += _LINEARVELOCITY;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_W))
-		velocity.y -= 50;
+		velocity.y -= _LINEARVELOCITY;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_D))
-		velocity.x += 10;
+		velocity.x += _LINEARVELOCITY;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_A))
-		velocity.x -= 10;
+		velocity.x -= _LINEARVELOCITY;
 
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Q))
-		angle = -100.0f;
+		angle = -_ANGULARVELOCITY;
 	
 	velocity.x *= elapsed;
 	velocity.y *= elapsed;

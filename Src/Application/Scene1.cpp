@@ -32,32 +32,30 @@ void Scene1::CreateScene()
 
 void Scene1::CreateGameObjects(void)
 {
+
+	GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
+	//SetCamera(((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera());
+	//actors.push_back(cameraObject);
+
 	//Objetos de prueba
+	/*
 	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
 	Ogre::Quaternion quat;
 	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(95.0f)), Ogre::Vector3(0, 1, 0));
 	ogrito->GetNode()->rotate(quat);
 	actors.push_back(ogrito);
+	*/
+	
+	GameObject * player = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
+	//actors.push_back(player);
 
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);
-	actors.push_back(gm);
+	//actors.push_back(gm);
 
 	//GameObject * boxStatic = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MUROPREFAB);	
 
-	GameObject * Lightobject = new GameObject("light");
-	Lightobject->GetNode()->setPosition(100, 0, 100);
-	Ogre::Quaternion quat2;
-	quat2.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
-	Lightobject->GetNode()->setOrientation(quat2);
-	Lightobject->AddComponent(new LightComponent());
-	Lightobject->AddComponent(new CircleColliderComponent(50));
-	Lightobject->AddComponent(new RigidbodyComponent(false, 10.0f));
-	Lightobject->AddComponent(new PlayerComponent());
-	Lightobject->AddComponent(new EntityComponent("ogrehead.mesh"));
-/*	Ogre::Quaternion quat;
-	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(95.0f)), Ogre::Vector3(0, 1, 0));
-	Lightobject->GetNode()->setOrientation(quat);*/
-	actors.push_back(Lightobject);
+	GameObject * Lightobject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::LIGHTPREFAB);
+	//actors.push_back(Lightobject);
 
 	/*GameObject * cameraObject = new GameObject("camera");
 	cameraObject->GetNode()->setPosition(0, 0, 500);
@@ -65,8 +63,6 @@ void Scene1::CreateGameObjects(void)
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
 	actors.push_back(cameraObject);*/
 	
-	GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
-	SetCamera(((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera());
-	actors.push_back(cameraObject);
+	
 }
 

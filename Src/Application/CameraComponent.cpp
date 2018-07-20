@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 
-CameraComponent::CameraComponent(Ogre::Camera * camera) : Component(),camera (camera){
+CameraComponent::CameraComponent() : Component(){
 }
 
 CameraComponent::~CameraComponent()
@@ -10,10 +10,13 @@ CameraComponent::~CameraComponent()
 }
 
 void CameraComponent::Start(){
-	rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
+	
+	//rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
 	velocity = 5.0f;
 	dir = (0, 0, 0);
-	camera = gameObject->GetNode()->getCreator()->createCamera("Camera");
+	initialPos = (0, 550, -10);
+
+	camera = gameObject->GetNode()->getCreator()->createCamera("MainCamera");
 	gameObject->SetObjMan(camera);
 
 	//rigidbody->GetBody()->SetTransform(b2Vec2(-10, 10), 0.0f);
@@ -26,8 +29,33 @@ void CameraComponent::Start(){
 
 void CameraComponent::Update(double elapsed) {
 
+	//Volver al principio
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_SPACE))
-		dir.z += velocity;
+		camera->setPosition(initialPos);
+
+	//ARREGLAR (Descubrir funcionamiento de input del ratón)
+	/*if (Input::GetInstance()->getMousePosition() != ){
+		//X AXIS
+		if (arg.state.X.abs > (_mWindow->getWidth() - 20) && arg.state.X.abs < _mWindow->getWidth())
+		{
+			dir.x += velocity;
+		}
+		else if (arg.state.X.abs < (20) && arg.state.X.abs > 0)
+			dir.x -= velocity;
+		else
+			dir.x = 0;
+
+		//Y AXIS
+		if (arg.state.Y.abs >(_mWindow->getHeight() - 20) && arg.state.Y.abs < _mWindow->getHeight())
+		{
+			dir.z += velocity;
+		}
+		else if (arg.state.Y.abs < (20) && arg.state.Y.abs > 0)
+			dir.z -= velocity;
+		else
+			dir.z = 0;
+	}*/
+
 	camera->move(dir *Ogre::Real(elapsed));
 	
 	//gameObject->GetNode()->translate(dir *Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);

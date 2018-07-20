@@ -14,12 +14,13 @@ private:
 	RigidbodyComponent * rigidbody;
 	float velocity;
 	Ogre::Vector3 dir;
+	Ogre::Vector3 initialPos;
 
 #pragma endregion Attributes
 
 #pragma region Methods  
 public:
-	CameraComponent(Ogre::Camera * camera);
+	CameraComponent();
 
 	virtual ~CameraComponent();
 

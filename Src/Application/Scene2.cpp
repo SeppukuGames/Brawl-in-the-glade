@@ -64,7 +64,7 @@ void Scene2::CreateGameObjects(void)
 
 	GameObject * cameraObject = new GameObject("camera");
 	cameraObject->GetNode()->setPosition(0, 0, 500);
-	cameraObject->AddComponent(new CameraComponent(camera));
+	cameraObject->AddComponent(new CameraComponent());
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
 	actors.push_back(cameraObject);
 }

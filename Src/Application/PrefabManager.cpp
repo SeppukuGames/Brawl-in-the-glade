@@ -14,6 +14,8 @@
 #include "EntityComponent.h"
 #include "AudioComponent.h"
 #include "CameraComponent.h"
+#include "PlayerComponent.h"
+#include "LightComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -35,7 +37,7 @@ void PrefabManager::ResetInstance(){
 GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	GameObject *gameObject = nullptr;
-
+	Ogre::Quaternion quat;
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){
 
@@ -50,8 +52,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case NINJAPREFAB:
-		gameObject = new GameObject("Ninjita");
+		gameObject = new GameObject("Ninja");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
+		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
+		//gameObject->GetNode()->setOrientation(quat);
+		gameObject->AddComponent(new BoxColliderComponent(50, 150));
+		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
+		gameObject->AddComponent(new PlayerComponent());
 		break;
 
 	case GAMEMANAGERPREFAB:
@@ -78,12 +85,23 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
-		Ogre::Camera* camera = SceneManager::GetInstance()->GetCurrentScene()->GetCamera();
 		//gameObject->AddComponent(new BoxColliderComponent(1, 1));
 		//gameObject->AddComponent(new RigidbodyComponent(false));
-		gameObject->AddComponent(new CameraComponent(camera));
+		gameObject->AddComponent(new CameraComponent());
+		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
+		break;
+
+	case LIGHTPREFAB:
+		gameObject = new GameObject("Light");
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));			//Quizá cambiarlo por otro mesh?
+		gameObject->GetNode()->setPosition(100, 0, 100);
+		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
+		gameObject->GetNode()->setOrientation(quat);
+		gameObject->AddComponent(new LightComponent());
 		break;
 	}
+
+	SceneManager::GetInstance()->GetCurrentScene()->AddGameObject(gameObject);
 
 	return gameObject;
 }
