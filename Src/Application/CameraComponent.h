@@ -5,6 +5,10 @@
 
 #include "Component.h"
 #include "RigidbodyComponent.h"
+#include "InputManager.h"
+#include "GraphicManager.h"
+
+const float _VELOCITY = 15.f;
 
 class CameraComponent : public Component{
 
@@ -12,9 +16,16 @@ class CameraComponent : public Component{
 private:
 	Ogre::Camera * camera;				//Referencia a la cámara
 	RigidbodyComponent * rigidbody;
-	float velocity;
 	Ogre::Vector3 dir;
 	Ogre::Vector3 initialPos;
+
+	//ESCALAS MOVIMIENTO DE CÁMARA
+	const int mMoveScale = 30;
+	const int mZoomScale = 15;
+	const int maxZoomIn = -10;
+	const int maxZoomOut = 10;
+	int aumento = 0;
+	int antiguoZoom = 0, actualZoom = 0;
 
 #pragma endregion Attributes
 
@@ -28,6 +39,14 @@ public:
 	virtual void Update(double elapsed);
 
 	inline Ogre::Camera* GetCamera(){ return camera; }
+
+private:
+
+	bool MouseMoved();
+	void CheckZoom();
+	void CheckBorders();
+	void CheckReposition();
+	MousePosition actualMousePos, oldMousePos;
 
 #pragma endregion Methods
 

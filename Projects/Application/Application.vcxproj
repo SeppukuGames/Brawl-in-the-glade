@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp" />
     <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\..\Src\Application\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
     <ClInclude Include="..\..\Src\Application\AudioComponent.h" />
     <ClInclude Include="..\..\Src\Application\AudioManager.h" />
     <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h" />

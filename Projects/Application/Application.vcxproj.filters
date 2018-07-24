@@ -111,6 +111,9 @@
     <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\CameraComponent.h">
       <Filter>Header Files\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

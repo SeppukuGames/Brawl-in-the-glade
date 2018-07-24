@@ -6,10 +6,6 @@
 #include <iostream>
 #include "GameManager.h"
 
-const float _LINEARVELOCITY = 500.f;
-const float _ANGULARVELOCITY = 150.f;
-//const float _VELOCITY = 50.f;
-
 PlayerComponent::PlayerComponent() : rigidbody(nullptr)
 {
 }

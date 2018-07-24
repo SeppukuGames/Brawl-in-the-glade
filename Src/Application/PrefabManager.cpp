@@ -59,6 +59,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new BoxColliderComponent(50, 150));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new PlayerComponent());
+		SceneManager::GetInstance()->GetCurrentScene()->SetPlayer(gameObject);
 		break;
 
 	case GAMEMANAGERPREFAB:

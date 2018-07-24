@@ -9,6 +9,8 @@
 #include "LightComponent.h"
 #include "CameraComponent.h"
 #include "AudioComponent.h"
+#include "PlayerComponent.h"
+#include "AnimationComponent.h"
 #include "Error.h"
 
 GameObject::GameObject(std::string name) :components(0){
@@ -48,6 +50,16 @@ Component* GameObject::GetComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			EntityComponent* comp = dynamic_cast<EntityComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::ANIMATION:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			AnimationComponent* comp = dynamic_cast<AnimationComponent*>(components[i]);
 
 			if (comp != NULL)
 				return components[i];
@@ -119,6 +131,17 @@ Component* GameObject::GetComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			AudioComponent * comp = dynamic_cast<AudioComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+
+	case ComponentName::PLAYER:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			PlayerComponent * comp = dynamic_cast<PlayerComponent*>(components[i]);
 
 			if (comp != NULL)
 				return components[i];

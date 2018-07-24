@@ -4,6 +4,9 @@
 #include "Component.h"
 #include "RigidbodyComponent.h"
 
+const float _LINEARVELOCITY = 500.f;
+const float _ANGULARVELOCITY = 150.f;
+
 class PlayerComponent : public Component{
 
 #pragma region Attributes  

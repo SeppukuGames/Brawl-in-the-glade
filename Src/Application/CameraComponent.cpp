@@ -1,6 +1,8 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
-#include "InputManager.h"
+#include "SceneManager.h"
+#include <iostream>
+
 
 CameraComponent::CameraComponent() : Component(){
 }
@@ -12,7 +14,6 @@ CameraComponent::~CameraComponent()
 void CameraComponent::Start(){
 	
 	//rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
-	velocity = 5.0f;
 	dir = (0, 0, 0);
 	initialPos = (0, 550, -10);
 
@@ -25,39 +26,91 @@ void CameraComponent::Start(){
 	quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 	camera->rotate(quat);
 	gameObject->GetNode()->setPosition(0, 0, 500);
+
+	actualMousePos = oldMousePos = Input::GetInstance()->getMousePosition();
 }
 
 void CameraComponent::Update(double elapsed) {
 
-	//Volver al principio
+	//Reset camera to player's position
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_SPACE))
-		camera->setPosition(initialPos);
-
-	//ARREGLAR (Descubrir funcionamiento de input del ratón)
-	/*if (Input::GetInstance()->getMousePosition() != ){
-		//X AXIS
-		if (arg.state.X.abs > (_mWindow->getWidth() - 20) && arg.state.X.abs < _mWindow->getWidth())
-		{
-			dir.x += velocity;
-		}
-		else if (arg.state.X.abs < (20) && arg.state.X.abs > 0)
-			dir.x -= velocity;
-		else
-			dir.x = 0;
-
-		//Y AXIS
-		if (arg.state.Y.abs >(_mWindow->getHeight() - 20) && arg.state.Y.abs < _mWindow->getHeight())
-		{
-			dir.z += velocity;
-		}
-		else if (arg.state.Y.abs < (20) && arg.state.Y.abs > 0)
-			dir.z -= velocity;
-		else
-			dir.z = 0;
-	}*/
+		CheckReposition();
+	
+	if (MouseMoved())
+		CheckBorders();
+	
+	CheckZoom();
 
 	camera->move(dir *Ogre::Real(elapsed));
-	
-	//gameObject->GetNode()->translate(dir *Ogre::Real(elapsed), Ogre::Node::TS_LOCAL);
 
+}
+
+bool CameraComponent::MouseMoved(){
+
+	actualMousePos = Input::GetInstance()->getMousePosition();
+
+	//Si se ha movido (coord. distintas)
+	if (actualMousePos.X.abs != oldMousePos.X.abs || actualMousePos.Y.abs != oldMousePos.Y.abs){
+		oldMousePos = actualMousePos;
+		return true;
+	}
+
+	return false;
+}
+
+void CameraComponent::CheckZoom(){
+	
+	actualZoom = actualMousePos.Z.abs;
+
+	if (actualZoom > antiguoZoom && aumento < maxZoomOut)		//AUMENTAR
+		aumento++;
+	else if (actualZoom < antiguoZoom && aumento > maxZoomIn)	//DISMINUIR
+		aumento--;
+
+	if (aumento < maxZoomOut && actualZoom > antiguoZoom)
+	{
+		camera->setPosition(camera->getPosition().x, camera->getPosition().y + mZoomScale, camera->getPosition().z + mZoomScale);
+		//_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y + mZoomScale, _gameObject->getNode()->getPosition().z + mZoomScale);
+	}
+	else if (actualZoom < antiguoZoom && aumento > maxZoomIn) {
+		camera->setPosition(camera->getPosition().x, camera->getPosition().y - mZoomScale, camera->getPosition().z - mZoomScale);
+		//_gameObject->getNode()->setPosition(_gameObject->getNode()->getPosition().x, _gameObject->getNode()->getPosition().y - mZoomScale, _gameObject->getNode()->getPosition().z - mZoomScale);
+	}
+
+	antiguoZoom = actualZoom;
+}
+
+void CameraComponent::CheckBorders(){
+	
+	Ogre::RenderWindow *_mWindow = GraphicManager::GetInstance()->GetWindow();
+
+	//X AXIS
+	if (actualMousePos.X.abs > (_mWindow->getWidth() - 20) && actualMousePos.X.abs < _mWindow->getWidth())
+	{
+		dir.x += _VELOCITY;
+	}
+	else if (actualMousePos.X.abs < (20) && actualMousePos.X.abs > 0)
+		dir.x -= _VELOCITY;
+	else
+		dir.x = 0;
+
+	//Y AXIS
+	if (actualMousePos.Y.abs >(_mWindow->getHeight() - 20) && actualMousePos.Y.abs < _mWindow->getHeight())
+	{
+		dir.z += _VELOCITY;
+	}
+	else if (actualMousePos.Y.abs < (20) && actualMousePos.Y.abs > 0)
+		dir.z -= _VELOCITY;
+	else
+		dir.z = 0;
+}
+
+void CameraComponent::CheckReposition(){
+	
+	GameObject* player = SceneManager::GetInstance()->GetCurrentScene()->GetPlayer();
+	Ogre::Vector3 newPos = camera->getPosition();
+	newPos.x = ((RigidbodyComponent*)player->GetComponent(ComponentName::RIGIDBODY))->GetBody()->GetPosition().x;
+	newPos.z = ((RigidbodyComponent*)player->GetComponent(ComponentName::RIGIDBODY))->GetBody()->GetPosition().y;
+	aumento = 0;
+	camera->setPosition(newPos);
 }

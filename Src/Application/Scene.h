@@ -10,6 +10,7 @@ class Scene
 #pragma region Attributes  
 protected:
 	Ogre::Camera* camera;				//Atributo para la referencia a la cámara
+	GameObject* player;					//Atributo para la referencia del jugador principal
 	std::list<GameObject*> actors;		//Vector que guarda todos los objetos de las escena
 	Ogre::SceneManager* sceneMgr;		//Atributo para la referencia del sceneManager
 
@@ -30,6 +31,8 @@ public:
 	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };		//Método que devuelve la referencia al sceneManager
 	Ogre::Camera * GetCamera() { return camera; };
 	void SetCamera(Ogre::Camera* cam);
+	GameObject * GetPlayer() { return player; };
+	void SetPlayer(GameObject* player);
 	void SetViewport(void);										//Método encargado de establecer el viewport
 
 protected:

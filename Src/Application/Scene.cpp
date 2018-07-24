@@ -66,6 +66,10 @@ void Scene::SetCamera(Ogre::Camera* cam) {
 	camera = cam;
 }
 
+void Scene::SetPlayer(GameObject* _player) {
+	player = _player;
+}
+
 //Método encargado de establecer el viewport
 void Scene::SetViewport(void)
 {
