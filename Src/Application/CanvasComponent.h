@@ -6,9 +6,9 @@
 //Overlay
 #include <OgreOverlay.h>
 #include <OgreOverlaySystem.h>
-//Overlay
 #include <OgreBillboard.h>
 #include <OgreBillboardSet.h>
+//Overlay
 #include "OgreTextAreaOverlayElement.h"
 #include "OgreFontManager.h"
 #include "OgreOverlayManager.h"
@@ -18,18 +18,22 @@
 
 class CanvasComponent : public Component {
 
-public:
+private:
 
-	CanvasComponent(Ogre::OverlayContainer* newContainer, Ogre::Overlay* newOverlay);
-
-	virtual ~CanvasComponent(){};
-
-	virtual void Start() {};
+	virtual void Start();
 
 	virtual void Update(double elapsed);
 
 	void CanvasComponent::createGUI();
-	
+
+	void CanvasComponent::createHealthBar();
+
+public:
+
+	CanvasComponent();
+
+	virtual ~CanvasComponent(){};
+
 	void CanvasComponent::setNewUISize(float x, float y);
 
 	float CanvasComponent::getUIWidth();
@@ -40,6 +44,7 @@ public:
 protected:
 	Ogre::OverlayContainer* ovContainer;
 	Ogre::Overlay* overlay;
+
 };
 
 #endif

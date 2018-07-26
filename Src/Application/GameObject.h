@@ -36,7 +36,7 @@ public:
 	inline Ogre::SceneNode* GetNode(){ return node; };					//Método que devuelve el nodo
 		
 	inline std::string GetTag(){ return tag; };						//Método que devuelve el tag del nodo
-	inline std::string SetTag(std::string tag){ this->tag = tag; };		//Método que establece el tag del nodo
+	inline void SetTag(std::string tag){ this->tag = tag; };		//Método que establece el tag del nodo
 
 protected:
 	Ogre::SceneNode* node = nullptr;									//Atributo para la referencia al nodo

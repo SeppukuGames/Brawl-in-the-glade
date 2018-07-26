@@ -99,22 +99,24 @@
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\LightComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Scene.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\LightComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -177,9 +179,6 @@
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\LightComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
@@ -189,12 +188,17 @@
     <ClInclude Include="..\..\Src\Application\checkML.h">
       <Filter>Header Files\Core\Error</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CameraComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CanvasComponent.h" />
+    <ClInclude Include="..\..\Src\Application\CanvasComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CameraComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\LightComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
