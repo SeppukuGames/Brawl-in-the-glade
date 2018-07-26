@@ -16,6 +16,7 @@
 #include "CameraComponent.h"
 #include "PlayerComponent.h"
 #include "LightComponent.h"
+#include "AnimationComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -54,6 +55,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case NINJAPREFAB:
 		gameObject = new GameObject("Ninja");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
+		gameObject->GetNode()->setScale(.5, .5, .5);
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		//gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new BoxColliderComponent(50, 150));
@@ -99,6 +101,14 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new LightComponent());
+		break;
+
+	case TOWERPREFAB:
+		gameObject = new GameObject("Tower");
+		gameObject->AddComponent(new EntityComponent("Torre.mesh"));
+		gameObject->GetNode()->setPosition(500, 0, 500);
+		gameObject->GetNode()->setScale(10, 10, 10);
+		gameObject->AddComponent(new BoxColliderComponent(35, 35));
 		break;
 	}
 

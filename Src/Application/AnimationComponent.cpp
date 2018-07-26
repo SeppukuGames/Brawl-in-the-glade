@@ -1,6 +1,7 @@
 #include "AnimationComponent.h"
 #include "GameObject.h"
 #include "EntityComponent.h"
+
 AnimationComponent::AnimationComponent(std::string animName)
 {
 	baseAnim = animName;

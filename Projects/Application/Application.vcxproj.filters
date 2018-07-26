@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -194,5 +195,6 @@
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CanvasComponent.h" />
   </ItemGroup>
 </Project>

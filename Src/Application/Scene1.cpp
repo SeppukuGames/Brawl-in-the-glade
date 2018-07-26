@@ -63,6 +63,7 @@ void Scene1::CreateGameObjects(void)
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
 	actors.push_back(cameraObject);*/
 	
+	GameObject * tower = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::TOWERPREFAB);
 	
 }
 

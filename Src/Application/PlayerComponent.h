@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "RigidbodyComponent.h"
 
-const float _LINEARVELOCITY = 500.f;
+const float _LINEARVELOCITY = 5000.f;
 const float _ANGULARVELOCITY = 150.f;
 
 class PlayerComponent : public Component{
@@ -14,6 +14,7 @@ private:
 	RigidbodyComponent * rigidbody;
 	b2Vec2 velocity;
 	float angle;
+	bool isMoving;
 
 #pragma endregion Attributes
 
@@ -29,6 +30,9 @@ public:
 	virtual void OnCollisionEnter(ColliderComponent* collider);		//Es llamado cuando dos gameObject colisionan.
 	virtual void OnCollisionExit(ColliderComponent* collider);		//Es llamado cuando dos gameObject dejan de colisionar. 
 
+private:
+	bool CheckMovement(double elapsed);
+	void CheckRotation(double elapsed);
 #pragma endregion Methods
 
 };
