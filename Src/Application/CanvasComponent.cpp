@@ -1,8 +1,12 @@
 #include "CanvasComponent.h"
 #include "GameObject.h"
+#include "StatsComponent.h"
 #include "SceneManager.h"
 
 using namespace Ogre;
+
+const float maxWidth = 200;
+const float maxHeight = 10;
 
 CanvasComponent::CanvasComponent() : Component()
 {
@@ -59,10 +63,10 @@ void CanvasComponent::createGUI() {
 
 void CanvasComponent::createHealthBar(){
 	
-	BillboardSet* billboardSet = gameObject->GetNode()->getCreator()->createBillboardSet();
+	billboardSet = gameObject->GetNode()->getCreator()->createBillboardSet();
 	billboardSet->setMaterialName("health");
 	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
-	billboardSet->setDefaultDimensions(200, 10);
+	billboardSet->setDefaultDimensions(maxWidth, maxHeight);
 	Billboard* billboard = billboardSet->createBillboard(Vector3::ZERO);
 	billboard->setPosition(Vector3(0, 250, 0));
 	gameObject->GetNode()->attachObject(billboardSet);
@@ -83,3 +87,8 @@ float CanvasComponent::getUIHeight() {
 	return ovContainer->getHeight();
 }
 
+void CanvasComponent::hitGameObject(float amount){
+	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+	stats->HitGameObject(amount);
+	billboardSet->setDefaultDimensions((maxWidth * stats->GetLife()) / stats->GetMaxLife(), maxHeight);
+}

@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\ColliderComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameManager.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\ColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\Component.h" />
+    <ClInclude Include="..\..\Src\Application\EnemyComponent.h" />
     <ClInclude Include="..\..\Src\Application\EntityComponent.h" />
     <ClInclude Include="..\..\Src\Application\Error.h" />
     <ClInclude Include="..\..\Src\Application\GameManager.h" />
@@ -65,6 +67,7 @@
     <ClInclude Include="..\..\Src\Application\Scene1.h" />
     <ClInclude Include="..\..\Src\Application\Scene2.h" />
     <ClInclude Include="..\..\Src\Application\SceneManager.h" />
+    <ClInclude Include="..\..\Src\Application\StatsComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C077A3AD-5242-468F-AD96-581CEBFA7C1C}</ProjectGuid>

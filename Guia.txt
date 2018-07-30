@@ -22,6 +22,8 @@ cada vez que creais nuevos componentes o nuevas escenas, para lo cual os dejamos
 
 - 4. Comentarios de posibles tareas
 
+- 5. Cómo hacer llamadas entre componentes
+
 
 -------------------------------------- 1. Crear una nueva escena---------------------------------------------------
 
@@ -96,7 +98,7 @@ En este apartado vamos a mencionar algunas cosas para que entendais como manejar
 
 	- Paneles y texto
 
-	- TODO lo relacionado con Overlay (No hemos tocado nada de Overlay)
+	- TODO lo relacionado con Overlay (No hemos tocado nada de Overlay) -> ESTO YA ESTÁ HECHO
 
 	- Crear la escena MENÚ y GAMEOVER. La escena de PAUSA está creada, pero sin botones ni nada, está vacía.
 
@@ -104,4 +106,28 @@ SERIA MUY INTERESANTE. Cuando se entregue o antes. Hacer un proyecto por cada Ma
 
 -------------------------------------- 4. Comentarios de posibles tareas---------------------------------------------------
 
+-------------------------------------- 5. Cómo hacer llamadas entre componentes--------------------------------------------
 
+Para utilizar componentes de un mismo GameObject en un script, tenemos que seguir la idea de cómo se hace en Unity.
+
+Por ejemplo, para quitar a un objeto (éste puede ser el jugador, un enemigo o la propia torre) una cantidad específica de vida
+por un ataque recibido, se llama desde el CanvasComponent al gameObject asociado, y se le aplica en su otro componente 
+StatsComponent (el encargado de gestionar vida, ataques, atributos en general). La llamada se haría así:
+
+StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+	stats->HitGameObject(amount);
+
+El gameObject es el objeto al que está adherido el componente, la función GetComponent nos da el componente que queremos y
+con ese atributo hacemos lo que queramos (en este caso, "atacar" al GameObject). TODOS los componentes se llaman de esta manera,
+salvo los propios de la escena que se organizan con el SceneManager. Por ejemplo, si necesitamos conocer el rigidbody del personaje
+desde el componente Enemigo, la llamada a tal atributo se haría de esta manera:
+
+	RigidbodyComponent* player_rb = (RigidbodyComponent*)SceneManager::GetInstance()->GetCurrentScene()->GetPlayer()->
+		GetComponent(ComponentName::RIGIDBODY);
+
+Conteniendo el player_rb una referencia directa al rigidbody del jugador.
+
+Esta llamada a componentes imitando a cómo lo hace Unity se produce por cómo está construido el PrefabManager, el cual debéis mirar
+antes de nada para entender cómo de añaden a los objetos los componentes, así como la Scene1 para ver cómo se construyen.
+
+-------------------------------------- 5. Cómo hacer llamadas entre componentes--------------------------------------------

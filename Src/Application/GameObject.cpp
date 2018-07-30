@@ -12,6 +12,8 @@
 #include "PlayerComponent.h"
 #include "AnimationComponent.h"
 #include "CanvasComponent.h"
+#include "EnemyComponent.h"
+#include "StatsComponent.h"
 #include "Error.h"
 
 GameObject::GameObject(std::string name) :components(0){
@@ -161,6 +163,27 @@ Component* GameObject::GetComponent(ComponentName component) {
 
 		break;
 
+	case ComponentName::ENEMY:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			EnemyComponent * comp = dynamic_cast<EnemyComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+
+	case ComponentName::STATS:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			StatsComponent * comp = dynamic_cast<StatsComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
 	default:
 		throw(Error("Construye el GetComponent del nuevo Componente"));
 	}

@@ -11,6 +11,7 @@ class Scene
 protected:
 	Ogre::Camera* camera;				//Atributo para la referencia a la cámara
 	GameObject* player;					//Atributo para la referencia del jugador principal
+	GameObject* tower;					//Atributo para la referencia del jugador principal
 	std::list<GameObject*> actors;		//Vector que guarda todos los objetos de las escena
 	Ogre::SceneManager* sceneMgr;		//Atributo para la referencia del sceneManager
 
@@ -33,6 +34,8 @@ public:
 	void SetCamera(Ogre::Camera* cam);
 	GameObject * GetPlayer() { return player; };
 	void SetPlayer(GameObject* player);
+	GameObject * GetTower() { return tower; };
+	void SetTower(GameObject* tower);
 	void SetViewport(void);										//Método encargado de establecer el viewport
 
 protected:

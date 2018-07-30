@@ -33,6 +33,7 @@ public:
 private:
 	bool CheckMovement(double elapsed);
 	void CheckRotation(double elapsed);
+
 #pragma endregion Methods
 
 };

@@ -18,6 +18,8 @@
 #include "LightComponent.h"
 #include "AnimationComponent.h"
 #include "CanvasComponent.h"
+#include "StatsComponent.h"
+#include "EnemyComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -63,6 +65,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new BoxColliderComponent(50, 150));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new PlayerComponent());
+		gameObject->AddComponent(new StatsComponent());
 		gameObject->AddComponent(new CanvasComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetPlayer(gameObject);
 		break;
@@ -114,7 +117,22 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->GetNode()->setScale(10, 10, 10);
 		gameObject->AddComponent(new BoxColliderComponent(35, 35));
 		gameObject->AddComponent(new CanvasComponent());
+		gameObject->AddComponent(new StatsComponent());
+		SceneManager::GetInstance()->GetCurrentScene()->SetTower(gameObject);
 		
+		break;
+
+	case ENEMYPREFAB:
+		gameObject = new GameObject("Enemy");
+		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
+		gameObject->GetNode()->setPosition(250, 0, 250);
+		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
+		gameObject->AddComponent(new BoxColliderComponent(50, 150));
+		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
+		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+		gameObject->AddComponent(new StatsComponent());
+		gameObject->AddComponent(new CanvasComponent());
+
 		break;
 	}
 
