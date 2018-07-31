@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <OgreRoot.h>
 #include <list>
+#include "lectorXML.h"
 
 class Scene
 {
@@ -14,6 +15,7 @@ protected:
 	GameObject* tower;					//Atributo para la referencia del jugador principal
 	std::list<GameObject*> actors;		//Vector que guarda todos los objetos de las escena
 	Ogre::SceneManager* sceneMgr;		//Atributo para la referencia del sceneManager
+	lectorXML lectorXML_;				//Lector de archivos XML
 
 #pragma endregion Attributes
 

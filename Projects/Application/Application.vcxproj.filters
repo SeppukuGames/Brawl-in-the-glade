@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Core\Managers">
       <UniqueIdentifier>{6df8a63d-9f8d-46e1-9556-d5ff65468333}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\XML">
+      <UniqueIdentifier>{b7fa3179-ff45-4d5f-82c0-af2296eee428}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\Application\GameManager.cpp">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\StatsComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\lectorXML.h">
+      <Filter>Header Files\XML</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

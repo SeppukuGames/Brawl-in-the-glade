@@ -4,7 +4,7 @@
 
 #include "GraphicManager.h"
 #include "EntityComponent.h"
-#include "PrefabManager.h"
+//#include "PrefabManager.h"
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
@@ -32,8 +32,9 @@ void Scene1::CreateScene()
 
 void Scene1::CreateGameObjects(void)
 {
-
-	GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
+	std::vector<GameObject*> gameObjects;
+	gameObjects = lectorXML_.Leer("../../escena1.xml");
+	//GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
 	//SetCamera(((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera());
 	//actors.push_back(cameraObject);
 
@@ -45,7 +46,7 @@ void Scene1::CreateGameObjects(void)
 	ogrito->GetNode()->rotate(quat);
 	actors.push_back(ogrito);
 	*/
-	
+	/*
 	GameObject * player = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
 	//actors.push_back(player);
 
@@ -62,10 +63,11 @@ void Scene1::CreateGameObjects(void)
 	cameraObject->AddComponent(new CameraComponent(camera));
 	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
 	actors.push_back(cameraObject);*/
-	
+	/*
 	GameObject * tower = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::TOWERPREFAB);
 	
 	GameObject * enemy = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
 	GameObject * enemy2 = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
+	*/
 }
 

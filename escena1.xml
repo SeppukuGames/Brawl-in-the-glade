@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Juego>
+    <Entidad name="Ninja">
+        <Componente name="Posicion">
+            "32, 01, 313"
+        </Componente>
+    </Entidad>    
+    <Entidad name="Camara">        
+    </Entidad>   
+    <Entidad name="GameManager">        
+    </Entidad>    
+    <Entidad name="Light">        
+    </Entidad>   
+    <Entidad name="Torre">        
+    </Entidad>   
+    <Entidad name="Enemigo">        
+    </Entidad>  
+    <Entidad name="Enemigo">        
+    </Entidad>    
+    <Entidad name="Salmorejo">   
+        "de prueba, para ver que no falla el lector"     
+    </Entidad>   
+</Juego>

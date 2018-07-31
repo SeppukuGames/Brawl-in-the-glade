@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
     <ClInclude Include="..\..\Src\Application\GraphicManager.h" />
     <ClInclude Include="..\..\Src\Application\InputManager.h" />
+    <ClInclude Include="..\..\Src\Application\lectorXML.h" />
     <ClInclude Include="..\..\Src\Application\LightComponent.h" />
     <ClInclude Include="..\..\Src\Application\PauseManager.h" />
     <ClInclude Include="..\..\Src\Application\PauseScene.h" />

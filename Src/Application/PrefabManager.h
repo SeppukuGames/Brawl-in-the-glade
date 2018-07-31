@@ -5,7 +5,7 @@
 
 //Enumerado pra los tipos de objetos que se pueden crear
 enum PREFABTYPE{ OGROPREFAB, NINJAPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB,
-ENEMYPREFAB};
+ENEMYPREFAB, NULO};
 
 class PrefabManager {
 #pragma region Singleton  
