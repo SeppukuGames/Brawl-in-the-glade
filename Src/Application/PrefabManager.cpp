@@ -123,7 +123,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ENEMYPREFAB:
-		gameObject = new GameObject("Enemy");
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Enemy" + i);
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
 		gameObject->GetNode()->setPosition(250, 0, 250);
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
@@ -132,7 +133,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
 		gameObject->AddComponent(new StatsComponent());
 		gameObject->AddComponent(new CanvasComponent());
-
+		i++;
 		break;
 	}
 

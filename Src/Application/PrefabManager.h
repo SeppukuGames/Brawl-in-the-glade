@@ -12,6 +12,7 @@ class PrefabManager {
 
 private:
 	static PrefabManager  *instance;
+	int i = 0;
 
 public:
 	static PrefabManager * GetInstance();
