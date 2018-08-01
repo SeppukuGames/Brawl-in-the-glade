@@ -50,7 +50,7 @@ void PauseScene::CreateGameObjects(void)
 	GameObject * pm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PAUSEMANAGERPREFAB);
 	actors.push_back(pm);
 
-	GameObject * A = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
+	GameObject * A = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PLAYERPREFAB);
 	actors.push_back(A);
 
 	GameObject * cameraObject = new GameObject("camera");

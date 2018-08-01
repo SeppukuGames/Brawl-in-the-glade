@@ -19,8 +19,8 @@ public:
 	{
 		if (texto == "Camara")
 			return PREFABTYPE::MAINCAMERA;
-		if (texto == "Ninja")
-			return PREFABTYPE::NINJAPREFAB;
+		if (texto == "Player")
+			return PREFABTYPE::PLAYERPREFAB;
 		if (texto == "GameManager")
 			return PREFABTYPE::GAMEMANAGERPREFAB;
 		if (texto == "Light")
@@ -33,26 +33,25 @@ public:
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
 	}
 	
-	Component* identificarComponente(xml_node<> * component_node)
+	Component* identificarComponente(GameObject* aux, xml_node<> * component_node)
 	{
 		std::string nombreComponente = component_node->first_attribute("name")->value();
 		if (nombreComponente == "Posicion")
-		{
-			StatsComponent* componente = new StatsComponent();
+		{			
+			StatsComponent* componente = (StatsComponent*)aux->GetComponent(ComponentName::STATS); 
 			//atoi, para convertirlo a enteros
 			Ogre::Vector3 vectorAux(atoi(component_node->first_attribute("x")->value()),
 				atoi(component_node->first_attribute("y")->value()),
 				atoi(component_node->first_attribute("z")->value()));
-			//componente->SetPosition(vectorAux);			
+			componente->SetPosition(vectorAux);
 			return componente;			
 		}
 		//component->value(); //Acceder al valor del componente
 		
 	}
 
-	std::vector<GameObject*> Leer(const std::string archivo)
-	{
-		std::vector<GameObject*> gameObjects_;
+	void Leer(const std::string archivo)
+	{		
 		xml_document<> doc;
 		xml_node<> * root_node;
 
@@ -75,17 +74,14 @@ public:
 			if (tipoPrefab != PREFABTYPE::NULO){
 				GameObject* aux = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
 
-				// Interate over the components		
-				//En proceso				
+				// Interate over the components								
 				for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 				{
-					Component* componente = identificarComponente(component_node);
-					//aux->AddComponent(componente);
-				}							
-				gameObjects_.push_back(aux);
+					Component* componente = identificarComponente(aux, component_node);
+					aux->AddComponent(componente);
+				}				
 			}
-		}
-		return gameObjects_;
+		}		
 	}
 
 };

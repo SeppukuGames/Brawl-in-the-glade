@@ -55,13 +55,15 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		break;
 
-	case NINJAPREFAB:
+	case PLAYERPREFAB:
 		gameObject = new GameObject("Ninja");
 		gameObject->SetTag("Player");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setScale(.5, .5, .5);
+
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		//gameObject->GetNode()->setOrientation(quat);
+
 		gameObject->AddComponent(new BoxColliderComponent(50, 150));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new PlayerComponent());

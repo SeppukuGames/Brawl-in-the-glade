@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Juego>
-    <Entidad name="Ninja">
+    <Entidad name="Player">
         <Componente name="Posicion" x="20" y="2" z="20">            
         </Componente>
     </Entidad>    
@@ -9,10 +9,12 @@
     <Entidad name="GameManager">        
     </Entidad>    
     <Entidad name="Light">        
+    </Entidad>  		
+    <Entidad name="Torre">  
+		<Componente name="Posicion" x="200" y="-10" z="200">            
+        </Componente>		
     </Entidad>   
-    <Entidad name="Torre">        
-    </Entidad>   
-    <Entidad name="Enemigo">        
+    <Entidad name="Enemigo">  		
     </Entidad>  
     <Entidad name="Enemigo">        
     </Entidad>    

@@ -38,7 +38,7 @@ void Scene2::CreateScene()
 void Scene2::CreateGameObjects(void)
 {
 	//Objetos de prueba
-	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
+	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PLAYERPREFAB);
 	actors.push_back(ogrito);
 
 	GameObject * gm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::GAMEMANAGERPREFAB);

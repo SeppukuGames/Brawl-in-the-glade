@@ -186,6 +186,8 @@ Component* GameObject::GetComponent(ComponentName component) {
 		break;
 	default:
 		throw(Error("Construye el GetComponent del nuevo Componente"));
+		return nullptr;
+		break;
 	}
 
 	return NULL;
