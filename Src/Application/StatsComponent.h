@@ -2,7 +2,7 @@
 #define STATSCOMPONENT_H_
 
 #include "Component.h"
-
+#include "GameObject.h"
 
 class StatsComponent : public Component{
 
@@ -29,6 +29,8 @@ virtual ~StatsComponent(){};
 	float GetAttackPower() { return attackPower; };
 
 	void HitGameObject(float amount){ life -= amount; };
+	void SetPosition(Ogre::Vector3 posicion){ gameObject->GetNode()->setPosition(posicion); };
+	
 
 #pragma endregion Methods
 

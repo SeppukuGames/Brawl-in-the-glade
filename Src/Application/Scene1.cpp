@@ -32,12 +32,8 @@ void Scene1::CreateScene()
 
 void Scene1::CreateGameObjects(void)
 {
-	std::vector<GameObject*> gameObjects;
-	gameObjects = lectorXML_.Leer("../../escena1.xml");
-	//GameObject * cameraObject = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::MAINCAMERA);
-	//SetCamera(((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera());
-	//actors.push_back(cameraObject);
-
+	lectorXML_.Leer("../../escena1.xml");
+	
 	//Objetos de prueba
 	/*
 	GameObject* ogrito = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::NINJAPREFAB);
