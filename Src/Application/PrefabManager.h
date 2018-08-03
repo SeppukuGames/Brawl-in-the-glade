@@ -5,7 +5,7 @@
 
 //Enumerado pra los tipos de objetos que se pueden crear
 enum PREFABTYPE{ OGROPREFAB, NINJAPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB,
-ENEMYPREFAB};
+ENEMYPREFAB, BULLETPREFAB };
 
 class PrefabManager {
 #pragma region Singleton  
@@ -13,6 +13,7 @@ class PrefabManager {
 private:
 	static PrefabManager  *instance;
 	int i = 0;
+	int j = 0;
 
 public:
 	static PrefabManager * GetInstance();

@@ -14,6 +14,7 @@
 #include "CanvasComponent.h"
 #include "EnemyComponent.h"
 #include "StatsComponent.h"
+#include "BulletComponent.h"
 #include "Error.h"
 
 GameObject::GameObject(std::string name) :components(0){
@@ -178,6 +179,17 @@ Component* GameObject::GetComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			StatsComponent * comp = dynamic_cast<StatsComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+
+	case ComponentName::BULLET:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			BulletComponent * comp = dynamic_cast<BulletComponent*>(components[i]);
 
 			if (comp != NULL)
 				return components[i];

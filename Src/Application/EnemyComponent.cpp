@@ -138,17 +138,15 @@ void EnemyComponent::Fire() {
 	if (objType == _PLAYER) {
 		GameObject* player = SceneManager::GetInstance()->GetCurrentScene()->GetPlayer();
 		StatsComponent* stats = (StatsComponent*)player->GetComponent(ComponentName::STATS);
-		CanvasComponent* canvas = (CanvasComponent*)player->GetComponent(ComponentName::CANVAS);
 
-		canvas->hitGameObject(stats->GetAttackPower());
+		stats->HitGameObject(stats->GetAttackPower());
 	}
 	else if (objType == _TOWER) {
 		//towerHealth->hitTower(attackPower);
 		GameObject* tower = SceneManager::GetInstance()->GetCurrentScene()->GetTower();
 		StatsComponent* stats = (StatsComponent*)tower->GetComponent(ComponentName::STATS);
-		CanvasComponent* canvas = (CanvasComponent*)tower->GetComponent(ComponentName::CANVAS);
 
-		canvas->hitGameObject(stats->GetAttackPower());
+		stats->HitGameObject(stats->GetAttackPower());
 		
 	}
 	else std::cout << "ERROR: Enemy objetive type not allowed!" << std::endl;

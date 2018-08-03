@@ -15,6 +15,7 @@
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp" />
     <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\BulletComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\CameraComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\..\Src\Application\AudioComponent.h" />
     <ClInclude Include="..\..\Src\Application\AudioManager.h" />
     <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h" />
+    <ClInclude Include="..\..\Src\Application\BulletComponent.h" />
     <ClInclude Include="..\..\Src\Application\CameraComponent.h" />
     <ClInclude Include="..\..\Src\Application\CanvasComponent.h" />
     <ClInclude Include="..\..\Src\Application\checkML.h" />

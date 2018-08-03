@@ -87,8 +87,8 @@ float CanvasComponent::getUIHeight() {
 	return ovContainer->getHeight();
 }
 
-void CanvasComponent::hitGameObject(float amount){
+void CanvasComponent::HitGameObject(float amount){
+	
 	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
-	stats->HitGameObject(amount);
 	billboardSet->setDefaultDimensions((maxWidth * stats->GetLife()) / stats->GetMaxLife(), maxHeight);
 }

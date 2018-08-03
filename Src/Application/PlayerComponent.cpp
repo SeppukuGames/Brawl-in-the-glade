@@ -8,6 +8,7 @@
 #include "AnimationComponent.h"
 #include "SceneManager.h"
 #include "GraphicManager.h"
+#include "PrefabManager.h"
 #include <math.h>
 
 #define M_PI acos(-1.0)
@@ -25,7 +26,9 @@ void PlayerComponent::Start(){
 	rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
 	velocity.Set(0, 0);
 	angle = 0.0f;
+	cont = 0.0f;
 	isMoving = false;
+	clickFlag = false;
 
 	if (rigidbody == nullptr){
 		Error errorE("\n\n\n\n\nError al crear el PlayerComponent. Necesita un Rigidbody ");
@@ -50,8 +53,6 @@ void PlayerComponent::Update(double elapsed){
 			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
 		isMoving = false;
 	}
-		
-	
 
 	CheckRotation(elapsed);
 	
@@ -61,6 +62,13 @@ void PlayerComponent::Update(double elapsed){
 	rigidbody->GetBody()->SetLinearVelocity(velocity);
 	//rigidbody->GetBody()->SetAngularVelocity(angle);
 
+	cont += elapsed;
+
+	if (cont > refreshRate){
+		clickFlag = false;
+		cont = 0.0f;
+	}
+	Attack();
 	//Acceso a la instancia de GameManager
 	GameManager::GetInstance()->GetGameObject()->GetNode()->getName();
 
@@ -176,7 +184,7 @@ void PlayerComponent::CheckRotation(double elapsed){
 		/*if (desiredAngle < 0)
 			desiredAngle = 360 - (-desiredAngle);*/
 
-		std::cout << desiredAngle << std::endl;
+		//std::cout << desiredAngle << std::endl;
 		
 		rigidbody->GetBody()->SetAngularVelocity(0);
 		rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle);
@@ -185,3 +193,12 @@ void PlayerComponent::CheckRotation(double elapsed){
 
 }
 
+void PlayerComponent::Attack(){
+
+	if (Input::GetInstance()->getMouseButton(OIS::MouseButtonID::MB_Left) && !clickFlag){
+		std::cout << "Bala creada!" << std::endl;
+		clickFlag = true;
+		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::BULLETPREFAB);
+	}
+
+}

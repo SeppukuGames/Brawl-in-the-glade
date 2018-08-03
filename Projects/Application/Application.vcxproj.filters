@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BulletComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -209,5 +210,6 @@
     <ClInclude Include="..\..\Src\Application\StatsComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BulletComponent.h" />
   </ItemGroup>
 </Project>

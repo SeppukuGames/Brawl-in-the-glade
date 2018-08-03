@@ -2,7 +2,8 @@
 #define STATSCOMPONENT_H_
 
 #include "Component.h"
-
+#include "CanvasComponent.h"
+#include "GameObject.h"
 
 class StatsComponent : public Component{
 
@@ -28,7 +29,12 @@ virtual ~StatsComponent(){};
 	float GetMaxLife() { return maxLife; };
 	float GetAttackPower() { return attackPower; };
 
-	void HitGameObject(float amount){ life -= amount; };
+	void HitGameObject(float amount)
+	{ 
+		life -= amount; 
+		CanvasComponent* canvas = (CanvasComponent*)gameObject->GetComponent(ComponentName::CANVAS);
+		canvas->HitGameObject(amount);
+	};
 
 #pragma endregion Methods
 

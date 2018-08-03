@@ -16,6 +16,9 @@ private:
 	float angle;
 	bool isMoving;
 
+	bool clickFlag;		//Flag para controlar que no se pulse más de una vez tras un click
+	const float refreshRate = 13.0f;
+	float cont;
 #pragma endregion Attributes
 
 #pragma region Methods  
@@ -33,6 +36,7 @@ public:
 private:
 	bool CheckMovement(double elapsed);
 	void CheckRotation(double elapsed);
+	void Attack();
 
 #pragma endregion Methods
 

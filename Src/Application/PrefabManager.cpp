@@ -20,6 +20,7 @@
 #include "CanvasComponent.h"
 #include "StatsComponent.h"
 #include "EnemyComponent.h"
+#include "BulletComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -134,6 +135,18 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new StatsComponent());
 		gameObject->AddComponent(new CanvasComponent());
 		i++;
+		break;
+
+	case BULLETPREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Bullet" + j);
+		gameObject->SetTag("Bullet");
+		gameObject->GetNode()->setScale(.5, .5, .5);
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
+		gameObject->AddComponent(new BoxColliderComponent(1, 1));
+		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
+		gameObject->AddComponent(new BulletComponent());
+		j++;
 		break;
 	}
 

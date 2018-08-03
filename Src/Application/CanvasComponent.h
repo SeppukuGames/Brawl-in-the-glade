@@ -40,7 +40,7 @@ public:
 
 	float CanvasComponent::getUIHeight();
 
-	void CanvasComponent::hitGameObject(float amount);
+	void CanvasComponent::HitGameObject(float amount);
 
 
 protected:
