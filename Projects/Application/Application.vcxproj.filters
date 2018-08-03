@@ -201,9 +201,6 @@
     <ClInclude Include="..\..\Src\Application\CameraComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\LightComponent.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\EnemyComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -211,5 +208,8 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\BulletComponent.h" />
+    <ClInclude Include="..\..\Src\Application\LightComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

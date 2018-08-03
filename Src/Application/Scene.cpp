@@ -44,7 +44,8 @@ void Scene::AddGameObject(GameObject * gameObject){
 
 //Método encargado de eliminar un GameObject
 void Scene::RemoveGameObject(GameObject * gameObject){
-	actors.remove(gameObject);
+	actors.remove(gameObject);//Se elimina el gameObject de la lista de actores
+	delete gameObject; //Se borra el gameObject
 }
 
 bool Scene::Tick(double elapsed)
@@ -95,10 +96,12 @@ bool Scene::HandleInput(void) {
 
 bool Scene::Update(double elapsed)
 {
-	std::list <GameObject*> ::iterator it;
-	for (it = actors.begin(); it != actors.end(); ++it)
-		(*it)->Tick(elapsed);
-
+	std::list <GameObject*> ::iterator it  = actors.begin();
+	while (it != actors.end()){
+		GameObject * gameObject = (*it);
+		++it;
+		gameObject->Tick(elapsed);
+	}
 	return true;
 }
 

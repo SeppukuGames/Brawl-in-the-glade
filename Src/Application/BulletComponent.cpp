@@ -29,9 +29,9 @@ void BulletComponent::Start(){
 void BulletComponent::Update(double elapsed){
 	cont += elapsed;
 
-	/*if (cont > bulletDuration)
+	if (cont > bulletDuration)
 		DestruyeBala();
-	else*/{		
+	else{		
 		
 		direccion.x *= elapsed;
 		direccion.y *= elapsed;
