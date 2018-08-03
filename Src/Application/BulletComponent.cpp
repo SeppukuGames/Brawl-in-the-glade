@@ -29,9 +29,9 @@ void BulletComponent::Start(){
 void BulletComponent::Update(double elapsed){
 	cont += elapsed;
 
-	/*if (cont > bulletDuration)
+	if (cont > bulletDuration)
 		DestruyeBala();
-	else*/{		
+	else{		
 		
 		direccion.x *= elapsed;
 		direccion.y *= elapsed;
@@ -47,7 +47,7 @@ void BulletComponent::OnCollisionEnter(ColliderComponent* collider){
 	if (collider->GetGameObject()->GetTag() == "Enemy"){
 		StatsComponent* stats = (StatsComponent*)collider->GetGameObject()->GetComponent(ComponentName::STATS);
 		stats->HitGameObject(10.f);	//CAMBIAR
-		//DestruyeBala();
+		DestruyeBala();
 	}
 
 }

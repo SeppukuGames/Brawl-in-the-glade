@@ -95,10 +95,19 @@ bool Scene::HandleInput(void) {
 
 bool Scene::Update(double elapsed)
 {
-	std::list <GameObject*> ::iterator it;
+	/*std::list <GameObject*> ::iterator it;
 	for (it = actors.begin(); it != actors.end(); ++it)
 		(*it)->Tick(elapsed);
 
+	return true;*/
+
+	std::list <GameObject*> ::iterator it = actors.begin();
+	while (it != actors.end()){
+		GameObject* gameObject = (*it);
+		++it;
+		gameObject->Tick(elapsed);
+	}
+		
 	return true;
 }
 
