@@ -44,7 +44,8 @@ void Scene::AddGameObject(GameObject * gameObject){
 
 //Método encargado de eliminar un GameObject
 void Scene::RemoveGameObject(GameObject * gameObject){
-	actors.remove(gameObject);
+	actors.remove(gameObject);//Se elimina el gameObject de la lista de actores
+	delete gameObject; //Se borra el gameObject
 }
 
 bool Scene::Tick(double elapsed)
