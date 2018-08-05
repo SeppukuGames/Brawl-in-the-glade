@@ -28,6 +28,10 @@ private:
 
 	void CanvasComponent::createHealthBar();
 
+	float maxWidth = 200;
+	float maxHeight = 10;
+	float YAxis = 250;
+
 public:
 
 	CanvasComponent();

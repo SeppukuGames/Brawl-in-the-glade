@@ -63,7 +63,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->GetNode()->setScale(.5, .5, .5);
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		//gameObject->GetNode()->setOrientation(quat);
-		gameObject->AddComponent(new BoxColliderComponent(50, 150));
+		gameObject->AddComponent(new BoxColliderComponent(25, 25));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new PlayerComponent());
 		gameObject->AddComponent(new StatsComponent());
@@ -126,6 +126,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMYPREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + i);
+		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
 		gameObject->GetNode()->setPosition(250, 0, 250);
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);

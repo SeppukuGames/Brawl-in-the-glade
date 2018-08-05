@@ -2,11 +2,10 @@
 #include "GameObject.h"
 #include "StatsComponent.h"
 #include "SceneManager.h"
+#include "Error.h"
 
 using namespace Ogre;
 
-const float maxWidth = 200;
-const float maxHeight = 10;
 
 CanvasComponent::CanvasComponent() : Component()
 {
@@ -14,10 +13,34 @@ CanvasComponent::CanvasComponent() : Component()
 
 void CanvasComponent::Start() {
 
-	if (gameObject->GetTag() == "Tower")
+	if (gameObject->GetTag() == "Tower"){
+
+		maxWidth = 300;
+		maxHeight = 30;
+		YAxis = 0;
+
 		createGUI();
-	else
+	}
+	else if (gameObject->GetTag() == "Player"){
+		
+		maxWidth = 150;
+		maxHeight = 10;
+		YAxis = 250;
+		
 		createHealthBar();
+	}
+	else if (gameObject->GetTag() == "Enemy"){
+
+		maxWidth = 100;
+		maxHeight = 5;
+		YAxis = 150;
+
+		createHealthBar();
+	}
+	else {
+		Error errorE("\n\n\n\n\nERROR (CANVAS): El tag de la entidad no esta definido ");
+		throw errorE;
+	}
 };
 
 void CanvasComponent::Update(double elapsed) {
@@ -29,7 +52,6 @@ void CanvasComponent::Update(double elapsed) {
 void CanvasComponent::createGUI() {
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
-	//FontManager& fM = FontManager::getSingleton();
 
 	OverlayContainer* lifeGUI = static_cast<OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "health"));
@@ -37,7 +59,7 @@ void CanvasComponent::createGUI() {
 
 	lifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
 	lifeGUI->setPosition(0, 0);
-	lifeGUI->setDimensions(300, 35);
+	lifeGUI->setDimensions(maxWidth, maxHeight);
 	lifeGUI->setMaterialName("health");
 
 	OverlayContainer* backLifeGUI = static_cast<OverlayContainer*>(
@@ -45,7 +67,7 @@ void CanvasComponent::createGUI() {
 
 	backLifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
 	backLifeGUI->setPosition(0, 0);
-	backLifeGUI->setDimensions(300, 35);
+	backLifeGUI->setDimensions(maxWidth, maxHeight);
 	backLifeGUI->setMaterialName("backHealth"); // Optional background material 
 
 	// Create an overlay, and add the panel*/
@@ -53,11 +75,10 @@ void CanvasComponent::createGUI() {
 	GOoverlay->add2D(backLifeGUI);
 	GOoverlay->add2D(lifeGUI);
 
-	//ninja->addComponent(new UICanvas(lifeGUI, overlay));
 	ovContainer = lifeGUI;
 	overlay = GOoverlay;
 
-	//dynamic_cast<PlayerComponent*> (ninja->getComponent(ComponentName::PLAYER))->setPlayerUI();
+	billboardSet = NULL;
 
 }
 
@@ -68,7 +89,7 @@ void CanvasComponent::createHealthBar(){
 	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
 	billboardSet->setDefaultDimensions(maxWidth, maxHeight);
 	Billboard* billboard = billboardSet->createBillboard(Vector3::ZERO);
-	billboard->setPosition(Vector3(0, 250, 0));
+	billboard->setPosition(Vector3(0, YAxis, 0));
 	gameObject->GetNode()->attachObject(billboardSet);
 
 	ovContainer = NULL;
@@ -90,5 +111,11 @@ float CanvasComponent::getUIHeight() {
 void CanvasComponent::HitGameObject(float amount){
 	
 	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
-	billboardSet->setDefaultDimensions((maxWidth * stats->GetLife()) / stats->GetMaxLife(), maxHeight);
+
+	if (gameObject->GetTag() == "Tower"){
+		setNewUISize((maxWidth * stats->GetLife()) / stats->GetMaxLife(), maxHeight);
+	}
+	else{		
+		billboardSet->setDefaultDimensions((maxWidth * stats->GetLife()) / stats->GetMaxLife(), maxHeight);
+	}
 }

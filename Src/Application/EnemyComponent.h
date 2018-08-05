@@ -51,7 +51,7 @@ protected:
 	enemyType	enmType;					//Tipo de enemigo a construir
 
 	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
-	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
+	const float fireDistance = 125.f;		//Distance of enemy's ability to fire
 	const float fireCadence = 2.f;			//Amount of seconds between each attack
 
 	RigidbodyComponent* rb;					//Enemy's Rigidbody

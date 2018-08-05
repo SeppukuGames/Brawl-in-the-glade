@@ -176,7 +176,7 @@ void PlayerComponent::CheckRotation(double elapsed){
 		b2Vec2 toTarget = newMouseCoord - rigidbody->GetBody()->GetPosition();
 		float desiredAngle = atan2f(toTarget.y, toTarget.x);
 		
-		desiredAngle *= (180 / M_PI);
+		desiredAngle *= (-360/ M_PI);
 
 		//while (totalRotation < -180) totalRotation += 360;
 		//while (totalRotation >  180) totalRotation -= 360;
@@ -187,7 +187,7 @@ void PlayerComponent::CheckRotation(double elapsed){
 		//std::cout << desiredAngle << std::endl;
 		
 		rigidbody->GetBody()->SetAngularVelocity(0);
-		rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle);
+		rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle -180);
 	}
 
 

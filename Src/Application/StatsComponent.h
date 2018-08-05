@@ -21,7 +21,7 @@ public:
 
 StatsComponent::StatsComponent() : Component(){
 	life = maxLife = 100;
-	attackPower = 50;
+	attackPower = 5;
 };
 virtual ~StatsComponent(){};
 
