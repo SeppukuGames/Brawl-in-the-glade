@@ -30,6 +30,8 @@ virtual ~StatsComponent(){};
 
 	void HitGameObject(float amount){ life -= amount; };
 	void SetPosition(Ogre::Vector3 posicion){ gameObject->GetNode()->setPosition(posicion); };
+	void SetLife(float vida){ life = vida; }
+	void SetMaxLife(float vida){ maxLife = vida; }
 	
 
 #pragma endregion Methods

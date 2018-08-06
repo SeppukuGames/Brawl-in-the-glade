@@ -1,6 +1,11 @@
 #include "GameObject.h"
 #include "Component.h"
+
 #include "StatsComponent.h"
+#include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
+#include "PlayerComponent.h"
+#include "EnemyComponent.h"
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
@@ -15,6 +20,26 @@ using namespace rapidxml;
 
 class lectorXML{
 public:
+
+	Ogre::Vector2 generarVector2(xml_node<> * component_node)
+	{
+		//atoi, para convertirlo a enteros
+		Ogre::Vector2 vectorAux(atoi(component_node->first_attribute("x")->value()),
+			atoi(component_node->first_attribute("y")->value()));
+
+		return vectorAux;
+	}
+
+	Ogre::Vector3 generarVector3(xml_node<> * component_node)
+	{
+		//atoi, para convertirlo a enteros
+		Ogre::Vector3 vectorAux(atoi(component_node->first_attribute("x")->value()),
+			atoi(component_node->first_attribute("y")->value()),
+			atoi(component_node->first_attribute("z")->value()));
+
+		return vectorAux;
+	}
+
 	PREFABTYPE identificarPrefab(const std::string texto)
 	{
 		if (texto == "Camara")
@@ -33,27 +58,66 @@ public:
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
 	}
 	
-	Component* identificarComponente(GameObject* aux, xml_node<> * component_node)
+	void identificarComponente(GameObject* gameObject, xml_node<> * component_node)
 	{
 		std::string nombreComponente = component_node->first_attribute("name")->value();
-		if (nombreComponente == "Posicion")
-		{			
-			StatsComponent* componente = (StatsComponent*)aux->GetComponent(ComponentName::STATS); 
-			//atoi, para convertirlo a enteros
-			Ogre::Vector3 vectorAux(atoi(component_node->first_attribute("x")->value()),
-				atoi(component_node->first_attribute("y")->value()),
-				atoi(component_node->first_attribute("z")->value()));
-			componente->SetPosition(vectorAux);
-			return componente;			
+		if (nombreComponente == "Stats")
+		{		
+			StatsComponent* componente;
+			//Si no tiene StatsComponent, lo crea
+			if (!gameObject->GetComponent(ComponentName::STATS)){
+				componente = new StatsComponent();
+				gameObject->AddComponent(componente);
+			}
+			else
+				componente = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+
+			if (component_node->first_attribute("vida")) //Si existe
+				componente->SetLife(atoi(component_node->first_attribute("vida")->value()));
+
+			if (component_node->first_attribute("maxVida")) //Si existe
+				componente->SetLife(atoi(component_node->first_attribute("maxVida")->value()));
+								
 		}
-		//component->value(); //Acceder al valor del componente
+
+		if (nombreComponente == "Posicion")
+		{
+			Ogre::Vector3 posicion = generarVector3(component_node);
+			gameObject->GetNode()->setPosition(posicion);
+		}
+
+		if (nombreComponente == "BoxCollider")
+		{
+			BoxColliderComponent* componente;			
+			Ogre::Vector2 size = generarVector2(component_node);
+			componente = new BoxColliderComponent(size.x, size.y);
+			gameObject->AddComponent(componente);									
+		}	
+
+		if (nombreComponente == "Rigidbody")
+			gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		
+	}
+
+	bool DevuelveActivo(const std::string estado)
+	{
+		return estado == "si";
+	}
+	
+	void AjustesPosteriores(GameObject* gameObject, PREFABTYPE tipoPrefab)
+	{		
+		if (tipoPrefab == PREFABTYPE::ENEMYPREFAB)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+
+		if (tipoPrefab == PREFABTYPE::PLAYERPREFAB)
+			gameObject->AddComponent(new PlayerComponent());
 	}
 
 	void Leer(const std::string archivo)
 	{		
 		xml_document<> doc;
 		xml_node<> * root_node;
+		GameObject* gameObject = nullptr;
 
 		// Read the xml file into a vector
 		std::ifstream theFile(archivo);
@@ -71,15 +135,20 @@ public:
 		for (xml_node<> * entity_node = root_node->first_node("Entidad"); entity_node; entity_node = entity_node->next_sibling())
 		{
 			PREFABTYPE tipoPrefab = identificarPrefab(entity_node->first_attribute("name")->value());
-			if (tipoPrefab != PREFABTYPE::NULO){
-				GameObject* aux = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
-
+			bool activo = DevuelveActivo(entity_node->first_attribute("activo")->value());
+			if (tipoPrefab != PREFABTYPE::NULO && activo)
+			{
+				GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
+				
 				// Interate over the components								
 				for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 				{
-					Component* componente = identificarComponente(aux, component_node);
-					aux->AddComponent(componente);
-				}				
+					identificarComponente(gameObject, component_node);					
+				}	
+
+				//Funcion especial para player y enemies
+				AjustesPosteriores(gameObject, tipoPrefab);
+
 			}
 		}		
 	}

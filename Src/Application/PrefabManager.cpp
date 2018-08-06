@@ -18,7 +18,7 @@
 #include "LightComponent.h"
 #include "AnimationComponent.h"
 #include "CanvasComponent.h"
-#include "StatsComponent.h"
+//#include "StatsComponent.h"
 #include "EnemyComponent.h"
 
 #pragma region Singleton  
@@ -43,31 +43,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	GameObject *gameObject = nullptr;
 	Ogre::Quaternion quat;
 	//Distinguimos entre el tipo de enemigo
-	switch (prefabType){
-
-	//Ejemplos de prefab
-		
-	case OGROPREFAB:
-		//Se crea el GameObject
-		gameObject = new GameObject("Ogrito");
-
-		//Se añaden los componentes correspondientes
-		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
-		break;
+	switch (prefabType){		
 
 	case PLAYERPREFAB:
 		gameObject = new GameObject("Ninja");
 		gameObject->SetTag("Player");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
-		gameObject->GetNode()->setScale(.5, .5, .5);
-
-		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
-		//gameObject->GetNode()->setOrientation(quat);
-
-		gameObject->AddComponent(new BoxColliderComponent(50, 150));
-		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
-		gameObject->AddComponent(new PlayerComponent());
-		gameObject->AddComponent(new StatsComponent());
+		gameObject->GetNode()->setScale(.5, .5, .5);		
 		gameObject->AddComponent(new CanvasComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetPlayer(gameObject);
 		break;
@@ -91,7 +73,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
 		//gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
-		gameObject->AddComponent(new BoxColliderComponent(500, 50));
+		//gameObject->AddComponent(new BoxColliderComponent(500, 50));
 		break;
 
 	case MAINCAMERA:
@@ -104,8 +86,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case LIGHTPREFAB:
 		gameObject = new GameObject("Light");
-		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));			//Quizá cambiarlo por otro mesh?
-		gameObject->GetNode()->setPosition(100, 0, 100);
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));		//Quizá cambiarlo por otro mesh?
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new LightComponent());
@@ -114,12 +95,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case TOWERPREFAB:
 		gameObject = new GameObject("Tower");
 		gameObject->SetTag("Tower");
-		gameObject->AddComponent(new EntityComponent("Torre.mesh"));
-		gameObject->GetNode()->setPosition(500, 0, 500);
-		gameObject->GetNode()->setScale(10, 10, 10);
-		gameObject->AddComponent(new BoxColliderComponent(35, 35));
-		gameObject->AddComponent(new CanvasComponent());
-		gameObject->AddComponent(new StatsComponent());
+		gameObject->AddComponent(new EntityComponent("Torre.mesh"));		
+		gameObject->GetNode()->setScale(10, 10, 10);		
+		gameObject->AddComponent(new CanvasComponent());		
 		SceneManager::GetInstance()->GetCurrentScene()->SetTower(gameObject);
 		
 		break;
@@ -127,13 +105,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMYPREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + i);
-		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
-		gameObject->GetNode()->setPosition(250, 0, 250);
-		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
-		gameObject->AddComponent(new BoxColliderComponent(50, 150));
-		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
-		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
-		gameObject->AddComponent(new StatsComponent());
+		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
+		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
 		i++;
 		break;
