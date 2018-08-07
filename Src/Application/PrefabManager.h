@@ -14,7 +14,7 @@ private:
 	static PrefabManager  *instance;
 	int i = 0;
 	int j = 0;
-
+	std::string EnemyText, BulletText;
 public:
 	static PrefabManager * GetInstance();
 	static void ResetInstance();

@@ -125,12 +125,14 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ENEMYPREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
-		gameObject = new GameObject("Enemy" + i);
+		EnemyText = "Enemy ";
+		EnemyText += std::to_string(i);
+		gameObject = new GameObject(EnemyText);
 		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
 		gameObject->GetNode()->setPosition(250, 0, 250);
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
-		gameObject->AddComponent(new BoxColliderComponent(50, 150));
+		gameObject->AddComponent(new BoxColliderComponent(10, 10));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
 		gameObject->AddComponent(new StatsComponent());
@@ -139,12 +141,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case BULLETPREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
-		gameObject = new GameObject("Bullet" + j);
+		BulletText = "Bullet ";
+		BulletText += std::to_string(j);
+		gameObject = new GameObject(BulletText);
 		gameObject->SetTag("Bullet");
 		gameObject->GetNode()->setScale(.5, .5, .5);
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
-		gameObject->AddComponent(new BoxColliderComponent(1, 1));
+		gameObject->AddComponent(new BoxColliderComponent(5, 5));
 		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
 		gameObject->AddComponent(new BulletComponent());
 		j++;

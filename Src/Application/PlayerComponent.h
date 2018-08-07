@@ -17,7 +17,7 @@ private:
 	bool isMoving;
 
 	bool clickFlag;		//Flag para controlar que no se pulse más de una vez tras un click
-	const float refreshRate = 13.0f;
+	const float refreshRate = .3f;
 	float cont;
 #pragma endregion Attributes
 
