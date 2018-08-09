@@ -36,7 +36,8 @@ void BulletComponent::Update(double elapsed){
 
 	if (cont > bulletDuration)
 		DestruyeBala();
-	else{		
+
+	else{
 
 		b2Vec2 newVec(direccion.x, direccion.y);
 		newVec *= 10;
@@ -59,8 +60,8 @@ void BulletComponent::OnCollisionEnter(ColliderComponent* collider){
 	}
 
 	//MIRAR POR QUÉ FALLA
-	/*if (collider->GetGameObject()->GetTag() != "Player")
-		DestruyeBala();*/
+	if (collider->GetGameObject()->GetTag() != "Player")
+		DestruyeBala();
 
 }
 
@@ -114,9 +115,9 @@ void BulletComponent::DireccionarBala(){
 		direccion = newMouseCoord - rb->GetBody()->GetPosition();
 	}
 
-	
+
 }
 void BulletComponent::DestruyeBala(){
-	SceneManager::GetInstance()->GetCurrentScene()->RemoveGameObject(gameObject);
+	SceneManager::GetInstance()->GetCurrentScene()->Destroy(gameObject);
 }
 

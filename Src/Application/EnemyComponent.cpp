@@ -52,7 +52,7 @@ void EnemyComponent::Update(double elapsed){
 	//If estas muerto
 	if (stats->GetLife() <= 0){
 		isDead = true;
-		SceneManager::GetInstance()->GetCurrentScene()->RemoveGameObject(gameObject);
+		SceneManager::GetInstance()->GetCurrentScene()->Destroy(gameObject);
 		return;
 	}
 

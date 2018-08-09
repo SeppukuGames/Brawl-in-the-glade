@@ -205,8 +205,9 @@ Component* GameObject::GetComponent(ComponentName component) {
 
 //Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
 void GameObject::OnCollisionEnter(ColliderComponent* collider){
-	for (size_t i = 0; i < components.size(); i++)
-		components[i]->OnCollisionEnter(collider);
+	for (size_t i = 0; i < components.size(); i++){
+			components[i]->OnCollisionEnter(collider);
+	}
 }
 
 //Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes
