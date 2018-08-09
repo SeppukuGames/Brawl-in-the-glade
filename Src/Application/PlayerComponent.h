@@ -37,6 +37,16 @@ private:
 	bool CheckMovement(double elapsed);
 	void CheckRotation(double elapsed);
 	void Attack();
+	bool PlayerComponent::RaycastFromPoint(Ogre::Real posMouseX, Ogre::Real posMouseY,
+		Ogre::Vector3 &result);
+	void PlayerComponent::GetMeshInformation(const Ogre::MeshPtr mesh,
+		size_t &vertex_count,
+		Ogre::Vector3* &vertices,
+		size_t &index_count,
+		unsigned long* &indices,
+		const Ogre::Vector3 &position,
+		const Ogre::Quaternion &orient,
+		const Ogre::Vector3 &scale);
 
 #pragma endregion Methods
 

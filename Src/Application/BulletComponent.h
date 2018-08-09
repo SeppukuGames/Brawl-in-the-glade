@@ -10,7 +10,7 @@ private:
 	
 	//DEBEN IR POR XML 
 	const float bulletDuration = 15.0f;		//Duracion de la bala en el juego	
-	const float velocidad = 15.0f;
+	const float velocidad = 1500.0f;
 
 	float cont;
 	
@@ -30,6 +30,8 @@ public:
 	void Start();
 	void Update(double elapsed);
 	void DireccionarBala();
+	bool BulletComponent::RaycastFromPoint(Ogre::Real posMouseX, Ogre::Real posMouseY,
+		Ogre::Vector3 &result);
 	//virtual void onCollision(GameObject *collision);
 
 	void DestruyeBala();

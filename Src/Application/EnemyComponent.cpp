@@ -106,9 +106,7 @@ void EnemyComponent::EnemyAI(double elapsed){
 
 	if (canMove) {
 		obtenerDireccion();
-		/*b2Vec2 newVec(rb->GetBody()->GetPosition().x + direction.x,
-			rb->GetBody()->GetPosition().y + direction.y);*/
-		std::cout << "DireccionX: " << objetivo.x << "\nDireccionY: " << objetivo.y << std::endl;
+		//std::cout << "DireccionX: " << objetivo.x << "\nDireccionY: " << objetivo.y << std::endl;
 		b2Vec2 newVec(direction.x, direction.y);
 		newVec *= elapsed;
 		rb->GetBody()->SetLinearVelocity(newVec);
