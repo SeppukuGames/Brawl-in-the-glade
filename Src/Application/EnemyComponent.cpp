@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "Error.h"
-
+#include "EntityComponent.h"
 #include <iostream>
 
 
@@ -22,15 +22,15 @@ void EnemyComponent::Start(){
 	switch (enmType) {
 	case ENEMY1:
 		velocity = 10.15f;
-		//life = maxLife = 100.f;
-		//attackPower = 50.f;
+		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
 		break;
 	case ENEMY2:
-		velocity = 1.08f;
-		//life = maxLife = 200.f;
-		//attackPower = 80.f;
+		velocity = 2.08f;
+		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		break;
 	default:
+		Error errorE("\n\n\n\n\nERROR (ENEMY): El tipo de enemigo no esta definido ");
+		throw errorE;
 		break;
 	}
 
@@ -159,4 +159,8 @@ void EnemyComponent::Fire() {
 		throw errorE;
 	} 
 	
+}
+
+enemyType EnemyComponent::GetEnemyType(){
+	return enmType;
 }

@@ -2,8 +2,7 @@
 #define STATSCOMPONENT_H_
 
 #include "Component.h"
-#include "CanvasComponent.h"
-#include "GameObject.h"
+#include "RigidbodyComponent.h"
 
 class StatsComponent : public Component{
 
@@ -19,22 +18,17 @@ private:
 
 public:
 
-StatsComponent::StatsComponent() : Component(){
-	life = maxLife = 100;
-	attackPower = 5;
-};
-virtual ~StatsComponent(){};
+	StatsComponent::StatsComponent() : Component(){};
+	virtual ~StatsComponent(){};
+
+	virtual void Start();
 
 	float GetLife() { return life; };
 	float GetMaxLife() { return maxLife; };
 	float GetAttackPower() { return attackPower; };
 
-	void HitGameObject(float amount)
-	{ 
-		life -= amount; 
-		CanvasComponent* canvas = (CanvasComponent*)gameObject->GetComponent(ComponentName::CANVAS);
-		canvas->HitGameObject(amount);
-	};
+	void HitGameObject(float amount);
+	void SetEnemyWave(RigidbodyComponent* rb);
 
 #pragma endregion Methods
 

@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\Src\Application\BulletComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">

@@ -56,7 +56,7 @@ void BulletComponent::OnCollisionEnter(ColliderComponent* collider){
 	if (collider->GetGameObject()->GetTag() == "Enemy"){
 		StatsComponent* stats = (StatsComponent*)collider->GetGameObject()->GetComponent(ComponentName::STATS);
 		StatsComponent* player_stats = (StatsComponent*)SceneManager::GetInstance()->GetCurrentScene()->GetPlayer()->GetComponent(ComponentName::STATS);
-		stats->HitGameObject(player_stats->GetAttackPower());	//CAMBIAR
+		stats->HitGameObject(player_stats->GetAttackPower());
 	}
 
 	//MIRAR POR QUÉ FALLA

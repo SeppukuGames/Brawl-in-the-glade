@@ -31,9 +31,9 @@ void CanvasComponent::Start() {
 	}
 	else if (gameObject->GetTag() == "Enemy"){
 
-		maxWidth = 100;
-		maxHeight = 5;
-		YAxis = 150;
+		maxWidth = 60;
+		maxHeight = 3;
+		YAxis = 80;
 
 		createHealthBar();
 	}

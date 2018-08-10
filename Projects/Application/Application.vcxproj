@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\Src\Application\Scene1.cpp" />
     <ClCompile Include="..\..\Src\Application\Scene2.cpp" />
     <ClCompile Include="..\..\Src\Application\SceneManager.cpp" />
+    <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />

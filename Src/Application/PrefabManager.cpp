@@ -60,9 +60,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Ninja");
 		gameObject->SetTag("Player");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
-		gameObject->GetNode()->setScale(.5, .5, .5);
-		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
-		//gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new BoxColliderComponent(25, 25));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 		gameObject->AddComponent(new PlayerComponent());
@@ -85,6 +82,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case MUROPREFAB:
+		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Muro");
 		//Ogre::Quaternion quat;
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
@@ -95,13 +93,12 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
-		//gameObject->AddComponent(new BoxColliderComponent(1, 1));
-		//gameObject->AddComponent(new RigidbodyComponent(false));
 		gameObject->AddComponent(new CameraComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
 		break;
 
 	case LIGHTPREFAB:
+		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Light");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));			//Quizá cambiarlo por otro mesh?
 		gameObject->GetNode()->setPosition(100, 0, 100);
@@ -114,8 +111,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Tower");
 		gameObject->SetTag("Tower");
 		gameObject->AddComponent(new EntityComponent("Torre.mesh"));
-		gameObject->GetNode()->setPosition(500, 0, 500);
-		gameObject->GetNode()->setScale(10, 10, 10);
 		gameObject->AddComponent(new BoxColliderComponent(35, 35));
 		gameObject->AddComponent(new CanvasComponent());
 		gameObject->AddComponent(new StatsComponent());
@@ -129,12 +124,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		EnemyText += std::to_string(i);
 		gameObject = new GameObject(EnemyText);
 		gameObject->SetTag("Enemy");
-		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
-		gameObject->GetNode()->setPosition(250, 0, 250);
-		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
-		gameObject->AddComponent(new BoxColliderComponent(10, 10));
+		gameObject->AddComponent(new BoxColliderComponent(25, 25));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
-		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
 		gameObject->AddComponent(new StatsComponent());
 		gameObject->AddComponent(new CanvasComponent());
 		i++;
