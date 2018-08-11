@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "RigidbodyComponent.h"
 
-const float _LINEARVELOCITY = 5000.f;
+const float _LINEARVELOCITY = 15000.f;
 const float _ANGULARVELOCITY = 150.f;
 
 class PlayerComponent : public Component{

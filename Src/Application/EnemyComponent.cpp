@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "Error.h"
 #include "EntityComponent.h"
+#include "GameManager.h"
 #include <iostream>
 
 
@@ -52,6 +53,7 @@ void EnemyComponent::Update(double elapsed){
 	//If estas muerto
 	if (stats->GetLife() <= 0){
 		isDead = true;
+		GameManager::GetInstance()->RemoveEnemy();
 		SceneManager::GetInstance()->GetCurrentScene()->Destroy(gameObject);
 		return;
 	}

@@ -43,6 +43,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	GameObject *gameObject = nullptr;
 	Ogre::Quaternion quat;
+	srand((unsigned int)time(NULL));
+	int random;
+
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){
 
@@ -119,17 +122,21 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ENEMYPREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		random = rand() % 2 + 1;
 		EnemyText = "Enemy ";
 		EnemyText += std::to_string(i);
 		gameObject = new GameObject(EnemyText);
 		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new BoxColliderComponent(25, 25));
 		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
-		gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
+		if (random == 1)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+		else if (random == 2)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
 		gameObject->AddComponent(new StatsComponent());
 		gameObject->AddComponent(new CanvasComponent());
-		i++;
+		GameManager::GetInstance()->AddEnemy();
+		++i;
 		break;
 
 	case BULLETPREFAB:

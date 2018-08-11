@@ -5,8 +5,12 @@
 #include "EnemyComponent.h"
 #include "Error.h"
 
+#include <iostream>
+
 void StatsComponent::Start() {
 	
+	srand((unsigned int)time(NULL));
+
 	if (gameObject->GetTag() == "Tower"){
 		life = maxLife = 1000;
 		attackPower = 0;
@@ -65,8 +69,8 @@ void StatsComponent::SetEnemyWave(RigidbodyComponent* rb){
 	b2Vec2 spawn2(850, -200);
 	b2Vec2 spawn3(500, 850);
 
-	srand((unsigned int)time(NULL));
-	int random = rand() % 3;
+	int random = rand() % 3 + 1;
+
 	switch (random)
 	{
 	case 1:
@@ -79,8 +83,10 @@ void StatsComponent::SetEnemyWave(RigidbodyComponent* rb){
 		rb->GetBody()->SetTransform(spawn3, rb->GetBody()->GetAngle());
 		break;
 	default:
+		rb->GetBody()->SetTransform(b2Vec2(250, 250), rb->GetBody()->GetAngle());
 		break;
 	}
 	
-	rb->GetBody()->SetTransform(b2Vec2(250, 250), rb->GetBody()->GetAngle());
+	std::cout << "Random: " << random << std::endl;
+	
 }

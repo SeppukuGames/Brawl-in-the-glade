@@ -65,7 +65,7 @@ void Scene1::CreateGameObjects(void)
 	
 	GameObject * tower = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::TOWERPREFAB);
 	
-	GameObject * enemy = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
-	GameObject * enemy2 = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
+	//GameObject * enemy = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
+	//GameObject * enemy2 = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB);
 }
 
