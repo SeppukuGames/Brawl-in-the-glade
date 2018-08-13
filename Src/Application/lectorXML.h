@@ -93,7 +93,7 @@ public:
 				componente->SetLife(atoi(component_node->first_attribute("vida")->value()));
 
 			if (component_node->first_attribute("maxVida")) //Si existe
-				componente->SetLife(atoi(component_node->first_attribute("maxVida")->value()));
+				componente->SetMaxLife(atoi(component_node->first_attribute("maxVida")->value()));
 
 		}
 
@@ -175,23 +175,26 @@ public:
 			PREFABTYPE tipoPrefab = identificarPrefab(entity_node->first_attribute("name")->value());
 			bool activo = DevuelveActivo(entity_node->first_attribute("activo")->value());
 			int numeroPrefabs = atoi(entity_node->first_attribute("numero")->value());
-
+		
 			if (tipoPrefab != PREFABTYPE::NULO && activo)
 			{
-				for (int i = 0; i < numeroPrefabs; i++)
-				{
-
-					GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
-
+				
+					GameObject * gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
+		
 					// Interate over the components								
 					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
 						identificarComponente(gameObject, component_node);
 					}
-
+		
 					//Funcion especial para player y enemies
 					AjustesPosteriores(gameObject, tipoPrefab);
-				}
+		
+					for (int i = 1; i < numeroPrefabs; i++)
+					{
+						GameObject * gameObjectAux = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
+						gameObjectAux = gameObject;
+					}
 			}
 		}
 	}
