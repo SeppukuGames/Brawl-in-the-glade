@@ -166,7 +166,8 @@ public:
 
 			if (nombreComponente == "Posicion")
 			{
-				Ogre::Vector3 posicion; // = iter->second->DeberíaObtenerLaPosicion
+				// Contemplar la opcion de random aqui o en identificarComponentes
+				Ogre::Vector3 posicion = iter->second->GetGameObject()->GetNode()->getPosition();
 				gameObject->GetNode()->setPosition(posicion);
 			}
 
