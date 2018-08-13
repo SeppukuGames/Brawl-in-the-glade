@@ -36,14 +36,14 @@
 		<Componente name="Posicion" x="200" y="0" z="200">            
         </Componente>
     </Entidad>
-    <Entidades name="Enemigo" activo="si" numero= "2">
+    <Entidad name="Enemigo" activo="si" numero="2">
 		<Componente name="Posicion" random="si">            
         </Componente>	
 		<Componente name="BoxCollider" x="50" y="150">            
         </Componente>	
 		<Componente name="Rigidbody">            
         </Componente>	
-    </Entidades>
+    </Entidad>
     <Entidad name="Salmorejo" activo="si">   
         "de prueba, para ver que no falla el lector"     
     </Entidad>   

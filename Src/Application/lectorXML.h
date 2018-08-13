@@ -15,6 +15,7 @@
 #include <iostream>
 #include <random>
 
+
 #include "PrefabManager.h"
 
 using namespace rapidxml;
@@ -33,7 +34,7 @@ public:
 
 	Ogre::Vector3 generarVector3(xml_node<> * component_node)
 	{
-		
+
 		if (component_node->first_attribute("random")) {
 			std::random_device rd; // obtain a random number from hardware
 			std::mt19937 eng(rd()); // seed the generator
@@ -94,7 +95,6 @@ public:
 
 			if (component_node->first_attribute("maxVida")) //Si existe
 				componente->SetMaxLife(atoi(component_node->first_attribute("maxVida")->value()));
-
 		}
 
 		if (nombreComponente == "Posicion")
@@ -114,6 +114,70 @@ public:
 		if (nombreComponente == "Rigidbody")
 			gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 
+	}
+
+	std::pair<std::string, Component*> identificarComponentes(xml_node<> * component_node)
+	{
+		std::string nombreComponente = component_node->first_attribute("name")->value();
+		if (nombreComponente == "Stats")
+		{
+			StatsComponent * componente = new StatsComponent();
+			
+			if (component_node->first_attribute("vida")) //Si existe
+				componente->SetLife(atoi(component_node->first_attribute("vida")->value()));
+
+			if (component_node->first_attribute("maxVida")) //Si existe
+				componente->SetMaxLife(atoi(component_node->first_attribute("maxVida")->value()));
+
+			return std::make_pair("Stats", componente);
+		}
+
+		if (nombreComponente == "Posicion")
+		{
+			Ogre::Vector3 posicion = generarVector3(component_node);
+			StatsComponent * componente = new StatsComponent();
+			componente->SetPosition(posicion);
+			return std::make_pair("Posicion", componente);
+		}
+
+		if (nombreComponente == "BoxCollider")
+		{
+			BoxColliderComponent* componente;
+			Ogre::Vector2 size = generarVector2(component_node);
+			componente = new BoxColliderComponent(size.x, size.y);
+			return std::make_pair("BoxCollider", componente);
+		}
+
+		if (nombreComponente == "Rigidbody")
+			return std::make_pair("Rigidbody", new RigidbodyComponent(false, 1.0f));
+	}
+
+
+	void AsignaComponentes(GameObject * gameObject, std::list<std::pair<std::string, Component*>>listaComponentes) {	
+		for (std::list<std::pair<std::string, Component*>>::const_iterator iter = listaComponentes.begin(); iter != listaComponentes.end(); ++iter)
+		{
+			std::string nombreComponente = iter->first;
+			
+			if (nombreComponente == "Stats")
+			{
+				gameObject->AddComponent(iter->second);
+				
+			}
+
+			if (nombreComponente == "Posicion")
+			{
+				Ogre::Vector3 posicion; // = iter->second->DeberíaObtenerLaPosicion
+				gameObject->GetNode()->setPosition(posicion);
+			}
+
+			if (nombreComponente == "BoxCollider")
+			{
+				gameObject->AddComponent(iter->second);
+			}
+
+			if (nombreComponente == "Rigidbody")
+				gameObject->AddComponent(iter->second);
+		}
 	}
 
 	bool DevuelveActivo(const std::string estado)
@@ -153,48 +217,40 @@ public:
 		{
 			PREFABTYPE tipoPrefab = identificarPrefab(entity_node->first_attribute("name")->value());
 			bool activo = DevuelveActivo(entity_node->first_attribute("activo")->value());
+			int numeroPrefabs = 1;
+			if (entity_node->first_attribute("numero"))
+				numeroPrefabs = atoi(entity_node->first_attribute("numero")->value());
+
 			if (tipoPrefab != PREFABTYPE::NULO && activo)
 			{
-				GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
+				if (numeroPrefabs == 1) {
+					GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
 
-				// Interate over the components								
-				for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
-				{
-					identificarComponente(gameObject, component_node);
-				}
-
-				//Funcion especial para player y enemies
-				AjustesPosteriores(gameObject, tipoPrefab);
-
-			}
-		}
-
-
-		for (xml_node<> * entity_node = root_node->first_node("Entidades"); entity_node; entity_node = entity_node->next_sibling())
-		{
-			PREFABTYPE tipoPrefab = identificarPrefab(entity_node->first_attribute("name")->value());
-			bool activo = DevuelveActivo(entity_node->first_attribute("activo")->value());
-			int numeroPrefabs = atoi(entity_node->first_attribute("numero")->value());
-		
-			if (tipoPrefab != PREFABTYPE::NULO && activo)
-			{
-				
-					GameObject * gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
-		
 					// Interate over the components								
 					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
 						identificarComponente(gameObject, component_node);
 					}
-		
+
 					//Funcion especial para player y enemies
 					AjustesPosteriores(gameObject, tipoPrefab);
-		
-					for (int i = 1; i < numeroPrefabs; i++)
+				}
+
+				else {
+					std::list<std::pair<std::string, Component*>>listaComponentes;
+					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
-						GameObject * gameObjectAux = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
-						gameObjectAux = gameObject;
+						listaComponentes.push_back(identificarComponentes(component_node));
 					}
+
+					for (int i = 0; i < numeroPrefabs; i++) {
+						GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
+
+						AsignaComponentes(gameObject, listaComponentes);
+
+						AjustesPosteriores(gameObject, tipoPrefab);
+					}
+				}
 			}
 		}
 	}
