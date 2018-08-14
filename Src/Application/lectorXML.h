@@ -38,8 +38,8 @@ public:
 		if (component_node->first_attribute("random")) {
 			std::random_device rd; // obtain a random number from hardware
 			std::mt19937 eng(rd()); // seed the generator
-			std::uniform_int_distribution<> distrX(100, 200); // define the range
-			std::uniform_int_distribution<> distrZ(150, 250); // define the range
+			std::uniform_int_distribution<> distrX(50, 200); // define the range
+			std::uniform_int_distribution<> distrZ(150, 300); // define the range
 
 			int x = distrX(eng);
 			int z = distrZ(eng);
@@ -116,70 +116,6 @@ public:
 
 	}
 
-	std::pair<std::string, Component*> identificarComponentes(xml_node<> * component_node)
-	{
-		std::string nombreComponente = component_node->first_attribute("name")->value();
-		if (nombreComponente == "Stats")
-		{
-			StatsComponent * componente = new StatsComponent();
-			
-			if (component_node->first_attribute("vida")) //Si existe
-				componente->SetLife(atoi(component_node->first_attribute("vida")->value()));
-
-			if (component_node->first_attribute("maxVida")) //Si existe
-				componente->SetMaxLife(atoi(component_node->first_attribute("maxVida")->value()));
-
-			return std::make_pair("Stats", componente);
-		}
-
-		if (nombreComponente == "Posicion")
-		{
-			Ogre::Vector3 posicion = generarVector3(component_node);
-			StatsComponent * componente = new StatsComponent();
-			componente->SetPosition(posicion);
-			return std::make_pair("Posicion", componente);
-		}
-
-		if (nombreComponente == "BoxCollider")
-		{
-			BoxColliderComponent* componente;
-			Ogre::Vector2 size = generarVector2(component_node);
-			componente = new BoxColliderComponent(size.x, size.y);
-			return std::make_pair("BoxCollider", componente);
-		}
-
-		if (nombreComponente == "Rigidbody")
-			return std::make_pair("Rigidbody", new RigidbodyComponent(false, 1.0f));
-	}
-
-
-	void AsignaComponentes(GameObject * gameObject, std::list<std::pair<std::string, Component*>>listaComponentes) {	
-		for (std::list<std::pair<std::string, Component*>>::const_iterator iter = listaComponentes.begin(); iter != listaComponentes.end(); ++iter)
-		{
-			std::string nombreComponente = iter->first;
-			
-			if (nombreComponente == "Stats")
-			{
-				gameObject->AddComponent(iter->second);
-				
-			}
-
-			if (nombreComponente == "Posicion")
-			{
-				// Contemplar la opcion de random aqui o en identificarComponentes
-				Ogre::Vector3 posicion = iter->second->GetGameObject()->GetNode()->getPosition();
-				gameObject->GetNode()->setPosition(posicion);
-			}
-
-			if (nombreComponente == "BoxCollider")
-			{
-				gameObject->AddComponent(iter->second);
-			}
-
-			if (nombreComponente == "Rigidbody")
-				gameObject->AddComponent(iter->second);
-		}
-	}
 
 	bool DevuelveActivo(const std::string estado)
 	{
@@ -238,16 +174,19 @@ public:
 				}
 
 				else {
-					std::list<std::pair<std::string, Component*>>listaComponentes;
+					std::list<xml_node<> *>listaComponentes;
 					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
-						listaComponentes.push_back(identificarComponentes(component_node));
+						listaComponentes.push_back(component_node);
 					}
 
 					for (int i = 0; i < numeroPrefabs; i++) {
 						GameObject* gameObject = PrefabManager::GetInstance()->CreateObject(tipoPrefab);
 
-						AsignaComponentes(gameObject, listaComponentes);
+						for (std::list<xml_node<> *>::const_iterator iter = listaComponentes.begin(); iter != listaComponentes.end(); ++iter)
+						{
+							identificarComponente(gameObject, *iter);
+						}
 
 						AjustesPosteriores(gameObject, tipoPrefab);
 					}
