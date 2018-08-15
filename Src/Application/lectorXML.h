@@ -32,14 +32,39 @@ public:
 		return vectorAux;
 	}
 
+	std::uniform_int_distribution<> identificadorSpawns(std::string spawn, std::string coordenada) {
+		if (spawn == "spawn1") {
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(100, 200);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(100, 200);
+				return distrZ;
+			}
+		}
+
+		if (spawn == "spawnArbol") {
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(100, 200);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(100, 200);
+				return distrZ;
+			}
+		}
+	}
+
 	Ogre::Vector3 generarVector3(xml_node<> * component_node)
 	{
-
 		if (component_node->first_attribute("random")) {
 			std::random_device rd; // obtain a random number from hardware
 			std::mt19937 eng(rd()); // seed the generator
-			std::uniform_int_distribution<> distrX(50, 200); // define the range
-			std::uniform_int_distribution<> distrZ(150, 300); // define the range
+
+			std::string spawn = component_node->first_attribute("random")->value();
+			std::uniform_int_distribution<> distrX = identificadorSpawns(spawn, "x");// define the range
+			std::uniform_int_distribution<> distrZ = identificadorSpawns(spawn, "z"); // define the range
 
 			int x = distrX(eng);
 			int z = distrZ(eng);
@@ -70,8 +95,22 @@ public:
 			return PREFABTYPE::LIGHTPREFAB;
 		if (texto == "Torre")
 			return PREFABTYPE::TOWERPREFAB;
-		if (texto == "Enemigo")
-			return PREFABTYPE::ENEMYPREFAB;
+		if (texto == "Enemigo1")
+			return PREFABTYPE::ENEMY1PREFAB;
+		if (texto == "Enemigo2")
+			return PREFABTYPE::ENEMY2PREFAB;
+		if (texto == "Arbol")
+			return PREFABTYPE::ARBOLPREFAB;
+		if (texto == "Arbol_new")
+			return PREFABTYPE::ARBOL_NEWPREFAB;
+		if (texto == "Arbol2")
+			return PREFABTYPE::ARBOL2PREFAB;
+		if (texto == "Arbol3")
+			return PREFABTYPE::ARBOL3PREFAB;
+		if (texto == "Arbol4")
+			return PREFABTYPE::ARBOL4PREFAB;
+		if (texto == "Arbol5")
+			return PREFABTYPE::ARBOL5PREFAB;
 
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
 	}
@@ -124,8 +163,11 @@ public:
 
 	void AjustesPosteriores(GameObject* gameObject, PREFABTYPE tipoPrefab)
 	{
-		if (tipoPrefab == PREFABTYPE::ENEMYPREFAB)
+		if (tipoPrefab == PREFABTYPE::ENEMY1PREFAB)
 			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+
+		if (tipoPrefab == PREFABTYPE::ENEMY2PREFAB)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
 
 		if (tipoPrefab == PREFABTYPE::PLAYERPREFAB)
 			gameObject->AddComponent(new PlayerComponent());

@@ -102,13 +102,71 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		
 		break;
 
-	case ENEMYPREFAB:
+	case ENEMY1PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
-		gameObject = new GameObject("Enemy" + i);
+		gameObject = new GameObject("Enemy" + numEnemigos);
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
-		i++;
+		numEnemigos++;
+		break;
+
+	case ENEMY2PREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Enemy" + numEnemigos);
+		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
+		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
+		gameObject->AddComponent(new CanvasComponent());
+		numEnemigos++;
+		break;
+
+	case ARBOLPREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("arbol.mesh"));
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
+		break;
+
+	case ARBOL_NEWPREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("Arbol_new.mesh"));
+		
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
+		break;
+
+	case ARBOL2PREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("Arbol2.mesh"));
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
+		break;
+
+	case ARBOL3PREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("Arbol3.mesh"));
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
+		break;
+
+	case ARBOL4PREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("Arbol4.mesh"));
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
+		break;
+
+	case ARBOL5PREFAB:
+		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
+		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
+		gameObject->GetNode()->setScale(5, 10, 5);
+		numArboles++;
 		break;
 	}
 

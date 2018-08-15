@@ -4,15 +4,16 @@
 #include "GameObject.h"
 
 //Enumerado pra los tipos de objetos que se pueden crear
-enum PREFABTYPE{ OGROPREFAB, PLAYERPREFAB, GAMEMANAGERPREFAB,PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB,
-ENEMYPREFAB, NULO};
+enum PREFABTYPE{ OGROPREFAB, PLAYERPREFAB, GAMEMANAGERPREFAB, PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB,
+	ENEMY1PREFAB, ENEMY2PREFAB, ARBOLPREFAB, ARBOL_NEWPREFAB, ARBOL2PREFAB, ARBOL3PREFAB, ARBOL4PREFAB, ARBOL5PREFAB, NULO
+};
 
 class PrefabManager {
 #pragma region Singleton  
 
 private:
 	static PrefabManager  *instance;
-	int i = 0;
+	int numEnemigos = 0, numArboles = 0;
 
 public:
 	static PrefabManager * GetInstance();
