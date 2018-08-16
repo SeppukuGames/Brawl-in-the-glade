@@ -33,7 +33,7 @@ void Scene::CreateSceneMgr(void){
 
 // Método que inicializa el OverlaySystem
 void Scene::InitOverlay(void)
-{	
+{
 	sceneMgr->addRenderQueueListener(GraphicManager::GetInstance()->GetOverlaySystem());
 }
 
@@ -42,19 +42,38 @@ void Scene::AddGameObject(GameObject * gameObject){
 	actors.push_back(gameObject);
 }
 
-//Método encargado de eliminar un GameObject
-void Scene::RemoveGameObject(GameObject * gameObject){
-	actors.remove(gameObject);
+
+//Método que recibe un gameObject y lo añade a la cola de actores a destruir
+void Scene::Destroy(GameObject * gameObject){
+	actorsToDestroy.push(gameObject);//Se añade a la lista de actores a destruir
 }
 
+//Método que comprueba si un actor debe destruirse 
+void Scene::CheckActorsDestruction(){
+	//Comprobamos que no hay ningún actor por destruir
+	while (!actorsToDestroy.empty()){
+
+		//Caso en el que existe el gameObject
+		if (std::find(actors.begin(), actors.end(), actorsToDestroy.back()) != actors.end()){
+			actors.remove(actorsToDestroy.back());//Se elimina el gameObject de la lista de actores
+			delete actorsToDestroy.back();
+		}
+		actorsToDestroy.pop();
+
+	}
+}
 bool Scene::Tick(double elapsed)
 {
+
+	CheckActorsDestruction();
 	PhysicsManager::GetInstance()->Tick();
 
 	if (!HandleInput())
 		return false;
 
 	Update(elapsed);
+
+
 
 	if (!Render())
 		return false;
@@ -95,9 +114,18 @@ bool Scene::HandleInput(void) {
 
 bool Scene::Update(double elapsed)
 {
-	std::list <GameObject*> ::iterator it;
+	/*std::list <GameObject*> ::iterator it;
 	for (it = actors.begin(); it != actors.end(); ++it)
-		(*it)->Tick(elapsed);
+	(*it)->Tick(elapsed);
+
+	return true;*/
+
+	std::list <GameObject*> ::iterator it = actors.begin();
+	while (it != actors.end()){
+		GameObject* gameObject = (*it);
+		++it;
+		gameObject->Tick(elapsed);
+	}
 
 	return true;
 }

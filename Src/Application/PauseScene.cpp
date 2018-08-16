@@ -48,10 +48,12 @@ void PauseScene::CreateGameObjects(void)
 	//TODO: Panel con botones (Overlay)
 
 	GameObject * pm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PAUSEMANAGERPREFAB);
-	actors.push_back(pm);
+	//actors.push_back(pm); //NO ES NECESARIO AÑADIR AQUI EL OBJETO A LA LISTA DE ACTORES, ESTÁ EN PREFAB MANAGER
+
 
 	GameObject * A = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PLAYERPREFAB);
-	actors.push_back(A);
+	actors.push_back(A); // TODO: ¿Se debería de pushear?
+
 
 	GameObject * cameraObject = new GameObject("camera");
 	cameraObject->GetNode()->setPosition(0, 0, 500);

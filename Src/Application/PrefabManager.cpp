@@ -20,6 +20,7 @@
 #include "CanvasComponent.h"
 //#include "StatsComponent.h"
 #include "EnemyComponent.h"
+#include "BulletComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -42,6 +43,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	GameObject *gameObject = nullptr;
 	Ogre::Quaternion quat;
+	srand((unsigned int)time(NULL));
+	int random;
+
 	//Distinguimos entre el tipo de enemigo
 	switch (prefabType){		
 
@@ -50,6 +54,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->SetTag("Player");
 		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		gameObject->GetNode()->setScale(.5, .5, .5);		
+
+		//TODO: ¿Alguna de estas NO está en el XML y debería estar?
+		//gameObject->AddComponent(new BoxColliderComponent(25, 25));
+		//gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
+		//gameObject->AddComponent(new PlayerComponent());
+		//gameObject->AddComponent(new StatsComponent());
+
 		gameObject->AddComponent(new CanvasComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetPlayer(gameObject);
 		break;
@@ -68,6 +79,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case MUROPREFAB:
+		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Muro");
 		//Ogre::Quaternion quat;
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
@@ -78,13 +90,12 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
-		//gameObject->AddComponent(new BoxColliderComponent(1, 1));
-		//gameObject->AddComponent(new RigidbodyComponent(false));
 		gameObject->AddComponent(new CameraComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
 		break;
 
 	case LIGHTPREFAB:
+		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Light");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));		//Quizá cambiarlo por otro mesh?
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
@@ -99,29 +110,43 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->GetNode()->setScale(10, 10, 10);		
 		gameObject->AddComponent(new CanvasComponent());		
 		SceneManager::GetInstance()->GetCurrentScene()->SetTower(gameObject);
+		//TODO: XML?
+		//gameObject->AddComponent(new BoxColliderComponent(35, 35));
+
+		
 		
 		break;
 
+
 	case ENEMY1PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
-		gameObject = new GameObject("Enemy" + numEnemigos);
+		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos)); 
+		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
+
+		//PARA EVITAR QUE EL NEWWAVE SE QUEJE
+		gameObject->AddComponent(new StatsComponent());
+		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
 		numEnemigos++;
 		break;
 
 	case ENEMY2PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
-		gameObject = new GameObject("Enemy" + numEnemigos);
+		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos));
+		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
 		gameObject->AddComponent(new CanvasComponent());
+
+		//PARA EVITAR QUE EL NEWWAVE SE QUEJE
+		gameObject->AddComponent(new StatsComponent());
+		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
 		numEnemigos++;
 		break;
 
 	case ARBOLPREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("arbol.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
@@ -129,7 +154,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL_NEWPREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("Arbol_new.mesh"));
 		
@@ -138,7 +162,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL2PREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("Arbol2.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
@@ -146,7 +169,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL3PREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("Arbol3.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
@@ -154,7 +176,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL4PREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("Arbol4.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
@@ -162,11 +183,44 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL5PREFAB:
-		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Arbol" + numArboles);
 		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
+
+	/*
+	REFERENCIA TEMPORAL, NO SE VA A USAR.
+	case ENEMYPREFAB:
+		random = rand() % 2 + 1;
+		EnemyText = "Enemy ";
+		EnemyText += std::to_string(i);
+		gameObject = new GameObject(EnemyText);
+		gameObject->SetTag("Enemy");
+		gameObject->AddComponent(new BoxColliderComponent(25, 25));
+		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
+		if (random == 1)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+		else if (random == 2)
+			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
+		gameObject->AddComponent(new StatsComponent());
+		gameObject->AddComponent(new CanvasComponent());
+		GameManager::GetInstance()->AddEnemy();
+		++i;
+		break;
+		*/
+
+	case BULLETPREFAB:
+		BulletText = "Bullet ";
+		BulletText += std::to_string(j);
+		gameObject = new GameObject(BulletText);
+		gameObject->SetTag("Bullet");
+		gameObject->GetNode()->setScale(.5, .5, .5);
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
+		gameObject->AddComponent(new BoxColliderComponent(5, 5));
+		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
+		gameObject->AddComponent(new BulletComponent());
+		j++;
+
 		break;
 	}
 

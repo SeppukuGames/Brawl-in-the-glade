@@ -123,6 +123,10 @@
     <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BulletComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -203,9 +207,6 @@
     <ClInclude Include="..\..\Src\Application\CameraComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\LightComponent.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\EnemyComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -214,6 +215,11 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\lectorXML.h">
       <Filter>Header Files\XML</Filter>
+    <ClInclude Include="..\..\Src\Application\LightComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BulletComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

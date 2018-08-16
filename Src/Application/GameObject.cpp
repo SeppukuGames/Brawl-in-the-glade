@@ -14,6 +14,7 @@
 #include "CanvasComponent.h"
 #include "EnemyComponent.h"
 #include "StatsComponent.h"
+#include "BulletComponent.h"
 #include "Error.h"
 
 GameObject::GameObject(std::string name) :components(0){
@@ -184,6 +185,17 @@ Component* GameObject::GetComponent(ComponentName component) {
 		}
 
 		break;
+
+	case ComponentName::BULLET:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			BulletComponent * comp = dynamic_cast<BulletComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
 	default:
 		throw(Error("Construye el GetComponent del nuevo Componente"));
 		return nullptr;
@@ -195,8 +207,9 @@ Component* GameObject::GetComponent(ComponentName component) {
 
 //Es llamado cuando dos gameObject colisionan. Informa a todos sus componentes
 void GameObject::OnCollisionEnter(ColliderComponent* collider){
-	for (size_t i = 0; i < components.size(); i++)
-		components[i]->OnCollisionEnter(collider);
+	for (size_t i = 0; i < components.size(); i++){
+			components[i]->OnCollisionEnter(collider);
+	}
 }
 
 //Es llamado cuando dos gameObject dejan de colisionar. Informa a todos sus componentes

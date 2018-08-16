@@ -3,6 +3,9 @@
 #include "CanvasComponent.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "Error.h"
+#include "EntityComponent.h"
+#include "GameManager.h"
 #include <iostream>
 
 
@@ -19,21 +22,22 @@ void EnemyComponent::Start(){
 	//TODO ESTO DEBE IR POR XML
 	switch (enmType) {
 	case ENEMY1:
-		velocity = 0.15f;
-		//life = maxLife = 100.f;
-		//attackPower = 50.f;
+		velocity = 10.15f;
+		gameObject->AddComponent(new EntityComponent("bot1.mesh"));
 		break;
 	case ENEMY2:
-		velocity = 0.08f;
-		//life = maxLife = 200.f;
-		//attackPower = 80.f;
+		velocity = 2.08f;
+		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		break;
 	default:
+		Error errorE("\n\n\n\n\nERROR (ENEMY): El tipo de enemigo no esta definido ");
+		throw errorE;
 		break;
 	}
 
+	GameObject* tower_go = SceneManager::GetInstance()->GetCurrentScene()->GetTower();
+	Torre.Set(tower_go->GetNode()->getPosition().x, tower_go->GetNode()->getPosition().z);
 	direction = { 0, 0 };
-	Torre = { 700, 700 };
 	objetivo = Torre;
 	timeCheck = 0;
 	rb = (RigidbodyComponent*)gameObject->GetComponent(ComponentName::RIGIDBODY);
@@ -43,6 +47,17 @@ void EnemyComponent::Start(){
 }
 
 void EnemyComponent::Update(double elapsed){
+
+	//No encuentra el componente de stats
+	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+	
+	//If estas muerto
+	if (stats->GetLife() <= 0){
+		isDead = true;
+		GameManager::GetInstance()->RemoveEnemy();
+		SceneManager::GetInstance()->GetCurrentScene()->Destroy(gameObject);
+		return;
+	}
 
 	EnemyAI(elapsed);
 }
@@ -56,19 +71,15 @@ void EnemyComponent::EnemyAI(double elapsed){
 	b2Vec2 pos2 = player_rb->GetBody()->GetPosition();	//Posición del jugador
 	float dist = obtenerDistancia(pos1, pos2);
 
-	//If estas muerto
-	/*if (life <= 0){
-	isDead = true;
-	MainGame::getInstance()->DestroyGameObject(_gameObject);
-	}*/
+	//std::cout << "Distance: " << dist << std::endl;
 
 	if (dist < maxPlayerDistance && !isDead) {
-		//std::cout << "Reaching tower! Distance: " << dist << std::endl;
+		std::cout << "Reaching player! Distance: " << dist << std::endl;
 		objetivo = player_rb->GetBody()->GetPosition();
 		objType = _PLAYER;
+		
 		if (dist < fireDistance) {
 			timeCheck += elapsed;
-			//std::cout << " Time: " << timeCheck << std::endl;
 			canMove = false;
 			if (timeCheck >= fireCadence) {
 				timeCheck = 0.f;
@@ -84,7 +95,6 @@ void EnemyComponent::EnemyAI(double elapsed){
 		objetivo = Torre;
 		objType = _TOWER;
 
-
 		if (dist < fireDistance) {
 			canMove = false;
 			timeCheck += elapsed;
@@ -99,19 +109,16 @@ void EnemyComponent::EnemyAI(double elapsed){
 
 	if (canMove) {
 		obtenerDireccion();
-		b2Vec2 newVec(rb->GetBody()->GetPosition().x + direction.x,
-			rb->GetBody()->GetPosition().y + direction.y);
+		//std::cout << "DireccionX: " << objetivo.x << "\nDireccionY: " << objetivo.y << std::endl;
+		b2Vec2 newVec(direction.x, direction.y);
 		newVec *= elapsed;
-		rb->GetBody()->SetTransform(newVec, rb->GetBody()->GetAngle());
-		//rb->GetBody()->SetTransform(rb->getRigidbody()->getWorldTransform());
-		//rb->GetBody()->getMotionState()->setWorldTransform(rb->getRigidbody()->getWorldTransform());
+		rb->GetBody()->SetLinearVelocity(newVec);
+	}
+	else{
 		rb->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
 	}
 }
 float EnemyComponent::obtenerDistancia(b2Vec2 pos1, b2Vec2 pos2) {
-
-	//btVector3 pos1 = rb->getRigidbody()->getWorldTransform().getOrigin();			//Posición del enemigo
-	//btVector3 pos2 = _player_rb->getRigidbody()->getWorldTransform().getOrigin();	//Posición del jugador
 
 	float distanceX = pow((float)pos2.x - (float)pos1.x, 2);
 	float distanceZ = pow((float)pos2.y - (float)pos1.y, 2);
@@ -137,28 +144,26 @@ void EnemyComponent::Fire() {
 	*/
 	if (objType == _PLAYER) {
 		GameObject* player = SceneManager::GetInstance()->GetCurrentScene()->GetPlayer();
-		StatsComponent* stats = (StatsComponent*)player->GetComponent(ComponentName::STATS);
-		CanvasComponent* canvas = (CanvasComponent*)player->GetComponent(ComponentName::CANVAS);
+		StatsComponent* p_stats = (StatsComponent*)player->GetComponent(ComponentName::STATS);
+		StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 
-		canvas->hitGameObject(stats->GetAttackPower());
+		p_stats->HitGameObject(stats->GetAttackPower());
 	}
 	else if (objType == _TOWER) {
-		//towerHealth->hitTower(attackPower);
 		GameObject* tower = SceneManager::GetInstance()->GetCurrentScene()->GetTower();
-		StatsComponent* stats = (StatsComponent*)tower->GetComponent(ComponentName::STATS);
-		CanvasComponent* canvas = (CanvasComponent*)tower->GetComponent(ComponentName::CANVAS);
+		StatsComponent* t_stats = (StatsComponent*)tower->GetComponent(ComponentName::STATS);
+		StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 
-		canvas->hitGameObject(stats->GetAttackPower());
+		t_stats->HitGameObject(stats->GetAttackPower());
 		
 	}
-	else std::cout << "ERROR: Enemy objetive type not allowed!" << std::endl;
-	
-
+	else{
+		Error errorE("\n\n\n\n\nERROR (ENEMY_COMP): El objetivo de ataque del enemigo no está definido! ");
+		throw errorE;
+	} 
 	
 }
 
-//ESTO HACERLO EN EL COMPONENTE DEL CANVAS DIRECTAMENTE LLAMÁNDOLO (IGUAL ARRIBA)
-/*void EnemyComponent::hitEmemy(float amount) {
-	life -= amount;
-	enemyUI->setDefaultDimensions((maxWidth * life) / maxLife, maxHeight);
-}*/
+enemyType EnemyComponent::GetEnemyType(){
+	return enmType;
+}

@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include "PlayerComponent.h"
 #include "InputManager.h"
 #include "GameObject.h"
@@ -8,9 +10,10 @@
 #include "AnimationComponent.h"
 #include "SceneManager.h"
 #include "GraphicManager.h"
+#include "PrefabManager.h"
 #include <math.h>
 
-#define M_PI acos(-1.0)
+//#define M_PI acos(-1.0)
 
 PlayerComponent::PlayerComponent() : rigidbody(nullptr)
 {
@@ -25,15 +28,16 @@ void PlayerComponent::Start(){
 	rigidbody = (RigidbodyComponent*)(gameObject->GetComponent(RIGIDBODY));
 	velocity.Set(0, 0);
 	angle = 0.0f;
+	cont = 0.0f;
 	isMoving = false;
+	clickFlag = false;
 
 	if (rigidbody == nullptr){
 		Error errorE("\n\n\n\n\nError al crear el PlayerComponent. Necesita un Rigidbody ");
 		throw errorE;
 	}
 
-	gameObject->AddComponent(new AnimationComponent("Idle2"));	//Le pasas una inicial, luego la cambias desde el input
-	//rigidbody->GetBody()->SetAngularVelocity(-10.0f);
+	gameObject->AddComponent(new AnimationComponent("Idle2"));
 	
 }
 
@@ -50,8 +54,6 @@ void PlayerComponent::Update(double elapsed){
 			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
 		isMoving = false;
 	}
-		
-	
 
 	CheckRotation(elapsed);
 	
@@ -59,7 +61,14 @@ void PlayerComponent::Update(double elapsed){
 	velocity.y *= elapsed;
 
 	rigidbody->GetBody()->SetLinearVelocity(velocity);
-	//rigidbody->GetBody()->SetAngularVelocity(angle);
+
+	cont += elapsed;
+
+	if (cont > refreshRate){
+		clickFlag = false;
+		cont = 0.0f;
+	}
+	Attack();
 
 	//Acceso a la instancia de GameManager
 	GameManager::GetInstance()->GetGameObject()->GetNode()->getName();
@@ -103,34 +112,8 @@ bool PlayerComponent::CheckMovement(double elapsed){
 
 void PlayerComponent::CheckRotation(double elapsed){
 	
-	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Q))
+	/*if (Input::GetInstance()->getKey(OIS::KeyCode::KC_Q))
 		angle = -_ANGULARVELOCITY;
-
-	/*float bodyAngle = rigidbody->GetBody()->GetAngle();
-	MousePosition mousePos = Input::GetInstance()->getMousePosition();
-	b2Vec2 mouseCoord(mousePos.X.abs, mousePos.Y.abs);
-	b2Vec2 toTarget = mouseCoord - rigidbody->GetBody()->GetPosition();
-	float desiredAngle = atan2f(-toTarget.x, toTarget.y);
-	desiredAngle *= (180 / M_PI);*/
-
-	/*std::cout << mousePos.X.abs << "\n";
-	if (desiredAngle < 0)
-		desiredAngle = 360 - (-desiredAngle);
-	*/
-
-	
-	/*float totalRotation = desiredAngle - bodyAngle;
-
-	while (totalRotation < -180) totalRotation += 360;
-	while (totalRotation >  180 ) totalRotation -= 360;
-	
-	totalRotation *= (180 / M_PI);
-	*/
-	//totalRotation *= 5;
-	//rigidbody->GetBody()->SetAngularVelocity(0);
-	//rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), -90 + desiredAngle);
-	
-	//rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), totalRotation);
 	
 	Ogre::Plane mPlane(Ogre::Vector3::UNIT_Y, 0);
 
@@ -138,9 +121,36 @@ void PlayerComponent::CheckRotation(double elapsed){
 	Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
 	Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
 
+	Ogre::Vector3 resultado;
+	MousePosition mousePos = Input::GetInstance()->getMousePosition();
+	b2Vec2 mouseCoord(mousePos.X.abs, mousePos.Z.abs);
+
+	// convert to 0-1 offset
+	Ogre::Real offsetX = mouseCoord.x / GraphicManager::GetInstance()->GetWindow()->getWidth();
+	Ogre::Real offsetY = mouseCoord.y / GraphicManager::GetInstance()->GetWindow()->getWidth();
+	RaycastFromPoint(offsetX, offsetY, resultado);
+
+	Ogre::Vector3 newLook(resultado.x, 0, resultado.z);
+	//btVector3 posJugador = transform.getOrigin();
+	float laX = newLook.x - rigidbody->GetBody()->GetPosition().x;
+	float laZ = newLook.z - rigidbody->GetBody()->GetPosition().y;
+	std::cout << laX << "  " << laZ << std::endl;
+
+	b2Vec2 vectDir(laX, laZ);
+	float desiredAngle = atan2f(vectDir.y, vectDir.x);
+	std::cout << desiredAngle << std::endl;
+	desiredAngle *= (180 / M_PI);
+
+	rigidbody->GetBody()->SetAngularVelocity(0);
+	rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle +180);*/
+
+
+	
+	Ogre::Plane mPlane(Ogre::Vector3::UNIT_Y, 0);
+
 	MousePosition mousePos = Input::GetInstance()->getMousePosition();
 	b2Vec2 mouseCoord(mousePos.X.abs, mousePos.Y.abs);
-	
+
 	// convert to 0-1 offset
 	Ogre::Real offsetX = mouseCoord.x / GraphicManager::GetInstance()->GetWindow()->getWidth();
 	Ogre::Real offsetY = mouseCoord.y / GraphicManager::GetInstance()->GetWindow()->getWidth();
@@ -167,21 +177,31 @@ void PlayerComponent::CheckRotation(double elapsed){
 		b2Vec2 newMouseCoord(resultado.x, resultado.z);
 		b2Vec2 toTarget = newMouseCoord - rigidbody->GetBody()->GetPosition();
 		float desiredAngle = atan2f(toTarget.y, toTarget.x);
-		
-		desiredAngle *= (180 / M_PI);
+
+		desiredAngle *= (-360 / M_PI);
 
 		//while (totalRotation < -180) totalRotation += 360;
 		//while (totalRotation >  180) totalRotation -= 360;
-		
-		/*if (desiredAngle < 0)
-			desiredAngle = 360 - (-desiredAngle);*/
 
-		std::cout << desiredAngle << std::endl;
+
 		
 		rigidbody->GetBody()->SetAngularVelocity(0);
-		rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle);
+		rigidbody->GetBody()->SetTransform(rigidbody->GetBody()->GetPosition(), desiredAngle -180);
+
+		//std::cout << desiredAngle << std::endl;
+		//std::cout << rigidbody->GetBody()->GetAngle() << std::endl;
+	}
+	
+}
+
+void PlayerComponent::Attack(){
+
+	if (Input::GetInstance()->getMouseButton(OIS::MouseButtonID::MB_Left) && !clickFlag){
+		//std::cout << "Bala creada!" << std::endl;
+		clickFlag = true;
+		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::BULLETPREFAB);
 	}
 
-
 }
+
 

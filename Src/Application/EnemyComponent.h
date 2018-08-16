@@ -30,7 +30,8 @@ public:
 	float EnemyComponent::obtenerDistancia(b2Vec2 pos1, b2Vec2 pos2);
 	void EnemyComponent::obtenerDireccion();
 	void EnemyComponent::Fire();
-	void EnemyComponent::hitEmemy(float amount);
+	enemyType EnemyComponent::GetEnemyType();
+	//void EnemyComponent::hitEmemy(float amount);
 
 
 protected:
@@ -51,15 +52,10 @@ protected:
 	enemyType	enmType;					//Tipo de enemigo a construir
 
 	const float maxPlayerDistance = 250.f;	//Max distance between enemy-player
-	const float fireDistance = 100.f;		//Distance of enemy's ability to fire
+	const float fireDistance = 125.f;		//Distance of enemy's ability to fire
 	const float fireCadence = 2.f;			//Amount of seconds between each attack
 
 	RigidbodyComponent* rb;					//Enemy's Rigidbody
-	//GameObject* _player;					//Player Reference
-	//PlayerComponent* playerHealth;			//Player's health Reference
-	//GameObject* _tower;						//Tower Reference
-	//TowerComponent* towerHealth;			//Tower's health Reference
-
 
 };
 #endif

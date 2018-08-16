@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "RigidbodyComponent.h"
 
-const float _LINEARVELOCITY = 5000.f;
+const float _LINEARVELOCITY = 15000.f;
 const float _ANGULARVELOCITY = 150.f;
 
 class PlayerComponent : public Component{
@@ -16,6 +16,9 @@ private:
 	float angle;
 	bool isMoving;
 
+	bool clickFlag;		//Flag para controlar que no se pulse más de una vez tras un click
+	const float refreshRate = .3f;
+	float cont;
 #pragma endregion Attributes
 
 #pragma region Methods  
@@ -33,6 +36,17 @@ public:
 private:
 	bool CheckMovement(double elapsed);
 	void CheckRotation(double elapsed);
+	void Attack();
+	bool PlayerComponent::RaycastFromPoint(Ogre::Real posMouseX, Ogre::Real posMouseY,
+		Ogre::Vector3 &result);
+	void PlayerComponent::GetMeshInformation(const Ogre::MeshPtr mesh,
+		size_t &vertex_count,
+		Ogre::Vector3* &vertices,
+		size_t &index_count,
+		unsigned long* &indices,
+		const Ogre::Vector3 &position,
+		const Ogre::Quaternion &orient,
+		const Ogre::Vector3 &scale);
 
 #pragma endregion Methods
 

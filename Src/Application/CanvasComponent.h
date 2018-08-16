@@ -28,6 +28,10 @@ private:
 
 	void CanvasComponent::createHealthBar();
 
+	float maxWidth = 200;
+	float maxHeight = 10;
+	float YAxis = 250;
+
 public:
 
 	CanvasComponent();
@@ -40,7 +44,7 @@ public:
 
 	float CanvasComponent::getUIHeight();
 
-	void CanvasComponent::hitGameObject(float amount);
+	void CanvasComponent::HitGameObject(float amount);
 
 
 protected:

@@ -23,6 +23,10 @@ public:
 private:
 	Ogre::Timer* timer;
 
+	int enemyNumber;	//Contador de número de enemigos restantes
+	int enemyWave;		//Contador de número de enemigos por ronda
+	int waveNumber;		//Contador de rondas
+
 #pragma endregion Attributes
 
 #pragma region Methods  
@@ -32,6 +36,12 @@ public:
 	virtual void Update(double elapsed);
 
 	virtual ~GameManager(){};
+	
+	void AddEnemy(){ enemyNumber++; };
+	void RemoveEnemy(){ enemyNumber--; };
+	int GetWaveNumber() { return waveNumber; };
+	int GetEnemyNumber() { return enemyNumber; };
+	void NewWave();
 private:
 	GameManager(){};
 

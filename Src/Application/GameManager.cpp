@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "PrefabManager.h"
 
 #pragma region Singleton  
 /* Null, because instance will be initialized on demand. */
@@ -23,6 +24,8 @@ void GameManager::ResetInstance(){
 
 void GameManager::Start(){
 	timer = SceneManager::GetInstance()->GetTimer();
+	enemyWave = 5;
+	enemyNumber = 0;
 }
 
 void GameManager::Update(double elapsed){
@@ -32,4 +35,17 @@ void GameManager::Update(double elapsed){
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_P) && timer->getMilliseconds() > SceneManager::GetInstance()->GetNextSceneChange())
 		SceneManager::GetInstance()->LoadPauseScene(PAUSESCENE);
 
+	if (enemyNumber == 0){
+		NewWave();
+		enemyWave += 5;
+	}
+}
+
+void GameManager::NewWave(){
+
+	int cont = 0;
+	while (enemyNumber < enemyWave){
+		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMY1PREFAB); //He metido el 1 por meter algo
+		enemyNumber++;
+	}
 }

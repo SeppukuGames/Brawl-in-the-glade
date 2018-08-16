@@ -3,6 +3,8 @@
 
 #include "Component.h"
 #include "GameObject.h"
+#include "RigidbodyComponent.h"
+
 
 class StatsComponent : public Component{
 
@@ -18,21 +20,24 @@ private:
 
 public:
 
-StatsComponent::StatsComponent() : Component(){
-	life = maxLife = 100;
-	attackPower = 50;
-};
-virtual ~StatsComponent(){};
+	StatsComponent::StatsComponent() : Component(){};
+	virtual ~StatsComponent(){};
+
+	virtual void Start();
 
 	float GetLife() { return life; };
 	float GetMaxLife() { return maxLife; };
 	float GetAttackPower() { return attackPower; };
 
-	void HitGameObject(float amount){ life -= amount; };
+	//void HitGameObject(float amount){ life -= amount; }; 
 	void SetPosition(Ogre::Vector3 posicion){ gameObject->GetNode()->setPosition(posicion); };
 	void SetLife(float vida){ life = vida; }
 	void SetMaxLife(float vida){ maxLife = vida; }
 	
+
+	void HitGameObject(float amount);
+	void SetEnemyWave(RigidbodyComponent* rb);
+
 
 #pragma endregion Methods
 
