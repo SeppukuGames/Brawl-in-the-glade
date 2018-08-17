@@ -1,51 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{65811be4-7bc1-4f7d-926e-33ba4787fdd7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{354a067a-4bc8-43aa-a161-7c9dcedb1e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{b41b2fdf-99ad-475e-b2b6-a05053131f32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{e96d487d-4226-431d-b6de-6dcb8e44b6d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scenes">
-      <UniqueIdentifier>{3ebd6974-d51c-4090-bcfa-98f979b72216}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{bab51cdd-d9e3-4139-93a1-8f578a26f5a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{63094f81-634a-430b-80d5-8e75d71cf71f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scenes">
-      <UniqueIdentifier>{d5a32d9f-5d73-4c59-90fc-aca583283df4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core\Components">
-      <UniqueIdentifier>{50b231ff-5ef7-4ce7-8cd4-a251429b6e7c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core\Error">
-      <UniqueIdentifier>{b8233917-a797-4e5a-bf34-e29bab0c1aba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Core\Components">
-      <UniqueIdentifier>{d1b99fce-c3e0-417a-986d-448e0acec0eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Core\Managers">
-      <UniqueIdentifier>{0b26aebf-6915-4be7-8d9f-55a73ee39bda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core\Managers">
-      <UniqueIdentifier>{6df8a63d-9f8d-46e1-9556-d5ff65468333}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\XML">
-      <UniqueIdentifier>{b7fa3179-ff45-4d5f-82c0-af2296eee428}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="..\..\Src\Application\main.cpp" />
+    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Application\GameManager.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\LightComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\PauseManager.cpp">
@@ -54,44 +26,17 @@
     <ClCompile Include="..\..\Src\Application\PlayerComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Scene2.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\Scene1.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PauseScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GameObject.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="..\..\Src\Application\AudioComponent.cpp">
+      <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp">
       <Filter>Source Files\Core\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp">
-      <Filter>Source Files\Core\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\InputManager.cpp">
-      <Filter>Source Files\Core\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp">
-      <Filter>Source Files\Core\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
-      <Filter>Source Files\Core\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\SceneManager.cpp">
-      <Filter>Source Files\Core\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\AudioComponent.cpp">
-      <Filter>Source Files\Core\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\BulletComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\CircleColliderComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
@@ -102,33 +47,56 @@
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\GameObject.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\GraphicManager.cpp">
+      <Filter>Source Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\InputManager.cpp">
+      <Filter>Source Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PauseScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp">
+      <Filter>Source Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\PrefabManager.cpp">
+      <Filter>Source Files\Core\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp">
       <Filter>Source Files\Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\Application\Scene.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp">
+    <ClCompile Include="..\..\Src\Application\Scene1.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Scene2.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\SceneManager.cpp">
+      <Filter>Source Files\Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\StatsComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CanvasComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\LightComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\CameraComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\BulletComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CameraComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\CanvasComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\EnemyComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -138,19 +106,19 @@
     <ClInclude Include="..\..\Src\Application\PlayerComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Scene1.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="..\..\Src\Application\StatsComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Scene2.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\PauseScene.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="..\..\Src\Application\LightComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Component.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\GameObject.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\Error.h">
@@ -162,23 +130,29 @@
     <ClInclude Include="..\..\Src\Application\GraphicManager.h">
       <Filter>Header Files\Core\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\InputManager.h">
-      <Filter>Header Files\Core\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\Application\PhysicsManager.h">
       <Filter>Header Files\Core\Managers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\PrefabManager.h">
       <Filter>Header Files\Core\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
+      <Filter>Header Files\Core\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\Application\SceneManager.h">
       <Filter>Header Files\Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
+      <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\AudioComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
+    <ClInclude Include="..\..\Src\Application\BulletComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\checkML.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\CircleColliderComponent.h">
       <Filter>Header Files\Core\Components</Filter>
@@ -189,37 +163,64 @@
     <ClInclude Include="..\..\Src\Application\EntityComponent.h">
       <Filter>Header Files\Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h">
-      <Filter>Header Files\Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\Scene.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\checkML.h">
-      <Filter>Header Files\Core\Error</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CanvasComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\CameraComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\EnemyComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Application\StatsComponent.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="..\..\Src\Application\InputManager.h">
+      <Filter>Header Files\Core\Managers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\lectorXML.h">
       <Filter>Header Files\XML</Filter>
-    <ClInclude Include="..\..\Src\Application\LightComponent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\BulletComponent.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="..\..\Src\Application\PauseScene.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene1.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Scene2.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{ccae28d5-3933-42e2-bbbd-29c236a0d45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{db745a80-5504-421a-b2f0-9f865dd1ffef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{75c892fd-c4ff-425f-9300-3bb1faf973e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Components">
+      <UniqueIdentifier>{1f4ad542-058c-4c5b-a8b4-141aea353e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Error">
+      <UniqueIdentifier>{044996cd-1b86-423a-aad4-12663e942cf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Managers">
+      <UniqueIdentifier>{f5bd3cc5-c551-4d6f-be26-ccad980dc5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6b2b2ebd-e8cb-45df-83dc-bd56ff7cc02d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{de9c4c41-b9c6-4dd3-9fe9-651de71ee27c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{c3a23fbe-ee19-4954-b78a-23f5957be2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\XML">
+      <UniqueIdentifier>{6948c801-0d6f-402f-a233-a0e8efb4f510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{3b1e8ea4-67d8-40c6-bfcb-69e09da21580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Components">
+      <UniqueIdentifier>{ceb78ec5-7faf-466e-ab73-70d0e8c6b49f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Managers">
+      <UniqueIdentifier>{22f2bb4f-bd5d-4893-b7ab-05fa3f8e44ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{a5e5434e-5dd5-4727-a884-4e4ae977e524}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

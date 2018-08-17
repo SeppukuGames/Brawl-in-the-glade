@@ -30,6 +30,7 @@ GameObject::~GameObject()
 		components[i] = nullptr;
 	}
 
+	//Se rompe aquí al salir del juego y no sé por qué
 	delete control;
 }
 
