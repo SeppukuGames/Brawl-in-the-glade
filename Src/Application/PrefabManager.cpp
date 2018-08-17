@@ -18,8 +18,8 @@
 #include "LightComponent.h"
 #include "AnimationComponent.h"
 #include "CanvasComponent.h"
-//#include "StatsComponent.h"
 #include "EnemyComponent.h"
+//#include "MenuComponent.h"
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -167,6 +167,10 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
+		break;
+	case MENU:
+		gameObject = new GameObject("Menu");
+		//gameObject->AddComponent(new MenuComponent());
 		break;
 	}
 

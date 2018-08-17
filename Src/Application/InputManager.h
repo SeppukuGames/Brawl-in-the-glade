@@ -52,7 +52,6 @@ public:
 	bool keyReleased(const OIS::KeyEvent &arg);						//Método que devuelve true si se ha soltado la tecla recibida como parámetro
 	bool getKey(OIS::KeyCode kc);									//Comprueba si la tecla que está en la estructura coincide con la consultada
 
-
 #pragma endregion Keyboard
 
 #pragma region Mouse  

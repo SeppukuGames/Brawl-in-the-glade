@@ -123,6 +123,12 @@
     <ClCompile Include="..\..\Src\Application\EnemyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\Application\MenuComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Application\Boton.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\GameManager.h">
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\Application\lectorXML.h">
       <Filter>Header Files\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\MenuComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Application\Boton.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
 #include "EnemyComponent.h"
+#include "Boton.h"
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
@@ -15,8 +16,9 @@
 #include <iostream>
 #include <random>
 
-
 #include "PrefabManager.h"
+
+#include "MenuComponent.h"
 
 using namespace rapidxml;
 
@@ -111,6 +113,8 @@ public:
 			return PREFABTYPE::ARBOL4PREFAB;
 		if (texto == "Arbol5")
 			return PREFABTYPE::ARBOL5PREFAB;
+		if (texto == "Menu")
+			return PREFABTYPE::MENU;
 
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
 	}
@@ -153,8 +157,19 @@ public:
 		if (nombreComponente == "Rigidbody")
 			gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 
-	}
+		if (nombreComponente == "Menu")
+			gameObject->AddComponent(new MenuComponent(component_node->first_attribute("imagen")->value()));
 
+		if (nombreComponente == "Boton")
+		{
+			Component* aux = gameObject->GetComponent(ComponentName::MENUCOMPONENT);
+			int n = static_cast<MenuComponent*>(aux)->getNumButtons();
+			Boton* boton = new Boton(component_node->first_attribute("texto")->value(), n);
+			boton->setAction(component_node->first_attribute("tipo")->value());
+			static_cast<MenuComponent*>(aux)->AddButton(boton);			
+		}
+
+	}
 
 	bool DevuelveActivo(const std::string estado)
 	{

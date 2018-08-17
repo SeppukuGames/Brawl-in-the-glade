@@ -14,6 +14,8 @@
 #include "CanvasComponent.h"
 #include "EnemyComponent.h"
 #include "StatsComponent.h"
+#include "MenuComponent.h"
+#include "Boton.h"
 #include "Error.h"
 
 GameObject::GameObject(std::string name) :components(0){
@@ -178,6 +180,26 @@ Component* GameObject::GetComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			StatsComponent * comp = dynamic_cast<StatsComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::MENUCOMPONENT:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			MenuComponent * comp = dynamic_cast<MenuComponent*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::BOTON:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			Boton * comp = dynamic_cast<Boton*>(components[i]);
 
 			if (comp != NULL)
 				return components[i];
