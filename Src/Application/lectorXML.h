@@ -161,13 +161,20 @@ public:
 		return estado == "si";
 	}
 
+	//TODO: ver si debería ir aqui el componente STATS independientemente de qué tipo de objeto sea.
 	void AjustesPosteriores(GameObject* gameObject, PREFABTYPE tipoPrefab)
 	{
-		if (tipoPrefab == PREFABTYPE::ENEMY1PREFAB)
+		if (tipoPrefab == PREFABTYPE::ENEMY1PREFAB){
+			//Importante: Tiene que tener un enemyComponent previo
 			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+			gameObject->AddComponent(new StatsComponent());
+		}
 
-		if (tipoPrefab == PREFABTYPE::ENEMY2PREFAB)
+		if (tipoPrefab == PREFABTYPE::ENEMY2PREFAB){
+			//Importante: Tiene que tener un enemyComponent previo
 			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
+			gameObject->AddComponent(new StatsComponent());
+		}
 
 		if (tipoPrefab == PREFABTYPE::PLAYERPREFAB)
 			gameObject->AddComponent(new PlayerComponent());
@@ -213,6 +220,7 @@ public:
 
 					//Funcion especial para player y enemies
 					AjustesPosteriores(gameObject, tipoPrefab);
+					PrefabManager::GetInstance()->insertObjectIntoCurrentScene(gameObject);
 				}
 
 				else {
@@ -231,8 +239,10 @@ public:
 						}
 
 						AjustesPosteriores(gameObject, tipoPrefab);
+						PrefabManager::GetInstance()->insertObjectIntoCurrentScene(gameObject);
 					}
 				}
+				
 			}
 		}
 	}

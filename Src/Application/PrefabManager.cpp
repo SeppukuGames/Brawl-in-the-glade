@@ -70,12 +70,16 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
+		insertObjectIntoCurrentScene(gameObject);
+
 
 		break;	
 
 	case PAUSEMANAGERPREFAB:
 		gameObject = new GameObject("Pause_Manager");
 		gameObject->AddComponent(new PauseManager());
+		insertObjectIntoCurrentScene(gameObject);
+
 		break;
 
 	case MUROPREFAB:
@@ -86,12 +90,16 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		//gameObject->AddComponent(new BoxColliderComponent(500, 50));
+		insertObjectIntoCurrentScene(gameObject);
+
 		break;
 
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
 		gameObject->AddComponent(new CameraComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
+		insertObjectIntoCurrentScene(gameObject);
+
 		break;
 
 	case LIGHTPREFAB:
@@ -101,6 +109,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new LightComponent());
+		insertObjectIntoCurrentScene(gameObject);
+
 		break;
 
 	case TOWERPREFAB:
@@ -125,10 +135,14 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
+		
 
 		//PARA EVITAR QUE EL NEWWAVE SE QUEJE
-		gameObject->AddComponent(new StatsComponent());
 		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
+		//gameObject->AddComponent(new StatsComponent());
+		//
+
+		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
 		break;
 
@@ -139,10 +153,16 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
 		gameObject->AddComponent(new CanvasComponent());
+		
 
-		//PARA EVITAR QUE EL NEWWAVE SE QUEJE
-		gameObject->AddComponent(new StatsComponent());
+		//PARA EVITAR QUE EL NEWWAVE SE QUEJE. 
+		//Importante: Tiene que tener un enemyComponent previo
 		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
+		//gameObject->AddComponent(new StatsComponent());
+
+		
+
+		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
 		break;
 
@@ -188,8 +208,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
 
-	/*
-	REFERENCIA TEMPORAL, NO SE VA A USAR.
+	
+	//REFERENCIA TEMPORAL, NO SE VA A USAR. o no debería, vamos.
 	case ENEMYPREFAB:
 		random = rand() % 2 + 1;
 		EnemyText = "Enemy ";
@@ -206,8 +226,10 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new CanvasComponent());
 		GameManager::GetInstance()->AddEnemy();
 		++i;
+
+		insertObjectIntoCurrentScene(gameObject);
 		break;
-		*/
+	
 
 	case BULLETPREFAB:
 		BulletText = "Bullet ";
@@ -219,12 +241,17 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new BoxColliderComponent(5, 5));
 		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
 		gameObject->AddComponent(new BulletComponent());
+		insertObjectIntoCurrentScene(gameObject);
 		j++;
 
 		break;
 	}
 
-	SceneManager::GetInstance()->GetCurrentScene()->AddGameObject(gameObject);
+	
 
 	return gameObject;
 }
+
+//He hecho esto para añadir algunos objetos directamente con la funcionalidad del PrefabManager y otros
+//Que se tienen que completar -de momento- con el XML se incluyen más tarde.
+void PrefabManager::insertObjectIntoCurrentScene(GameObject* obj){ SceneManager::GetInstance()->GetCurrentScene()->AddGameObject(obj); }

@@ -45,7 +45,7 @@ void GameManager::NewWave(){
 
 	int cont = 0;
 	while (enemyNumber < enemyWave){
-		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMY1PREFAB); //He metido el 1 por meter algo
+		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB); //He metido el 1 por meter algo
 		enemyNumber++;
 	}
 }
