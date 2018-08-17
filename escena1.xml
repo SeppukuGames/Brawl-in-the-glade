@@ -20,6 +20,8 @@
     </Entidad>  		
     <Entidad name="Torre" activo="si">  
 		<Componente name="Posicion" x="200" y="0" z="200">            
+        </Componente>
+        <Componente name="Stats" vida="150" maxVida="150">            
         </Componente>	
 		<Componente name="BoxCollider" x="35" y="35">            
         </Componente>		

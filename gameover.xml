@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Juego>
+    <Entidad name="Menu" activo="si">
+		<Componente name="Menu" imagen="Gameover">            
+        </Componente>
+        <Componente name="Boton" texto="Reintentar" tipo="Start">            
+        </Componente>		
+		<Componente name="Boton" texto="Salir" tipo="Exit">            
+        </Componente>
+    </Entidad>    
+    <Entidad name="Camara" activo="si">        
+    </Entidad>   
+    <Entidad name="GameManager" activo="si">        
+    </Entidad>           
+    <Entidad name="Salmorejo" activo="si">   
+        "de prueba, para ver que no falla el lector"     
+    </Entidad>   
+</Juego>

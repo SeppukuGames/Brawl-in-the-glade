@@ -1,7 +1,5 @@
 #include "Scene1.h"
 
-
-
 #include "GraphicManager.h"
 #include "EntityComponent.h"
 //#include "PrefabManager.h"
@@ -32,7 +30,8 @@ void Scene1::CreateScene()
 
 void Scene1::CreateGameObjects(void)
 {
-	lectorXML_.Leer("../../escena1.xml");
+	lectorXML_.Leer("../../escena1.xml"); //Y LA PAUSA TAMBIEN SE ROMPE.
+	//lectorXML_.Leer("../../menu.xml");
 	
 	//Objetos de prueba
 	/*

@@ -18,9 +18,9 @@
 #include "LightComponent.h"
 #include "AnimationComponent.h"
 #include "CanvasComponent.h"
-//#include "StatsComponent.h"
 #include "EnemyComponent.h"
 #include "BulletComponent.h"
+
 
 #pragma region Singleton  
 PrefabManager* PrefabManager::instance = 0;
@@ -244,6 +244,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		insertObjectIntoCurrentScene(gameObject);
 		j++;
 
+		break;
+	case MENU:
+		gameObject = new GameObject("Menu");
 		break;
 	}
 

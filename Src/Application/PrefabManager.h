@@ -4,11 +4,12 @@
 #include "GameObject.h"
 
 //Enumerado pra los tipos de objetos que se pueden crear
+
 //Merge: añadido bulletprefab al enum de lectorXML
 enum PREFABTYPE{
 	OGROPREFAB, PLAYERPREFAB, GAMEMANAGERPREFAB, PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB, BULLETPREFAB,
 	ENEMY1PREFAB, ENEMY2PREFAB, ARBOLPREFAB, ARBOL_NEWPREFAB, ARBOL2PREFAB, ARBOL3PREFAB, ARBOL4PREFAB, ARBOL5PREFAB, NULO,
-	ENEMYPREFAB /*Para corregir rapidamente lo del newwave*/
+	ENEMYPREFAB /*Para corregir rapidamente lo del newwave*/,MENU
 };
 
 

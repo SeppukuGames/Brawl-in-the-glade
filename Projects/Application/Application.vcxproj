@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\Src\Application\AnimationComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\AudioManager.cpp" />
+    <ClCompile Include="..\..\Src\Application\Boton.cpp" />
     <ClCompile Include="..\..\Src\Application\BoxColliderComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\BulletComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\CameraComponent.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="..\..\Src\Application\InputManager.cpp" />
     <ClCompile Include="..\..\Src\Application\LightComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\main.cpp" />
+    <ClCompile Include="..\..\Src\Application\MenuComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\PauseManager.cpp" />
     <ClCompile Include="..\..\Src\Application\PauseScene.cpp" />
     <ClCompile Include="..\..\Src\Application\PhysicsManager.cpp" />
@@ -44,6 +46,7 @@
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
     <ClInclude Include="..\..\Src\Application\AudioComponent.h" />
     <ClInclude Include="..\..\Src\Application\AudioManager.h" />
+    <ClInclude Include="..\..\Src\Application\Boton.h" />
     <ClInclude Include="..\..\Src\Application\BoxColliderComponent.h" />
     <ClInclude Include="..\..\Src\Application\BulletComponent.h" />
     <ClInclude Include="..\..\Src\Application\CameraComponent.h" />
@@ -61,6 +64,7 @@
     <ClInclude Include="..\..\Src\Application\InputManager.h" />
     <ClInclude Include="..\..\Src\Application\lectorXML.h" />
     <ClInclude Include="..\..\Src\Application\LightComponent.h" />
+    <ClInclude Include="..\..\Src\Application\MenuComponent.h" />
     <ClInclude Include="..\..\Src\Application\PauseManager.h" />
     <ClInclude Include="..\..\Src\Application\PauseScene.h" />
     <ClInclude Include="..\..\Src\Application\PhysicsManager.h" />
