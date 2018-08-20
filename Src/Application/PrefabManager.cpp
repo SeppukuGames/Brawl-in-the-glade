@@ -96,6 +96,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case MAINCAMERA:
 		gameObject = new GameObject("Main_Camera");
+		gameObject->SetTag("Camara");
 		gameObject->AddComponent(new CameraComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
 		insertObjectIntoCurrentScene(gameObject);
@@ -131,7 +132,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMY1PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos)); 
-		gameObject->SetTag("Enemy");
+		gameObject->SetTag("Enemy1");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
@@ -149,7 +150,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMY2PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos));
-		gameObject->SetTag("Enemy");
+		gameObject->SetTag("Enemy2");
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
 		gameObject->AddComponent(new CanvasComponent());
@@ -247,6 +248,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 	case MENU:
 		gameObject = new GameObject("Menu");
+		gameObject->SetTag("Menu");
 		break;
 	}
 

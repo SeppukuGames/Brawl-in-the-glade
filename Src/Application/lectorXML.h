@@ -157,16 +157,21 @@ public:
 		if (nombreComponente == "Rigidbody")
 			gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
 
-		if (nombreComponente == "Menu")
+		if (nombreComponente == "Menu"){
 			gameObject->AddComponent(new MenuComponent(component_node->first_attribute("imagen")->value()));
+		}
 
 		if (nombreComponente == "Boton")
 		{
+			//Es posible que Boton esté añadiendose a la escena- Incluso cuando no debería porque
+			//los botones son hijos del componente MenuComponent
+			//Es decir: Al borrar algo, ese algo debería ser el MenuComponent que destruya sus botones y eso es lo que no se está haciendo bien
+			//			Actualmente se meten botones en la lista de objetosss kkkk
 			Component* aux = gameObject->GetComponent(ComponentName::MENUCOMPONENT);
 			int n = static_cast<MenuComponent*>(aux)->getNumButtons();
 			Boton* boton = new Boton(component_node->first_attribute("texto")->value(), n);
 			boton->setAction(component_node->first_attribute("tipo")->value());
-			static_cast<MenuComponent*>(aux)->AddButton(boton);			
+			static_cast<MenuComponent*>(aux)->AddButton(boton);	
 		}
 
 	}

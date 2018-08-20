@@ -18,9 +18,12 @@ camera(0), sceneMgr(0)
 Scene::~Scene()
 {
 	//Destruye todos los actores
-	std::list <GameObject*> ::iterator it;
-	for (it = actors.begin(); it != actors.end(); ++it)
+	std::list <GameObject*> ::iterator it = actors.begin();
+	
+	for (it = actors.begin(); it != actors.end(); ++it){
+		cout << (*it)->GetTag() << endl;
 		delete (*it);
+	}
 
 	sceneMgr->clearScene();
 }

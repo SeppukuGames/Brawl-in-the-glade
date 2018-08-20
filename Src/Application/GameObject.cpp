@@ -26,14 +26,16 @@ GameObject::GameObject(std::string name) :components(0){
 
 GameObject::~GameObject()
 {
-	for (size_t i = 0; i < components.size(); i++)
+	size_t i = 0;
+	for (i = 0; i < components.size(); i++)
 	{
+		cout << this->GetTag() << endl;
 		delete components[i];
 		components[i] = nullptr;
 	}
 
-	//Se rompe aquí al salir del juego y PASAR ENTRE ESCENAS y no sé por qué
-	//PERO SOLO EN UN CASO ESPECIFICO LPM
+	////Con este método, falla en el Tidy.
+	//if (i != 0) //Si el objeto tiene componentes...
 	delete control;
 }
 
