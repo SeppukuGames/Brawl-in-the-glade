@@ -32,7 +32,8 @@ GameObject::~GameObject()
 		components[i] = nullptr;
 	}
 
-	//Se rompe aquí al salir del juego y no sé por qué
+	//Se rompe aquí al salir del juego y PASAR ENTRE ESCENAS y no sé por qué
+	//PERO SOLO EN UN CASO ESPECIFICO LPM
 	delete control;
 }
 

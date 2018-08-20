@@ -1,8 +1,14 @@
-#include "Scene1.h"
+#include "MenuScene.h"
+
+#include <OgreSceneNode.h>
+#include <OgreLight.h>
+#include <OgreCamera.h>
+#include <OgreRenderWindow.h>
+#include <Box2D.h>
 
 #include "GraphicManager.h"
 #include "EntityComponent.h"
-//#include "PrefabManager.h"
+#include "PrefabManager.h"
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
@@ -14,25 +20,22 @@
 
 using namespace Ogre;
 
-Scene1::Scene1() : Scene()
+MenuScene::MenuScene() : Scene()
 {
 }
 
 
+
 //Método encargado de crear la escena
-void Scene1::CreateScene()
+void MenuScene::CreateScene()
 {
 	//Creamos luz ambiental
-	sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	//sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	CreateGameObjects();
 }
 
-void Scene1::CreateGameObjects(void)
+void MenuScene::CreateGameObjects(void)
 {
-	//TODO: ¿Se rompe la pausa?
-	lectorXML_.Leer("../../escena1.xml"); 
-	
-	//lectorXML_.Leer("../../menu.xml");
+	lectorXML_.Leer("../../menu.xml");
 }
-

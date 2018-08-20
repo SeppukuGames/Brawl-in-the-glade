@@ -1,17 +1,17 @@
-#ifndef __Scene2_h_
-#define __Scene2_h_
+#ifndef __MenuScene_h_
+#define __MenuScene_h_
 
 #include "Scene.h"
 
-class Scene2 : public Scene
+class MenuScene : public Scene
 {
 public:
-	Scene2();
+	MenuScene();
 
 	virtual void CreateScene(void);					//Método encargado de crear la escena
 
 protected:
 	virtual void CreateGameObjects(void);			//Método encargado de crear las entidades (luz, cámara, personaje, etc..)
 };
-#endif // #ifndef __Scene2_h_
+#endif //
 

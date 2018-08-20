@@ -8,7 +8,7 @@
 #define SCENEWAIT 1000		//Tiempo de espera para cambiar de escena
 
 //Enumerados para los tipos de escena normal y escena de pausa
-enum SceneType {NULLSCENE, MENUSCENE,SCENE1, SCENE2, GAMEOVERSCENE};
+enum SceneType {NULLSCENE, MENUSCENE,SCENE1, /*SCENE2,*/ GAMEOVERSCENE};
 enum PauseSceneType {NULLPAUSESCENE, PAUSESCENE };
 
 class SceneManager

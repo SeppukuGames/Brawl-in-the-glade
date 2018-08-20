@@ -38,7 +38,7 @@
     <ClCompile Include="..\..\Src\Application\RigidbodyComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\Scene.cpp" />
     <ClCompile Include="..\..\Src\Application\Scene1.cpp" />
-    <ClCompile Include="..\..\Src\Application\Scene2.cpp" />
+    <ClCompile Include="..\..\Src\Application\MenuScene.cpp" />
     <ClCompile Include="..\..\Src\Application\SceneManager.cpp" />
     <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
   </ItemGroup>
@@ -73,7 +73,7 @@
     <ClInclude Include="..\..\Src\Application\RigidbodyComponent.h" />
     <ClInclude Include="..\..\Src\Application\Scene.h" />
     <ClInclude Include="..\..\Src\Application\Scene1.h" />
-    <ClInclude Include="..\..\Src\Application\Scene2.h" />
+    <ClInclude Include="..\..\Src\Application\MenuScene.h" />
     <ClInclude Include="..\..\Src\Application\SceneManager.h" />
     <ClInclude Include="..\..\Src\Application\StatsComponent.h" />
   </ItemGroup>

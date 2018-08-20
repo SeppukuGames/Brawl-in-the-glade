@@ -5,7 +5,7 @@
 #include "GraphicManager.h"
 #include "AudioManager.h"
 #include "Scene1.h"
-#include "Scene2.h"
+#include "MenuScene.h"
 #include "PauseScene.h"
 #include "AudioComponent.h"
 #include "Error.h"
@@ -60,7 +60,7 @@ void SceneManager::Go()
 	lastTime = timer->getMilliseconds();
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
-	sceneType = SCENE1;
+	sceneType = MENUSCENE;
 	SetScene();
 
 	while (GameLoop());
@@ -158,12 +158,12 @@ void SceneManager::SetScene(){
 		scene = new Scene1();
 		break;
 
-	case SCENE2:
+	/*case SCENE2:
 		scene = new Scene2();
-		break;
+		break;*/
 
 	case MENUSCENE:
-		//scene = new MenuScene();
+		scene = new MenuScene();
 		break;
 
 	case GAMEOVERSCENE:
@@ -202,7 +202,7 @@ void SceneManager::PopScene()
 {
 	Scene * scene = scenes.top();
 	scenes.pop();
-	delete (scene);
+	delete (scene); //Da un fallo aqui al cambiar de escena.
 	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
 }
 

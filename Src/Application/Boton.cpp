@@ -3,7 +3,6 @@
 #include "SceneManager.h"
 #include "StatsComponent.h"
 
-using namespace Ogre;
 
 const float maxWidth = 200;
 const float maxHeight = 35;
@@ -23,12 +22,12 @@ void Boton::Update(double elapsed)
 
 void Boton::createButton(std::string texto, int n) {
 
-	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	//FontManager& fM = FontManager::getSingleton();
 
 	nombreBoton = texto;
 
-	OverlayContainer* button = static_cast<OverlayContainer*>(
+	Ogre::OverlayContainer* button = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", nombreBoton));
 
 	button->setMetricsMode(Ogre::GMM_PIXELS);
@@ -38,7 +37,7 @@ void Boton::createButton(std::string texto, int n) {
 
 	nombreTexto = texto + std::to_string(n);
 
-	TextAreaOverlayElement* textArea = static_cast<TextAreaOverlayElement*>(
+	Ogre::TextAreaOverlayElement* textArea = static_cast<Ogre::TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", nombreTexto));
 
 	textArea->setMetricsMode(Ogre::GMM_PIXELS);
@@ -50,14 +49,14 @@ void Boton::createButton(std::string texto, int n) {
 	textArea->setCharHeight(50);
 	textArea->setFontName("Trebuchet");
 		
-	textArea->setColourBottom(ColourValue(0.0, 0.0, 0.0));
-	textArea->setColourTop(ColourValue(1.0, 1.0, 1.0));
+	textArea->setColourBottom(Ogre::ColourValue(0.0, 0.0, 0.0));
+	textArea->setColourTop(Ogre::ColourValue(1.0, 1.0, 1.0));
 
 	// Add the text area to the panel
 	button->addChild(textArea);
 
 	// Create an overlay, and add the panel*/
-	Overlay* GOoverlay = overlayManager.create(texto);
+	Ogre::Overlay* GOoverlay = overlayManager.create(texto);
 
 	GOoverlay->add2D(button);
 
@@ -129,6 +128,7 @@ void Boton::Action()
 	{
 	case START:
 		std::cout << "Soy start" << std::endl;
+		SceneManager::GetInstance()->LoadScene(SCENE1);
 		break;
 	case OPTIONS:
 		std::cout << "Soy opciones" << std::endl;
