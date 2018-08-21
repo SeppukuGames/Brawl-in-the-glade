@@ -21,7 +21,6 @@ Scene::~Scene()
 	std::list <GameObject*> ::iterator it = actors.begin();
 	
 	for (it = actors.begin(); it != actors.end(); ++it){
-		cout << (*it)->GetTag() << endl;
 		delete (*it);
 	}
 
@@ -42,6 +41,7 @@ void Scene::InitOverlay(void)
 
 //Método encargado de añadir un GameObject
 void Scene::AddGameObject(GameObject * gameObject){
+	cout << "HE AÑADIDO: " << gameObject->GetTag() << " A LA ESCENA" << endl;
 	actors.push_back(gameObject);
 }
 

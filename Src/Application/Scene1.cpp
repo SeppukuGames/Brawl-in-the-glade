@@ -1,5 +1,6 @@
 #include "Scene1.h"
 
+//Ya no hacen falta, verdad?
 #include "GraphicManager.h"
 #include "EntityComponent.h"
 //#include "PrefabManager.h"
@@ -32,7 +33,5 @@ void Scene1::CreateGameObjects(void)
 {
 	//TODO: ¿Se rompe la pausa?
 	lectorXML_.Leer("../../escena1.xml"); 
-	
-	//lectorXML_.Leer("../../menu.xml");
 }
 

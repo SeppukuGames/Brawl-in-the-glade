@@ -52,7 +52,7 @@ void PauseScene::CreateGameObjects(void)
 
 
 	GameObject * A = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PLAYERPREFAB);
-	actors.push_back(A); // TODO: ¿Se debería de pushear?
+	//actors.push_back(A); // TODO: ¿Se debería de pushear?
 
 
 	GameObject * cameraObject = new GameObject("camera");

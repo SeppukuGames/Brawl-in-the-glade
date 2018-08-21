@@ -67,10 +67,11 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
+		gameObject->SetTag("GameManager");
 		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
-		insertObjectIntoCurrentScene(gameObject);
+		//insertObjectIntoCurrentScene(gameObject);
 
 
 		break;	
@@ -79,7 +80,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Pause_Manager");
 		gameObject->AddComponent(new PauseManager());
 		insertObjectIntoCurrentScene(gameObject);
-
+		//¿?¿?
 		break;
 
 	case MUROPREFAB:
@@ -90,7 +91,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
 		//gameObject->AddComponent(new BoxColliderComponent(500, 50));
-		insertObjectIntoCurrentScene(gameObject);
+		//insertObjectIntoCurrentScene(gameObject);
 
 		break;
 
@@ -99,7 +100,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->SetTag("Camara");
 		gameObject->AddComponent(new CameraComponent());
 		SceneManager::GetInstance()->GetCurrentScene()->SetCamera(((CameraComponent*)gameObject->GetComponent(CAMERA))->GetCamera());
-		insertObjectIntoCurrentScene(gameObject);
+		//insertObjectIntoCurrentScene(gameObject);
 
 		break;
 
@@ -110,7 +111,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new LightComponent());
-		insertObjectIntoCurrentScene(gameObject);
+		//insertObjectIntoCurrentScene(gameObject);
 
 		break;
 
@@ -132,16 +133,11 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMY1PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos)); 
-		gameObject->SetTag("Enemy1");
+		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
-		
 
-		//PARA EVITAR QUE EL NEWWAVE SE QUEJE
-		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
-		//gameObject->AddComponent(new StatsComponent());
-		//
 
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
@@ -150,18 +146,10 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case ENEMY2PREFAB:
 		//Esto hay que hacerlo random, tanto la posición como el tipo de enemigo a spawnear
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos));
-		gameObject->SetTag("Enemy2");
+		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
 		gameObject->AddComponent(new CanvasComponent());
-		
-
-		//PARA EVITAR QUE EL NEWWAVE SE QUEJE. 
-		//Importante: Tiene que tener un enemyComponent previo
-		//gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
-		//gameObject->AddComponent(new StatsComponent());
-
-		
 
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
@@ -228,7 +216,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		GameManager::GetInstance()->AddEnemy();
 		++i;
 
-		insertObjectIntoCurrentScene(gameObject);
+		insertObjectIntoCurrentScene(gameObject); //Este lo voy a dejar para el newwave. Hay que quitarlo cuando se hagan las oleadas por XML
 		break;
 	
 

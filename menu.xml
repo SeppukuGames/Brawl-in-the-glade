@@ -11,5 +11,8 @@
         </Componente>
     </Entidad>    
     <Entidad name="Camara" activo="si">        
-    </Entidad>            
+    </Entidad>
+     <Entidad name="Salmorejo" activo="si">   
+        "de prueba, para ver que no falla el lector"     
+    </Entidad>        
 </Juego>
