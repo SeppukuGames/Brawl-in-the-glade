@@ -7,7 +7,6 @@ class MenuScene : public Scene
 {
 public:
 	MenuScene();
-
 	virtual void CreateScene(void);					//Método encargado de crear la escena
 
 protected:

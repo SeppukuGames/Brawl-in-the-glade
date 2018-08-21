@@ -202,7 +202,7 @@ void SceneManager::PopScene()
 {
 	Scene * scene = scenes.top();
 	scenes.pop();
-	delete (scene); //Da un fallo aqui al cambiar de escena.
+	delete (scene);
 	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();
 }
 

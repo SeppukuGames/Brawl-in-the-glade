@@ -21,6 +21,7 @@ Scene::~Scene()
 	std::list <GameObject*> ::iterator it = actors.begin();
 	
 	for (it = actors.begin(); it != actors.end(); ++it){
+		cout << "Estoy destruyendo una unidad de: " << (*it)->GetTag() << endl;
 		delete (*it);
 	}
 

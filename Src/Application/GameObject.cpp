@@ -26,16 +26,13 @@ GameObject::GameObject(std::string name) :components(0){
 
 GameObject::~GameObject()
 {
-	size_t i = 0;
-	for (i = 0; i < components.size(); i++)
+	cout << components.size();
+	for (size_t i = 0; i < components.size(); i++)
 	{
-		cout << this->GetTag() << endl;
 		delete components[i];
 		components[i] = nullptr;
 	}
 
-	////Con este método, falla en el Tidy.
-	//if (i != 0) //Si el objeto tiene componentes...
 	delete control;
 }
 

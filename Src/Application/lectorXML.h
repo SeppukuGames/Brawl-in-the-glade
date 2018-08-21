@@ -115,6 +115,9 @@ public:
 			return PREFABTYPE::ARBOL5PREFAB;
 		if (texto == "Menu")
 			return PREFABTYPE::MENU;
+		if (texto == "Ogro")
+			return PREFABTYPE::MUROPREFAB;
+
 
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
 	}
@@ -163,12 +166,6 @@ public:
 
 		if (nombreComponente == "Boton")
 		{
-			//Es posible que Boton esté añadiendose a la escena- Incluso cuando no debería porque
-			//los botones son hijos del componente MenuComponent
-			//Es decir: Al borrar algo, ese algo debería ser el MenuComponent que destruya sus botones y eso es lo que no se está haciendo bien
-			//			Actualmente se meten botones en la lista de objetosss kkkk
-
-			//NOPE, NO ES ESO
 			Component* aux = gameObject->GetComponent(ComponentName::MENUCOMPONENT);
 			int n = static_cast<MenuComponent*>(aux)->getNumButtons();
 			Boton* boton = new Boton(component_node->first_attribute("texto")->value(), n);

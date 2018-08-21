@@ -89,7 +89,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//Ogre::Quaternion quat;
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
 		//gameObject->GetNode()->setOrientation(quat);
-		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
+		gameObject->SetTag("OgroTEST");
+		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
 		//gameObject->AddComponent(new BoxColliderComponent(500, 50));
 		//insertObjectIntoCurrentScene(gameObject);
 
@@ -107,7 +108,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case LIGHTPREFAB:
 		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Light");
-		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));		//Quizá cambiarlo por otro mesh?
+		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));		//Quizá cambiarlo por otro mesh? O que no tenga, directamente
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
 		gameObject->AddComponent(new LightComponent());
