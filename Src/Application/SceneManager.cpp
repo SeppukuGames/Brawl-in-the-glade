@@ -60,7 +60,7 @@ void SceneManager::Go()
 	lastTime = timer->getMilliseconds();
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
-	sceneType = MENUSCENE;
+	sceneType = SCENE1;
 	SetScene();
 
 	while (GameLoop());

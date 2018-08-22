@@ -125,9 +125,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		SceneManager::GetInstance()->GetCurrentScene()->SetTower(gameObject);
 		//TODO: XML?
 		//gameObject->AddComponent(new BoxColliderComponent(35, 35));
-
-		
-		
 		break;
 
 

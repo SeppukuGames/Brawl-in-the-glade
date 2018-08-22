@@ -38,7 +38,7 @@
 		<Componente name="Posicion" x="200" y="0" z="200">            
         </Componente>
     </Entidad>
-    <Entidad name="Enemigo2" activo="si" numero="2">
+    <Entidad name="Enemigo" activo="si" numero="2">
 		<Componente name="Posicion" random="spawn1">            
         </Componente>	
 		<Componente name="BoxCollider" x="50" y="150">            
