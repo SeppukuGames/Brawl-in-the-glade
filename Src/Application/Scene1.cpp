@@ -1,18 +1,5 @@
 #include "Scene1.h"
 
-//Ya no hacen falta, verdad?
-#include "GraphicManager.h"
-#include "EntityComponent.h"
-//#include "PrefabManager.h"
-#include "BoxColliderComponent.h"
-#include "CircleColliderComponent.h"
-#include "RigidbodyComponent.h"
-#include "PlayerComponent.h"
-#include "InputManager.h"
-#include "LightComponent.h"
-#include "CameraComponent.h"
-#include "GameManager.h"
-
 using namespace Ogre;
 
 Scene1::Scene1() : Scene()

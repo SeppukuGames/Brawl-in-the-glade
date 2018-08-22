@@ -6,6 +6,7 @@
 #include "AudioManager.h"
 #include "Scene1.h"
 #include "MenuScene.h"
+#include "GameOverScene.h"
 #include "PauseScene.h"
 #include "AudioComponent.h"
 #include "Error.h"
@@ -158,16 +159,12 @@ void SceneManager::SetScene(){
 		scene = new Scene1();
 		break;
 
-	/*case SCENE2:
-		scene = new Scene2();
-		break;*/
-
 	case MENUSCENE:
 		scene = new MenuScene();
 		break;
 
 	case GAMEOVERSCENE:
-		//scene = new GameOverScene();
+		scene = new GameOverScene();
 		break;
 
 	default:

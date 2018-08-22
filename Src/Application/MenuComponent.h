@@ -36,7 +36,7 @@ public:
 
 	MenuComponent(std::string imagen);
 
-	virtual ~MenuComponent(){}; //¿Debería borrar la imagen y los botones?
+	~MenuComponent(); //¿Debería borrar la imagen y los botones?
 
 	void MenuComponent::setNewUISize(float x, float y);
 

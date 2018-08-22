@@ -26,7 +26,7 @@ GameObject::GameObject(std::string name) :components(0){
 
 GameObject::~GameObject()
 {
-	cout << components.size();
+	//cout << "Tengo " << components.size() << " componentes antes de borrarlos" << endl;
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		delete components[i];

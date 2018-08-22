@@ -42,37 +42,44 @@ void PlayerComponent::Start(){
 }
 
 void PlayerComponent::Update(double elapsed){
-	
-	if (CheckMovement(elapsed) && !isMoving){
-		((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->blend("Walk",
-			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
 
-		isMoving = true;
+	//Comprobamos si el personaje ha muerto
+	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+	if (stats->isDead())
+		SceneManager::GetInstance()->LoadScene(GAMEOVERSCENE);
+
+	else {
+		
+		if (CheckMovement(elapsed) && !isMoving){
+			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->blend("Walk",
+				((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
+
+			isMoving = true;
+		}
+		else if(!CheckMovement(elapsed) && isMoving) {
+			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->blend("Idle2",
+				((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
+			isMoving = false;
+		}
+
+		CheckRotation(elapsed);
+		
+		velocity.x *= elapsed;
+		velocity.y *= elapsed;
+
+		rigidbody->GetBody()->SetLinearVelocity(velocity);
+
+		cont += elapsed;
+
+		if (cont > refreshRate){
+			clickFlag = false;
+			cont = 0.0f;
+		}
+		Attack();
+
+		//Acceso a la instancia de GameManager
+		GameManager::GetInstance()->GetGameObject()->GetNode()->getName();
 	}
-	else if(!CheckMovement(elapsed) && isMoving) {
-		((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->blend("Idle2",
-			((AnimationComponent*)gameObject->GetComponent(ComponentName::ANIMATION))->BlendWhileAnimating, Ogre::Real(0.3), true);
-		isMoving = false;
-	}
-
-	CheckRotation(elapsed);
-	
-	velocity.x *= elapsed;
-	velocity.y *= elapsed;
-
-	rigidbody->GetBody()->SetLinearVelocity(velocity);
-
-	cont += elapsed;
-
-	if (cont > refreshRate){
-		clickFlag = false;
-		cont = 0.0f;
-	}
-	Attack();
-
-	//Acceso a la instancia de GameManager
-	GameManager::GetInstance()->GetGameObject()->GetNode()->getName();
-
 }
 
 void PlayerComponent::OnCollisionEnter(ColliderComponent* collider){

@@ -25,6 +25,7 @@
     <ClCompile Include="..\..\Src\Application\EntityComponent.cpp" />
     <ClCompile Include="..\..\Src\Application\GameManager.cpp" />
     <ClCompile Include="..\..\Src\Application\GameObject.cpp" />
+    <ClCompile Include="..\..\Src\Application\GameOverScene.cpp" />
     <ClCompile Include="..\..\Src\Application\GraphicManager.cpp" />
     <ClCompile Include="..\..\Src\Application\InputManager.cpp" />
     <ClCompile Include="..\..\Src\Application\LightComponent.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="..\..\Src\Application\Error.h" />
     <ClInclude Include="..\..\Src\Application\GameManager.h" />
     <ClInclude Include="..\..\Src\Application\GameObject.h" />
+    <ClInclude Include="..\..\Src\Application\GameOverScene.h" />
     <ClInclude Include="..\..\Src\Application\GraphicManager.h" />
     <ClInclude Include="..\..\Src\Application\InputManager.h" />
     <ClInclude Include="..\..\Src\Application\lectorXML.h" />

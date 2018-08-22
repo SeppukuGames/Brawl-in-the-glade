@@ -68,6 +68,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
 		gameObject->SetTag("GameManager");
+		//Si vas al gameoverScene y vuelves, peta aqui. ¿Hay que resetear?
 		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
@@ -155,6 +156,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOLPREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("arbol.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
@@ -162,6 +164,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOL_NEWPREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol_new.mesh"));
 		
 		gameObject->GetNode()->setScale(5, 10, 5);
@@ -170,6 +173,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOL2PREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol2.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
@@ -177,6 +181,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOL3PREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol3.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
@@ -184,6 +189,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOL4PREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol4.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
@@ -191,6 +197,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 
 	case ARBOL5PREFAB:
 		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
@@ -214,7 +221,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		GameManager::GetInstance()->AddEnemy();
 		++i;
 
-		insertObjectIntoCurrentScene(gameObject); //Este lo voy a dejar para el newwave. Hay que quitarlo cuando se hagan las oleadas por XML
+		//insertObjectIntoCurrentScene(gameObject); //Este lo voy a dejar para el newwave. Hay que quitarlo cuando se hagan las oleadas por XML
 		break;
 	
 

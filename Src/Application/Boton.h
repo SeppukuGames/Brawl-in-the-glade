@@ -38,7 +38,7 @@ public:
 
 	Boton(std::string texto, int n);
 
-	virtual ~Boton(){};
+	~Boton();
 
 	void Boton::setNewUISize(float x, float y);
 

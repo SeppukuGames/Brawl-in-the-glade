@@ -29,6 +29,8 @@ public:
 	float GetMaxLife() { return maxLife; };
 	float GetAttackPower() { return attackPower; };
 
+	bool isDead(){ return life <= 0; }
+
 	//void HitGameObject(float amount){ life -= amount; }; 
 	void SetPosition(Ogre::Vector3 posicion){ gameObject->GetNode()->setPosition(posicion); };
 	void SetLife(float vida){ life = vida; }

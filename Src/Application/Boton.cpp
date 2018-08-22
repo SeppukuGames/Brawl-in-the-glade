@@ -12,6 +12,11 @@ Boton::Boton(std::string texto, int n) : Component()
 	createButton(texto, n);
 }
 
+//Destruye la imagen asociada al botón
+Boton::~Boton(){
+	delete ovContainer;
+}
+
 void Boton::Start()
 {
 };
