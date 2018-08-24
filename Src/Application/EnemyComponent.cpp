@@ -35,7 +35,7 @@ void EnemyComponent::Start(){
 		break;
 	}
 
-	GameObject* tower_go = SceneManager::GetInstance()->GetCurrentScene()->GetTower();
+	GameObject* tower_go = GameManager::GetInstance()->GetTower();
 	Torre.Set(tower_go->GetNode()->getPosition().x, tower_go->GetNode()->getPosition().z);
 	direction = { 0, 0 };
 	objetivo = Torre;
@@ -66,8 +66,7 @@ void EnemyComponent::EnemyAI(double elapsed){
 	
 	//Prerrequisites
 	b2Vec2 pos1 = rb->GetBody()->GetPosition();		//Posición del enemigo
-	RigidbodyComponent* player_rb = (RigidbodyComponent*)SceneManager::GetInstance()->GetCurrentScene()->GetPlayer()->
-		GetComponent(ComponentName::RIGIDBODY);
+	RigidbodyComponent* player_rb = (RigidbodyComponent*)GameManager::GetInstance()->GetPlayer()->GetComponent(ComponentName::RIGIDBODY);
 	b2Vec2 pos2 = player_rb->GetBody()->GetPosition();	//Posición del jugador
 	float dist = obtenerDistancia(pos1, pos2);
 
@@ -143,14 +142,14 @@ void EnemyComponent::Fire() {
 	CanvasComponent* canvas = (CanvasComponent*)gameObject->GetComponent(ComponentName::CANVAS);
 	*/
 	if (objType == _PLAYER) {
-		GameObject* player = SceneManager::GetInstance()->GetCurrentScene()->GetPlayer();
+		GameObject* player = GameManager::GetInstance()->GetPlayer();
 		StatsComponent* p_stats = (StatsComponent*)player->GetComponent(ComponentName::STATS);
 		StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 
 		p_stats->HitGameObject(stats->GetAttackPower());
 	}
 	else if (objType == _TOWER) {
-		GameObject* tower = SceneManager::GetInstance()->GetCurrentScene()->GetTower();
+		GameObject* tower = GameManager::GetInstance()->GetTower();
 		StatsComponent* t_stats = (StatsComponent*)tower->GetComponent(ComponentName::STATS);
 		StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 

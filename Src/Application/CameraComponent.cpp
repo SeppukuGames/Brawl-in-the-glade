@@ -1,6 +1,7 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "GameManager.h"
 #include <iostream>
 
 
@@ -107,7 +108,7 @@ void CameraComponent::CheckBorders(){
 
 void CameraComponent::CheckReposition(){
 	
-	GameObject* player = SceneManager::GetInstance()->GetCurrentScene()->GetPlayer();
+	GameObject* player = GameManager::GetInstance()->GetPlayer();
 	Ogre::Vector3 newPos = camera->getPosition();
 	newPos.x = ((RigidbodyComponent*)player->GetComponent(ComponentName::RIGIDBODY))->GetBody()->GetPosition().x;
 	newPos.z = ((RigidbodyComponent*)player->GetComponent(ComponentName::RIGIDBODY))->GetBody()->GetPosition().y;

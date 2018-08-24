@@ -27,6 +27,8 @@ private:
 	int enemyWave;		//Contador de número de enemigos por ronda
 	int waveNumber;		//Contador de rondas
 
+	GameObject* player;								//Atributo para la referencia del jugador principal
+	GameObject* tower;								//Atributo para la referencia a la torre
 #pragma endregion Attributes
 
 #pragma region Methods  
@@ -36,6 +38,11 @@ public:
 	virtual void Update(double elapsed);
 
 	virtual ~GameManager(){};
+
+	GameObject * GetPlayer() { return player; };
+	void SetPlayer(GameObject* player);
+	GameObject * GetTower() { return tower; };
+	void SetTower(GameObject* tower);
 	
 	void AddEnemy(){ enemyNumber++; };
 	void RemoveEnemy(){ enemyNumber--; };

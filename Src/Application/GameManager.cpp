@@ -16,8 +16,8 @@ GameManager* GameManager::GetInstance()
 }
 
 void GameManager::ResetInstance(){
-		delete instance;
-		instance = nullptr;
+	delete instance;
+	instance = nullptr;
 }
 
 #pragma endregion Singleton
@@ -39,6 +39,14 @@ void GameManager::Update(double elapsed){
 		NewWave();
 		enemyWave += 5;
 	}
+}
+
+void GameManager::SetPlayer(GameObject* _player) {
+	player = _player;
+}
+
+void GameManager::SetTower(GameObject* _tower) {
+	tower = _tower;
 }
 
 void GameManager::NewWave(){

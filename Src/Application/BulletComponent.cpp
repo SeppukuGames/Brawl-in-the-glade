@@ -1,6 +1,7 @@
 #include "BulletComponent.h"
 
 #include "SceneManager.h"
+#include "GameManager.h"
 #include "StatsComponent.h"
 #include "PlayerComponent.h"
 #include "GraphicManager.h"
@@ -55,7 +56,7 @@ void BulletComponent::OnCollisionEnter(ColliderComponent* collider){
 	//std::cout << "Colision con " + collider->GetGameObject()->GetNode()->getName() + '\n';
 	if (collider->GetGameObject()->GetTag() == "Enemy"){
 		StatsComponent* stats = (StatsComponent*)collider->GetGameObject()->GetComponent(ComponentName::STATS);
-		StatsComponent* player_stats = (StatsComponent*)SceneManager::GetInstance()->GetCurrentScene()->GetPlayer()->GetComponent(ComponentName::STATS);
+		StatsComponent* player_stats = (StatsComponent*)GameManager::GetInstance()->GetPlayer()->GetComponent(ComponentName::STATS);
 		stats->HitGameObject(player_stats->GetAttackPower());
 	}
 
@@ -79,7 +80,7 @@ void BulletComponent::DireccionarBala(){
 	direccion.x = cos(rb->GetBody()->GetAngle());
 	direccion.y = sin(rb->GetBody()->GetAngle());*/
 
-	RigidbodyComponent* player_rb = (RigidbodyComponent*)SceneManager::GetInstance()->GetCurrentScene()->GetPlayer()->GetComponent(ComponentName::RIGIDBODY);
+	RigidbodyComponent* player_rb = (RigidbodyComponent*)GameManager::GetInstance()->GetPlayer()->GetComponent(ComponentName::RIGIDBODY);
 	b2Vec2 pos = player_rb->GetBody()->GetPosition();
 	rb->GetBody()->SetTransform(pos, player_rb->GetBody()->GetAngle());
 

@@ -62,13 +62,13 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//gameObject->AddComponent(new StatsComponent());
 
 		gameObject->AddComponent(new CanvasComponent());
-		SceneManager::GetInstance()->GetCurrentScene()->SetPlayer(gameObject);
+		GameManager::GetInstance()->SetPlayer(gameObject);
 		break;
 
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
 		gameObject->SetTag("GameManager");
-		GameManager::ResetInstance();
+		
 		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
@@ -123,7 +123,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("Torre.mesh"));		
 		gameObject->GetNode()->setScale(10, 10, 10);		
 		gameObject->AddComponent(new CanvasComponent());		
-		SceneManager::GetInstance()->GetCurrentScene()->SetTower(gameObject);
+		GameManager::GetInstance()->SetTower(gameObject);
 		//TODO: XML?
 		//gameObject->AddComponent(new BoxColliderComponent(35, 35));
 		break;
