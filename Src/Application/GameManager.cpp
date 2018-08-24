@@ -16,8 +16,8 @@ GameManager* GameManager::GetInstance()
 }
 
 void GameManager::ResetInstance(){
-	delete instance;
-	instance = nullptr;
+		delete instance;
+		instance = nullptr;
 }
 
 #pragma endregion Singleton

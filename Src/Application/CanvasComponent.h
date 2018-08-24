@@ -36,7 +36,9 @@ public:
 
 	CanvasComponent();
 
-	virtual ~CanvasComponent(){};
+	~CanvasComponent(){
+		delete ovContainer; //Intentando arreglar lo de que se vea la barra de vida de la torre en el GameOver
+	};
 
 	void CanvasComponent::setNewUISize(float x, float y);
 

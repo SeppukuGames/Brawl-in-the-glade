@@ -68,7 +68,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case GAMEMANAGERPREFAB:
 		gameObject = new GameObject("Game_Manager");
 		gameObject->SetTag("GameManager");
-		//Si vas al gameoverScene y vuelves, peta aqui. ¿Hay que resetear?
+		GameManager::ResetInstance();
 		gameObject->AddComponent(GameManager::GetInstance());
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));

@@ -13,6 +13,7 @@ MenuComponent::MenuComponent(std::string imagen) : Component()
 {
 	createGUI(imagen);
 }
+
 //Destructora que se encarga de borrar la imagen del GUI y los botones
 MenuComponent::~MenuComponent(){
 	delete ovContainer;
