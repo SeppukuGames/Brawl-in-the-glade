@@ -48,7 +48,7 @@ void EnemyComponent::Start(){
 
 void EnemyComponent::Update(double elapsed){
 
-	//No encuentra el componente de stats
+	
 	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 	
 	//If estas muerto

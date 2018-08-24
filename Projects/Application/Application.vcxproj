@@ -42,6 +42,7 @@
     <ClCompile Include="..\..\Src\Application\MenuScene.cpp" />
     <ClCompile Include="..\..\Src\Application\SceneManager.cpp" />
     <ClCompile Include="..\..\Src\Application\StatsComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\TowerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h" />
@@ -78,6 +79,7 @@
     <ClInclude Include="..\..\Src\Application\MenuScene.h" />
     <ClInclude Include="..\..\Src\Application\SceneManager.h" />
     <ClInclude Include="..\..\Src\Application\StatsComponent.h" />
+    <ClInclude Include="..\..\Src\Application\TowerComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C077A3AD-5242-468F-AD96-581CEBFA7C1C}</ProjectGuid>

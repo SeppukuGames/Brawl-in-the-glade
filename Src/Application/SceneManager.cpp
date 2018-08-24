@@ -61,7 +61,7 @@ void SceneManager::Go()
 	lastTime = timer->getMilliseconds();
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
-	sceneType = SCENE1;
+	sceneType = SCENE1; //CAMBIAR A MENU CUANDO SE HAGA EL RELEASE EH
 	SetScene();
 
 	while (GameLoop());

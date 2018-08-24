@@ -5,6 +5,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "PlayerComponent.h"
+#include "TowerComponent.h"
 #include "EnemyComponent.h"
 #include "Boton.h"
 
@@ -199,6 +200,9 @@ public:
 
 		if (tipoPrefab == PREFABTYPE::PLAYERPREFAB)
 			gameObject->AddComponent(new PlayerComponent());
+
+		if (tipoPrefab == PREFABTYPE::TOWERPREFAB)
+			gameObject->AddComponent(new TowerComponent());
 	}
 
 	void Leer(const std::string archivo)
