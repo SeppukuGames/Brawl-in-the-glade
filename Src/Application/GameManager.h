@@ -37,7 +37,7 @@ public:
 	virtual void Start();
 	virtual void Update(double elapsed);
 
-	virtual ~GameManager(){};
+	virtual ~GameManager(){ instance = 0; };
 
 	GameObject * GetPlayer() { return player; };
 	void SetPlayer(GameObject* player);
@@ -50,7 +50,7 @@ public:
 	int GetEnemyNumber() { return enemyNumber; };
 	void NewWave();
 private:
-	GameManager(){};
+	GameManager(){  };
 
 
 #pragma endregion Methods
