@@ -16,7 +16,8 @@ MenuComponent::MenuComponent(std::string imagen) : Component()
 
 //Destructora que se encarga de borrar la imagen del GUI y los botones
 MenuComponent::~MenuComponent(){
-	delete ovContainer;
+	
+	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
 
 	std::vector<Boton*>::iterator it = botones_.begin();
 	for (it; it != botones_.end(); ++it){

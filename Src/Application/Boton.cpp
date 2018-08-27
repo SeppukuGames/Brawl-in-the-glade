@@ -14,7 +14,9 @@ Boton::Boton(std::string texto, int n) : Component()
 
 //Destruye la imagen asociada al botón
 Boton::~Boton(){
-	delete ovContainer;
+	//delete ovContainer;
+	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+
 }
 
 void Boton::Start()

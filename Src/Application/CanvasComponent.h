@@ -37,7 +37,11 @@ public:
 	CanvasComponent();
 
 	~CanvasComponent(){
-		delete ovContainer; //Intentando arreglar lo de que se vea la barra de vida de la torre en el GameOver
+		//El primer paso de GOS a juego de puta madre, luego se rompe ANTES DE LLEGAR A GOS
+		//¿Quizá haya algo que no se borra bien en la SEGUNDA VEZ?
+		//El error es de tipo abort. Seguir por ahí.
+		Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+		Ogre::OverlayManager::getSingleton().destroyAll();
 	};
 
 	void CanvasComponent::setNewUISize(float x, float y);

@@ -53,6 +53,8 @@ void CanvasComponent::createGUI() {
 
 	OverlayManager& overlayManager = OverlayManager::getSingleton();
 
+	//Da un error aqui al volver de GOS al juego ya creado
+	//¿No hace falta crearlo dos veces? -> Ya estaba creado
 	OverlayContainer* lifeGUI = static_cast<OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "health"));
 
