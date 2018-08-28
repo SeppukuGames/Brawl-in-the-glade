@@ -25,7 +25,10 @@ private:
 
 	int enemyNumber;	//Contador de número de enemigos restantes
 	int enemyWave;		//Contador de número de enemigos por ronda
+	int numWave;		// La oleada en la que nos encontramos		
+	int numEnemiesXML;	// numero de enemigos determinado por el XML
 	int waveNumber;		//Contador de rondas
+	float difficulty;
 
 #pragma endregion Attributes
 
@@ -39,6 +42,8 @@ public:
 	
 	void AddEnemy(){ enemyNumber++; };
 	void RemoveEnemy(){ enemyNumber--; };
+	void setDifficulty(float difficulty) { this->difficulty = difficulty; };
+	void setnumEnemiesXML(int num) { numEnemiesXML = num; };
 	int GetWaveNumber() { return waveNumber; };
 	int GetEnemyNumber() { return enemyNumber; };
 	void NewWave();

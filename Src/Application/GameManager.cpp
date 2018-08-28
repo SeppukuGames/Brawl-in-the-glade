@@ -24,7 +24,8 @@ void GameManager::ResetInstance(){
 
 void GameManager::Start(){
 	timer = SceneManager::GetInstance()->GetTimer();
-	enemyWave = 5;
+	numWave = 1;
+	enemyWave = numEnemiesXML + (numWave * difficulty);
 	enemyNumber = 0;
 }
 
@@ -37,7 +38,8 @@ void GameManager::Update(double elapsed){
 
 	if (enemyNumber == 0){
 		NewWave();
-		enemyWave += 5;
+		numWave++;
+		enemyWave = numEnemiesXML + (numWave * difficulty);
 	}
 }
 

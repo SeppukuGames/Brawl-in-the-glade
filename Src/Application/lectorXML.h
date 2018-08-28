@@ -17,6 +17,8 @@
 #include <random>
 
 #include "PrefabManager.h"
+#include "GameManager.h"
+
 
 #include "MenuComponent.h"
 
@@ -182,6 +184,20 @@ public:
 		return estado == "si";
 	}
 
+	float detectaDificultad(const std::string estado) {
+		if (estado == "Facil") {
+			return 1.2f;
+		}
+
+		else if (estado == "Media") {
+			return 1.8f;
+		}
+
+		else if (estado == "Dificil") {
+			return 2.1f;
+		}
+	}
+
 	//TODO: ver si debería ir aqui el componente STATS independientemente de qué tipo de objeto sea.
 	void AjustesPosteriores(GameObject* gameObject, PREFABTYPE tipoPrefab)
 	{
@@ -227,6 +243,7 @@ public:
 			int numeroPrefabs = 1;
 			if (entity_node->first_attribute("numero"))
 				numeroPrefabs = atoi(entity_node->first_attribute("numero")->value());
+			GameManager::GetInstance()->setnumEnemiesXML(numeroPrefabs);
 
 			if (tipoPrefab != PREFABTYPE::NULO && activo)
 			{
@@ -246,6 +263,10 @@ public:
 
 				else {
 					std::list<xml_node<> *>listaComponentes;
+					xml_node<> * oleada = entity_node->first_node("Oleada");
+					float dificultad = detectaDificultad(oleada->first_attribute("dificultad")->value());
+					GameManager::GetInstance()->setDifficulty(dificultad);
+
 					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
 						listaComponentes.push_back(component_node);
