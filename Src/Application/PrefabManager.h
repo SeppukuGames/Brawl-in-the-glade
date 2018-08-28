@@ -45,6 +45,7 @@ public:
 	//Método para crear un GameObject u otro dependiendo del tipo de prefab recibido
 	GameObject * CreateObject(PREFABTYPE prefabType);
 	void insertObjectIntoCurrentScene(GameObject*);
+	void resetNameInt();
 };
 
 #endif /* _PREFAB_H_ */

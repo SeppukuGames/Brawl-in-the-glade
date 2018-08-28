@@ -16,6 +16,7 @@ Boton::Boton(std::string texto, int n) : Component()
 Boton::~Boton(){
 	//delete ovContainer;
 	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+	Ogre::OverlayManager::getSingleton().destroyAll();
 
 }
 

@@ -23,6 +23,8 @@ MenuComponent::~MenuComponent(){
 	for (it; it != botones_.end(); ++it){
 		delete (*it);
 	}
+
+	Ogre::OverlayManager::getSingleton().destroyAll();
 }
 
 

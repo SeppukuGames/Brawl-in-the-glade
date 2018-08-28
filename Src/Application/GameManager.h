@@ -29,6 +29,7 @@ private:
 
 	GameObject* player;								//Atributo para la referencia del jugador principal
 	GameObject* tower;								//Atributo para la referencia a la torre
+
 #pragma endregion Attributes
 
 #pragma region Methods  

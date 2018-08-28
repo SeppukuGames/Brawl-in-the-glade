@@ -21,6 +21,7 @@ void TowerComponent::Update(double elapsed){
 
 	//If estas muerto
 	if (stats->isDead()){
+		PrefabManager::GetInstance()->resetNameInt();
 		SceneManager::GetInstance()->LoadScene(GAMEOVERSCENE);
 	}
 }

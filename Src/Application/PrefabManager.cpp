@@ -109,6 +109,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case LIGHTPREFAB:
 		//BORRAR DE LA ESCENA
 		gameObject = new GameObject("Light");
+		gameObject->SetTag("Luz");
 		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));		//Quizá cambiarlo por otro mesh? O que no tenga, directamente
 		quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(-55.0f)), Ogre::Vector3(1, 0, 0));
 		gameObject->GetNode()->setOrientation(quat);
@@ -253,3 +254,8 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 //He hecho esto para añadir algunos objetos directamente con la funcionalidad del PrefabManager y otros
 //Que se tienen que completar -de momento- con el XML se incluyen más tarde.
 void PrefabManager::insertObjectIntoCurrentScene(GameObject* obj){ SceneManager::GetInstance()->GetCurrentScene()->AddGameObject(obj); }
+
+//Método que reinicia los valores de "numArboles" y "numEnemigos"
+void PrefabManager::resetNameInt(){
+	numArboles = numEnemigos = 0;
+}
