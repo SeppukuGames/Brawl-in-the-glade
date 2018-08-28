@@ -13,11 +13,7 @@
     <Entidad name="Camara" activo="si">        
     </Entidad>   
     <Entidad name="GameManager" activo="si">        
-    </Entidad>    
-    <Entidad name="Light" activo="si">      
-		<Componente name="Posicion" x="100" y="0" z="100">            
-        </Componente>	
-    </Entidad>  		
+    </Entidad>   		
     <Entidad name="Torre" activo="si">  
 		<Componente name="Posicion" x="200" y="0" z="200">            
         </Componente>

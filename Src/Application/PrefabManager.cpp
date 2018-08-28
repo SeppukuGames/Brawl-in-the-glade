@@ -62,6 +62,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//gameObject->AddComponent(new StatsComponent());
 
 		gameObject->AddComponent(new CanvasComponent());
+		gameObject->AddComponent(new LightComponent());
 		GameManager::GetInstance()->SetPlayer(gameObject);
 		break;
 
@@ -80,7 +81,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case PAUSEMANAGERPREFAB:
 		gameObject = new GameObject("Pause_Manager");
 		gameObject->AddComponent(new PauseManager());
-		insertObjectIntoCurrentScene(gameObject);
+		insertObjectIntoCurrentScene(gameObject); //Seguramente esté aqui el problema de la pausa
 		//¿?¿?
 		break;
 

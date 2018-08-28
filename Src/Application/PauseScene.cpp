@@ -45,6 +45,7 @@ bool PauseScene::Tick(double elapsed){
 //Método encargado de crear las entidades (luz, cámara, personaje, etc..)
 void PauseScene::CreateGameObjects(void)
 {
+	//TODO: Leer por XML
 	//TODO: Panel con botones (Overlay)
 
 	GameObject * pm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PAUSEMANAGERPREFAB);
