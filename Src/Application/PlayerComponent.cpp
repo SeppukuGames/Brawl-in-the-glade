@@ -46,7 +46,7 @@ void PlayerComponent::Update(double elapsed){
 	//Comprobamos si el personaje ha muerto
 	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
 	if (stats->isDead()){
-		PrefabManager::GetInstance()->resetNameInt();
+		PrefabManager::GetInstance()->resetNameInts();
 		SceneManager::GetInstance()->LoadScene(GAMEOVERSCENE);
 	}
 

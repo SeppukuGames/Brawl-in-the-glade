@@ -7,9 +7,9 @@
 
 //Merge: añadido bulletprefab al enum de lectorXML
 enum PREFABTYPE{
-	OGROPREFAB, PLAYERPREFAB, GAMEMANAGERPREFAB, PAUSEMANAGERPREFAB, MUROPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB, BULLETPREFAB,
+	OGROPREFAB, PLAYERPREFAB, GAMEMANAGERPREFAB, PAUSEMANAGERPREFAB, SUELOPREFAB, MAINCAMERA, LIGHTPREFAB, TOWERPREFAB, BULLETPREFAB,
 	ENEMY1PREFAB, ENEMY2PREFAB, ARBOLPREFAB, ARBOL_NEWPREFAB, ARBOL2PREFAB, ARBOL3PREFAB, ARBOL4PREFAB, ARBOL5PREFAB, NULO,
-	ENEMYPREFAB /*Para corregir rapidamente lo del newwave*/,MENU
+	ENEMYPREFAB,MENU
 };
 
 
@@ -45,7 +45,7 @@ public:
 	//Método para crear un GameObject u otro dependiendo del tipo de prefab recibido
 	GameObject * CreateObject(PREFABTYPE prefabType);
 	void insertObjectIntoCurrentScene(GameObject*);
-	void resetNameInt();
+	void resetNameInts();
 };
 
 #endif /* _PREFAB_H_ */

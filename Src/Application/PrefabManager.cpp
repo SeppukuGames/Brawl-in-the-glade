@@ -85,14 +85,14 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		//¿?¿?
 		break;
 
-	case MUROPREFAB:
+	case SUELOPREFAB:
 		//BORRAR DE LA ESCENA
-		gameObject = new GameObject("Muro");
+		gameObject = new GameObject("Suelo");
 		//Ogre::Quaternion quat;
 		//quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(20.0f)), Ogre::Vector3(0, 0, 1));
 		//gameObject->GetNode()->setOrientation(quat);
-		gameObject->SetTag("OgroTEST");
-		gameObject->AddComponent(new EntityComponent("ninja.mesh"));
+		gameObject->SetTag("Suelo");
+		gameObject->AddComponent(new EntityComponent("suelo.mesh"));
 		//gameObject->AddComponent(new BoxColliderComponent(500, 50));
 		//insertObjectIntoCurrentScene(gameObject);
 
@@ -257,6 +257,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 void PrefabManager::insertObjectIntoCurrentScene(GameObject* obj){ SceneManager::GetInstance()->GetCurrentScene()->AddGameObject(obj); }
 
 //Método que reinicia los valores de "numArboles" y "numEnemigos"
-void PrefabManager::resetNameInt(){
+void PrefabManager::resetNameInts(){
 	numArboles = numEnemigos = 0;
 }

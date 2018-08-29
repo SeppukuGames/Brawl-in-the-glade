@@ -118,8 +118,8 @@ public:
 			return PREFABTYPE::ARBOL5PREFAB;
 		if (texto == "Menu")
 			return PREFABTYPE::MENU;
-		if (texto == "Ogro")
-			return PREFABTYPE::MUROPREFAB;
+		if (texto == "Suelo")
+			return PREFABTYPE::SUELOPREFAB;
 
 
 		return PREFABTYPE::NULO; //En caso de meter un elemento inexistente o mal escrito
@@ -150,6 +150,12 @@ public:
 		{
 			Ogre::Vector3 posicion = generarVector3(component_node);
 			gameObject->GetNode()->setPosition(posicion);
+		}
+
+		if (nombreComponente == "Escalado")
+		{
+			Ogre::Vector3 Escalado = generarVector3(component_node);
+			gameObject->GetNode()->setScale(Escalado);
 		}
 
 		if (nombreComponente == "BoxCollider")
