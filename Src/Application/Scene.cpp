@@ -111,12 +111,8 @@ bool Scene::HandleInput(void) {
 
 bool Scene::Update(double elapsed)
 {
-	/*std::list <GameObject*> ::iterator it;
-	for (it = actors.begin(); it != actors.end(); ++it)
-	(*it)->Tick(elapsed);
-
-	return true;*/
-
+	//Cuando se pone la pausa, luego intenta actualizar a los enemigos y explota
+	//Habría que cancelar la actualizacion en este frame con un bool y convirtiendolo en while
 	std::list <GameObject*> ::iterator it = actors.begin();
 	while (it != actors.end()){
 		GameObject* gameObject = (*it);
