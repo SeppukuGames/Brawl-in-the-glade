@@ -264,8 +264,10 @@ public:
 				else {
 					std::list<xml_node<> *>listaComponentes;
 					xml_node<> * oleada = entity_node->first_node("Oleada");
-					float dificultad = detectaDificultad(oleada->first_attribute("dificultad")->value());
-					GameManager::GetInstance()->setDifficulty(dificultad);
+					if (oleada != NULL) {
+						float dificultad = detectaDificultad(oleada->first_attribute("dificultad")->value());
+						GameManager::GetInstance()->setDifficulty(dificultad);
+					}
 
 					for (xml_node<> * component_node = entity_node->first_node("Componente"); component_node; component_node = component_node->next_sibling())
 					{
