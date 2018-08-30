@@ -114,11 +114,14 @@ bool Scene::Update(double elapsed)
 	//Cuando se pone la pausa, luego intenta actualizar a los enemigos y explota
 	//Habría que cancelar la actualizacion en este frame con un bool y convirtiendolo en while
 	std::list <GameObject*> ::iterator it = actors.begin();
-	while (it != actors.end()){
+	while (it != actors.end() && !stopCurrentUpdate){
 		GameObject* gameObject = (*it);
 		++it;
 		gameObject->Tick(elapsed);
 	}
+
+	//Si se ha parado el update, lo restituimos para no parar tambien el siguiente update
+	if (stopCurrentUpdate) setStopUpdate(false);
 
 	return true;
 }

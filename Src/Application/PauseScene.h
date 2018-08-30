@@ -10,7 +10,7 @@ private:
 
 public:		
 	PauseScene();
-	bool Tick(double elapsed);
+	//bool Tick(double elapsed);
 	virtual void CreateScene(void);				//Método encargado de crear la escena
 
 protected:

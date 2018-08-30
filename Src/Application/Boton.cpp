@@ -124,6 +124,8 @@ void Boton::setAction(std::string accion)
 {
 	if (accion == "Start")
 		tipo = ButtonType::START;
+	if (accion == "Resume")
+		tipo = ButtonType::RESUME;
 	if (accion == "Options")
 		tipo = ButtonType::OPTIONS;
 	if (accion == "Exit")
@@ -140,6 +142,10 @@ void Boton::Action()
 		break;
 	case OPTIONS:
 		std::cout << "Soy opciones" << std::endl;
+		break;
+	case RESUME:
+		SceneManager::GetInstance()->UnloadPauseScene();
+		std::cout << "Soy una decepción" << std::endl;
 		break;
 	case BUTTONEXIT:
 		std::cout << "Soy exit" << std::endl;

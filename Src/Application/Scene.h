@@ -20,7 +20,7 @@ protected:
 	std::queue<GameObject*> actorsToDestroy;		//Vector que guarda los objetos que se van a destruir en el siguiente tick
 	Ogre::SceneManager* sceneMgr;					//Atributo para la referencia del sceneManager
 	lectorXML lectorXML_;							//Lector de archivos XML
-
+	bool stopCurrentUpdate = false;					//Detiene el update actual cuando se entra en pausa
 
 #pragma endregion Attributes
 
@@ -41,6 +41,7 @@ public:
 	Ogre::Camera * GetCamera() { return camera; };
 	void SetCamera(Ogre::Camera* cam);
 	void SetViewport(void);										//Método encargado de establecer el viewport
+	void setStopUpdate(bool ssu){ stopCurrentUpdate = ssu; }	//Método encargado de cambiar la pausa del update
 
 protected:
 	void CheckActorsDestruction();								//Método que comprueba si un actor debe destruirse 

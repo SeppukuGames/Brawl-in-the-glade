@@ -28,37 +28,11 @@ void PauseScene::CreateScene()
 	CreateGameObjects();
 }
 
-bool PauseScene::Tick(double elapsed){
-
-	if (!HandleInput())
-		return false;
-
-	Update(elapsed);
-
-	if (!Render())
-		return false;
-
-	return true;
-}
-
-
 //Método encargado de crear las entidades (luz, cámara, personaje, etc..)
 void PauseScene::CreateGameObjects(void)
 {
 	//TODO: Leer por XML
 	//TODO: Panel con botones (Overlay)
-
-	GameObject * pm = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PAUSEMANAGERPREFAB);
-	//actors.push_back(pm); //NO ES NECESARIO AÑADIR AQUI EL OBJETO A LA LISTA DE ACTORES, ESTÁ EN PREFAB MANAGER
-
-
-	GameObject * A = PrefabManager::GetInstance()->CreateObject(PREFABTYPE::PLAYERPREFAB);
-	//actors.push_back(A); // TODO: ¿Se debería de pushear?
-
-
-	GameObject * cameraObject = new GameObject("camera");
-	cameraObject->GetNode()->setPosition(0, 0, 500);
-	cameraObject->AddComponent(new CameraComponent());
-	camera = ((CameraComponent*)cameraObject->GetComponent(CAMERA))->GetCamera();
-	actors.push_back(cameraObject);
+	lectorXML_.Leer("../../pause.xml");
+	
 }

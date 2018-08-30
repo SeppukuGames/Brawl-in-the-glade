@@ -18,7 +18,6 @@ void Scene1::CreateScene()
 
 void Scene1::CreateGameObjects(void)
 {
-	//TODO: ¿Se rompe la pausa?
 	lectorXML_.Leer("../../escena1.xml"); 
 }
 

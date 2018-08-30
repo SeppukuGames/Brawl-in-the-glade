@@ -16,7 +16,7 @@
 #include "OgreBorderPanelOverlayElement.h"
 
 enum ButtonType{
-	START, OPTIONS, BUTTONEXIT
+	START, RESUME, OPTIONS, BUTTONEXIT
 };
 
 class Boton : public Component {

@@ -83,6 +83,7 @@ void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
 	{
 	case PAUSESCENE:
 		scn = new PauseScene();
+	
 		break;
 
 	default:
@@ -92,8 +93,9 @@ void SceneManager::LoadPauseScene(PauseSceneType pauseSceneType){
 		break;
 	}
 
-	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();	//Eliminamos todos los viewports
-	AudioManager::GetInstance()->Pause();			//Paramos todos los sonidos de la escena
+	SceneManager::GetInstance()->GetCurrentScene()->setStopUpdate(true);	//Paramos la actualización del Scene1
+	GraphicManager::GetInstance()->GetWindow()->removeAllViewports();		//Eliminamos todos los viewports
+	AudioManager::GetInstance()->Pause();									//Paramos todos los sonidos de la escena
 
 	PushScene(scn);
 	isPaused = true;
