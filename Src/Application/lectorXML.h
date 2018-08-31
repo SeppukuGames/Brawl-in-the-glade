@@ -48,13 +48,48 @@ public:
 			}
 		}
 
+		// Posicion de los bosques
+
 		if (spawn == "spawnArbol") {
 			if (coordenada == "x") {
-				std::uniform_int_distribution<> distrX(100, 200);
+				std::uniform_int_distribution<> distrX(-800, 450);
 				return distrX;
 			}
 			if (coordenada == "z") {
-				std::uniform_int_distribution<> distrZ(100, 200);
+				std::uniform_int_distribution<> distrZ(-600, 450);
+				return distrZ;
+			}
+		}
+
+		if (spawn == "spawnArbol_new") {
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(600, 1200);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(-600, 450);
+				return distrZ;
+			}
+		}
+
+		if (spawn == "spawnArbol2") {
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(-600, 450);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(600, 1200);
+				return distrZ;
+			}
+		}
+
+		if (spawn == "spawnArbol3") {
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(600, 1200);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(600, 1200);
 				return distrZ;
 			}
 		}
