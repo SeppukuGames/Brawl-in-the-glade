@@ -16,6 +16,7 @@
 #include "StatsComponent.h"
 #include "BulletComponent.h"
 #include "MenuComponent.h"
+#include "TowerComponent.h"
 #include "Boton.h"
 #include "Error.h"
 
@@ -213,6 +214,16 @@ Component* GameObject::GetComponent(ComponentName component) {
 		for (size_t i = 0; i < components.size(); i++)
 		{
 			Boton * comp = dynamic_cast<Boton*>(components[i]);
+
+			if (comp != NULL)
+				return components[i];
+		}
+
+		break;
+	case ComponentName::TOWER:
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			TowerComponent * comp = dynamic_cast<TowerComponent*>(components[i]);
 
 			if (comp != NULL)
 				return components[i];

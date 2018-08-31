@@ -49,11 +49,11 @@ public:
 
 		if (spawn == "spawnArbol") {
 			if (coordenada == "x") {
-				std::uniform_int_distribution<> distrX(100, 200);
+				std::uniform_int_distribution<> distrX(100, 300);
 				return distrX;
 			}
 			if (coordenada == "z") {
-				std::uniform_int_distribution<> distrZ(100, 200);
+				std::uniform_int_distribution<> distrZ(100, 300);
 				return distrZ;
 			}
 		}

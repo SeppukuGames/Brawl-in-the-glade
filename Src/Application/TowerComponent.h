@@ -23,6 +23,7 @@ public:
 
 	//Self methods
 	void healUp();
+	void reestablishTowerGUI();
 };
 
 #endif

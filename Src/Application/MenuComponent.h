@@ -26,6 +26,7 @@ private:
 	virtual void Update(double elapsed);
 
 	void MenuComponent::createGUI(std::string imagen);
+	
 
 	std::vector<Boton*>botones_;
 

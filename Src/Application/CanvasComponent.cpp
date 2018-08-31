@@ -4,13 +4,19 @@
 #include "SceneManager.h"
 #include "Error.h"
 
-using namespace Ogre;
+
 
 
 CanvasComponent::CanvasComponent() : Component()
 {
 }
 
+CanvasComponent::~CanvasComponent(){
+	
+	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+	Ogre::OverlayManager::getSingleton().destroyAll();
+		
+}
 void CanvasComponent::Start() {
 
 	if (gameObject->GetTag() == "Tower"){
@@ -51,11 +57,9 @@ void CanvasComponent::Update(double elapsed) {
 
 void CanvasComponent::createGUI() {
 
-	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 
-	//Da un error aqui al volver de GOS al juego ya creado
-	//¿No hace falta crearlo dos veces? -> Ya estaba creado
-	OverlayContainer* lifeGUI = static_cast<OverlayContainer*>(
+	Ogre::OverlayContainer* lifeGUI = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "health"));
 
 
@@ -64,7 +68,7 @@ void CanvasComponent::createGUI() {
 	lifeGUI->setDimensions(maxWidth, maxHeight);
 	lifeGUI->setMaterialName("health");
 
-	OverlayContainer* backLifeGUI = static_cast<OverlayContainer*>(
+	Ogre::OverlayContainer* backLifeGUI = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "backHealth"));
 
 	backLifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
@@ -73,7 +77,7 @@ void CanvasComponent::createGUI() {
 	backLifeGUI->setMaterialName("backHealth"); // Optional background material 
 
 	// Create an overlay, and add the panel*/
-	Overlay* GOoverlay = overlayManager.create("OverlayPlayer");
+	Ogre::Overlay* GOoverlay = overlayManager.create("OverlayPlayer");
 	GOoverlay->add2D(backLifeGUI);
 	GOoverlay->add2D(lifeGUI);
 
@@ -88,10 +92,10 @@ void CanvasComponent::createHealthBar(){
 	
 	billboardSet = gameObject->GetNode()->getCreator()->createBillboardSet();
 	billboardSet->setMaterialName("health");
-	billboardSet->setRenderQueueGroup(RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
+	billboardSet->setRenderQueueGroup(Ogre::RenderQueueGroupID::RENDER_QUEUE_OVERLAY);
 	billboardSet->setDefaultDimensions(maxWidth, maxHeight);
-	Billboard* billboard = billboardSet->createBillboard(Vector3::ZERO);
-	billboard->setPosition(Vector3(0, YAxis, 0));
+	Ogre::Billboard* billboard = billboardSet->createBillboard(Ogre::Vector3::ZERO);
+	billboard->setPosition(Ogre::Vector3(0, YAxis, 0));
 	gameObject->GetNode()->attachObject(billboardSet);
 
 	ovContainer = NULL;
@@ -99,6 +103,7 @@ void CanvasComponent::createHealthBar(){
 }
 
 void CanvasComponent::setNewUISize(float x, float y) {
+	if (ovContainer == nullptr) createGUI();
 	ovContainer->setDimensions(x, y);
 }
 

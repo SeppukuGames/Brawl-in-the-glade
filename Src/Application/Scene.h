@@ -39,6 +39,7 @@ public:
 
 	Ogre::SceneManager * GetSceneMgr(){ return sceneMgr; };		//Método que devuelve la referencia al sceneManager
 	Ogre::Camera * GetCamera() { return camera; };
+
 	void SetCamera(Ogre::Camera* cam);
 	void SetViewport(void);										//Método encargado de establecer el viewport
 	void setStopUpdate(bool ssu){ stopCurrentUpdate = ssu; }	//Método encargado de cambiar la pausa del update

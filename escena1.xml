@@ -46,7 +46,7 @@
 		<Componente name="Rigidbody">            
         </Componente>	
     </Entidad>
-    <Entidad name="Arbol2" activo="si" numero="2">
+    <Entidad name="Arbol2" activo="si" numero="10">
 		<Componente name="Posicion" random="spawnArbol">            
         </Componente>	
 		<Componente name="BoxCollider" x="50" y="150">            

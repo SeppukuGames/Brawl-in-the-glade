@@ -1,5 +1,6 @@
 #include "TowerComponent.h"
 #include "StatsComponent.h"
+#include "CanvasComponent.h"
 #include "SceneManager.h"
 
 
@@ -35,4 +36,10 @@ void TowerComponent::healUp(){
 
 	healingScale++;
 
+}
+
+void TowerComponent::reestablishTowerGUI(){
+	CanvasComponent* canvasComp = (CanvasComponent*)gameObject->GetComponent(ComponentName::CANVAS);
+	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
+	canvasComp->setNewUISize((300 * stats->GetLife()) / stats->GetMaxLife(), 30);
 }

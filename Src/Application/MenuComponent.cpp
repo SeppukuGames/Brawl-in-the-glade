@@ -4,7 +4,7 @@
 #include "StatsComponent.h"
 #include "InputManager.h"
 
-using namespace Ogre;
+
 
 const float maxWidth = 1200;
 const float maxHeight = 500;
@@ -16,15 +16,16 @@ MenuComponent::MenuComponent(std::string imagen) : Component()
 
 //Destructora que se encarga de borrar la imagen del GUI y los botones
 MenuComponent::~MenuComponent(){
+
+		Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+
+		Ogre::OverlayManager::getSingleton().destroyAll();
+
+		if (SceneManager::GetInstance()->getIsPaused()){
+		//llama a la torre para que restituya la vida
+			
+		}
 	
-	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
-
-	std::vector<Boton*>::iterator it = botones_.begin();
-	for (it; it != botones_.end(); ++it){
-		delete (*it);
-	}
-
-	Ogre::OverlayManager::getSingleton().destroyAll();
 }
 
 
@@ -73,9 +74,9 @@ void MenuComponent::Update(double elapsed) {
 
 void MenuComponent::createGUI(std::string imagen) {
 
-	OverlayManager& overlayManager = OverlayManager::getSingleton();
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	
-	OverlayContainer* menuGUI = static_cast<OverlayContainer*>(
+	Ogre::OverlayContainer* menuGUI = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "ImagenMenu"));
 
 	menuGUI->setMetricsMode(Ogre::GMM_PIXELS);
@@ -84,7 +85,7 @@ void MenuComponent::createGUI(std::string imagen) {
 	menuGUI->setMaterialName(imagen);
 
 	// Create an overlay, and add the panel*/
-	Overlay* GOoverlay = overlayManager.create("OverlayMenu");
+	Ogre::Overlay* GOoverlay = overlayManager.create("OverlayMenu");
 	
 	GOoverlay->add2D(menuGUI);
 

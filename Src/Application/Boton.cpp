@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 #include "StatsComponent.h"
+#include "GameManager.h"
+#include "TowerComponent.h"
 
 
 const float maxWidth = 200;
@@ -12,12 +14,10 @@ Boton::Boton(std::string texto, int n) : Component()
 	createButton(texto, n);
 }
 
-//Destruye la imagen asociada al botón
-Boton::~Boton(){
-	//delete ovContainer;
-	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
-	Ogre::OverlayManager::getSingleton().destroyAll();
 
+Boton::~Boton(){
+
+	Ogre::OverlayManager::getSingleton().destroyAll();
 }
 
 void Boton::Start()
@@ -134,19 +134,25 @@ void Boton::setAction(std::string accion)
 
 void Boton::Action()
 {
+	TowerComponent* towerComp;
 	switch (tipo)
 	{
 	case START:
 		std::cout << "Soy start" << std::endl;
 		SceneManager::GetInstance()->LoadScene(SCENE1);
 		break;
+
 	case OPTIONS:
 		std::cout << "Soy opciones" << std::endl;
 		break;
+
 	case RESUME:
 		SceneManager::GetInstance()->UnloadPauseScene();
-		std::cout << "Soy una decepción" << std::endl;
+		towerComp = (TowerComponent*)GameManager::GetInstance()->GetTower()->GetComponent(ComponentName::TOWER);
+		towerComp->reestablishTowerGUI();
+		std::cout << "Soy resume" << std::endl;
 		break;
+
 	case BUTTONEXIT:
 		std::cout << "Soy exit" << std::endl;
 		break;

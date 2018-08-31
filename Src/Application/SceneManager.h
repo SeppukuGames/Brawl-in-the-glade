@@ -58,6 +58,7 @@ public:
 	inline Scene* GetCurrentScene(){ return scenes.top(); };	//Devuelve la escena actual
 	inline Ogre::Timer* GetTimer(){ return timer; };			//Devuelve el timer
 	inline double GetLastTime(){ return lastTime; };			//Devuelve el el tiempo anterior
+	bool getIsPaused(){ return isPaused; }						//Devuelve si está en pausa
 
 	inline double GetNextSceneChange(){ return nextSceneChange; };					//Devuelve la siguiente escena a cambiar
 	inline double SetNextSceneChange(double next){ nextSceneChange = next; };		//Establece la siguiente escena a cambiar

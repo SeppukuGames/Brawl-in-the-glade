@@ -174,7 +174,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOL2PREFAB:
-		gameObject = new GameObject("Arbol" + numArboles);
+		gameObject = new GameObject("Arbol" + std::to_string(numArboles));
 		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol2.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
