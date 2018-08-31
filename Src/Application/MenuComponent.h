@@ -32,6 +32,7 @@ private:
 
 	int contador = 0;
 	int numBotones = 0;
+	int numOverlay = 0;
 
 public:
 

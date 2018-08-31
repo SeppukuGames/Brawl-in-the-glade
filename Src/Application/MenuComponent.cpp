@@ -17,13 +17,27 @@ MenuComponent::MenuComponent(std::string imagen) : Component()
 //Destructora que se encarga de borrar la imagen del GUI y los botones
 MenuComponent::~MenuComponent(){
 
-		Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
-
-		Ogre::OverlayManager::getSingleton().destroyAll();
-
+		//Si está en pausa
 		if (SceneManager::GetInstance()->getIsPaused()){
-		//llama a la torre para que restituya la vida
+
+			std::vector<Boton*>::iterator it = botones_.begin();
+			for (it; it != botones_.end(); ++it){
+				delete (*it);
+			}
+
+			delete ovContainer;	//Borramos la imagen
+			//delete Ogre::OverlayManager::getSingletonPtr()->getOverlayElement("ImagenMenu");
+			Ogre::OverlayManager::getSingletonPtr()->destroy("OverlayMenu");
 			
+
+		}
+
+		//Si no está en pausa
+		else{
+			Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+
+			Ogre::OverlayManager::getSingleton().destroyAll();
+
 		}
 	
 }
@@ -77,8 +91,9 @@ void MenuComponent::createGUI(std::string imagen) {
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	
 	Ogre::OverlayContainer* menuGUI = static_cast<Ogre::OverlayContainer*>(
-		overlayManager.createOverlayElement("Panel", "ImagenMenu"));
+		overlayManager.createOverlayElement("Panel", "ImagenMenu" + std::to_string(numOverlay)));
 
+	numOverlay++;
 	menuGUI->setMetricsMode(Ogre::GMM_PIXELS);
 	menuGUI->setPosition(80, 0);
 	menuGUI->setDimensions(850, 400);

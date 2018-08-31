@@ -16,8 +16,8 @@ Boton::Boton(std::string texto, int n) : Component()
 
 
 Boton::~Boton(){
-
-	Ogre::OverlayManager::getSingleton().destroyAll();
+	delete ovContainer;	//Borramos la imagen
+	//Ogre::OverlayManager::getSingletonPtr()->destroy("OverlayMenu");
 }
 
 void Boton::Start()
@@ -148,8 +148,6 @@ void Boton::Action()
 
 	case RESUME:
 		SceneManager::GetInstance()->UnloadPauseScene();
-		towerComp = (TowerComponent*)GameManager::GetInstance()->GetTower()->GetComponent(ComponentName::TOWER);
-		towerComp->reestablishTowerGUI();
 		std::cout << "Soy resume" << std::endl;
 		break;
 

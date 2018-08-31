@@ -38,8 +38,3 @@ void TowerComponent::healUp(){
 
 }
 
-void TowerComponent::reestablishTowerGUI(){
-	CanvasComponent* canvasComp = (CanvasComponent*)gameObject->GetComponent(ComponentName::CANVAS);
-	StatsComponent* stats = (StatsComponent*)gameObject->GetComponent(ComponentName::STATS);
-	canvasComp->setNewUISize((300 * stats->GetLife()) / stats->GetMaxLife(), 30);
-}
