@@ -123,7 +123,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Tower");
 		gameObject->SetTag("Tower");
 		gameObject->AddComponent(new EntityComponent("Torre.mesh"));		
-		gameObject->GetNode()->setScale(10, 10, 10);		
+		gameObject->GetNode()->setScale(10, 20, 10);		
 		gameObject->AddComponent(new CanvasComponent());		
 		GameManager::GetInstance()->SetTower(gameObject);
 		//TODO: XML?
@@ -157,35 +157,40 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		break;
 
 	case ARBOLPREFAB:
-		gameObject = new GameObject("Arbol" + numArboles);
+
+		gameObject = new GameObject("Arbol" + std::to_string(numArboles));
 		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("arbol.mesh"));
-		gameObject->GetNode()->setScale(5, 10, 5);
+		gameObject->GetNode()->setScale(15, 15, 15);
 		numArboles++;
 		break;
 
 	case ARBOL_NEWPREFAB:
-		gameObject = new GameObject("Arbol" + numArboles);
+
+		
+
+		gameObject = new GameObject("Arbol" + std::to_string(numArboles));
 		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol_new.mesh"));
-		
-		gameObject->GetNode()->setScale(5, 10, 5);
+		gameObject->GetNode()->setScale(15, 15, 15);
 		numArboles++;
 		break;
 
 	case ARBOL2PREFAB:
+
 		gameObject = new GameObject("Arbol" + std::to_string(numArboles));
 		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol2.mesh"));
-		gameObject->GetNode()->setScale(5, 10, 5);
+		gameObject->GetNode()->setScale(15, 15, 15);
 		numArboles++;
 		break;
 
 	case ARBOL3PREFAB:
-		gameObject = new GameObject("Arbol" + numArboles);
+
+		gameObject = new GameObject("Arbol" + std::to_string(numArboles));
 		gameObject->SetTag("Arbol");
 		gameObject->AddComponent(new EntityComponent("Arbol3.mesh"));
-		gameObject->GetNode()->setScale(5, 10, 5);
+		gameObject->GetNode()->setScale(15, 15, 15);
 		numArboles++;
 		break;
 
@@ -203,7 +208,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
-
 	
 	//REFERENCIA TEMPORAL, NO SE VA A USAR. o no debería, vamos.
 	case ENEMYPREFAB:
@@ -233,7 +237,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject(BulletText);
 		gameObject->SetTag("Bullet");
 		gameObject->GetNode()->setScale(.5, .5, .5);
-		gameObject->AddComponent(new EntityComponent("ogrehead.mesh"));
+		gameObject->AddComponent(new EntityComponent("bala.mesh"));
 		gameObject->AddComponent(new BoxColliderComponent(5, 5));
 		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
 		gameObject->AddComponent(new BulletComponent());

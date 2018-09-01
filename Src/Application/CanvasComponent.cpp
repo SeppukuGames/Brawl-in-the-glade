@@ -64,7 +64,6 @@ void CanvasComponent::createGUI() {
 	Ogre::OverlayContainer* lifeGUI = static_cast<Ogre::OverlayContainer*>(
 		overlayManager.createOverlayElement("Panel", "health"));
 
-
 	lifeGUI->setMetricsMode(Ogre::GMM_PIXELS);
 	lifeGUI->setPosition(0, 0);
 	lifeGUI->setDimensions(maxWidth, maxHeight);
