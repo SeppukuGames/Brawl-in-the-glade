@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "Ogre.h"
 
+
 //Clase encargada de gestionar el estado de la escena
 class GameManager : public Component{
 
@@ -29,6 +30,7 @@ private:
 	int numEnemiesXML;	// numero de enemigos determinado por el XML
 	int waveNumber;		//Contador de rondas
 	float difficulty;
+	
 
 	GameObject* player;								//Atributo para la referencia del jugador principal
 	GameObject* tower;								//Atributo para la referencia a la torre

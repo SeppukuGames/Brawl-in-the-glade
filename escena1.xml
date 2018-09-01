@@ -26,41 +26,28 @@
 		<Componente name="BoxCollider" x="35" y="35">            
         </Componente>		
     </Entidad>   
-    <Entidad name="Enemigo" activo="si" numero="2">
-    	<Oleada dificultad="Facil">
-    	</Oleada>
-		<Componente name="Posicion" random="spawn1">            
-        </Componente>	
-		<Componente name="BoxCollider" x="50" y="150">            
-        </Componente>	
-		<Componente name="Rigidbody">            
-       	</Componente>	
-    </Entidad>
     <Entidad name="Arbol" activo="si" numero="20">
 		<Componente name="Posicion" random="spawnArbol">            
         </Componente>	
-		<Componente name="BoxCollider"  x="5" y="5">            
+		<Componente name="BoxCollider"  x="2" y="2">            
         </Componente>
     </Entidad>
     <Entidad name="Arbol_new" activo="si" numero="20">
 		<Componente name="Posicion" random="spawnArbol_new">            
         </Componente>	
-		<Componente name="BoxCollider"  x="5" y="5">            
+		<Componente name="BoxCollider"  x="2" y="2">            
         </Componente>
     </Entidad>
     <Entidad name="Arbol2" activo="si" numero="20">
 		<Componente name="Posicion" random="spawnArbol2">            
         </Componente>	
-		<Componente name="BoxCollider"  x="5" y="5">            
+		<Componente name="BoxCollider"  x="2" y="2">            
         </Componente>
     </Entidad>
     <Entidad name="Arbol3" activo="si" numero="20">
 		<Componente name="Posicion" random="spawnArbol3">            
         </Componente>	
-		<Componente name="BoxCollider"  x="5" y="5">            
+		<Componente name="BoxCollider"  x="2" y="2">            
         </Componente>
-    </Entidad>
-    <Entidad name="Salmorejo" activo="si">   
-        "de prueba, para ver que no falla el lector"     
-    </Entidad>   
+    </Entidad> 
 </Juego>

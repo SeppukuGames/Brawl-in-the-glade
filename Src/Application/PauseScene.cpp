@@ -34,5 +34,6 @@ void PauseScene::CreateGameObjects(void)
 	//TODO: Leer por XML
 	//TODO: Panel con botones (Overlay)
 	lectorXML_.Leer("../../pause.xml");
+
 	
 }

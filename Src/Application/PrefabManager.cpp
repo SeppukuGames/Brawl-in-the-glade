@@ -138,8 +138,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
 		gameObject->AddComponent(new CanvasComponent());
-
-
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
 		break;
@@ -151,7 +149,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
 		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
 		gameObject->AddComponent(new CanvasComponent());
-
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
 		break;
@@ -208,28 +205,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new EntityComponent("Arbol5.mesh"));
 		gameObject->GetNode()->setScale(5, 10, 5);
 		numArboles++;
-	
-	//REFERENCIA TEMPORAL, NO SE VA A USAR. o no debería, vamos.
-	case ENEMYPREFAB:
-		random = rand() % 2 + 1;
-		EnemyText = "Enemy ";
-		EnemyText += std::to_string(i);
-		gameObject = new GameObject(EnemyText);
-		gameObject->SetTag("Enemy");
-		gameObject->AddComponent(new BoxColliderComponent(25, 25));
-		gameObject->AddComponent(new RigidbodyComponent(false, 1.0f));
-		if (random == 1)
-			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY1));
-		else if (random == 2)
-			gameObject->AddComponent(new EnemyComponent(enemyType::ENEMY2));
-		gameObject->AddComponent(new StatsComponent());
-		gameObject->AddComponent(new CanvasComponent());
-		GameManager::GetInstance()->AddEnemy();
-		++i;
-
-		//insertObjectIntoCurrentScene(gameObject); //Este lo voy a dejar para el newwave. Hay que quitarlo cuando se hagan las oleadas por XML
-		break;
-	
 
 	case BULLETPREFAB:
 		BulletText = "Bullet ";

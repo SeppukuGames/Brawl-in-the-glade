@@ -20,7 +20,6 @@
 #include "PrefabManager.h"
 #include "GameManager.h"
 
-
 #include "MenuComponent.h"
 
 using namespace rapidxml;
@@ -135,8 +134,6 @@ public:
 			return PREFABTYPE::LIGHTPREFAB;
 		if (texto == "Torre")
 			return PREFABTYPE::TOWERPREFAB;
-		if (texto == "Enemigo")
-			return PREFABTYPE::ENEMYPREFAB;
 		if (texto == "Enemigo1")
 			return PREFABTYPE::ENEMY1PREFAB;
 		if (texto == "Enemigo2")

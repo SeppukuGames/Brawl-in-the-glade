@@ -1,7 +1,9 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
-#include "PrefabManager.h"
+
+
+#include "Scene.h"
 
 #pragma region Singleton  
 /* Null, because instance will be initialized on demand. */
@@ -55,7 +57,8 @@ void GameManager::NewWave(){
 
 	int cont = 0;
 	while (enemyNumber < enemyWave){
-		PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB); //He metido el 1 por meter algo
+		SceneManager::GetInstance()->GetCurrentScene()->CreateEnemies();
+		// PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB); //He metido el 1 por meter algo
 		enemyNumber++;
 	}
 }

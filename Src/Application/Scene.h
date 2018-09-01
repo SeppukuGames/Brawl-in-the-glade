@@ -32,7 +32,11 @@ public:
 	void AddGameObject(GameObject * gameObject);				//Método encargado de añadir un GameObject
 	void Destroy(GameObject * gameObject);						//Método que recibe un gameObject y lo añade a la cola de actores a destruir
 
-	
+	void CreateEnemies(void)
+	{
+		lectorXML_.Leer("../../enemies.xml");
+	}
+
 	virtual bool Tick(double elapsed);							//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
 	virtual void CreateScene(void) = 0;							//Método abstracto para crear una escena
