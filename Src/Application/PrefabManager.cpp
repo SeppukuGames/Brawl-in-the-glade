@@ -136,7 +136,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos)); 
 		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot1.mesh"));		
-		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);		
+		gameObject->GetNode()->setScale(5, 5, 5);		
 		gameObject->AddComponent(new CanvasComponent());
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;
@@ -147,7 +147,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject = new GameObject("Enemy" + std::to_string(numEnemigos));
 		gameObject->SetTag("Enemy");
 		gameObject->AddComponent(new EntityComponent("bot2.mesh"));
-		gameObject->GetNode()->setScale(1.1, 1.1, 1.1);
+		gameObject->GetNode()->setScale(5, 5, 5);
 		gameObject->AddComponent(new CanvasComponent());
 		GameManager::GetInstance()->AddEnemy();
 		numEnemigos++;

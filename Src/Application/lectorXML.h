@@ -37,13 +37,15 @@ public:
 	}
 
 	std::uniform_int_distribution<> identificadorSpawns(std::string spawn, std::string coordenada) {
+
+		// Centro Arriba
 		if (spawn == "spawn1") {
 			if (coordenada == "x") {
-				std::uniform_int_distribution<> distrX(100, 200);
+				std::uniform_int_distribution<> distrX(450, 600);
 				return distrX;
 			}
 			if (coordenada == "z") {
-				std::uniform_int_distribution<> distrZ(100, 200);
+				std::uniform_int_distribution<> distrZ(-100, 0);
 				return distrZ;
 			}
 		}
