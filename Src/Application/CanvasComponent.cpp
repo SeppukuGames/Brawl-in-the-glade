@@ -13,8 +13,10 @@ CanvasComponent::CanvasComponent() : Component()
 
 CanvasComponent::~CanvasComponent(){
 	
-	Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
-	Ogre::OverlayManager::getSingleton().destroyAll();
+	if (gameObject->GetTag() == "Tower"){
+		Ogre::OverlayManager::getSingleton().destroyAllOverlayElements();
+		Ogre::OverlayManager::getSingleton().destroyAll();
+	}
 		
 }
 void CanvasComponent::Start() {
