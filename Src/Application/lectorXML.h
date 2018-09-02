@@ -36,22 +36,60 @@ public:
 		return vectorAux;
 	}
 
-	std::uniform_int_distribution<> identificadorSpawns(std::string spawn, std::string coordenada) {
+	std::uniform_int_distribution<> identificadorSpawns(int spawn, std::string coordenada) {
 
-		// Centro Arriba
-		if (spawn == "spawn1") {
+		switch (spawn)
+		{
+		case 0:
+			// Centro Arriba
 			if (coordenada == "x") {
-				std::uniform_int_distribution<> distrX(450, 600);
+				std::uniform_int_distribution<> distrX(500, 550);
 				return distrX;
 			}
 			if (coordenada == "z") {
 				std::uniform_int_distribution<> distrZ(-100, 0);
 				return distrZ;
 			}
+			break;
+		case 1:
+			// Centro Abajo
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(500, 550);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(1000, 1200);
+				return distrZ;
+			}
+			break;
+		case 2:
+			// Derecha
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(1000, 1200);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(500, 550);
+				return distrZ;
+			}
+			break;
+		case 3:
+			// Izquierda
+			if (coordenada == "x") {
+				std::uniform_int_distribution<> distrX(-100, 0);
+				return distrX;
+			}
+			if (coordenada == "z") {
+				std::uniform_int_distribution<> distrZ(500, 550);
+				return distrZ;
+			}
+			break;
 		}
+	}
+
+	std::uniform_int_distribution<> identificadorSpawns(std::string spawn, std::string coordenada) {
 
 		// Posicion de los bosques
-
 		if (spawn == "spawnArbol") {
 			if (coordenada == "x") {
 				std::uniform_int_distribution<> distrX(-800, 450);
@@ -103,9 +141,22 @@ public:
 			std::random_device rd; // obtain a random number from hardware
 			std::mt19937 eng(rd()); // seed the generator
 
+			std::uniform_int_distribution<> distrX, distrZ;
+
 			std::string spawn = component_node->first_attribute("random")->value();
-			std::uniform_int_distribution<> distrX = identificadorSpawns(spawn, "x");// define the range
-			std::uniform_int_distribution<> distrZ = identificadorSpawns(spawn, "z"); // define the range
+			if (spawn == "randomSpawn") {
+				std::random_device rd; // obtain a random number from hardware
+				std::mt19937 eng(rd()); // seed the generator
+				std::uniform_int_distribution<> distr(0, 3);
+				int spawn = distr(eng);
+
+				distrX = identificadorSpawns(spawn, "x");// define the range
+				distrZ = identificadorSpawns(spawn, "z");// define the range
+			}
+			else {
+				distrX = identificadorSpawns(spawn, "x");// define the range
+				distrZ = identificadorSpawns(spawn, "z");// define the range
+			}
 
 			int x = distrX(eng);
 			int z = distrZ(eng);
@@ -215,7 +266,7 @@ public:
 			int n = static_cast<MenuComponent*>(aux)->getNumButtons();
 			Boton* boton = new Boton(component_node->first_attribute("texto")->value(), n);
 			boton->setAction(component_node->first_attribute("tipo")->value());
-			static_cast<MenuComponent*>(aux)->AddButton(boton);	
+			static_cast<MenuComponent*>(aux)->AddButton(boton);
 		}
 
 	}
@@ -330,7 +381,7 @@ public:
 						PrefabManager::GetInstance()->insertObjectIntoCurrentScene(gameObject);
 					}
 				}
-				
+
 			}
 		}
 	}

@@ -3,7 +3,7 @@
     <Entidad name="Enemigo1" activo="si" numero="2">
     	<Oleada dificultad="Facil">
     	</Oleada>
-		<Componente name="Posicion" random="spawn1">            
+		<Componente name="Posicion" random="randomSpawn">            
         </Componente>	
 		<Componente name="BoxCollider" x="50" y="150">            
         </Componente>	
@@ -13,7 +13,7 @@
     <Entidad name="Enemigo2" activo="si" numero="2">
     	<Oleada dificultad="Facil">
     	</Oleada>
-		<Componente name="Posicion" random="spawn1">            
+		<Componente name="Posicion" random="randomSpawn">            
         </Componente>	
 		<Componente name="BoxCollider" x="50" y="150">            
         </Componente>	
