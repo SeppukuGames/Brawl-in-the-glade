@@ -19,6 +19,6 @@ void Scene1::CreateScene()
 void Scene1::CreateGameObjects(void)
 {
 	lectorXML_.Leer("../../escena1.xml");
-	CreateEnemies();
+	CreateEnemies(2);
 }
 

@@ -225,9 +225,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->SetTag("Menu");
 		break;
 	}
-
-	
-
 	return gameObject;
 }
 

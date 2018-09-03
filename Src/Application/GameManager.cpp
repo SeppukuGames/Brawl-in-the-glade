@@ -57,8 +57,6 @@ void GameManager::NewWave(){
 
 	int cont = 0;
 	while (enemyNumber < enemyWave){
-		SceneManager::GetInstance()->GetCurrentScene()->CreateEnemies();
-		// PrefabManager::GetInstance()->CreateObject(PREFABTYPE::ENEMYPREFAB); //He metido el 1 por meter algo
-		enemyNumber++;
+				SceneManager::GetInstance()->GetCurrentScene()->CreateEnemies(enemyNumber % 2);
 	}
 }
