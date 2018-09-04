@@ -37,3 +37,15 @@ void PauseScene::CreateGameObjects(void)
 
 	
 }
+
+bool PauseScene::Tick(double elapsed){
+	if (!HandleInput())
+		return false;
+
+	Update(elapsed);
+
+	if (!Render())
+		return false;
+
+	return true;
+}

@@ -92,7 +92,9 @@
     <ClCompile Include="..\..\Src\Application\GameOverScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Application\TowerComponent.cpp" />
+    <ClCompile Include="..\..\Src\Application\TowerComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\Application\AnimationComponent.h">
@@ -197,7 +199,9 @@
     <ClInclude Include="..\..\Src\Application\GameOverScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\Application\TowerComponent.h" />
+    <ClInclude Include="..\..\Src\Application\TowerComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
