@@ -8,9 +8,9 @@ class BulletComponent : public Component {
 
 private:
 	
-	//DEBEN IR POR XML 
-	const float bulletDuration = 15.0f;		//Duracion de la bala en el juego	
-	const float velocidad = 15000.0f;
+	 
+	const float bulletDuration = 5.0f;		//Duracion de la bala en el juego	
+	const float velocidad = 15000000.0f;
 
 	float cont;
 	

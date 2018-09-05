@@ -211,9 +211,9 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		BulletText += std::to_string(j);
 		gameObject = new GameObject(BulletText);
 		gameObject->SetTag("Bullet");
-		gameObject->GetNode()->setScale(.5, .5, .5);
+		gameObject->GetNode()->setScale(.1, .1, .1);
 		gameObject->AddComponent(new EntityComponent("bala.mesh"));
-		gameObject->AddComponent(new BoxColliderComponent(5, 5));
+		gameObject->AddComponent(new BoxColliderComponent(1, 1));
 		gameObject->AddComponent(new RigidbodyComponent(false, 0.5f));
 		gameObject->AddComponent(new BulletComponent());
 		insertObjectIntoCurrentScene(gameObject);

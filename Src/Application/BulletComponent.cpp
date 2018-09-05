@@ -46,7 +46,7 @@ void BulletComponent::Update(double elapsed){
 
 		newVec *= velocidad;
 
-		newVec *= elapsed;
+		newVec += elapsed;
 		rb->GetBody()->SetLinearVelocity(newVec);
 	}
 }
@@ -113,6 +113,23 @@ void BulletComponent::DireccionarBala(){
 		//std::cout << resultado.y << std::endl;
 
 		b2Vec2 newMouseCoord(resultado.x, resultado.z);
+		if (resultado.x < player_rb->GetBody()->GetPosition().x) {
+			pos.x = player_rb->GetBody()->GetPosition().x - 20;
+		}
+
+		else {
+			pos.x = player_rb->GetBody()->GetPosition().x + 20;
+		}
+
+		if (resultado.z < player_rb->GetBody()->GetPosition().y) {
+			pos.y = player_rb->GetBody()->GetPosition().y - 20;
+		}
+
+		else {
+			pos.y = player_rb->GetBody()->GetPosition().y + 20;
+		}
+
+		rb->GetBody()->SetTransform(pos, player_rb->GetBody()->GetAngle());
 		direccion = newMouseCoord - rb->GetBody()->GetPosition();
 	}
 

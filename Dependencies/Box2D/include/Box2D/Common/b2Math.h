@@ -97,6 +97,10 @@ struct b2Vec2
 		x *= a; y *= a;
 	}
 
+	void operator += (float32 a) {
+		x += a; y += a;
+	}
+
 	/// Get the length of this vector (the norm).
 	float32 Length() const
 	{
