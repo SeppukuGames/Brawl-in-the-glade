@@ -79,8 +79,7 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 	case PAUSEMANAGERPREFAB:
 		gameObject = new GameObject("Pause_Manager");
 		gameObject->AddComponent(new PauseManager());
-		insertObjectIntoCurrentScene(gameObject); //Seguramente esté aqui el problema de la pausa
-		//¿?¿?
+		insertObjectIntoCurrentScene(gameObject); 
 		break;
 
 	case SUELOPREFAB:

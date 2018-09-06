@@ -7,8 +7,6 @@
         </Componente>
         <Componente name="Boton" texto="Empezar partida" tipo="Start">            
         </Componente>
-        <Componente name="Boton" texto="Opciones" tipo="Options">            
-        </Componente>
         <Componente name="Boton" texto="Salir" tipo="Exit">            
         </Componente>
     </Entidad>        

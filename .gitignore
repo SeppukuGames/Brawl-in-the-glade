@@ -5,7 +5,7 @@
 *.ilk
 
 Inter/
-# Exes/
+Exes/
 
 # Otros archivos que he visto que hay que ignorar
 *.sdf

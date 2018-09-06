@@ -99,12 +99,7 @@ bool PlayerComponent::CheckMovement(double elapsed){
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_S)){
 			velocity.y += _LINEARVELOCITY;
 			hasMoved = true;
-	}
-	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_T)) {
-		PrefabManager::GetInstance()->resetNameInts();
-		SceneManager::GetInstance()->LoadScene(GAMEOVERSCENE);
-	}
-	
+	}	
 
 		if (Input::GetInstance()->getKey(OIS::KeyCode::KC_W)){
 			velocity.y -= _LINEARVELOCITY;
