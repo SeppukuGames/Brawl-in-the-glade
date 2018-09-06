@@ -19,10 +19,11 @@ Scene::~Scene()
 {
 	//Destruye todos los actores
 	std::list <GameObject*> ::iterator it = actors.begin();
-	
+	std::string nombre;
 	for (it = actors.begin(); it != actors.end(); ++it){
-		cout << "Estoy destruyendo una unidad de: " << (*it)->GetTag() << endl;
+		nombre = (*it)->GetTag();
 		delete (*it);
+		cout << "Objeto: " << nombre << " destruido." << endl;
 	}
 
 	sceneMgr->clearScene();
@@ -32,6 +33,9 @@ Scene::~Scene()
 void Scene::CreateSceneMgr(void){
 
 	sceneMgr = GraphicManager::GetInstance()->GetRoot()->createSceneManager();
+
+	if(sceneMgr == nullptr)
+		cout << "Error en la creación de escena" << endl;
 }
 
 // Método que inicializa el OverlaySystem

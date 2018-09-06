@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Juego>  
+    <Entidad name="Camara" activo="si">        
+    </Entidad>
+       <Entidad name="Menu" activo="si">
+        <Componente name="Menu" imagen="Fondo">            
+        </Componente>
+        <Componente name="Boton" texto="Empezar partida" tipo="Start">            
+        </Componente>
+        <Componente name="Boton" texto="Opciones" tipo="Options">            
+        </Componente>
+        <Componente name="Boton" texto="Salir" tipo="Exit">            
+        </Componente>
+    </Entidad>        
+</Juego>

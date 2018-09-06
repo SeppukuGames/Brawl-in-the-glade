@@ -74,8 +74,6 @@ GameObject* PrefabManager::CreateObject(PREFABTYPE prefabType){
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/getout.ogg", true,false));
 		gameObject->AddComponent(new AudioComponent("../../Media/Sounds/bell.wav", false, false));
 		//insertObjectIntoCurrentScene(gameObject);
-
-
 		break;	
 
 	case PAUSEMANAGERPREFAB:

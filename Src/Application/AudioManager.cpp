@@ -1,6 +1,6 @@
 #include "AudioManager.h"
 #include "Error.h"
-
+#include <iostream>
 using namespace irrklang;
 
 #pragma region Singleton  
@@ -50,6 +50,8 @@ void AudioManager::InitSoundEngine(void){
 		throw errorE;
 
 	}
+
+	std::cout << "Terminado de cargar audio" << endl;
 }
 
 //Reanuda todos los sonidos

@@ -37,14 +37,14 @@ public:
 		switch (tipoEnemigo)
 		{
 		case 0:
-			lectorXML_.Leer("../../enemy2.xml");
+			lectorXML_.Leer("../enemy2.xml");
 			break;
 		case 1:
-			lectorXML_.Leer("../../enemy1.xml");
+			lectorXML_.Leer("../enemy1.xml");
 			break;
 
 		case 2:
-			lectorXML_.Leer("../../enemies.xml");
+			lectorXML_.Leer("../enemies.xml");
 			break;
 		}
 		

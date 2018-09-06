@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
+#include <iostream>
 
 #include "GraphicManager.h"
 #include "AudioManager.h"
@@ -61,9 +62,9 @@ void SceneManager::Go()
 	lastTime = timer->getMilliseconds();
 	nextSceneChange = timer->getMilliseconds() + SCENEWAIT;
 
-	sceneType = MENUSCENE; //CAMBIAR A MENU CUANDO SE HAGA EL RELEASE EH
+	sceneType = MENUSCENE;
 	SetScene();
-
+	std::cout << "Terminado de cargar escena" << endl;
 	while (GameLoop());
 }
 

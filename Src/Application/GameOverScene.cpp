@@ -17,5 +17,5 @@ void GameOverScene::CreateScene()
 
 void GameOverScene::CreateGameObjects(void)
 {
-	lectorXML_.Leer("../../gameover.xml");
+	lectorXML_.Leer("../gameover.xml");
 }

@@ -6,7 +6,8 @@ LightComponent::LightComponent() : Component(){
 
 LightComponent::~LightComponent()
 {
-	delete light;
+	gameObject->GetNode()->detachObject(light);
+	gameObject->GetNode()->getCreator()->destroyLight(light);
 }
 
 void LightComponent::Start(){

@@ -7,7 +7,8 @@ EntityComponent::EntityComponent(std::string meshString) : Component(){
 
 EntityComponent::~EntityComponent()
 {
-	delete entity;
+	gameObject->GetNode()->detachObject(entity);
+	gameObject->GetNode()->getCreator()->destroyEntity(entity);
 }
 
 void EntityComponent::Start(){

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Juego>   
+    <Entidad name="Enemigo2" activo="si">
+        <Oleada dificultad="Facil">
+        </Oleada>
+        <Componente name="Posicion" random="randomSpawn">            
+        </Componente>   
+        <Componente name="BoxCollider" x="50" y="150">            
+        </Componente>   
+        <Componente name="Rigidbody">            
+        </Componente>   
+    </Entidad> 
+</Juego>

@@ -12,7 +12,8 @@ audioName(audioName), isLooped(isLooped), playOnAwake(playOnAwake)
 }
 
 AudioComponent::~AudioComponent(){
-	sound->drop();
+	soundEngine->removeSoundSource(audioName);
+	//sound->drop();
 }
 
 void AudioComponent::Start(){

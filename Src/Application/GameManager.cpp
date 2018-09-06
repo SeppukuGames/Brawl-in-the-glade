@@ -38,6 +38,11 @@ void GameManager::Update(double elapsed){
 	if (Input::GetInstance()->getKey(OIS::KeyCode::KC_P) && timer->getMilliseconds() > SceneManager::GetInstance()->GetNextSceneChange())
 		SceneManager::GetInstance()->LoadPauseScene(PAUSESCENE);
 
+	/*if (Input::GetInstance()->getKey(OIS::KeyCode::KC_T)) {
+		PrefabManager::GetInstance()->resetNameInts();
+		SceneManager::GetInstance()->LoadScene(GAMEOVERSCENE);
+	}*/
+
 	if (enemyNumber == 0){
 		NewWave();
 		numWave++;

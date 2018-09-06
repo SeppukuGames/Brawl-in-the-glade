@@ -18,5 +18,5 @@ void MenuScene::CreateScene()
 
 void MenuScene::CreateGameObjects(void)
 {
-	lectorXML_.Leer("../../menu.xml");
+	lectorXML_.Leer("../menu.xml");
 }

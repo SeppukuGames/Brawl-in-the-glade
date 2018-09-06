@@ -1,5 +1,6 @@
 #include "PhysicsManager.h"
 #include "GameObject.h"
+#include <iostream>
 
 #pragma region Singleton  
 /* Null, because instance will be initialized on demand. */
@@ -37,6 +38,7 @@ void PhysicsManager::InitPhysics()
 	world = new b2World(gravity); 	//Inicializar el mundo
 	//Nos suscribimos a las funciones de beginContact
 	world->SetContactListener(this);
+	std::cout << "Terminado de cargar fisica" << std::endl;
 }
 
 //Método que actualiza el estado de la física cada frame
