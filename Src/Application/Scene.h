@@ -21,6 +21,7 @@ protected:
 	Ogre::SceneManager* sceneMgr;					//Atributo para la referencia del sceneManager
 	lectorXML lectorXML_;							//Lector de archivos XML
 	bool stopCurrentUpdate = false;					//Detiene el update actual cuando se entra en pausa
+	bool exitGame = false;							//Detiene el juego y lo cierra
 
 #pragma endregion Attributes
 
@@ -32,23 +33,8 @@ public:
 	void AddGameObject(GameObject * gameObject);				//Método encargado de añadir un GameObject
 	void Destroy(GameObject * gameObject);						//Método que recibe un gameObject y lo añade a la cola de actores a destruir
 
-	void CreateEnemies(int tipoEnemigo)
-	{
-		switch (tipoEnemigo)
-		{
-		case 0:
-			lectorXML_.Leer("../enemy2.xml");
-			break;
-		case 1:
-			lectorXML_.Leer("../enemy1.xml");
-			break;
+	void CreateEnemies(int tipoEnemigo);						//Método que asigna un numero de enemigos a la escena
 
-		case 2:
-			lectorXML_.Leer("../enemies.xml");
-			break;
-		}
-		
-	}
 
 	virtual bool Tick(double elapsed);							//Bucle principal. Acaba cuando se cierra la ventana o un error en renderOneFrame
 
@@ -60,6 +46,8 @@ public:
 	void SetCamera(Ogre::Camera* cam);
 	void SetViewport(void);										//Método encargado de establecer el viewport
 	void setStopUpdate(bool ssu){ stopCurrentUpdate = ssu; }	//Método encargado de cambiar la pausa del update
+	void setGameExit() { exitGame = true; }						//Método que se encarga de cerrar el juego
+	bool getGameExit() { return exitGame; }						//Devuelve si se está cerrando el juego
 
 protected:
 	void CheckActorsDestruction();								//Método que comprueba si un actor debe destruirse 

@@ -42,7 +42,8 @@ bool PauseScene::Tick(double elapsed){
 	if (!HandleInput())
 		return false;
 
-	Update(elapsed);
+	if (!Update(elapsed))
+		return false;
 
 	if (!Render())
 		return false;
