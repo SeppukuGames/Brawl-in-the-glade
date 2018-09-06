@@ -75,7 +75,8 @@ bool Scene::Tick(double elapsed)
 	if (!HandleInput())
 		return false;
 
-	Update(elapsed);
+	if (!Update(elapsed))
+		return false;
 
 
 
@@ -111,8 +112,6 @@ bool Scene::HandleInput(void) {
 
 bool Scene::Update(double elapsed)
 {
-	//Cuando se pone la pausa, luego intenta actualizar a los enemigos y explota
-	//Habría que cancelar la actualizacion en este frame con un bool y convirtiendolo en while
 	std::list <GameObject*> ::iterator it = actors.begin();
 	while (it != actors.end() && !stopCurrentUpdate){
 		GameObject* gameObject = (*it);
@@ -123,10 +122,31 @@ bool Scene::Update(double elapsed)
 	//Si se ha parado el update, lo restituimos para no parar tambien el siguiente update
 	if (stopCurrentUpdate) setStopUpdate(false);
 
+	//Si se debe terminar el juego, se devolverá falso
+	if (exitGame) 
+		return false;
+
 	return true;
 }
 
 bool Scene::Render(void) {
 	return GraphicManager::GetInstance()->Render();
+}
+
+void Scene::CreateEnemies(int tipoEnemigo){
+	switch (tipoEnemigo)
+	{
+	case 0:
+		lectorXML_.Leer("../../enemy2.xml");
+		break;
+	case 1:
+		lectorXML_.Leer("../../enemy1.xml");
+		break;
+
+	case 2:
+		lectorXML_.Leer("../../enemies.xml");
+		break;
+	}
+
 }
 

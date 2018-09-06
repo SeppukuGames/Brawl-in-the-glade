@@ -138,22 +138,20 @@ void Boton::Action()
 	switch (tipo)
 	{
 	case START:
-		std::cout << "Soy start" << std::endl;
 		SceneManager::GetInstance()->LoadScene(SCENE1);
 		break;
 
 	case OPTIONS:
-		std::cout << "Soy opciones" << std::endl;
 		break;
 
 	case RESUME:
 		SceneManager::GetInstance()->UnloadPauseScene();
-		std::cout << "Soy resume" << std::endl;
 		break;
 
 	case BUTTONEXIT:
-		std::cout << "Soy exit" << std::endl;
+		SceneManager::GetInstance()->GetCurrentScene()->setGameExit();
 		break;
+
 	default:
 		break;
 	}
